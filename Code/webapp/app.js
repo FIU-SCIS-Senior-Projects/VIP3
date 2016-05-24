@@ -13,5 +13,6 @@ angular.module('mainApp', [
     'toDoModule',
 	'user-profile',
 	'reviewRegistration',
-	'folder'
+	'folder',
+	'manage'
 ]);

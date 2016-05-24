@@ -124,6 +124,12 @@ angular.module('routes', ['ui.router'])
                 templateUrl: 'features/drive/createFolder.html',
 				controller: 'fld'
             })
+			
+			.state('semesterManagement', {
+                url: '/manage',
+                templateUrl: 'features/management/manage.html',
+				controller: 'm'
+            })
 
 
         });
