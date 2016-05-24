@@ -1,0 +1,135 @@
+<div class = "loginIcon">
+    <a ui-sref="toDo" ng-click="header.count = 0"><span class = "glyphicon glyphicon-bell"></span><span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span></a>
+	<a ui-sref="login"><span class="glyphicon glyphicon-user"></span></a>
+</div>
+<div>
+	<a href="/"><img class="header-logo" src="img/FIU_VIP.jpg"></a>
+	<nav class="navbar navbar-padding">
+		<!-- Toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a ui-sref="projects">TEAMS </a></li>
+				<li class="dropdown">
+					<a ui-sref="#" class="dropdown-toggle">PROSPECTIVE STUDENTS<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-submenu"><a href="#">VIP COURSE SYLLABUS</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://docs.google.com/document/d/1sVOLR_yz7wNK9es3ayJuJIS6TA85ogIsI0XXfZhEI-8/edit?usp=sharing" target="_blank">SOPHOMORE</a></li>
+								<li><a href="https://docs.google.com/document/d/1F_mmv9WRj_KOCV0gMjjxWSU9nqoOl1_REtO6v-5_YI4/edit?usp=sharing" target="_blank">JUNIOR</a></li>
+								<li><a href="https://docs.google.com/document/d/10C-3aNeia3Mzj3R2ZbLVntIE3KhkTHJmFI5KiyQ9HiU/edit?usp=sharing" target="_blank">SENIOR</a></li>
+							</ul>
+						</li>
+						<li class="dropdown-submenu"><a href="#">HOW VIP CREDITS COUNT</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://docs.google.com/document/d/1TwzarJnFR6cxi5vniKQf4qUIvFj7G6BwbvUc-E7QcTA/edit?usp=sharing" target="_blank">BIOMEDICAL ENGINEERING (BME)</a></li>
+								<li><a href="https://docs.google.com/document/d/1dTNxO1yJI9UnThVaopk5BhrUs_6Ek8arSvxX6OJIUXU/edit?usp=sharing" target="_blank">CONSTRUCTION MANAGEMENT (CM)</a></li>
+								<li><a href="https://docs.google.com/document/d/1Y_bjgn_xtxge1HdShoynQsXL2myECSISRqUEziKBqGM/edit?usp=sharing" target="_blank">ELECTRICAL AND COMPUTER ENGINEERING (ECE)</a></li>
+								<li><a href="https://docs.google.com/document/d/1bB0mMASjgD6aGqCQLLKlInLnOdBxvou8o3PuE4vmpDI/edit?usp=sharing" target="_blank">MECHANICAL AND MATERIALS ENGINEERING (MME)</a></li>
+								<li><a href="https://docs.google.com/document/d/1dTNxO1yJI9UnThVaopk5BhrUs_6Ek8arSvxX6OJIUXU/edit?usp=sharing" target="_blank">CONSTURCTION MANAGEMENT (CM)</a></li>
+								<li><a href="https://docs.google.com/document/d/1_NcRW3HSZED-FYO_3TiZ2HgxkfeLfA9ksl9wCpL-YOg/edit?usp=sharing" target="_blank">COMPUTER SCIENCE (CS)</a></li>
+								<li><a href="https://docs.google.com/document/d/1gkWFKum_fcl5cYTxIm-JH5LrBKPyjMBUszwu714sNVw/edit?usp=sharing" target="_blank">INFORMATION TECHNOLOGY (IT)</a></li>
+								<li class="dropdown-submenu"><a href="#">UNDERGRADUATE CATALOG</a>
+									<ul class="dropdown-menu">
+										<li><a href="http://catalog.fiu.edu/2013_2014/undergraduate/college-of-engineering-and-computing/school-of-computing-and-information-sciences.pdf" target="_blank">SCIS</a></li>
+										<li><a href="http://catalog.fiu.edu/2013_2014/undergraduate/college-of-engineering-and-computing/electrical-and-computer-engineering.pdf" target="_blank">CEC</a></li>
+										<li><a href="http://catalog.fiu.edu/2015_2016/undergraduate/" target="_blank">FIU</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+                                                <li><a ui-sref="studentconfirminfo">APPLY</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a ui-sref="#" class="dropdown-toggle">CURRENT STUDENTS<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="https://docs.google.com/spreadsheets/d/1XQYTPXd0UPv95STe6MS_ydXhvBlbzBUlG8EayvGyBrM/edit#gid=351988271" target="_blank">CLASS DAYS, TIMES, & LOCATIONS</a></li>
+						<li><a ui-sref="evaluation">PEER EVALUATIONS</a></li>
+						<li><a href="http://gpa-dev.cis.fiu.edu/" target="_blank">GPA TRACKER</a></li>
+						<li><a href="http://regsys-dev.cis.fiu.edu/" target="_blank">CONTEST REGISTRATION</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a ui-sref="#" class="dropdown-toggle">FACULTY<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a ui-sref="projectProposal">PROPOSE PROJECT</a></li>
+						<li><a ui-sref="#">REVIEW APPLICATIONS</a></li>
+						<li><a href="https://docs.google.com/spreadsheets/d/1XQYTPXd0UPv95STe6MS_ydXhvBlbzBUlG8EayvGyBrM/edit#gid=351988271" target="_blank">CLASS DAYS, TIMES, & LOCATIONS</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a ui-sref="#" class="dropdown-toggle">TOOLS<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="http://spws.cis.fiu.edu" target="_blank">MATCH MAKER</a></li>
+						<li><a href="https://docs.google.com/spreadsheets/d/1XQYTPXd0UPv95STe6MS_ydXhvBlbzBUlG8EayvGyBrM/edit?usp=sharing" target="_blank">TIMELINE</a></li>
+						<li><a href="https://fiu-scis-seniorproject.mingle.thoughtworks.com/projects/vip/cards/grid?aggregate_property%5Bcolumn%5D=points&aggregate_type%5Bcolumn%5D=sum&color_by=priority&favorite_id=716&filters%5B%5D=%5BType%5D%5Bis%5D%5BStory%5D&filters%5B%5D=%5BRelease%5D%5Bis%5D%5B650%5D&group_by%5Blane%5D=sprint&lanes=662%2C831%2C832%2C833%2C834&tab=Sprint+Planning" target="_blank">SELF-MANAGEMENT</a></li>
+						<li><a href="https://docs.google.com/spreadsheets/d/1mEzzZcpfgsrvp7NLtK9xD-wM1lV8XvQ0q5qGT0zbT7Q/edit?usp=sharing" target="_blank">TEAM AVAILABILITY</a></li>
+						<li><a href="https://calendar.google.com/calendar/render#main_7" target="_blank">TEAM CALENDAR</a></li>
+						<li><a href="https://docs.google.com/spreadsheets/d/1L3sLV2AldLJvC6jOvvZddtqWMwbkyovzYTJDpvl_N-0/edit?usp=sharing" target="_blank">TIME CARD</a></li>
+						<li><a href="https://drive.google.com/drive/u/0/folders/0Bxru3bNmw1YgWGVjWUxFazBvOUE" target="_blank">MEETING MINUTES</a></li>
+						<li><a href="https://drive.google.com/drive/u/0/folders/0Bxru3bNmw1YgRUtXckNfbk1ESzA" target="_blank">DOCUMENTATION</a></li>
+						<li><a href="https://docs.google.com/document/d/1jGE13LtseTvTuT9NS27nESONFVdU6qVz1jk3ghIUt-4/edit" target="_blank">PREVIOUS RELEASES</a></li>
+						<li><a href="https://github.com/FIU-SCIS-Senior-Projects/VIP2" target="_blank">VERSION CONTROL</a></li>
+						<li><a href="http://cp.cis.fiu.edu" target="_blank">COLLABORATION PLATFORM</a></li>
+						<li><a href="http://mj.cis.fiu.edu" target="_blank">MOBILE JUDGE</a></li>
+						<li><a href="http://vjf-dev.cis.fiu.edu" target="_blank">VIRTUAL JOB FAIR</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a ui-sref="#" class="dropdown-toggle">REPORTS<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+
+						<li class="dropdown-submenu"><a href="#">FIRST PERIOD</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://docs.google.com/document/d/1IYbscANYZMZvP39y6DBb6qv84LEOIawb_NVBIO2HasQ/edit?usp=sharing" target="_blank">6 MONTH REPORTING FORM</a></li>
+								<li><a href="https://docs.google.com/document/d/1fxldU52-NqLOuuc-etS-8oY31FDNF5CObuE2uIIdWqU/edit?usp=sharing" target="_blank">PROJECT DESCRIPTION</a></li>
+							</ul>
+						</li>
+						<li class="dropdown-submenu"><a href="#">SECOND PERIOD</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://docs.google.com/spreadsheets/d/1MUAMk80QJw15E2V6wWy1m95cZa0oWEW1xk75N5dVfLo/edit?usp=sharing" target="_blank">6 MONTH REPORTING FORM, PART I</a></li>
+								<li><a href="https://docs.google.com/document/d/1k0TEQffImx1TztIP-dEqFCk_AD-1ptT7AYwlSVAz6pM/edit?usp=sharing" target="_blank">6 MONTH REPORTING FORM, PART II</a></li>
+							</ul>
+						</li>
+						<li class="dropdown-submenu"><a href="#">THIRD PERIOD</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://docs.google.com/spreadsheets/d/1BdihSaxGvI3neeNu20jdOCxcEl3AYkTclsSAsMwF4IE/edit?usp=sharing" target="_blank">6 MONTH REPORTING FORM, PART I</a></li>
+								<li><a href="https://docs.google.com/document/d/1bO1_Z3CB4yVIN_qpBv6M8-e-mSN7q0O1jdXeArtANsg/edit?usp=sharing" target="_blank">6 MONTH REPORTING FORM, PART II</a></li>
+								<li><a href="https://docs.google.com/document/d/1zdCiODU1CL7FRSy2ynnjF3lSX4_j5gUR3qjFDMvG0i4/edit?usp=sharing" target="_blank">6 MONTH REPORTING FORM, SUPPLEMENTAL</a></li>
+								<li><a href="https://drive.google.com/folderview?id=0B4jsb-7DsymoZzVOSVgtc2lydEE&usp=sharing" target="_blank">SUPPLEMENT ONGOING FILES</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a ui-sref="#" class="dropdown-toggle">ABOUT<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a ui-sref="about">VIP @ FIU</a></li>
+						<li><a ui-sref="organization">ORGANIZATION</a></li>
+						<li><a ui-sref="contact">CONTACT</a></li>
+						<li class="dropdown-submenu"><a href="#">PRESENTATIONS</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://drive.google.com/open?id=1L739LQ8B60KWWUfA7iWFT3C_rNpBoNQw3SCohsPJ6Aw" target="_blank">INTRO TO OTHER UNIVERSITIES</a></li>
+								<li><a href="https://drive.google.com/file/d/0B457zg45quzrbmtBMGNDcTZJRVE/view?usp=sharing" target="_blank">INTRO TO STUDENTS</a></li>
+							</ul>
+						</li>
+						<li><a ui-sref="presentationsAndPublications">PUBLICATIONS</a></li>
+                                                <li><a href="http://fiuacademicdigitizationimagingservices.zenfolio.com/p570924554/slideshow#h6a8734af" target="_blank">SHOWCASE</a></li>
+						<li><a href="http://www.vip.gatech.edu" target="_blank">VIP @ GT</a></li>
+					</ul>
+				</li>
+				<!--<li><a ui-sref="competitionInformation">VIP Innovation Competition</a></li>-->
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+</div>

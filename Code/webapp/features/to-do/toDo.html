@@ -1,0 +1,58 @@
+<div>
+    <div ng-hide="todo.personalCount < 1" class="panel panel-default">
+        <div class="panel-heading">
+            <h4><b>Personal</b></h4>
+        </div>
+        <ul class="list-group" ng-repeat="personal in todo.list | filter: personal.type='personal' | filter: personal.read='false' | orderBy: todo.time">
+            <li class="list-group-item">
+                <a ng-href="{{personal.link}}" ng-click="todo.markedAsRead(personal)">
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong>{{personal.todo}}</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-hide="todo.userCount < 1" class="panel panel-default">
+        <div class="panel-heading">
+            <h4><b>User Account Registration Review</b></h4>
+        </div>
+        <ul class="list-group" ng-repeat="user in todo.list | filter: user.type='user' | filter: user.read='false' | orderBy: todo.time">
+            <li class="list-group-item">
+                <a ng-href="{{user.link}}" ng-click="todo.markedAsRead(user)">
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong>{{user.todo}}</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-hide="todo.projectCount < 1" class="panel panel-default">
+        <div class="panel-heading">
+            <h4><b>Project Proposal Review</b></h4>
+        </div>
+        <ul class="list-group" ng-repeat="project in todo.list | filter: project.type='project' | filter: project.read='false' | orderBy: todo.time">
+            <li class="list-group-item">
+                <a ng-href="{{project.link}}" ng-click="todo.markedAsRead(project)">
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong>{{project.todo}}</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-hide="todo.studentCount < 1" class="panel panel-default">
+        <div class="panel-heading">
+            <h4><b>Student Application Review</b></h4>
+        </div>
+        <ul class="list-group" ng-repeat="student in todo.list | filter: student.type='student' | filter: student.read='false' | orderBy: todo.time">
+            <li class="list-group-item">
+                <a ng-href="{{student.link}}" ng-click="todo.markedAsRead(student)">
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong>{{student.todo}}</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-if="todo.personalCount < 1 && todo.userCount < 1 && todo.projectCount < 1 && todo.studentCount < 1" class="jumbotron">
+        <h1 class="text-center">All clear here!</h1>
+        <p class="text-center">You have no more tasks to do.</p>
+    </div>
+</div>

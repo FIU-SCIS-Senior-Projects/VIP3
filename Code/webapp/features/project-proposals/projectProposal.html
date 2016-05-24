@@ -1,0 +1,48 @@
+<div>
+    <h2>Team Proposal Form</h2>
+    <form role="form">
+        <div class="form-group">
+            <label>*Team Title:</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
+        </div>
+        <div class="form-group">
+            <label>Team Image:</label>
+            <input type="url" class="form-control" placeholder="" ng-model="project.image">
+        </div>
+        <div class="form-group">
+            <label>*Team Description:</label>
+            <div text-angular ng-model="project.description"></div>
+        </div>
+        <div class="form-group">
+            <label>*Number of students for first semester:</label>
+            <input type="number" class="form-control" placeholder="" ng-model="project.firstSemester" required="True">
+        </div>
+        <div class="form-group">
+            <label>*Maximum number of students per semester:</label>
+            <input type="number" class="form-control" placeholder="" ng-model="project.maxStudents" required="True">
+        </div>
+       
+       <p><h5>Click to expand</h5></p>
+        <div ng-repeat = 'college in colleges'>
+            <div>
+                  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{college['name']}}">{{college['name']}}</button>
+                  <div class="collapse" id="{{college['name']}}">
+                        <div ng-repeat = '(key2, value2) in college["schools"]'>
+                            <label><input type="checkbox" ng-click="toggleCheckbox(value2)">  {{value2}}</label>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <!-- <div ng-repeat = 'majors in majorList'>
+            <label><input type="checkbox" ng-click="toggleCheckbox(majors)"> {{majors}}</label>
+        </div> -->
+
+
+
+        <button type="submit" class="btn btn-default" ng-click="save()">Submit</button>
+        <br>
+        <br>
+        <p><strong>* : required fields</strong></p>
+    </form>
+</div>

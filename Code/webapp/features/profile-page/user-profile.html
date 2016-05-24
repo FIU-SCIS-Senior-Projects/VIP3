@@ -1,0 +1,106 @@
+<div class="register">
+	<h3 align="center"> User Profile </h3>
+	<form name="Profile" ng-submit="vm.updateProfile()">
+		<div style = "text-align: center;">
+			<img src = "img/user_icon.png" ng-src="{{vm.profile.image}}" style = " border: 1px solid black;" alt="img/user_icon.png" height="120" width="120" >
+		</div>
+
+		<div class="form-group">
+			<table class="table">
+				<tr>
+					<td>
+						<input type="text" placeholder="First Name" ng-model="vm.profile.firstName" class="form-control" >
+
+					</td>
+					<td>
+						<input  type="text"  placeholder="Last Name" ng-model="vm.profile.lastName" class="form-control" >
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<input type="text" placeholder="Email" ng-model="vm.profile.email" class="form-control" >
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>User Type:</label>
+						<div>
+							<select class = 'form-control' ng-model="vm.profile.userType" ng-options="user as user for user in vm.users">
+							</select>
+						</div><br>
+
+					</td>
+					<td>
+						<label>Rank:</label>
+						<div>
+							<select class = "form-control" ng-model="vm.profile.rank" ng-options="rank for rank in vm.ranks">
+							</select>
+						</div>
+				</tr>
+				<tr>
+					<td>
+						<label>Panther ID:</label>
+
+						<div>
+							<input type="text" ng-model="vm.profile.pantherID" class="form-control" />
+						</div>
+
+					</td>
+					<td>
+
+						<label>Gender:</label>
+						<div>
+							<select  ng-model="vm.profile.gender" class="form-control" ng-options=" sex for sex in vm.genders">
+						</div>
+					</td>
+				<tr>
+					<td colspan="4">
+
+						<label>College:</label>
+						<select  ng-model="vm.profile.college" class="form-control"  ng-options=" sex for sex in vm.schools" >
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+
+						<label>School/Department:</label>
+						<input  ng-model="vm.profile.department" class="form-control" >
+						</input>
+
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<label>Major:</label>
+						<div>
+							<select class = 'form-control' ng-model="vm.profile.major" ng-options=" major for major in vm.majors" >
+							</select>
+						</div>
+
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<label>Minor:</label>
+						<div>
+							<input class = 'form-control' ng-model="vm.profile.minor" >
+							</input>
+						</div>
+
+					</td>
+				</tr>
+			</table>
+
+			<div align="center">
+				<button style= "width: 150px;" type="submit" class="btn btn-primary btn-block" ng-disabled="vm.profile.$invalid" >
+					<i></i> Update
+				</button>
+
+					</div>
+				</div>
+			</div><br>
+		</div>
+
+	</form>
+</div>

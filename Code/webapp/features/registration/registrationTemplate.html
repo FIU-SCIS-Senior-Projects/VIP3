@@ -1,0 +1,113 @@
+<div class=register>
+    <h3 align="center"> Registration </h3>
+    <form ng-submit="regCtlr.saveUser()">
+        <div class="form-group">
+            <table class="table">
+                <tr>
+                    <td>
+                        <input class="form-control" placeholder="First Name" type="text"
+                               ng-model="regCtlr.userData.firstName">
+
+                    </td>
+                    <td>
+                        <input class="form-control" placeholder="Last Name" type="text"
+                               ng-model="regCtlr.userData.lastName"></input>
+                    </td>
+                </tr>
+              <tr>
+                    <td colspan="4"><input class="form-control" placeholder="Email" type="text"
+                                           ng-model="regCtlr.userData.email"></input></td>
+                </tr>
+
+                <tr>
+                    <td colspan="4"><input class="form-control" placeholder="Password" type="password"
+                                           ng-model="regCtlr.userData.password"></input></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><input class="form-control" placeholder="Confirm Password" type="password"
+                                           ng-model="regCtlr.userData.passwordConf"></input></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>User Type:</label>
+                        <div>
+                            <select ng-change="regCtlr.onchange(regCtlr.userData.userType.name)"  class = 'form-control'  ng-model="regCtlr.userData.userType" ng-options="user as user.name for user in regCtlr.Users">
+                            </select>
+                        </div><br>
+
+                    </td>
+                    <td>
+                        <label>Rank:</label>
+                        <div>
+                            <select class = "form-control" ng-model="regCtlr.userData.rank" ng-options="rank for rank in regCtlr.userData.userType.ranks">
+                            </select>
+                        </div>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Panther ID:</label>
+
+                        <div>
+                            <input  type="number"  class = "form-control" placeholder = "123456" type="text" ng-model="regCtlr.userData.pantherID" />
+                        </div>
+
+                    </td>
+                    <td>
+
+                        <label>Gender:</label>
+                    <div>
+                        <select  class = "form-control"ng-model="regCtlr.userData.gender">
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
+                    </div>
+                </td>
+
+                <tr>
+                    <td colspan="4">
+
+                            <label>College:</label>
+                            <select class = 'form-control' ng-model="regCtlr.userData.college" ng-options="college as college.name for college in regCtlr.Colleges" >
+                            </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+
+                        <label>School/Department:</label>
+                        <select class = 'form-control' ng-model="regCtlr.userData.department" ng-options=" school for school in regCtlr.userData.college.schools" >
+                        </select>
+
+                    </td>
+                </tr>
+
+            </table>
+
+            <div align="center">
+                <button style= "width: 150px;" type="submit" class="btn btn-primary btn-block">
+                    <i class="fa fa-lg fa-user-plus" "></i> Create Account
+                </button>
+
+
+            <div style = "margin-left:53px;" class="row show-hide-message" ng-show="regCtlr.message">
+                <div style = "margin-left:53px;"class="col-sm-6 col-sm-offset-4">
+
+                    <div style = "margin-left:53px;" class="alert alert-info">
+                        {{ regCtlr.message }}
+                    </div>
+
+                </div>
+            </div>
+                  </div><br>
+            <div>
+                <a ui-sref ="login" class="pull-right">Already have an account?</a><br>
+                <!--  <a href="#" class="pull-left">Forgotten your password?</a> -->
+            </div>
+
+
+        </div>
+
+    </form>
+
+
+</div>

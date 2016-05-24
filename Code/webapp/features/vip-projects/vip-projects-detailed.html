@@ -1,0 +1,48 @@
+<div class="row team-project">
+    <div class="projects-top-bar">
+        <div>
+            <h3></h3>
+        </div>
+        <div class="col">
+            <div class="col-sm-4 team-info">
+                <h5>{{vm.data.name}}</h5>
+            </div>
+            <div class="col-sm-8 sort-by-padding">
+                <label class=""><h5>Sort By:</h5></label>
+                <select class="btn btn-default dropdown-toggle top-margin">
+                    <option value="Title">Title</option>
+                    <option value="Start Year">Start Year</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="col-sm-9 project-second-section-middle">
+            <div class="col-sm-12 project-info">
+                <img src="{{vm.data.image}}" style="padding: 10px; height: 120px; width:120px; float:left;"/>
+                    <p>
+                        <strong>{{vm.data.title}}</strong>
+                    </p>
+                    <p>
+                        <strong>Description</strong>
+                        <br>
+                        {{vm.data.description}}
+                    </p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="col-sm-12 project-second-section-sidebar">
+                <button class="btn btn-default" ng-click="vm.filterByDiscipline(discipline)">Show All</button>
+            </div>
+            <div class="col-sm-12">
+                <div class="btn"><h4>My Fields</h4></div>
+            </div>
+            <div class="col-sm-12" ng-repeat="discipline in vm.data.disciplines">
+                <div class="btn side-bar-button">{{discipline}}</div>
+            </div>
+            <div class="btn btn-default" ng-click="vm.applyForProject()"> Apply</div>
+            <div class="btn btn-default" ng-click="vm.editProject()"> Edit</div>
+            <div class="btn btn-default" ng-click="vm.deleteProject()"> Delete</div>
+        </div>
+    </div>
+</div>
