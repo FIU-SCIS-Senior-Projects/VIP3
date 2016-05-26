@@ -118,17 +118,11 @@ angular.module('routes', ['ui.router'])
                 controller: 'reviewController',
                 controllerAs: 'vm'
             })
-			
-			.state('createfolder', {
-                url: '/drive/createfolder',
-                templateUrl: 'features/drive/createFolder.html',
+
+			.state('GoogleAPI', {
+                url: '/drive',
+                templateUrl: 'features/drive/GoogleAPI.html',
 				controller: 'fld'
-            })
-			
-			.state('semesterManagement', {
-                url: '/manage',
-                templateUrl: 'features/management/manage.html',
-				controller: 'm'
             })
 
 

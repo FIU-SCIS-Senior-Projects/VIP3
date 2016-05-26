@@ -11,18 +11,12 @@ var bodyParser	        = require('body-parser');
 var path		= require('path');
 var config		= require('./api/config/config');
 var app			= express();
-var semesterSchema = new mongoose.Schema({ semester: String, year: String });
+
 
 //connect to mongodb
 mongoose.connect(config.database);
 mongoose.connection.on('error', function(err){
 	console.log('Error: could not connect to MongoDB.');
-});
-
-mongoose.connection.on("open", function(){
-  console.log("mongodb is connected!!");
-  // Setup Schemas
-  mongoose.model('CurrentSemester', semesterSchema , 'currentSemester');    
 });
 
 require('./api/config/passport')(passport);
@@ -60,27 +54,10 @@ app.use('/todo', toDoRoutes);
 app.use('/support', supportRoutes);
 
 
-
-//Mongo CRUD
-
-app.get('/semester', function(req,res) {
-    var currentSemester = mongoose.model('CurrentSemester');
-	currentSemester.find({}, function(err, data) { 
-	
-		res.send(data[0]);
-		
-	});
-	
-});
-
-
 //home page
 app.get('*', function (req, res) {
 	res.sendFile(path.join(__dirname + '/webapp/index.html'));
 });
-
-
- 
 
 //start the server
 app.listen(config.port);
