@@ -12,8 +12,6 @@ var path		= require('path');
 var config		= require('./api/config/config');
 var app			= express();
 
-config.port = 3000;
-config.database = 'admin:manager@localhost:27017/admin';
 
 //connect to mongodb
 mongoose.connect(config.database);
