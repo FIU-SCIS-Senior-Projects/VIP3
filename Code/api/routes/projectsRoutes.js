@@ -51,9 +51,34 @@ module.exports = function(app, express) {
     //route get or adding products to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
+			
+			
             req.body.term = currentTerm._id;
+			
+			//Validate to ensure student counts isn't negative or student count is greater than maximum.
+			
+			var studentCount = Number(req.body.firstSemester);
+			var maxStudentCount = Number(req.body.maxStudents);
+		
+			
+			if (isNaN(studentCount) || isNaN(maxStudentCount)) {
+				res.status(400);
+                return res.send("firstSemester invalid input or maxStudents invalid input.");
+			}
+			if (studentCount < 0 || maxStudentCount < 0) {
+				
+				res.status(400);
+                return res.send("firstSemester cannot be less than 0 or maxStudents cannot be less than 0.");
+			}
+			if (studentCount > maxStudentCount) {
+				res.status(400);
+				return res.send("Count cannot be greater than the maximum.");
+			}
+			
+			
            Project.create(req.body, function (err) {
                 if(err) {
+					res.status(400);
                     return res.send(err);
                 }
                 return res.json({success: true});

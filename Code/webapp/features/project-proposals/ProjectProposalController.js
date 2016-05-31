@@ -153,14 +153,21 @@ angular.module('ProjectProposalController', ['ProjectProposalService'])
                 $scope.project.status='pending'
                 ProjectService.createProject($scope.project)
                     .then(function(data){
-                    });
+						$scope.result = "Project Proposal Submitted and Pending!";
+                    }, function (error) {
+						$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
+					});
             }
             else{
                 $scope.project.id = $stateParams.id
                 ProjectService.editProject($scope.project, $stateParams.id)
                     .then(function(data){
-                    });
+						$scope.result = "Project Proposal Submitted and Pending!";
+                    }, function(error) {
+						$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
+					});
             }
+			
         };
 
         $scope.toggleCheckbox = function toggleSelection(majors) {
