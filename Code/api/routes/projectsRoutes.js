@@ -27,6 +27,7 @@ module.exports = function(app, express) {
         }
     ];
     Term.count(function (err, count) {
+		
         if (!err && count === 0) {
             Term.create(termsSeed, function(err){
                 console.log("Error found ", err);
@@ -39,21 +40,25 @@ module.exports = function(app, express) {
     
     //Getting the current term
     Term.find({active: true}, function(err, term){
+		
+		
         if(err) 
         {
             console.log("Error getting the term");
             console.log(err);
         }
         currentTerm = term;
-        //console.log(currentTerm);
+        
     }); 
+	
+	
 
     //route get or adding products to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
 			
 			
-            req.body.term = currentTerm._id;
+            req.body.term = currentTerm[0]._id;
 			
 			//Validate to ensure student counts isn't negative or student count is greater than maximum.
 			
@@ -85,7 +90,7 @@ module.exports = function(app, express) {
             });
         })
         .get(function (req, res) {
-            Project.find({ term: currentTerm[0]._id, status: "Active" }, function (err, projects) {
+            Project.find({ term: currentTerm[0]._id, status: "active" }, function (err, projects) {
                 if(err) {
                     console.log(err);
                     return res.send('error');
@@ -116,9 +121,10 @@ module.exports = function(app, express) {
             });
         })
         .get(function (req, res) {
-            Project.findById({ _id:req.params.id, term: currentTerm[0]._id }, function(err, proj){
+            Project.findById(req.params.id, function(err, proj){
                 if(err)
                     res.send(err);
+				console.log(proj);
                 res.json(proj);
             });
         })
