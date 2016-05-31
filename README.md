@@ -5,10 +5,10 @@ View Google Drive Demo at: http://localhost:3000/GoogleAPI#/drive
 
 5/31/2016:
 
-Fixed:<br>
+<b>Fixed:<br></b>
 User Registration<br>
 User Login (with email and password)<br>
 Email Confirmation function. <br>
-<br>
-Temporarily fixed:<br>
+<br><br>
+<b>Temporarily fixed:<br></b>
 'Display Projects' page by manually setting the term variable to 1 - need to make this dynamic in the future.<br>
