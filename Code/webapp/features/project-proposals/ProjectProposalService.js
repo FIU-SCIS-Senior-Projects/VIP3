@@ -12,18 +12,18 @@ angular.module('ProjectProposalService', [])
         projectFactory.editProject = function (projectData, id) {
             return $http.put('/api/projects/' + id, projectData);
         };
-        
+
         projectFactory.getProjects = function () {
             return $http.get('/api/projects/').then(function(data){
                console.log("Got the Projects");
-               return data.data; 
+               return data.data;
             });
         };
 
         projectFactory.getProject = function (id) {
             return $http.get('/api/projects/'+ id).then(function(data){
                console.log("Got the Project");
-               return data.data; 
+               return data.data;
             });
         };
 
