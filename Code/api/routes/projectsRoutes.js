@@ -40,27 +40,20 @@ module.exports = function(app, express) {
 
     //Getting the current term
     Term.find({active: true}, function(err, term){
-<<<<<<< HEAD
+
 		
 		
         if(err) 
-=======
-        if(err)
->>>>>>> vladan
         {
             console.log("Error getting the term");
             console.log(err);
         }
         currentTerm = term;
-<<<<<<< HEAD
+
         
     }); 
 	
-	
-=======
-        //console.log(currentTerm);
-    });
->>>>>>> vladan
+
 
     //route get or adding products to a users account
     apiRouter.route('/projects')
