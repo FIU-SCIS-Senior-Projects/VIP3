@@ -27,6 +27,7 @@ module.exports = function(app, express) {
         }
     ];
     Term.count(function (err, count) {
+		
         if (!err && count === 0) {
             Term.create(termsSeed, function(err){
                 console.log("Error found ", err);
@@ -39,28 +40,57 @@ module.exports = function(app, express) {
     
     //Getting the current term
     Term.find({active: true}, function(err, term){
+		
+		
         if(err) 
         {
             console.log("Error getting the term");
             console.log(err);
         }
         currentTerm = term;
-        //console.log(currentTerm);
+        
     }); 
+	
+	
 
     //route get or adding products to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
-            req.body.term = currentTerm._id;
+			
+			
+            req.body.term = currentTerm[0]._id;
+			
+			//Validate to ensure student counts isn't negative or student count is greater than maximum.
+			
+			var studentCount = Number(req.body.firstSemester);
+			var maxStudentCount = Number(req.body.maxStudents);
+		
+			
+			if (isNaN(studentCount) || isNaN(maxStudentCount)) {
+				res.status(400);
+                return res.send("firstSemester invalid input or maxStudents invalid input.");
+			}
+			if (studentCount < 0 || maxStudentCount < 0) {
+				
+				res.status(400);
+                return res.send("firstSemester cannot be less than 0 or maxStudents cannot be less than 0.");
+			}
+			if (studentCount > maxStudentCount) {
+				res.status(400);
+				return res.send("Count cannot be greater than the maximum.");
+			}
+			
+			
            Project.create(req.body, function (err) {
                 if(err) {
+					res.status(400);
                     return res.send(err);
                 }
                 return res.json({success: true});
             });
         })
         .get(function (req, res) {
-            Project.find({ term: currentTerm[0]._id, status: "Active" }, function (err, projects) {
+            Project.find({ term: currentTerm[0]._id, status: "active" }, function (err, projects) {
                 if(err) {
                     console.log(err);
                     return res.send('error');
@@ -91,9 +121,10 @@ module.exports = function(app, express) {
             });
         })
         .get(function (req, res) {
-            Project.findById({ _id:req.params.id, term: currentTerm[0]._id }, function(err, proj){
+            Project.findById(req.params.id, function(err, proj){
                 if(err)
                     res.send(err);
+				console.log(proj);
                 res.json(proj);
             });
         })
