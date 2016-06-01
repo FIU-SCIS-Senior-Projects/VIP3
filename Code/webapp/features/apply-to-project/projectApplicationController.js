@@ -151,15 +151,19 @@ angular
             loadData();
         }
 
-
         function loadData(){
             ProjectService.getProjects().then(function(data){
                 vm.projects = data;
+                //alert(vm.projects);
                 if($stateParams.id){
+					//alert("found some ID");
+					//alert(vm.id);
                     vm.id = $stateParams.id;
                     getProjectById(vm.projects);
                 } else {
                     vm.sProject = null;
+                    //alert($stateParams.id);
+                    //alert(vm.id);
                 }
             });
         }

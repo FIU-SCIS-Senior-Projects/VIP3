@@ -22,8 +22,8 @@ var UsersSchema = new Schema({
     minor:String,
     image: String,
     userType: {
-        name: String,
-        ranks: []
+        type: String
+        //ranks: []
     },
 
     google: {
@@ -55,7 +55,7 @@ UsersSchema.pre('save', function(next) {
 // NEED TO HASH CONFIRM PASSWORD!!!! - TMOOR
 UsersSchema.methods.comparePassword = function(password) {
     var user = this;
-    
+
     return bcrypt.compareSync(password, user.password);
 };
 

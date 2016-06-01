@@ -5,7 +5,7 @@ var Term = require('../models/terms');
 module.exports = function(app, express) {
     var apiRouter = express.Router();
     var currentTerm;
-   
+
     /*
     *Temporal Seed for the terms Starts here
     */
@@ -33,25 +33,34 @@ module.exports = function(app, express) {
                 console.log("Error found ", err);
             });
         }
-    }); 
+    });
     /*
     *Temporal Seed for the terms Ends here
     */
-    
+
     //Getting the current term
     Term.find({active: true}, function(err, term){
+<<<<<<< HEAD
 		
 		
         if(err) 
+=======
+        if(err)
+>>>>>>> vladan
         {
             console.log("Error getting the term");
             console.log(err);
         }
         currentTerm = term;
+<<<<<<< HEAD
         
     }); 
 	
 	
+=======
+        //console.log(currentTerm);
+    });
+>>>>>>> vladan
 
     //route get or adding products to a users account
     apiRouter.route('/projects')
@@ -90,18 +99,21 @@ module.exports = function(app, express) {
             });
         })
         .get(function (req, res) {
-            Project.find({ term: currentTerm[0]._id, status: "active" }, function (err, projects) {
+
+            Project.find({ term: currentTerm[0]._id, status: "Active" }, function (err, projects) {
+
                 if(err) {
                     console.log(err);
                     return res.send('error');
                 }
+                console.log
                 return res.json(projects);
             });
         });
 
     apiRouter.route('/projects/:id')
-    
-    
+
+
         .put(function (req, res) {
             console.log(req.params.id);
             console.log(req.body.id);

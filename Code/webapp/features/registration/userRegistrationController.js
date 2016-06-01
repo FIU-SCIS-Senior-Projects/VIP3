@@ -1,5 +1,6 @@
 /**
  * Created by tmoore on 4/4/16.
+ * Cleaned random garbage characters such as " " from this file - vlad, 5/29/2016
  */
 angular
     .module('userRegistrationController', ['userService'])
@@ -160,10 +161,10 @@ angular
         vm.userType = vm.Users[1];
         vm.college = vm.Colleges[1];
 
-        vm.onchange = function(value) { 
-            if(value==="Student") { 
-            alert("A student does need to register.You may simply login with your .fiu.edu account."); 
-        } }
+        vm.onchange = function(value) {
+            if(value==="Student"){
+            alert("A student does need to register.You may simply login with your .fiu.edu account.");
+        }}
         vm.saveUser = function () {
 
             vm.processing = true;
@@ -254,18 +255,22 @@ angular
 
             //END OF FORM INPUT VALIDATION FUNCTIONS //
 
+            //alert("Seems all validation checks passed");
+
 
             // solution for now to set user type.. might change when data comes from DB
+            //vm.userData.userType = vm.userData.userType.name;
+            //vm.userData.userType = mongoose.Types.ObjectId("vlad_test");
             vm.userData.userType = vm.userData.userType.name;
 
             // solution for now to set college.. might change when data comes from DB
             vm.userData.college = vm.userData.college.name;
 
             // call user service which makes the post from userRoutes
-            User.create(vm.userData)
-                                // data contains what we got back from the service and API
-                .success(function(data){
-                vm.processing = false;
+            User.create(vm.userData).success(function(data)
+            {
+					//alert("User creation returned true");
+                	vm.processing = false;
 
                     //Here we have the user ID so we can send an email to user
                     vm.objectId = data.objectId;
