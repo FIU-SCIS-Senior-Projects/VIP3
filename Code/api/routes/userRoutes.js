@@ -3,7 +3,6 @@ var passport      = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bodyParser    = require('body-parser');
 var nodemailer      = require('nodemailer');
-var mongoose = require('mongoose');
 
 //Models
 var User          = require('../models/users');
@@ -152,7 +151,7 @@ module.exports = function (app, express) {
             user.piDenial = req.body.piDenial;
             user.verifiedEmail = req.body.verifiedEmail;
             user.googleKey = " ";
-            user.userType = mongoose.Types.ObjectId(req.body.userType);
+            user.userType = req.body.userType;
             user.gender = req.body.gender;
 
             user.save(function (err) {
