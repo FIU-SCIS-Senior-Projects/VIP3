@@ -21,15 +21,13 @@ module.exports = function (app, express) {
 
 
     passport.serializeUser(function(user, done) {
-        done(null, {
-            id: user.id,
-            email: user.email,
-            firstName: user.firstName
-        });
+        done(null, user.id);
     });
 
-    passport.deserializeUser(function(obj, done) {
-        done(null, obj);
+    passport.deserializeUser(function(id, done) {
+		User.findById(id, function(err, user) {
+			done(err, user);
+		});
     });
 
     app.post('/login',
@@ -165,7 +163,7 @@ module.exports = function (app, express) {
                 }
 
                 // return the object id for validation and message for the client
-                res.json({ objectId: user._id, message: 'Please verify your email.' });
+                res.json({ objectId: user._id, message: 'User account created please verify the account via the registered email.' });
             });
         });
 
