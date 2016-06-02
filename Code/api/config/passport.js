@@ -22,9 +22,9 @@ module.exports = function(passport) {
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username/password.' });
                 }
-                //if (!user.validPassword(password)) {
-                //    return done(null, false, {message: 'Incorrect username/password.' });
-                //}
+                if (!user.comparePassword(password)) {
+                    return done(null, false, {message: 'Incorrect username/password.' });
+                }
                 return done(null, user);
             });
         }
