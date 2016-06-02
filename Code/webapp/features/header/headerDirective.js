@@ -12,11 +12,13 @@
                 var vm = this;
 				ProfileService.loadProfile().then(function(data){
 					if (data) {
+
 						vm.user_info = data.firstName;
 						vm.user_type = data.userType;
-						
+						vm.logged_in = true;
 					}
 				});
+				
 				
                 vm.count = 0;
                 ToDoService.loadAllToDo()
