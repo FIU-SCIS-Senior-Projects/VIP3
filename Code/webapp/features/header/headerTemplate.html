@@ -48,7 +48,8 @@
 								</li>
 							</ul>
 						</li>
-                                                <li><a ui-sref="studentconfirminfo">APPLY</a></li>
+                                                <li><a ng-show="header.user_type == 'Student'" ui-sref="studentconfirminfo">APPLY</a></li>
+												<li><a ng-hide="header.user_type == 'Student'" ui-sref="#">REVIEW STUDENT APPLICATIONS</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -63,8 +64,9 @@
 				<li class="dropdown">
 					<a ui-sref="#" class="dropdown-toggle">FACULTY<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a ui-sref="projectProposal">PROPOSE PROJECT</a></li>
-						<li><a ui-sref="#">REVIEW APPLICATIONS {{header.user_type}}</a></li>
+						<li><a ng-show="header.user_type == 'Staff/Faculty'" ui-sref="projectProposal">PROPOSE PROJECT</a></li>
+						<li><a ng-show="header.user_type == 'Pi/CoPi'" ui-sref="#">REVIEW PROJECT PROPOSALS</a></li>
+						<li><a ng-hide="header.user_type == 'Student'" ui-sref="#">REVIEW APPLICATIONS</a></li>
 						<li><a href="https://docs.google.com/spreadsheets/d/1XQYTPXd0UPv95STe6MS_ydXhvBlbzBUlG8EayvGyBrM/edit#gid=351988271" target="_blank">CLASS DAYS, TIMES, & LOCATIONS</a></li>
 					</ul>
 				</li>

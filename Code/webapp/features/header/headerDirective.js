@@ -14,6 +14,7 @@
 					if (data) {
 						vm.user_info = data.firstName;
 						vm.user_type = data.userType;
+						
 					}
 				});
 				
