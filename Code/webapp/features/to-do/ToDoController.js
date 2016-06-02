@@ -2,9 +2,9 @@
     angular.module('toDoModule')
     .controller('toDoController', toDoController);
 
-    toDoController.$inject = ['ToDoService'];
+    toDoController.$inject = ['ToDoService','ProfileService'];
 
-    function toDoController (ToDoService) {
+    function toDoController (ToDoService,ProfileService) {
         var vm = this;
         vm.list = [];
         vm.personalCount = 0;

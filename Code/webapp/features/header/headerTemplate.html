@@ -1,4 +1,5 @@
 <div class = "loginIcon">
+	<p>{{header.user_info}}</p>
     <a ui-sref="toDo" ng-click="header.count = 0"><span class = "glyphicon glyphicon-bell"></span><span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span></a>
 	<a ui-sref="login"><span class="glyphicon glyphicon-user"></span></a>
 </div>
@@ -63,7 +64,7 @@
 					<a ui-sref="#" class="dropdown-toggle">FACULTY<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a ui-sref="projectProposal">PROPOSE PROJECT</a></li>
-						<li><a ui-sref="#">REVIEW APPLICATIONS</a></li>
+						<li><a ui-sref="#">REVIEW APPLICATIONS {{header.user_type}}</a></li>
 						<li><a href="https://docs.google.com/spreadsheets/d/1XQYTPXd0UPv95STe6MS_ydXhvBlbzBUlG8EayvGyBrM/edit#gid=351988271" target="_blank">CLASS DAYS, TIMES, & LOCATIONS</a></li>
 					</ul>
 				</li>

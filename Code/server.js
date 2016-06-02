@@ -56,6 +56,7 @@ app.use('/support', supportRoutes);
 
 //home page
 app.get('*', function (req, res) {
+	console.log(req.user);
 	res.sendFile(path.join(__dirname + '/webapp/index.html'));
 });
 

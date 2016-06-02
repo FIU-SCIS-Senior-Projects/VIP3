@@ -7,6 +7,7 @@ module.exports = function(app, express) {
         
     apiRouter.route('/profile')
         .put(function (req, res) {
+			console.log('POST /profile');
             /*
             * This update takes TOO LONG to complete therefore im using the not so short approach but the fastest of the two
             */
@@ -35,6 +36,7 @@ module.exports = function(app, express) {
             });
         })
         .get(function (req, res) {
+			console.log('POST /profile');
             Profile.find({email:req.user.email}, function (err, profile) {
                 if(err) {
                     console.log(err);
@@ -42,6 +44,7 @@ module.exports = function(app, express) {
                 }
                 return res.json(profile);
             });
+			
         });
 
 

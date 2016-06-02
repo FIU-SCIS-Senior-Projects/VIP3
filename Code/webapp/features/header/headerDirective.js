@@ -1,6 +1,6 @@
 (function() {
     angular.module('vipHeader', ['toDoModule'])
-    .directive('vipHeader', function (ToDoService) {
+    .directive('vipHeader', function (ToDoService,ProfileService) {
         return {
             templateUrl: 'features/header/headerTemplate.html',
             restrict: 'E',
@@ -10,6 +10,13 @@
             controllerAs: 'header',
             controller: function () {
                 var vm = this;
+				ProfileService.loadProfile().then(function(data){
+					if (data) {
+						vm.user_info = data.firstName;
+						vm.user_type = data.userType;
+					}
+				});
+				
                 vm.count = 0;
                 ToDoService.loadAllToDo()
                     .then(function (data) {
