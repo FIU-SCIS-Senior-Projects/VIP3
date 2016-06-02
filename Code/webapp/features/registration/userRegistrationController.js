@@ -365,7 +365,6 @@ function pid_validation(pid,userType) {
         return true;
     }
 
-
     if (pid == undefined) {
         alert("Panther ID should not be empty.")
         return false;
