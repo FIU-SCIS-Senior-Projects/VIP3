@@ -37,12 +37,11 @@ module.exports = function (app, express) {
             failureFlash: true })
     );
 
-    /* FOR LOGOUT IMPLEMENTATION
+    // FOR LOGOUT IMPLEMENTATION
     app.get('/logout', function(req, res){
         req.logout();
         res.redirect('/');
     });
-    */
 
     var userRouter = express.Router();
 

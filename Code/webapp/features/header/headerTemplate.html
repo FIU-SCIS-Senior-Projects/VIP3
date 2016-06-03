@@ -1,7 +1,7 @@
 <div class = "loginIcon">
     <a ui-sref="toDo" ng-click="header.count = 0"><span class = "glyphicon glyphicon-bell"></span><span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span></a>
 	<a ng-hide="header.logged_in" ui-sref="login"><span class="glyphicon glyphicon-user"></span></a>
-	<a ng-show="header.logged_in" ng-click="header.logged_in = false" href="#"> <span class="glyphicon glyphicon-log-out"></a>
+	<a ng-show="header.logged_in" ng-click="header.logged_in = false" href="/logout"> <span class="glyphicon glyphicon-log-out"></a>
 </div>
 <div>
 	<a href="/"><img class="header-logo" src="img/FIU_VIP.jpg"></a>
