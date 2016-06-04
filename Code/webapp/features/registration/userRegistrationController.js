@@ -276,7 +276,7 @@ angular
                     vm.objectId = data.objectId;
                     vm.userData.recipient = vm.userData.email;
                     vm.userData.text = "Dear "+vm.userData.firstName +",\n\nWelcome to FIU's VIP Project!"+
-                       " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://vip-dev.cis.fiu.edu/vip/verifyEmail/" + vm.objectId +"";
+                       " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://vip.fiu.edu/vip/verifyEmail/" + vm.objectId +"";
                     vm.userData.subject = "Welcome to FIU VIP Project!";
                     User.nodeEmail(vm.userData);
                     vm.message = data.message; // message returned by the API
@@ -284,14 +284,14 @@ angular
                     vm.userData = {};
 
                     // send email to PI for approval
-                    vm.userData.recipient2 = "sadjadi@cs.fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
+                    vm.userData.recipient2 = "mtahe006@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
                     vm.userData.text2 = "Dear PI/CoPI,"+
                         " A new user is attempting to register, please accept or reject using the following link:\n\ http://vip-dev.cis.fiu.edu/#/verifyuser/" + vm.objectId +"";
                     vm.userData.subject2 = "User Registration Request";
                     User.nodeEmail(vm.userData);
 
                     //TODO LINK IS THIS ONE//
-                    var todoLink = "http://vip-dev.cis.fiu.edu/#/verifyuser/"+ vm.objectId ;
+                    var todoLink = "http://vip.fiu.edu/#/verifyuser/"+ vm.objectId ;
 
             })
         };
