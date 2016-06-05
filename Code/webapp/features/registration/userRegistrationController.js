@@ -9,7 +9,7 @@ angular
 
         vm.Users = [
             {
-                name: 'Faculty/Staff',
+                name: 'Staff/Faculty',
                 ranks: [
                     'Instructor',
                     'Assitant Professor',
