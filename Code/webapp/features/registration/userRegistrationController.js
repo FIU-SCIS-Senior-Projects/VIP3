@@ -287,7 +287,7 @@ angular
 					vm.userData.subject = "Welcome to FIU VIP Project!";
 
 					// send email to PI for approval
-					vm.userData.recipient2 = "mtahe006@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
+					vm.userData.recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
 					vm.userData.text2 = "Dear PI/CoPI,"+
 						" A new user is attempting to register, please accept or reject using the following link:\n\ http://vip-dev.cis.fiu.edu/#/verifyuser/" + vm.objectId +"";
 					vm.userData.subject2 = "User Registration Request";
