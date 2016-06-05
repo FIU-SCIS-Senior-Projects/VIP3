@@ -25,7 +25,7 @@
 		
 		function updateProfile () {
 			ProfileService.saveProfile(vm.profile).then(function(data){
-                console.log("Profile Updated");
+                vm.message = "Profile Updated";
             });
 		}
 
