@@ -11,7 +11,7 @@ module.exports = function(passport) {
            done(err, user);
        })
    });
-   
+
    passport.use(new LocalStrategy({
         usernameField : "email",
         passwordField : "password",
@@ -29,7 +29,7 @@ module.exports = function(passport) {
             });
         }
     ));
-    
+
    passport.use(new GoogleStrategy( {
        clientID        : configAuth.googleAuth.clientID,
        clientSecret    : configAuth.googleAuth.clientSecret,
@@ -62,11 +62,15 @@ module.exports = function(passport) {
                        newUser.image = profile._json.image.url;
                        newUser.google.email = profile.emails[0].value; // pull the first email
                        // save the user
-                       newUser.save(function (err) {
+                       newUser.save(function (err)
+                       {
                           if (err)
-                              throw err;
-                           //console.log(newUser);
-                           return done(null, newUser);
+                          {
+                              //throw err;
+							  console.log(err);
+							  done(null, false);
+					      }
+						  return done(null, newUser);
                        });
                    }
                });
