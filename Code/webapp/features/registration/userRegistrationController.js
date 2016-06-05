@@ -276,7 +276,7 @@ angular
 				// only insert user if return value of user.save in userRoutes.js returns success
 				if (data.success)
 				{
-					console.log("We are clear to insert this user into DB - no error returned");
+					vm.message = data.message;
 
 					// Here we have the user ID so we can send an email to user
 					vm.objectId = data.objectId;
