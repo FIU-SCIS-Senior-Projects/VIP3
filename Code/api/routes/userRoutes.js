@@ -71,18 +71,17 @@ module.exports = function (app, express) {
             });
         })
 
-    userRouter.route('/nodeemail')
-        .post(function(req, res) {
+    userRouter.route('/nodeemail').post(function(req, res)
+	{
+			console.log("NodeEmailer Called. We should be sending 2 emails");
+
             var recipient = req.body.recipient;
             var text = req.body.text;
             var subject = req.body.subject;
 
-
             var recipient2 = req.body.recipient2;
             var text2 = req.body.text2;
             var subject2 = req.body.subject2;
-
-
 
             var transporter = nodemailer.createTransport({
                 service:'Gmail',
@@ -99,12 +98,15 @@ module.exports = function (app, express) {
                 subject: subject, // Subject line
                 text: text
             };
+
             console.log(mailOptions);
+
             // send mail with defined transport object
-                transporter.sendMail(mailOptions, function(error, info){
-                    if(error) {
-                        return console.log(error);
-                    }
+			transporter.sendMail(mailOptions, function(error, info)
+			{
+				if(error) {
+					return console.log(error);
+				}
             });
 
 
@@ -123,11 +125,10 @@ module.exports = function (app, express) {
                     return console.log(error);
                 }
             });
+	})
 
-
-
-})
-
+	// User.create(vm.userData).success(function(data) from userRegistrationController.js calls this function
+	// BUG: This function is returning success even if the user already exists in the database
     userRouter.route('/users')
 
         .post(function (req, res) {
@@ -151,18 +152,19 @@ module.exports = function (app, express) {
             user.userType = req.body.userType;
             user.gender = req.body.gender;
 
-            user.save(function (err) {
+            user.save(function (err)
+            {
+				// an error occured while trying to insert the new user
                 if (err) {
-                    // duplicate entry
+                    // duplicate entry - user exists
                     if (err.code == 11000)
                         return res.json({success: false, message: 'A user already exists.'});
                     else
-                        return res.send(err);
-
+                        return res.send({success: false, error: err});
                 }
 
                 // return the object id for validation and message for the client
-                res.json({ objectId: user._id, message: 'User account created please verify the account via the registered email.' });
+                res.json({success: true, objectId: user._id, message: 'User account created please verify the account via the registered email.' });
             });
         });
 
