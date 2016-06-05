@@ -298,7 +298,7 @@ angular
 				// user already exists in the database, or some other error occured in user.save function
 				else
 				{
-					console.log("Not adding this user to database. Either they already exist, or some other error occured.");
+					vm.message = data.message;
 				}
             })
         };
