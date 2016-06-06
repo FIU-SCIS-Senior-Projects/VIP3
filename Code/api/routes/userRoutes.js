@@ -14,7 +14,7 @@ module.exports = function (app, express) {
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: 'http://localhost:3000/#/profile',
+            successRedirect: 'http://vip.fiu.edu/#/profile',
             failureRedirect: '/status'
 
         })
