@@ -9,7 +9,7 @@ angular
 
         vm.Users = [
             {
-                name: 'Faculty/Staff',
+                name: 'Staff/Faculty',
                 ranks: [
                     'Instructor',
                     'Assitant Professor',
@@ -165,8 +165,9 @@ angular
             if(value==="Student"){
             alert("A student does need to register.You may simply login with your .fiu.edu account.");
         }}
-        vm.saveUser = function () {
 
+        vm.saveUser = function ()
+        {
             vm.processing = true;
             // initialize both message to be returned by API and object ID to be used in verification
             vm.message = '';
@@ -230,24 +231,24 @@ angular
                 return;// return to form..did not enter rank
             }
 
-           if(!pid_validation(vm.userData.pantherID,vm.userData.userType.name))
-           {
-               return; // invalid panther id, return to form
-           }
+			if (!pid_validation(vm.userData.pantherID,vm.userData.userType.name))
+			{
+			   return; // invalid panther id, return to form
+			}
 
-            if(!gender_validation(vm.userData.gender))
+            if (!gender_validation(vm.userData.gender))
             {
                 return; // go back to from
             }
 
-            if(vm.userData.college == undefined)
+            if (vm.userData.college == undefined)
             {
                 alert("Please select your College.");
                 return false;
             }
 
 
-            if(vm.userData.department == undefined)
+            if (vm.userData.department == undefined)
             {
                 alert("Please select your Department.");
                 return false;
@@ -269,30 +270,36 @@ angular
             // call user service which makes the post from userRoutes
             User.create(vm.userData).success(function(data)
             {
-					//alert("User creation returned true");
-                	vm.processing = false;
+				//console.log("Result of adding new account (should check for dupes):");
+				vm.processing = false;
 
-                    //Here we have the user ID so we can send an email to user
-                    vm.objectId = data.objectId;
-                    vm.userData.recipient = vm.userData.email;
-                    vm.userData.text = "Dear "+vm.userData.firstName +",\n\nWelcome to FIU's VIP Project!"+
-                       " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://vip-dev.cis.fiu.edu/vip/verifyEmail/" + vm.objectId +"";
-                    vm.userData.subject = "Welcome to FIU VIP Project!";
-                    User.nodeEmail(vm.userData);
-                    vm.message = data.message; // message returned by the API
-                     // clear the form
-                    vm.userData = {};
+				// only insert user if return value of user.save in userRoutes.js returns success
+				if (data.success)
+				{
+					vm.message = data.message;
 
-                    // send email to PI for approval
-                    vm.userData.recipient2 = "sadjadi@cs.fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
-                    vm.userData.text2 = "Dear PI/CoPI,"+
-                        " A new user is attempting to register, please accept or reject using the following link:\n\ http://vip-dev.cis.fiu.edu/#/verifyuser/" + vm.objectId +"";
-                    vm.userData.subject2 = "User Registration Request";
-                    User.nodeEmail(vm.userData);
+					// Here we have the user ID so we can send an email to user
+					vm.objectId = data.objectId;
 
-                    //TODO LINK IS THIS ONE//
-                    var todoLink = "http://vip-dev.cis.fiu.edu/#/verifyuser/"+ vm.objectId ;
+					vm.userData.recipient = vm.userData.email;
+					vm.userData.text = "Dear "+vm.userData.firstName +",\n\nWelcome to FIU's VIP Project!"+
+					   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://vip.fiu.edu/vip/verifyEmail/" + vm.objectId +"";
+					vm.userData.subject = "Welcome to FIU VIP Project!";
 
+					// send email to PI for approval
+					vm.userData.recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
+					vm.userData.text2 = "Dear PI/CoPI,"+
+						" A new user is attempting to register, please accept or reject using the following link:\n\ http://vip-dev.cis.fiu.edu/#/verifyuser/" + vm.objectId +"";
+					vm.userData.subject2 = "User Registration Request";
+
+					User.nodeEmail(vm.userData);
+				}
+
+				// user already exists in the database, or some other error occured in user.save function
+				else
+				{
+					vm.message = data.message;
+				}
             })
         };
     });

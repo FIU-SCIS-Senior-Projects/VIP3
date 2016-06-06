@@ -1,6 +1,6 @@
 angular
-    .module('projectApplicationController', ['ProjectProposalService', 'userService'])
-    .controller('projAppCtrl', function(ProjectService,User,$stateParams) {
+    .module('projectApplicationController', ['ProjectProposalService','user-profile'])
+    .controller('projAppCtrl',  function (ProjectService, ProfileService,$stateParams) {
         var vm = this;
 
         vm.mockData = [{
@@ -179,21 +179,33 @@ angular
                 });
             });
         }
+		
+		ProfileService.loadProfile().then(function(data){
+					if (data) {
+
+						vm.user_info = data.firstName;
+						vm.user_type = data.userType;
+						vm.firstName = data.firstName;
+						vm.type = data.userType;
+						vm.lastName = data.lastName;
+						vm.gender = data.gender;
+						vm.email = data.email;
+						vm.pID = data.pantherID;
+						vm.rank = data.rank;
+						vm.school = data.department;
+						vm.college = data.college;
+						vm.semester = vm.mockData[0].semester;
+						
+					}
+		});
+				
 
 
 
-        vm.firstName = vm.mockData[0].firstName;
-        vm.type = vm.mockData[0].type;
-        vm.lastName = vm.mockData[0].lastName;
-        vm.gender = vm.mockData[0].gender;
-        vm.email = vm.mockData[0].email;
-        vm.pID= vm.mockData[0].pID;
-        vm.rank = vm.mockData[0].rank;
-        vm.school = vm.selectedCollege.schools[0];
-        vm.college = vm.mockData[0].college;
-        vm.semester = vm.mockData[0].semester;
+       
 
 
+<<<<<<< HEAD
         vm.update = function() {
             console.log(vm.User);
             console.log(vm.sProject._id);
@@ -207,5 +219,26 @@ angular
             // vm.mockData[0].rank = vm.rank;
             // vm.mockData[0].school = vm.school;
             // vm.mockData[0].college = vm.college;
+=======
+        vm.save = function() {
+			var project = vm.sProject;
+			for (i = 0; i < project.members.length; i++) {
+				if (project.members[i] === vm.email) {
+					vm.message = "You already joined the project!";
+					return;
+				}
+			}
+			project.members[project.members.length] = vm.email;
+			ProjectService.editProject(project,project._id).then(
+			   function(response){
+				 // success callback
+				 vm.message = response.data.message;
+			   }, 
+			   function(response){
+				 // failure callback
+				 vm.message = response.data;
+			   }
+			);;
+>>>>>>> integration
         };
     });

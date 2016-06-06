@@ -40,6 +40,7 @@ angular.module('userService', [])
         };
         //Emails to userData.email, with subject userData.subject, with text userData.text
         userFactory.nodeEmail = function(userData){
+			console.log("Requesting that emails be sent for new user - userService.js");
             return $http.post('/vip/nodeemail/', userData);
         };
 
