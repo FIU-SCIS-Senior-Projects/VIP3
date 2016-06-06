@@ -33,7 +33,6 @@ var UsersSchema = new Schema({
         name: String
     }
 
-
 });
 
 //Hash the password before the sure is saved
