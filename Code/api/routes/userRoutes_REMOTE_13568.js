@@ -16,13 +16,15 @@ module.exports = function (app, express) {
         passport.authenticate('google', {
             successRedirect: 'http://vip.fiu.edu/#/profile',
             failureRedirect: '/status'
+
         })
     );
-
+	
 	app.get('/status', function(req,res) {
 		res.redirect('/#/login/error');
 	});
-
+	
+	
 
 
 

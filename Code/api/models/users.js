@@ -54,7 +54,9 @@ UsersSchema.pre('save', function(next) {
 // NEED TO HASH CONFIRM PASSWORD!!!! - TMOOR
 UsersSchema.methods.comparePassword = function(password) {
     var user = this;
-
+	if (!user.password) {
+		return false;
+	}
     return bcrypt.compareSync(password, user.password);
 };
 

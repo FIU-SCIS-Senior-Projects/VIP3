@@ -202,6 +202,10 @@ angular
             vm.mockData[0].rank = vm.rank;
             vm.mockData[0].school = vm.school;
             vm.mockData[0].college = vm.college;
+			
+			var project = vm.sProject;
+			
+			alert(project);
 
             console.log(vm.mockData[0].rank);
         };

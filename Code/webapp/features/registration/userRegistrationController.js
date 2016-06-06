@@ -9,7 +9,7 @@ angular
 
         vm.Users = [
             {
-                name: 'Faculty/Staff',
+                name: 'Staff/Faculty',
                 ranks: [
                     'Instructor',
                     'Assitant Professor',
@@ -276,7 +276,7 @@ angular
 				// only insert user if return value of user.save in userRoutes.js returns success
 				if (data.success)
 				{
-					console.log("We are clear to insert this user into DB - no error returned");
+					vm.message = data.message;
 
 					// Here we have the user ID so we can send an email to user
 					vm.objectId = data.objectId;
@@ -287,7 +287,8 @@ angular
 					vm.userData.subject = "Welcome to FIU VIP Project!";
 
 					// send email to PI for approval
-					vm.userData.recipient2 = "mtahe006@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
+					vm.userData.recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
+
 					vm.userData.text2 = "Dear PI/CoPI,"+
 						" A new user is attempting to register, please accept or reject using the following link:\n\ http://vip-dev.cis.fiu.edu/#/verifyuser/" + vm.objectId +"";
 					vm.userData.subject2 = "User Registration Request";
@@ -298,7 +299,7 @@ angular
 				// user already exists in the database, or some other error occured in user.save function
 				else
 				{
-					console.log("Not adding this user to database. Either they already exist, or some other error occured.");
+					vm.message = data.message;
 				}
             })
         };
