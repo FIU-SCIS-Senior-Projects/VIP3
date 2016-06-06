@@ -50,27 +50,38 @@ module.exports = function(passport) {
                        return done(null, user);
                    }
                    else {
-                       // if the user isnt in our database, create a new user
-                       var newUser = new User();
-                       // set all of the relevant information.
-                       newUser.google.id = profile.id;
-                       newUser.google.token = token;
-                       newUser.google.name = profile.displayName;
-                       newUser.firstName = profile._json.name.givenName;
-                       newUser.lastName = profile._json.name.familyName;
-                       newUser.email = profile._json.emails[0].value;
-                       newUser.image = profile._json.image.url;
-                       newUser.google.email = profile.emails[0].value; // pull the first email
-                       // save the user
-                       newUser.save(function (err)
-                       {
-                          if (err)
+					   
+					   User.findOne({'email': profile.emails[0].value}, function(err, user) {
+							if (err) {return done(err); }
+							if (!user) {
+											 // if the user isnt in our database, create a new user
+								   var newUser = new User();
+								   // set all of the relevant information.
+								   newUser.google.id = profile.id;
+								   newUser.google.token = token;
+								   newUser.google.name = profile.displayName;
+								   newUser.firstName = profile._json.name.givenName;
+								   newUser.lastName = profile._json.name.familyName;
+								   newUser.email = profile._json.emails[0].value;
+								   newUser.image = profile._json.image.url;
+								   newUser.google.email = profile.emails[0].value; // pull the first email
+								   // save the user
+								   newUser.save(function (err)
+								   {
+									  if (err)
 
-                              console.log(err);
-                           //console.log(newUser);
-                           return done(null, newUser);
+										  console.log(err);
+									   //console.log(newUser);
+									   return done(null, newUser);
 
-                       });
+								   });
+							}
+							else {
+								return done(null, false, {message: 'You are not a student please use regular login.' });
+							}
+					   });
+					   
+					  
                    }
                });
            });

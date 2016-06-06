@@ -119,10 +119,10 @@ angular.module('routes', ['ui.router'])
                 controllerAs: 'vm'
             })
 
-			.state('GoogleAPI', {
-                url: '/drive',
-                templateUrl: 'features/drive/GoogleAPI.html',
-				controller: 'fld'
+			.state('loginError', {
+                url: '/login/error',
+                templateUrl: 'features/login/loginError.html',
+				controller: 'lError'
             })
 
 
