@@ -108,19 +108,31 @@ module.exports = function(app, express) {
 
 
         .put(function (req, res) {
-            console.log(req.params.id);
-            console.log(req.body.id);
+			console.log("PUT /projects/:id");
             Project.findById(req.params.id, function(err, proj){
                 console.log(proj);
-                if(err) res.send(err);
+                if(err) {
+					res.status(400);
+					res.send(err);
+				}
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
                 if(req.body.disciplines!=="") proj.disciplines = req.body.disciplines;
                 if(req.body.image!=="") proj.image = req.body.image;
                 if(req.body.firstSemester!=="") proj.firstSemester = req.body.firstSemester;
                 if(req.body.maxStudents!=="") proj.maxStudents = req.body.maxStudents;
+				if (req.body.members.length > proj.maxStudents) {
+					res.status(400);
+					res.send("Max capacity reach no more students can join");
+				}
+				else {
+					proj.members = req.body.members;
+				}
                 proj.save(function(err){
-                    if(err) res.send(err);
+                    if(err)  {
+						res.status(400);
+						res.send(err);
+					}
                     res.json({message: 'Updated!'});
                 })
             });
