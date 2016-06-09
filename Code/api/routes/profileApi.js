@@ -26,6 +26,7 @@ module.exports = function(app, express) {
                 profile.minor = req.body.minor;
                 profile.pantherID        = req.body.pantherID;
                 profile.major        = req.body.major;
+				profile.piApproval = req.body.piApproval;
                 //Missing fields go here
                 
                 profile.save(function(err){
