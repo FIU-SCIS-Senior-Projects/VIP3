@@ -4,6 +4,7 @@ angular.module('mainApp', [
 	'vipFooter',
     'vip-projects',		//Features Module
 	'ProjectProposalController',
+	'reviewProfile',
 	'routes',
 	'projectApplicationController',
 	'userRegistrationController',

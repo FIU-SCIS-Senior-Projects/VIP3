@@ -119,6 +119,13 @@ angular.module('routes', ['ui.router'])
                 controllerAs: 'vm'
             })
 
+            .state('verifyprofile', {
+                url: '/verifyprofile/:user_id',
+                templateUrl: 'features/reviewProfile/reviewProfile.html',
+                controller: 'reviewProfileController',
+                controllerAs: 'vm'
+            })
+
 			.state('loginError', {
                 url: '/login/error',
                 templateUrl: 'features/login/loginError.html',
