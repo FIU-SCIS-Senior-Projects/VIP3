@@ -63,7 +63,6 @@ module.exports = function(app, express) {
             //     console.log(WriteResult);
             //     return res.json(profile);
             // });
-
             // note to future devs: function finds profile via req.body._id data, and returns the found information to profile variable
             Profile.findById(req.body._id, function(err, profile)
             {
@@ -120,7 +119,6 @@ module.exports = function(app, express) {
 					console.log("Sending PI approval email for rank/usertype update request");
 
 				}
-
             });
         })
         .get(function (req, res) {

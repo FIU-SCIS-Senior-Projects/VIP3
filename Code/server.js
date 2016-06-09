@@ -20,10 +20,9 @@ mongoose.connection.on('error', function(err){
 });
 
 require('./api/config/passport')(passport);
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(cookieParser());
-//app.use(bodyParser());
-app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(function(req, res, next) {
 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -40,6 +39,7 @@ app.use(flash());
 // set static files location
 // used for requests that our frontend will make
 app.use(express.static(__dirname + '/webapp'));
+app.set('root',__dirname + '/webapp');
 
 var userRoutes = require('./api/routes/userRoutes')(app, express);
 var projectRoutes = require('./api/routes/projectsRoutes')(app,express);

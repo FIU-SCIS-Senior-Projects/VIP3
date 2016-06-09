@@ -13,7 +13,7 @@
 				ProfileService.loadProfile().then(function(data){
 					if (data) {
 
-						vm.user_info = data.firstName;
+						vm.current_user = data.firstName;
 						vm.user_type = data.userType;
 						vm.logged_in = true;
 					}
