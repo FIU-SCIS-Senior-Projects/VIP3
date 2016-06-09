@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');
 var Project = require('../models/projects');
 var Term = require('../models/terms');
 
+
 module.exports = function(app, express) {
     var apiRouter = express.Router();
     var currentTerm;
@@ -52,7 +53,9 @@ module.exports = function(app, express) {
 
 
     });
-
+	
+	
+	
 
 
     //route get or adding products to a users account
@@ -110,7 +113,6 @@ module.exports = function(app, express) {
         .put(function (req, res) {
 			console.log("PUT /projects/:id");
             Project.findById(req.params.id, function(err, proj){
-                console.log(proj);
                 if(err) {
 					res.status(400);
 					res.send(err);
