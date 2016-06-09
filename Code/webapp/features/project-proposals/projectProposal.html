@@ -6,10 +6,14 @@
             <label>*Team Title:</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
         </div>
-        <div class="form-group">
+        <div class="form-group" hidden>
             <label>Team Image:</label>
             <input type="url" class="form-control" placeholder="" ng-model="project.image">
         </div>
+		<div class="form-group">
+			<label>Upload Team Image</label>
+			<input type="file" class="form-control" id="teamImage"/>
+		</div>
         <div class="form-group">
             <label>*Team Description:</label>
             <div text-angular ng-model="project.description"></div>
