@@ -205,21 +205,6 @@ angular
        
 
 
-<<<<<<< HEAD
-        vm.update = function() {
-            console.log(vm.User);
-            console.log(vm.sProject._id);
-            console.log("Hello World");
-            vm.sProject.members += "Monroe, ";
-            ProjectService.editProject(vm.sProject, vm.sProject._id)
-            // vm.mockData[0].firstName = vm.firstName;
-            // vm.mockData[0].lastName = vm.lastName;
-            // vm.mockData[0].email = vm.email;
-            // vm.mockData[0].pID = vm.pID;
-            // vm.mockData[0].rank = vm.rank;
-            // vm.mockData[0].school = vm.school;
-            // vm.mockData[0].college = vm.college;
-=======
         vm.save = function() {
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
@@ -239,6 +224,5 @@ angular
 				 vm.message = response.data;
 			   }
 			);;
->>>>>>> integration
         };
     });
