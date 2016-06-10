@@ -7,26 +7,37 @@
 
     profileController.$inject = ['$state', '$scope', 'ProfileService'];
     /* @ngInject */
-    function profileController($state, $scope, ProfileService) {
+    function profileController($state, $scope, ProfileService)
+    {
         var vm = this;
         vm.profile;
 		vm.updateProfile = updateProfile;
-        
+
         init();
         function init(){
             loadData();
         }
-        
+
         function loadData(){
             ProfileService.loadProfile().then(function(data){
                 vm.profile = data;
             });
         }
-		
+
 		function updateProfile () {
-			ProfileService.saveProfile(vm.profile).then(function(data){
-                vm.message = "Profile Updated";
+			//saveProfile() needs to temporarily store the updated values the user wants
+
+			ProfileService.requestProfileUpdate(vm.profile).then(function(data)
+			{
+				vm.message = "Profile Updated. Waiting for PI Approval.";
+			});
+
+			/*
+			ProfileService.saveProfile(vm.profile).then(function(data)
+			{
+                vm.message = "Profile Updated. Waiting for PI Approval.";
             });
+            */
 		}
 
 

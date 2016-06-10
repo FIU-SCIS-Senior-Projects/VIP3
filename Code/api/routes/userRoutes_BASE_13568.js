@@ -14,16 +14,10 @@ module.exports = function (app, express) {
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: 'http://vip.fiu.edu/#/profile',
-            failureRedirect: '/status'
+            successRedirect: 'http://localhost:3000/#/profile',
+            failureRedirect: 'http://localhost:3000/#/login'
         })
     );
-
-	app.get('/status', function(req,res) {
-		res.redirect('/#/login/error');
-	});
-
-
 
 
     passport.serializeUser(function(user, done) {
@@ -39,7 +33,7 @@ module.exports = function (app, express) {
     app.post('/login',
         passport.authenticate('local', {
             successRedirect: '/#/profile',
-            failureRedirect: '/status',
+            failureRedirect: '/#/login',
             failureFlash: true })
     );
 

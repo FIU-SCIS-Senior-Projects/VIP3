@@ -14,16 +14,22 @@ module.exports = function (app, express) {
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
+<<<<<<< HEAD
+            successRedirect: '/#/profile',
+            failureRedirect: '/#/login'
+=======
             successRedirect: 'http://vip.fiu.edu/#/profile',
             failureRedirect: '/status'
+
+>>>>>>> integration
         })
     );
-
+	
 	app.get('/status', function(req,res) {
 		res.redirect('/#/login/error');
 	});
-
-
+	
+	
 
 
     passport.serializeUser(function(user, done) {

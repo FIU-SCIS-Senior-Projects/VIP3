@@ -10,6 +10,7 @@ var UsersSchema = new Schema({
     email: {type: String, required: true, index: {unique:true}},
     googleKey: String,
     rank: {type: String, required: false},
+    requested_rank: {type: String, required: false},
     pantherID: {type: String, required: false},
     gender: {type: String, required: false},
     project:    String,
@@ -21,11 +22,8 @@ var UsersSchema = new Schema({
     major:String,
     minor:String,
     image: String,
-    userType: {
-        type: String
-        //ranks: []
-    },
-
+    userType: {type: String},
+    requested_userType: {type: String, required: false},
     google: {
         id: String,
         token: String,
@@ -33,12 +31,13 @@ var UsersSchema = new Schema({
         name: String
     }
 
-
 });
 
 //Hash the password before the sure is saved
 UsersSchema.pre('save', function(next) {
     var user = this;
+
+    console.log("Called 'save' function for User");
 
     //Hash the password only if the password has been changed or user is new
     if (!user.isModified('password')) return next();

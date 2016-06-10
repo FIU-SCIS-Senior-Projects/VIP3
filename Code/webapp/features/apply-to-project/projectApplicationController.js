@@ -223,12 +223,12 @@ angular
         vm.save = function() {
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
-				if (project.members[i] === vm.email) {
+				if (project.members[i] === vm._id) {
 					vm.message = "You already joined the project!";
 					return;
 				}
 			}
-			project.members[project.members.length] = vm.email;
+			project.members[project.members.length] = vm._id;
 			ProjectService.editProject(project,project._id).then(
 			   function(response){
 				 // success callback

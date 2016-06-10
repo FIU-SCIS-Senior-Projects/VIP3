@@ -32,5 +32,7 @@ angular.module('ProjectProposalService', [])
                console.log("Deleting response just arrived");
             });;
         };
+		
+		
         return projectFactory;
     });
