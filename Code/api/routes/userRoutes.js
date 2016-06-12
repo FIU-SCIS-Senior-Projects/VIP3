@@ -13,8 +13,9 @@ module.exports = function (app, express) {
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
     app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: 'http://vip.fiu.edu/#/profile',
+        passport.authenticate('google',
+        {
+            successRedirect: 'http://vip.fiu.edu/#/',
             failureRedirect: '/status'
         })
     );
@@ -22,9 +23,6 @@ module.exports = function (app, express) {
 	app.get('/status', function(req,res) {
 		res.redirect('/#/login/error');
 	});
-
-
-
 
     passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -38,7 +36,8 @@ module.exports = function (app, express) {
 
     app.post('/login',
         passport.authenticate('local', {
-            successRedirect: '/#/profile',
+			alert(1);
+            successRedirect: '/#/',
             failureRedirect: '/status',
             failureFlash: true })
     );

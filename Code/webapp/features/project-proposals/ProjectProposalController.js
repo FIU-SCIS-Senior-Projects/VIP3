@@ -1,6 +1,40 @@
 angular.module('ProjectProposalController', ['ProjectProposalService'])
     .controller('ProjectProposalController', function($scope, ProjectService, $stateParams){
 
+		function getCookie(cname) {
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i = 0; i <ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length,c.length);
+				}
+			}
+			return "";
+		}
+
+		function checkCookie(cookieName)
+		{
+			var username=getCookie(cookieName);
+			if (username!="") {
+				return true;
+			} else {
+				return false;
+				}
+		}
+
+		// if the user isnt logged in, redirect them to the login page
+		if (getCookie("isLoggedIn") != "1" || !checkCookie("isLoggedIn"))
+		{
+			// save the current page that is redirecting them, so we can come back here later, after they login
+			document.cookie = "destinationURL="+window.location;
+
+			window.location = "/#/login";
+		}
+
         $scope.colleges= [
             {
                 name: 'Architecture & The Arts',
@@ -135,26 +169,33 @@ angular.module('ProjectProposalController', ['ProjectProposalService'])
         init();
         function init () {
             if($stateParams.id != null){
+				loadData();
                 vm.id = $stateParams.id;
                 vm.editingMode = true;
                 getProjectById();
             }
         }
-        
-        function getProjectById (){
-            ProjectService.getProject(vm.id).then(function(data){
-                $scope.project = data; 
+
+        function loadData(){
+            reviewProfileService.getReg($state.params.user_id).then(function(data){
+                vm.profile = data;
+
             });
         }
-		
-        
+
+        function getProjectById (){
+            ProjectService.getProject(vm.id).then(function(data){
+                $scope.project = data;
+            });
+        }
+
         $scope.save = function save() {
-            
+
 			var f = document.getElementById('teamImage').files[0],
 			r = new FileReader();
 			r.onloadend = function(e){
 				var dataURL = e.target.result;
-				
+
 				$scope.project.image = dataURL;
 			    if(!vm.editingMode){
 						$scope.project.status='pending'
@@ -174,12 +215,12 @@ angular.module('ProjectProposalController', ['ProjectProposalService'])
 								$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
 							});
 				}
-				
+
 			}
 			r.readAsDataURL(f);
-			
-           
-			
+
+
+
         };
 
         $scope.toggleCheckbox = function toggleSelection(majors) {
