@@ -6,6 +6,7 @@ angular
     .module('userRegistrationController', ['userService'])
     .controller('registrationController', function (User) {
         var vm = this;
+		var host = "vip.fiu.edu";
 
         vm.Users = [
             {
@@ -283,14 +284,14 @@ angular
 
 					vm.userData.recipient = vm.userData.email;
 					vm.userData.text = "Dear "+vm.userData.firstName +",\n\nWelcome to FIU's VIP Project!"+
-					   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://vip.fiu.edu/vip/verifyEmail/" + vm.objectId +"";
+					   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://" + host + "/vip/verifyEmail/" + vm.objectId + "";
 					vm.userData.subject = "Welcome to FIU VIP Project!";
 
 					// send email to PI for approval
 					vm.userData.recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
 
 					vm.userData.text2 = "Dear PI/CoPI,"+
-						" A new user is attempting to register, please accept or reject using the following link:\n\ http://vip-dev.cis.fiu.edu/#/verifyuser/" + vm.objectId +"";
+						" A new user is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/" + vm.objectId +"";
 					vm.userData.subject2 = "User Registration Request";
 
 					User.nodeEmail(vm.userData);

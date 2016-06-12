@@ -8,6 +8,8 @@ var nodemailer      = require('nodemailer');
 var User          = require('../models/users');
 
 module.exports = function (app, express) {
+	
+	var host = app.get("host");
 
     //Google+ Authentication
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
@@ -15,7 +17,7 @@ module.exports = function (app, express) {
     app.get('/auth/google/callback',
         passport.authenticate('google',
         {
-            successRedirect: 'http://vip.fiu.edu/#/',
+            successRedirect: 'http://' + host + '/#/',
             failureRedirect: '/status'
         })
     );
@@ -36,7 +38,6 @@ module.exports = function (app, express) {
 
     app.post('/login',
         passport.authenticate('local', {
-			alert(1);
             successRedirect: '/#/',
             failureRedirect: '/status',
             failureFlash: true })
