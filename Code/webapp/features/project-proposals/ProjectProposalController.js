@@ -1,39 +1,23 @@
-angular.module('ProjectProposalController', ['ProjectProposalService'])
-    .controller('ProjectProposalController', function($scope, ProjectService, $stateParams){
+angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
+    .controller('ProjectProposalController', function($location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
 
-		function getCookie(cname) {
-			var name = cname + "=";
-			var ca = document.cookie.split(';');
-			for(var i = 0; i <ca.length; i++) {
-				var c = ca[i];
-				while (c.charAt(0)==' ') {
-					c = c.substring(1);
-				}
-				if (c.indexOf(name) == 0) {
-					return c.substring(name.length,c.length);
-				}
-			}
-			return "";
-		}
-
-		function checkCookie(cookieName)
-		{
-			var username=getCookie(cookieName);
-			if (username!="") {
-				return true;
-			} else {
-				return false;
-				}
-		}
-
-		// if the user isnt logged in, redirect them to the login page
-		if (getCookie("isLoggedIn") != "1" || !checkCookie("isLoggedIn"))
-		{
-			// save the current page that is redirecting them, so we can come back here later, after they login
-			document.cookie = "destinationURL="+window.location;
-
-			window.location = "/#/login";
-		}
+		var profile;
+		
+		ProfileService.loadProfile().then(function(data){
+					if (data) {
+						profile = data;
+						if (profile.userType == "Student") {
+							$location.path("/");
+						}
+					}
+					else {
+						profile = null;
+						$location.path("login");
+					}
+		});
+		
+		
+	
 
         $scope.colleges= [
             {
@@ -190,37 +174,69 @@ angular.module('ProjectProposalController', ['ProjectProposalService'])
         }
 
         $scope.save = function save() {
-
-			var f = document.getElementById('teamImage').files[0],
-			r = new FileReader();
-			r.onloadend = function(e){
-				var dataURL = e.target.result;
-
-				$scope.project.image = dataURL;
-			    if(!vm.editingMode){
-						$scope.project.status='pending'
-						ProjectService.createProject($scope.project)
-							.then(function(data){
-								$scope.result = "Project Proposal Submitted and Pending!";
-							}, function (error) {
-								$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
-							});
-			    }
-			    else{
-						$scope.project.id = $stateParams.id
-						ProjectService.editProject($scope.project, $stateParams.id)
-							.then(function(data){
-								$scope.result = "Project Proposal Submitted and Pending!";
-							}, function(error) {
-								$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
-							});
-				}
-
+			var obj = document.getElementById('teamImage');
+			if (obj.files.length == 0) {
+				    $scope.project.image = "";
+					if(!vm.editingMode){
+							$scope.project.status='pending'
+							ProjectService.createProject($scope.project)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+								}, function (error) {
+									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
+								});
+					}
+					else{
+							$scope.project.id = $stateParams.id
+							ProjectService.editProject($scope.project, $stateParams.id)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+								}, function(error) {
+									$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
+								});
+					}
 			}
-			r.readAsDataURL(f);
+			else {
+				var f = obj.files[0],
+				r = new FileReader();
+				r.onloadend = function(e){
+					var dataURL = e.target.result;
 
+					$scope.project.image = dataURL;
+					if(!vm.editingMode){
+							$scope.project.status='pending'
+							ProjectService.createProject($scope.project)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+								}, function (error) {
+									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
+								});
+					}
+					else{
+							$scope.project.id = $stateParams.id
+							ProjectService.editProject($scope.project, $stateParams.id)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+								}, function(error) {
+									$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
+								});
+					}
 
-
+				}
+				r.readAsDataURL(f);
+			}
         };
 
         $scope.toggleCheckbox = function toggleSelection(majors) {

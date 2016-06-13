@@ -14,7 +14,9 @@ angular.module('user-profile')
         profileFactory.loadProfile = function () {
             return $http.get('/api/profile/').then(function(data){
                return data.data[0];
-            });
+            }, function(error) {
+				return null;
+			});
         };
 
         profileFactory.saveProfile = function (profileData) {
