@@ -1,11 +1,13 @@
 /* var ToDo	= require('../models/todo'); <--this line goes on top
 
     var todo = new ToDo();
+	todo.owner = Type of account that will see the todo or the specific account id
+	todo.id = Optional if you  want to send the todo to a specific account id.
     todo.todo = the title of the app;
     todo.type = type of todo, needs to be hard coded based upon tasks
         acceptable values - CASE SENSITIVE!:
              personal   ---- profile needs
-             user       ---- for account registration
+             user       ---- for co-pi approval
              project    ---- proposal review
              student    ---- for application review
     todo.link = your unique link;
@@ -35,8 +37,12 @@ module.exports = function(app, express) {
             });
         })
         .post(function (req, res) {
+			console.log("POST /TODO");
+			console.log(req.body);
             ToDo.create(req.body, function( err) {
                 if(err) {
+					console.log("Error:");
+					console.log(err);
                     return res.send('something went wrong');
                 } else {
                     res.send('to do added');

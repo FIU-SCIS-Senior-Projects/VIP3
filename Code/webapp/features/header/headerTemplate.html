@@ -1,6 +1,6 @@
 <div class = "loginIcon">
 	<span ng-show="header.logged_in" >Welcome <a ui-sref="profile">{{header.current_user}}!</a></span>
-    <a ui-sref="toDo" ng-click="header.count = 0">
+    <a ui-sref="toDo" ng-show="header.logged_in" ng-click="header.count = 0">
 	    <i class="fa fa-list-alt task-icon" aria-hidden="true"></i>
 	    <span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span>
     </a>

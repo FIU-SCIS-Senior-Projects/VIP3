@@ -3,8 +3,8 @@
  * Cleaned random garbage characters such as " " from this file - vlad, 5/29/2016
  */
 angular
-    .module('userRegistrationController', ['userService'])
-    .controller('registrationController', function (User) {
+    .module('userRegistrationController', ['userService','toDoModule'])
+    .controller('registrationController', function (User,ToDoService,ProfileService) {
         var vm = this;
 		var host = "vip.fiu.edu";
 
@@ -295,6 +295,29 @@ angular
 					vm.userData.subject2 = "User Registration Request";
 
 					User.nodeEmail(vm.userData);
+					
+					//Create todo for PI validation.
+					
+					var todo = {owner: "Pi/CoPi", todo: vm.userData.firstName + " has registered an account. Please CoPI validate his account.", type: "user", link: "http://" + host + "/#/verifyuser/" + vm.objectId };
+					
+					ToDoService.createTodo(todo).then(function(success)  {
+						
+					}, function(error) {
+						
+					});
+					
+					//Create todo for then newly registered user.
+					
+					var todo2 = {owner: vm.userData.userType, 
+					owner_id: vm.objectId + "", 
+					todo: "Welcome to VIP " + vm.userData.firstName + ", as a faculty you will be able to propose projects that students can join. Please check this page for importatnt notificcations.", type: "personal", link: "http://" + host + "/#/" };
+					
+					ToDoService.createTodo(todo2).then(function(success)  {
+						
+					}, function(error) {
+						
+					});
+					
 				}
 
 				// user already exists in the database, or some other error occured in user.save function
