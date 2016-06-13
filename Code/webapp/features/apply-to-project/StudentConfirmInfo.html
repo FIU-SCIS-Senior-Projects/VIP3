@@ -85,21 +85,23 @@
 
                 </table>
 
+                <!-- Display message for successful submit -->
+                <div style = "margin-left:53px;" class="row show-hide-message" ng-show="projApp.message">
+                    <div style = "margin-left:53px;"class="col-sm-6 col-sm-offset-4">
+                        <div style = "margin-left:53px;" class="alert alert-info">
+                            {{ projApp.message }}
+                        </div>
+                    </div>
+                </div>
+                <!-- End message -->
+
                 <div align="center">
                     <button style= "width: 150px;" type="submit" class="btn btn-primary btn-block" ng-disabled="ProjectApplication.$invalid" >
                         <i class="fa fa-lg fa-user-plus" ></i> Save & Submit
                     </button>
 
 
-                    <div style = "margin-left:53px;" class="row show-hide-message" ng-show="projApp.message">
-                        <div style = "margin-left:53px;"class="col-sm-6 col-sm-offset-4">
 
-                            <div style = "margin-left:53px;" class="alert alert-info">
-                                {{ projApp.message }}
-                            </div>
-
-                        </div>
-                    </div>
                 </div><br>
                 <div>
                     <a ui-sref ="home" class="pull-right">Cancel Application</a><br>

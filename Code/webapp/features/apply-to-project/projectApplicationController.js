@@ -3,18 +3,18 @@ angular
     .controller('projAppCtrl',  function (ProjectService, ProfileService,$stateParams) {
         var vm = this;
 
-        vm.mockData = [{
-            firstName: "Marlon",
-            lastName: "Rowe",
-            email: "mrowe009@fiu.edu",
-            pID: "1234567",
-            rank: "Senior",
-            gender: 'Male',
-            type: 'Student',
-            college: "'Engineering & Computing",
-            school: "School of Computing and Information Sciences",
-            semester: "Spring 2016"
-        }];
+        // vm.mockData = [{
+        //     firstName: "Marlon",
+        //     lastName: "Rowe",
+        //     email: "mrowe009@fiu.edu",
+        //     pID: "1234567",
+        //     rank: "Senior",
+        //     gender: 'Male',
+        //     type: 'Student',
+        //     college: "'Engineering & Computing",
+        //     school: "School of Computing and Information Sciences",
+        //     semester: "Spring 2016"
+        // }];
 
         vm.Colleges = [
             {
@@ -204,19 +204,24 @@ angular
 
         vm.save = function() {
 			var project = vm.sProject;
-			for (i = 0; i < project.members.length; i++) {
+
+			for (i = 0; i < project.members.length; i++) 
+            {
 				if (project.members[i] === vm._id) {
 					vm.message = "You already joined the project!";
 					return;
 				}
 			}
+
 			project.members[project.members.length] = vm._id;
 			ProjectService.editProject(project,project._id).then(
-			   function(response){
+			   function(response)
+               {
 				 // success callback
-				 vm.message = response.data.message;
+				 vm.message = "You have successfully applied for the project. Please wait for the PI to approve your applicaiton.";
 			   }, 
-			   function(response){
+			   function(response)
+               {
 				 // failure callback
 				 vm.message = response.data;
 			   }
