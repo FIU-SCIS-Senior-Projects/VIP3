@@ -34,6 +34,9 @@ module.exports = function(passport,app) {
 				if (!user.verifiedEmail) {
 					return done(null, false, {message: 'Account must be verified' });
 				}
+				if (!user.piApproval) {
+					return done(null, false, {message: 'Account must be aprroved by PI' });
+				}
                 return done(null, user);
             });
         }
@@ -56,12 +59,12 @@ module.exports = function(passport,app) {
                    if (user) {
                        // if a user is found, log them in
                        //console.log('found user' , user);
-					   if (!user.piApproval) {
+					   /*if (!user.piApproval) {
 						   return done(null, false, {message: 'You must be PI approved.' });
 					   }
 					   if (!user.verifiedEmail) {
 						   return done(null, false, {message: 'You must be PI approved.' });
-					   }
+					   }*/
                        return done(null, user);
                    }
                    else {

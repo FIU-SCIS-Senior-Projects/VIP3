@@ -23,7 +23,7 @@ module.exports = function (app, express) {
     );
 
 	app.get('/status', function(req,res) {
-		res.redirect('/#/login/error');
+		res.redirect('http://' + host + '/#/login/error');
 	});
 
     passport.serializeUser(function(user, done) {
