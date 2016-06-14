@@ -10,6 +10,8 @@ var User          = require('../models/users');
 module.exports = function (app, express) {
 	
 	var host = app.get("host");
+	
+	console.log("Host: " + host);
 
     //Google+ Authentication
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
