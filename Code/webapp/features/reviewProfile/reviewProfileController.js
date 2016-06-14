@@ -21,7 +21,7 @@
         }
 
         function loadData(){
-            reviewProfileService.getReg($state.params.user_id).then(function(data){
+            	reviewProfileService.getReg($state.params.user_id).then(function(data){
                 vm.profile = data;
 
             });

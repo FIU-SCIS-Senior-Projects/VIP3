@@ -4,7 +4,11 @@ var User = require('../models/users');
 var configAuth = require('./auth');
 var nodemailer      = require('nodemailer');
 
-module.exports = function(passport) {
+module.exports = function(passport,app) {
+	
+	
+	var host_name = app.get("host");
+	
    passport.serializeUser(function (user, done) {
        done(null, user.id);
    });
@@ -30,6 +34,9 @@ module.exports = function(passport) {
 				if (!user.verifiedEmail) {
 					return done(null, false, {message: 'Account must be verified' });
 				}
+				if (!user.piApproval) {
+					return done(null, false, {message: 'Account must be aprroved by PI' });
+				}
                 return done(null, user);
             });
         }
@@ -52,12 +59,12 @@ module.exports = function(passport) {
                    if (user) {
                        // if a user is found, log them in
                        //console.log('found user' , user);
-					   if (!user.piApproval) {
+					   /*if (!user.piApproval) {
 						   return done(null, false, {message: 'You must be PI approved.' });
 					   }
 					   if (!user.verifiedEmail) {
 						   return done(null, false, {message: 'You must be PI approved.' });
-					   }
+					   }*/
                        return done(null, user);
                    }
                    else {
@@ -88,13 +95,13 @@ module.exports = function(passport) {
 										
 										var recipient = newUser.email;
 										var text = "Dear "+ newUser.firstName +",\n\nWelcome to FIU's VIP Project!"+
-										   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://localhost:3000/vip/verifyEmail/" + newUser.id +"";
+										   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://" + host + "/vip/verifyEmail/" + newUser.id +"";
 										
 										var subject = "Welcome to FIU VIP Project!";
 
 										var recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW;
 										var text2 = "Dear PI/CoPI,"+
-											" A new user is attempting to register, please accept or reject using the following link:\n\ http://localhost:3000/#/verifyuser/" + newUser.id + "";
+											" A new user is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/" + newUser.id + "";
 										var subject2 = "User Registration Request";
 
 										var transporter = nodemailer.createTransport({

@@ -47,6 +47,12 @@ angular.module('routes', ['ui.router'])
                 url:'/login',
                 templateUrl: 'features/login/loginTemplate.html'
             })
+
+            .state('checkLogin', {
+                url:'/checkLogin',
+                templateUrl: 'features/checkLogin/loginTemplate.html'
+            })
+
             .state('projectProposal', {
                 url:'/project-proposal',
                 templateUrl: 'features/project-proposals/projectProposal.html',
@@ -131,6 +137,5 @@ angular.module('routes', ['ui.router'])
                 templateUrl: 'features/login/loginError.html',
 				controller: 'lError'
             })
-
 
         });

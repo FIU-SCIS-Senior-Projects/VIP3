@@ -13,13 +13,17 @@ var config		= require('./api/config/config');
 var app			= express();
 
 
+//Set HOST 
+app.set("host", "localhost:3000");
+
+
 //connect to mongodb
 mongoose.connect(config.database);
 mongoose.connection.on('error', function(err){
 	console.log('Error: could not connect to MongoDB.');
 });
 
-require('./api/config/passport')(passport);
+require('./api/config/passport')(passport,app);
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(cookieParser());
