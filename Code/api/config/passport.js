@@ -109,7 +109,7 @@ module.exports = function(passport,app) {
            });
        }
        else {
-           done(new Error("Invalid email"));
+           return done(null, false, {message: 'Must be FIU.EDU for Gmail login.' });
        }
    }));
 };
