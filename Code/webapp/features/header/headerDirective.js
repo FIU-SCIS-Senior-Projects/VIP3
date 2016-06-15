@@ -1,6 +1,24 @@
 (function() {
     angular.module('vipHeader', ['toDoModule'])
-    .directive('vipHeader', function (ToDoService,ProfileService) {
+    .directive('vipHeader', function (ToDoService,ProfileService)
+    {
+
+		// if redirect cookie exists, navigate the user back to the page they were at
+		if (document.cookie.indexOf("destinationURL") > -1)
+		{
+			//alert(getCookie("destinationURL"));
+			window.location = getCookie("destinationURL");
+		}
+
+		function getCookie(name) {
+		  var value = "; " + document.cookie;
+		  var parts = value.split("; " + name + "=");
+		  if (parts.length == 2) return parts.pop().split(";").shift();
+		}
+
+		// delete cookie
+		document.cookie = "destinationURL" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
         return {
             templateUrl: 'features/header/headerTemplate.html',
             restrict: 'E',
@@ -12,37 +30,9 @@
                 var vm = this;
 				ProfileService.loadProfile().then(function(data){
 					if (data) {
-
 						vm.current_user = data.firstName;
 						vm.user_type = data.userType;
 						vm.logged_in = true;
-
-						//alert("isLoggedIn cookie set");
-
-						// user is logged in, set cookie to true
-						document.cookie = "isLoggedIn=1";
-
-						if (!checkCookie("destinationURL"))
-						{
-							//alert("No target destinationxxx");
-						}
-
-						// user needs to be redirected to target page in cookie
-						// todo: sanitize cookie to make sure we only redirect to *.fiu.edu links
-						else
-						{
-							// otherwise, redirect them to the url
-							//alert(getCookie("destinationURL"));
-							var cook = getCookie("destinationURL");
-
-							//alert(cook);
-
-							// clear the cookie
-
-							document.cookie = "destinationURL" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-
-							window.location = cook;
-						}
 					}
 				});
 
@@ -59,16 +49,6 @@
 						}
 					}
 					return "";
-				}
-
-				function checkCookie(cookieName)
-				{
-					var username=getCookie(cookieName);
-					if (username!="") {
-						return true;
-					} else {
-						return false;
-						}
 				}
 
                 vm.count = 0;

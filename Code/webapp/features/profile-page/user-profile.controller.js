@@ -12,6 +12,7 @@
         var vm = this;
         vm.profile;
 		vm.updateProfile = updateProfile;
+		var currRank;
 
         init();
         function init(){
@@ -21,16 +22,27 @@
         function loadData(){
             ProfileService.loadProfile().then(function(data){
                 vm.profile = data;
+                console.log(vm.profile.userType);
+                currRank = vm.profile.userType;
             });
         }
 
 		function updateProfile () {
 			//saveProfile() needs to temporarily store the updated values the user wants
-
+			console.log(vm.profile.userType);
 			ProfileService.requestProfileUpdate(vm.profile).then(function(data)
 			{
-				vm.message = "Profile Updated. Waiting for PI Approval.";
+				console.log(data.userType);
+
+				if (currRank == "Staff/Faculty" || currRank == "Pi/CoPi")
+					vm.message = "Profile Updated.";
+
+				else
+					vm.message = "Profile Updated. Waiting for PI Approval.";
 			});
+
+			// refresh the page after 3 seconds so the user can see the message
+			setTimeout(function () { location.reload(true); }, 3000);
 
 			/*
 			ProfileService.saveProfile(vm.profile).then(function(data)
@@ -43,8 +55,7 @@
 
 		vm.users = ["Student",
 			"Staff/Faculty",
-			"Pi/CoPi",
-			"Student"
+			"Pi/CoPi"
 		];
 
 		vm.ranks = [

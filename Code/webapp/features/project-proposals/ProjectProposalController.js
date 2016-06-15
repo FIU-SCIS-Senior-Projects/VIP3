@@ -1,39 +1,34 @@
 angular.module('ProjectProposalController', ['ProjectProposalService'])
-    .controller('ProjectProposalController', function($scope, ProjectService, $stateParams){
+    .controller('ProjectProposalController', function($scope, $http, $window, ProjectService, $stateParams){
 
-		function getCookie(cname) {
-			var name = cname + "=";
-			var ca = document.cookie.split(';');
-			for(var i = 0; i <ca.length; i++) {
-				var c = ca[i];
-				while (c.charAt(0)==' ') {
-					c = c.substring(1);
+		// check if user is logged in
+		$http.get('/checklogin')
+			.success(function(data)
+			{
+				//console.log(data);
+				// user is logged in, so they may use the project proposal page
+				if (data)
+				{
+					console.log("User is logged in");
 				}
-				if (c.indexOf(name) == 0) {
-					return c.substring(name.length,c.length);
+
+				// user isnt logged in, set a destination cookie that brings them back to this page, and redirect to login
+				else
+				{
+					console.log("User is not logged in");
+
+					// set redirect cookie, so the user is navigated back to the project proposal page after they login
+					document.cookie = "destinationURL=" + $window.location.href;
+
+					// redirect to login, if user is not logged in
+					$window.location.href = '/#/login';
 				}
-			}
-			return "";
-		}
+			})
 
-		function checkCookie(cookieName)
-		{
-			var username=getCookie(cookieName);
-			if (username!="") {
-				return true;
-			} else {
-				return false;
-				}
-		}
-
-		// if the user isnt logged in, redirect them to the login page
-		if (getCookie("isLoggedIn") != "1" || !checkCookie("isLoggedIn"))
-		{
-			// save the current page that is redirecting them, so we can come back here later, after they login
-			document.cookie = "destinationURL="+window.location;
-
-			window.location = "/#/login";
-		}
+			// error
+			.error(function(data) {
+			  console.log('error: ' + data);
+			});
 
         $scope.colleges= [
             {

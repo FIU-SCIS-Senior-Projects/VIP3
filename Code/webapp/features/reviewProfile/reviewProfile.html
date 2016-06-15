@@ -1,5 +1,5 @@
 <div class="register">
-    <h3 align="center"><font color = "red"> Accept {{vm.profile.firstName}}'s Profile Changes? </font></h3>
+    <h3 align="center">Accept {{vm.profile.firstName}}'s Profile Changes?</h3>
     <form name="Profile"  >
         <div class="form-group">
             <table class="table">
@@ -19,17 +19,17 @@
                 </tr>
                 <tr>
                     <td>
-                        <label>User Type:</label>
+                        <label><font color = "red">Requested User Type:</font></label>
                         <div>
-                            <input  class = 'form-control' ng-model="vm.profile.userType">
+                            <input  class = 'form-control' ng-model="vm.profile.requested_userType">
                             </input>
                         </div><br>
 
                     </td>
                     <td>
-                        <label>Rank:</label>
+                        <label><font color = "red">Requested Rank:</font></label>
                         <div>
-                            <input    class = "form-control" ng-model="vm.profile.rank" >
+                            <input    class = "form-control" ng-model="vm.profile.requested_rank" >
                             </input>
                         </div>
                 </tr>
