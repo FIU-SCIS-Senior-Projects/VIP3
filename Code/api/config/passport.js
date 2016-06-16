@@ -70,7 +70,10 @@ module.exports = function(passport,app) {
                    else {
 					   
 					   User.findOne({'email': profile.emails[0].value}, function(err, user) {
-							if (err) {return done(err); }
+							if (err) {
+								console.log("Error: " + err);
+								return done(err); 
+							}
 							if (!user) {
 											 // if the user isnt in our database, create a new user
 								   var newUser = new User();
@@ -88,64 +91,8 @@ module.exports = function(passport,app) {
 								   newUser.save(function (err)
 								   {
 									  if (err)
-
-										  console.log(err);
-									   //console.log(newUser);
+										console.log("Error: " + err);
 									   
-										
-										var recipient = newUser.email;
-										var text = "Dear "+ newUser.firstName +",\n\nWelcome to FIU's VIP Project!"+
-										   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://" + host + "/vip/verifyEmail/" + newUser.id +"";
-										
-										var subject = "Welcome to FIU VIP Project!";
-
-										var recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW;
-										var text2 = "Dear PI/CoPI,"+
-											" A new user is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/" + newUser.id + "";
-										var subject2 = "User Registration Request";
-
-										var transporter = nodemailer.createTransport({
-											service:'Gmail',
-											auth: {
-												user: 'fiuvipmailer@gmail.com',
-												pass: 'vipadmin123'
-											}
-										});
-
-
-										var mailOptions = {
-											from: 'FIU VIP <vipadmin@fiu.edu>', // sender address
-											to: recipient, // list of receivers
-											subject: subject, // Subject line
-											text: text
-										};
-
-										console.log(mailOptions);
-
-										// send mail with defined transport object
-										transporter.sendMail(mailOptions, function(error, info)
-										{
-											if(error) {
-												return console.log(error);
-											}
-										});
-
-
-										var mailOptions2 = {
-											from: 'FIU VIP <vipadmin@fiu.edu>', // sender address
-											to: recipient2, // list of receivers
-											subject: subject2, // Subject line
-											text: text2
-										};
-
-										console.log(mailOptions2);
-
-										// send mail with defined transport object
-										transporter.sendMail(mailOptions2, function(error, info){
-											if(error) {
-												return console.log(error);
-											}
-										});
 														   
 									   return done(null, newUser);
 
@@ -162,7 +109,7 @@ module.exports = function(passport,app) {
            });
        }
        else {
-           done(new Error("Invalid email"));
+           return done(null, false, {message: 'Must be FIU.EDU for Gmail login.' });
        }
    }));
 };

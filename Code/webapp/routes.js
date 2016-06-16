@@ -134,8 +134,7 @@ angular.module('routes', ['ui.router'])
 
 			.state('loginError', {
                 url: '/login/error',
-                templateUrl: 'features/login/loginError.html',
-				controller: 'lError'
+                templateUrl: 'features/login/loginError.html'
             })
 
         });
