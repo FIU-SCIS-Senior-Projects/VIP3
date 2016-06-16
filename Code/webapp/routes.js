@@ -47,6 +47,12 @@ angular.module('routes', ['ui.router'])
                 url:'/login',
                 templateUrl: 'features/login/loginTemplate.html'
             })
+
+            .state('checkLogin', {
+                url:'/checkLogin',
+                templateUrl: 'features/checkLogin/loginTemplate.html'
+            })
+
             .state('projectProposal', {
                 url:'/project-proposal',
                 templateUrl: 'features/project-proposals/projectProposal.html',
@@ -119,10 +125,16 @@ angular.module('routes', ['ui.router'])
                 controllerAs: 'vm'
             })
 
+            .state('verifyprofile', {
+                url: '/verifyprofile/:user_id',
+                templateUrl: 'features/reviewProfile/reviewProfile.html',
+                controller: 'reviewProfileController',
+                controllerAs: 'vm'
+            })
+
 			.state('loginError', {
                 url: '/login/error',
-                templateUrl: 'features/login/loginError.html',
-				controller: 'lError'
+                templateUrl: 'features/login/loginError.html'
             })
 			
 			.state('reviewuser', {

@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html ng-app="mainApp" lang="en">
 <head>
-
-	
-
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>VIP</title>
 
 	<!-- FOR ANGULAR ROUTING -->
 	<base href="/">
-	
+
 	<!-- load bootstrap and custom CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
@@ -41,6 +38,7 @@
 	<script src="features/reviewRegistration/reviewRegModule.js"></script>
 	<script src="features/reviewStudentApplications/reviewStudentAppModule.js"></script>
 	<script src="features/reviewProjectProposals/reviewProjectProposalsModule.js"></script>
+	<script src="features/reviewProfile/reviewProfileModule.js"></script>
 
 	<!-- controllers -->
     <script src="features/vip-projects/vip-projects.controller.js"></script>
@@ -56,6 +54,7 @@
 	<script src="features/forgot-password/forgotPasswordService.js"></script>
 	<script src="features/reviewStudentApplications/reviewStudentAppController.js"></script>
 	<script src="features/reviewProjectProposals/reviewProjectProposalsController.js"></script>
+	<script src="features/reviewProfile/reviewProfileController.js"></script>
 
 	<!-- services -->
 	<script src = "features/project-proposals/ProjectProposalService.js"></script>
@@ -65,7 +64,8 @@
 	<script src="features/reviewRegistration/reviewRegService.js"></script>
 	<script src="features/reviewStudentApplications/reviewStudentAppService.js"></script>
 	<script src="features/reviewProjectProposals/reviewProjectProposalsService.js"></script>
-	
+	<script src="features/reviewProfile/reviewProfileService.js"></script>
+
 	<!-- directives -->
 	<script src="features/header/headerDirective.js"></script>
 	<script src="features/footer/footerDirective.js"></script>
@@ -73,9 +73,7 @@
 	<!-- main Angular app files -->
 	<script src="app.js"></script>
 	<script src="routes.js"></script>
-	
-	
-	
+
 </head>
 
 <body>
@@ -91,7 +89,7 @@
 		<vip-footer></vip-footer>
 
 	</div>
-</body>
 
+</body>
 
 </html>

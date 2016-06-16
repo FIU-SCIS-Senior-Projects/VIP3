@@ -3,9 +3,10 @@
  * Cleaned random garbage characters such as " " from this file - vlad, 5/29/2016
  */
 angular
-    .module('userRegistrationController', ['userService'])
-    .controller('registrationController', function (User) {
+    .module('userRegistrationController', ['userService','toDoModule'])
+    .controller('registrationController', function (User,ToDoService,ProfileService) {
         var vm = this;
+		var host = "vip.fiu.edu";
 
         vm.Users = [
             {
@@ -283,16 +284,40 @@ angular
 
 					vm.userData.recipient = vm.userData.email;
 					vm.userData.text = "Dear "+vm.userData.firstName +",\n\nWelcome to FIU's VIP Project!"+
-					   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://vip.fiu.edu/vip/verifyEmail/" + vm.objectId +"";
+					   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://" + host + "/vip/verifyEmail/" + vm.objectId + "";
 					vm.userData.subject = "Welcome to FIU VIP Project!";
 
 					// send email to PI for approval
 					vm.userData.recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
+
 					vm.userData.text2 = "Dear PI/CoPI,"+
-						" A new user is attempting to register, please accept or reject using the following link:\n\ http://vip-dev.cis.fiu.edu/#/verifyuser/" + vm.objectId +"";
+						" A new user is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/" + vm.objectId +"";
 					vm.userData.subject2 = "User Registration Request";
 
 					User.nodeEmail(vm.userData);
+					
+					//Create todo for PI validation.
+					
+					var todo = {owner: "Pi/CoPi", todo: vm.userData.firstName + " has registered an account. Please CoPI validate his account.", type: "user", link: "http://" + host + "/#/verifyuser/" + vm.objectId };
+					
+					ToDoService.createTodo(todo).then(function(success)  {
+						
+					}, function(error) {
+						
+					});
+					
+					//Create todo for then newly registered user.
+					
+					var todo2 = {owner: vm.userData.userType, 
+					owner_id: vm.objectId + "", 
+					todo: "Welcome to VIP " + vm.userData.firstName + ", as a faculty you will be able to propose projects that students can join. Please check this page for importatnt notificcations.", type: "personal", link: "http://" + host + "/#/" };
+					
+					ToDoService.createTodo(todo2).then(function(success)  {
+						
+					}, function(error) {
+						
+					});
+					
 				}
 
 				// user already exists in the database, or some other error occured in user.save function

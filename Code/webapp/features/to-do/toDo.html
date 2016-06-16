@@ -1,7 +1,7 @@
 <div>
     <div ng-hide="todo.personalCount < 1" class="panel panel-default">
         <div class="panel-heading">
-            <h4><b>Personal</b></h4>
+            <h4><b>General Messages</b></h4>
         </div>
         <ul class="list-group" ng-repeat="personal in todo.list | filter: personal.type='personal' | filter: personal.read='false' | orderBy: todo.time">
             <li class="list-group-item">

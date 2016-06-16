@@ -1,8 +1,18 @@
 <div class = "loginIcon">
 	<span ng-show="header.logged_in" >Welcome <a ui-sref="profile">{{header.current_user}}!</a></span>
-    <a ui-sref="toDo" ng-click="header.count = 0"><span class = "glyphicon glyphicon-bell"></span><span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span></a>
-	<a ng-hide="header.logged_in" ui-sref="login"><span class="glyphicon glyphicon-user"></span></a>
-	<a ng-show="header.logged_in" ng-click="header.logged_in = false" href="/logout"> <span class="glyphicon glyphicon-log-out"></a>
+    <a ui-sref="toDo" ng-show="header.logged_in" ng-click="header.count = 0">
+	    <i class="fa fa-list-alt task-icon" aria-hidden="true"></i>
+	    <span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span>
+    </a>
+	<a ng-hide="header.logged_in" ui-sref="login">
+		  <button type="button" class="btn btn-primary">Log In</button>
+	</a>
+	<a ng-show="header.logged_in" ng-click="header.logged_in = false" href="/logout">
+		<i class="fa fa-user" aria-hidden="true"></i>
+	</a>
+	<a ng-show="header.logged_in" ng-click="header.logged_in = false" href="/logout">
+		<button type="button" class="btn btn-primary">Log Out</button>
+	</a>
 </div>
 <div>
 	<a href="/"><img class="header-logo" src="img/FIU_VIP.jpg"></a>

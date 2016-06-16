@@ -1,9 +1,9 @@
 <div>
     <h2>Team Proposal Form</h2>
-	<p style="color:orange;"><strong>{{result}}</strong></p>
+	
     <form role="form">
         <div class="form-group">
-            <label>*Team Title:</label>
+            <label>*Team Title: {{result}}</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
         </div>
         <div class="form-group" hidden>
@@ -14,6 +14,7 @@
 			<label>Upload Team Image</label>
 			<input type="file" class="form-control" id="teamImage"/>
 		</div>
+
         <div class="form-group">
             <label>*Team Description:</label>
             <div text-angular ng-model="project.description"></div>
@@ -26,7 +27,7 @@
             <label>*Maximum number of students per semester:</label>
             <input type="number" min="0" class="form-control" placeholder="" ng-model="project.maxStudents" required="True">
         </div>
-       
+
        <p><h5>Click to expand</h5></p>
         <div ng-repeat = 'college in colleges'>
             <div>
@@ -43,11 +44,10 @@
             <label><input type="checkbox" ng-click="toggleCheckbox(majors)"> {{majors}}</label>
         </div> -->
 
-
-
         <button type="submit" class="btn btn-default" ng-click="save()">Submit</button>
         <br>
         <br>
         <p><strong>* : required fields</strong></p>
+		<p style="color:orange;"><strong>{{result}}</strong></p>
     </form>
 </div>
