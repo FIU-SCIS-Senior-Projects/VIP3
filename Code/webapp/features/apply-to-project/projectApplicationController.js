@@ -207,44 +207,6 @@ angular
 
        vm.save = function() {
 
-<<<<<<< HEAD
-            var project = vm.sProject;
-            for (i = 0; i < project.members.length; i++) {
-                if (project.members[i] === vm._id) {
-                    vm.message = "You already joined the project!";
-                    return;
-                }
-            }
-            project.members[project.members.length] = vm._id;
-            ProjectService.editProject(project,project._id).then(
-                   function(response){
-                     // success callback
-                     //vm.message = response.data.message;
-                     vm.message = "You have successfully applied for the project. Please wait for the PI to approve your applicaiton.";
-                     var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
-                    ToDoService.createTodo(todo).then(function(success)  {
-                        
-                    }, function(error) {
-                        
-                    });
-                    
-                    var email_msg = 
-                    {
-                        recipient: profile.email, 
-                        text: "Dear " + profile.firstName + ", thank you for applying to " + project.title + " you are currently pending and this is just a confirmation that you applied to the project please keep checking the VIP to-do or your email as the PI will approve or deny your request to join the project.\n\nProject: " + project.title + "\nStatus: Pending", 
-                        subject: "Project Application Submission Pending", 
-                        recipient2: "dlope073@fiu.edu", 
-                        text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project please approve him/her by logging into your VIP account and choosing student applications.", 
-                        subject2: "New Student Applied Has Applied To " + project.title 
-                    };
-                    User.nodeEmail(email_msg);
-               }, 
-               function(response){
-                 // failure callback
-                 vm.message = response.data;
-               }
-            );
-=======
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
 				if (project.members[i] === vm.email) {
@@ -280,6 +242,5 @@ angular
 				 vm.message = response.data;
 			   }
 			);
->>>>>>> b48bf330920ca0e6bc06c1e9e51c4bd5fd27f73b
         };
     });
