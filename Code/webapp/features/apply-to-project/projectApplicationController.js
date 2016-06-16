@@ -154,7 +154,6 @@ angular
         function loadData(){
             ProjectService.getProjects().then(function(data){
                 vm.projects = data;
-                //alert(vm.projects);
                 if($stateParams.id){
 					//alert("found some ID");
 					//alert(vm.id);
@@ -213,12 +212,12 @@ angular
 
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
-				if (project.members[i] === vm._id) {
+				if (project.members[i] === vm.email) {
 					vm.message = "You already joined the project!";
 					return;
 				}
 			}
-			project.members[project.members.length] = vm._id;
+			project.members[project.members.length] = vm.email;
 			ProjectService.editProject(project,project._id).then(
 				   function(response){
 					 // success callback
