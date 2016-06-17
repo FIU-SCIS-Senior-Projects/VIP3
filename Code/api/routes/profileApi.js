@@ -4,6 +4,10 @@ var passport      = require('passport');
 
 module.exports = function(app, express) {
     var apiRouter = express.Router();
+<<<<<<< HEAD
+=======
+
+>>>>>>> danny
 
 	// used to update the rank/usertype of a profile that the PI has authorized the changes to
     apiRouter.route('/updateprofile')
@@ -53,6 +57,13 @@ module.exports = function(app, express) {
             });
         })
 
+<<<<<<< HEAD
+=======
+
+        
+		
+
+>>>>>>> danny
     apiRouter.route('/profile')
         .put(function (req, res) {
 			console.log('POST /profile');
@@ -63,9 +74,33 @@ module.exports = function(app, express) {
             //     console.log(WriteResult);
             //     return res.json(profile);
             // });
+<<<<<<< HEAD
             // note to future devs: function finds profile via req.body._id data, and returns the found information to profile variable
             Profile.findById(req.body._id, function(err, profile)
             {
+=======
+
+            Profile.findById(req.body._id, function(err, profile){
+                profile.firstName = req.body.firstName;
+                profile.lastName = req.body.lastName;
+                profile.rank       = req.body.rank;    // set the users Rank within the program
+                profile.college      = req.body.college;   // sets the users college
+                profile.department      = req.body.department;   // sets the users college
+                profile.userType = req.body.userType;
+                profile.gender = req.body.gender;
+                profile.minor = req.body.minor;
+                profile.pantherID        = req.body.pantherID;
+                profile.major        = req.body.major;
+				profile.piApproval = req.body.piApproval;
+				profile.project = req.body.project;
+                //Missing fields go here
+                
+                profile.save(function(err){
+                    if(err) res.send(err);
+                    res.json(profile);
+                })
+
+>>>>>>> danny
 
 				// note to future devs: "profile.rank" is the users current rank in database, "req.body.rank" is the rank they are attempting to obtain
 
