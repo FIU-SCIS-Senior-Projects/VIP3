@@ -1,6 +1,6 @@
 <div>
     <h2>Team Proposal Form</h2>
-	<p style="color:orange;"><strong>{{result}}</strong></p>
+	
     <form role="form">
         <div class="form-group">
             <label>*Team Title: {{result}}</label>
@@ -14,6 +14,7 @@
 			<label>Upload Team Image</label>
 			<input type="file" class="form-control" id="teamImage"/>
 		</div>
+
         <div class="form-group">
             <label>*Team Description:</label>
             <div text-angular ng-model="project.description"></div>
@@ -43,11 +44,10 @@
             <label><input type="checkbox" ng-click="toggleCheckbox(majors)"> {{majors}}</label>
         </div> -->
 
-
-
         <button type="submit" class="btn btn-default" ng-click="save()">Submit</button>
         <br>
         <br>
         <p><strong>* : required fields</strong></p>
+		<p style="color:orange;"><strong>{{result}}</strong></p>
     </form>
 </div>

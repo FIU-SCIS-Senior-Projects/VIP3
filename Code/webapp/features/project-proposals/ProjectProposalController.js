@@ -1,34 +1,25 @@
-angular.module('ProjectProposalController', ['ProjectProposalService'])
-    .controller('ProjectProposalController', function($scope, $http, $window, ProjectService, $stateParams){
 
-		// check if user is logged in
-		$http.get('/checklogin')
-			.success(function(data)
-			{
-				//console.log(data);
-				// user is logged in, so they may use the project proposal page
-				if (data)
-				{
-					console.log("User is logged in");
-				}
+angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
+    .controller('ProjectProposalController', function($location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
 
-				// user isnt logged in, set a destination cookie that brings them back to this page, and redirect to login
-				else
-				{
-					console.log("User is not logged in");
+		var profile;
+		
+		ProfileService.loadProfile().then(function(data){
+					if (data) {
+						profile = data;
+						if (profile.userType == "Student") {
+							$location.path("/");
+						}
+					}
+					else {
+						profile = null;
+						$location.path("login");
+					}
+		});
+		
+		
+	
 
-					// set redirect cookie, so the user is navigated back to the project proposal page after they login
-					document.cookie = "destinationURL=" + $window.location.href;
-
-					// redirect to login, if user is not logged in
-					$window.location.href = '/#/login';
-				}
-			})
-
-			// error
-			.error(function(data) {
-			  console.log('error: ' + data);
-			});
 
         $scope.colleges= [
             {
@@ -185,37 +176,123 @@ angular.module('ProjectProposalController', ['ProjectProposalService'])
         }
 
         $scope.save = function save() {
-
-			var f = document.getElementById('teamImage').files[0],
-			r = new FileReader();
-			r.onloadend = function(e){
-				var dataURL = e.target.result;
-
-				$scope.project.image = dataURL;
-			    if(!vm.editingMode){
-						$scope.project.status='pending'
-						ProjectService.createProject($scope.project)
-							.then(function(data){
-								$scope.result = "Project Proposal Submitted and Pending!";
-							}, function (error) {
-								$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
-							});
-			    }
-			    else{
-						$scope.project.id = $stateParams.id
-						ProjectService.editProject($scope.project, $stateParams.id)
-							.then(function(data){
-								$scope.result = "Project Proposal Submitted and Pending!";
-							}, function(error) {
-								$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
-							});
-				}
-
+			var obj = document.getElementById('teamImage');
+			if (obj.files.length == 0) {
+				    $scope.project.image = "";
+					if(!vm.editingMode){
+							$scope.project.status='pending'
+							ProjectService.createProject($scope.project)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+									var email_msg = 
+									{
+										recipient: profile.email, 
+										text: "Dear " + profile.firstName + ", thank you for proposing " + profile.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+										subject: "Project Proposal Submission Pending", 
+										recipient2: "dlope073@fiu.edu", 
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
+										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
+									};
+									User.nodeEmail(email_msg);
+								}, function (error) {
+									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
+								});
+					}
+					else{
+							$scope.project.id = $stateParams.id
+							ProjectService.editProject($scope.project, $stateParams.id)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+									
+									var email_msg = 
+									{
+										recipient: profile.email, 
+										text: "Dear " + profile.firstName + ", thank you for proposing " + profile.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+										subject: "Project Proposal Submission Pending", 
+										recipient2: "dlope073@fiu.edu", 
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
+										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
+									};
+									User.nodeEmail(email_msg);
+									
+								}, function(error) {
+									$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
+								});
+					}
 			}
-			r.readAsDataURL(f);
+			else {
+				var f = obj.files[0],
+				r = new FileReader();
+				r.onloadend = function(e){
+					var dataURL = e.target.result;
 
+					$scope.project.image = dataURL;
+					if(!vm.editingMode){
+							$scope.project.status='pending'
+							ProjectService.createProject($scope.project)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+									var email_msg = 
+									{
+										recipient: profile.email, 
+										text: "Dear " + profile.firstName + ", thank you for proposing " + profile.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+										subject: "Project Proposal Submission Pending", 
+										recipient2: "dlope073@fiu.edu", 
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
+										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
+									};
+									User.nodeEmail(email_msg);
+								}, function (error) {
+									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
+								});
+					}
+					else{
+							$scope.project.id = $stateParams.id
+							ProjectService.editProject($scope.project, $stateParams.id)
+								.then(function(data){
+									$scope.result = "Project Proposal Submitted and Pending!";
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+									var email_msg = 
+									{
+										recipient: profile.email, 
+										text: "Dear " + profile.firstName + ", thank you for proposing " + profile.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+										subject: "Project Proposal Submission Pending", 
+										recipient2: "dlope073@fiu.edu", 
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
+										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
+									};
+									User.nodeEmail(email_msg);
+								}, function(error) {
+									$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
+								});
+					}
 
-
+				}
+				r.readAsDataURL(f);
+			}
         };
 
         $scope.toggleCheckbox = function toggleSelection(majors) {

@@ -8,6 +8,10 @@ var nodemailer      = require('nodemailer');
 var User          = require('../models/users');
 
 module.exports = function (app, express) {
+	
+	var host = app.get("host");
+	
+	console.log("Host: " + host);
 
     //Google+ Authentication
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
@@ -15,13 +19,13 @@ module.exports = function (app, express) {
     app.get('/auth/google/callback',
         passport.authenticate('google',
         {
-            successRedirect: 'http://localhost:3000/#/',
+            successRedirect: 'http://' + host + '/#/',
             failureRedirect: '/status'
         })
     );
 
 	app.get('/status', function(req,res) {
-		res.redirect('/#/login/error');
+		res.redirect('http://' + host + '/#/login/error');
 	});
 
     passport.serializeUser(function(user, done) {

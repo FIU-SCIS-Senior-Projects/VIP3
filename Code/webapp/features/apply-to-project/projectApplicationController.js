@@ -1,6 +1,6 @@
 angular
-    .module('projectApplicationController', ['ProjectProposalService','user-profile'])
-    .controller('projAppCtrl',  function (ProjectService, ProfileService,$stateParams) {
+    .module('projectApplicationController', ['ProjectProposalService','user-profile','toDoModule', 'userService'])
+    .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, $stateParams) {
         var vm = this;
 
         vm.mockData = [{
@@ -154,7 +154,6 @@ angular
         function loadData(){
             ProjectService.getProjects().then(function(data){
                 vm.projects = data;
-                //alert(vm.projects);
                 if($stateParams.id){
 					//alert("found some ID");
 					//alert(vm.id);
@@ -180,8 +179,12 @@ angular
             });
         }
 		
+		var profile;
+		
 		ProfileService.loadProfile().then(function(data){
 					if (data) {
+						
+						profile = data;
 
 						vm.user_info = data.firstName;
 						vm.user_type = data.userType;
@@ -206,23 +209,41 @@ angular
 
 
         vm.save = function() {
+
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
-				if (project.members[i] === vm._id) {
+				if (project.members[i] === vm.email) {
 					vm.message = "You already joined the project!";
 					return;
 				}
 			}
-			project.members[project.members.length] = vm._id;
+			project.members[project.members.length] = vm.email;
 			ProjectService.editProject(project,project._id).then(
-			   function(response){
-				 // success callback
-				 vm.message = response.data.message;
+				   function(response){
+					 // success callback
+					 vm.message = response.data.message;
+					 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
+					ToDoService.createTodo(todo).then(function(success)  {
+						
+					}, function(error) {
+						
+					});
+					
+					var email_msg = 
+					{
+						recipient: profile.email, 
+						text: "Dear " + profile.firstName + ", thank you for applying to " + project.title + " you are currently pending and this is just a confirmation that you applied to the project please keep checking the VIP to-do or your email as the PI will approve or deny your request to join the project.\n\nProject: " + project.title + "\nStatus: Pending", 
+						subject: "Project Application Submission Pending", 
+						recipient2: "dlope073@fiu.edu", 
+						text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project please approve him/her by logging into your VIP account and choosing student applications.", 
+						subject2: "New Student Applied Has Applied To " + project.title 
+					};
+					User.nodeEmail(email_msg);
 			   }, 
 			   function(response){
 				 // failure callback
 				 vm.message = response.data;
 			   }
-			);;
+			);
         };
     });

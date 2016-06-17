@@ -26,12 +26,20 @@
             else if(todo.type == 'student') vm.studentCount--;
         };
 
-        function getToDo () {
+        function getToDo (profile) {
             ToDoService.loadAllToDo()
                 .then(function(data) {
                     vm.list = data.data;
                     for(i = 0; i < vm.list.length; i++) {
                         if(vm.list[i].read) continue;
+						
+						if (vm.list[i].owner != profile.userType) continue;
+						
+						if (vm.list[i].owner_id) {
+							if (vm.list[i].owner_id != profile._id) {
+								continue;
+							}
+						}
 
                         if(vm.list[i].type == 'personal') vm.personalCount++;
 
@@ -43,7 +51,16 @@
                     }
                 });
         }
+		
+		ProfileService.loadProfile().then(function(data){
+					if (data) {
+						getToDo(data);
+					}
+					else {
+						
+					}
+		});
 
-        getToDo();
+        
     }
 }());

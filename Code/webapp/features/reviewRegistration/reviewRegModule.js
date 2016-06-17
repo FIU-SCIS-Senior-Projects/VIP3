@@ -1,6 +1,6 @@
 (function() {
     'use strict';
 
-    angular.module('reviewRegistration', []);
+    angular.module('reviewRegistration', ['userService']);
 
 })();
