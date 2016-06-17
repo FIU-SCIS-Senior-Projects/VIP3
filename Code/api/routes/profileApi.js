@@ -29,20 +29,12 @@ module.exports = function(app, express) {
 				console.log("rank = " + req.body.rank);
 				console.log("userType = " + req.body.userType);
 
-				// only update rank if user has requested it
-				if (profile.requested_rank != null)
-				{
-					profile.rank = profile.requested_rank;
-				}
-
 				// only update usertype if user requested it
 				if (profile.requested_userType != null)
 				{
 					profile.userType = profile.requested_userType;
 				}
 
-				// clear the requested usertypes
-				profile.requested_rank = null;
 				profile.requested_userType = null;
 
 				// update users rank
@@ -70,7 +62,6 @@ module.exports = function(app, express) {
 
 				// note to future devs: "profile.rank" is the users current rank in database, "req.body.rank" is the rank they are attempting to obtain
 
-				var isRankUpdateRequest = false;
 				var isUserTypeUpdateRequest = false;
 
 				console.log("Profile.findById rank is " + profile.rank);
@@ -85,12 +76,14 @@ module.exports = function(app, express) {
 				profile.pantherID = req.body.pantherID;
 				profile.major = req.body.major;
 
+				// all user types are allowed to update their rankes without approval
+				profile.rank = req.body.rank;
+
 
 				// user is privileged and should be allowed to update profile without approval
 				if (profile.userType == "Staff/Faculty" || profile.userType == "Pi/CoPi")
 				{
 					console.log("User is privileged and allowed to update profile without approval");
-					profile.rank = req.body.rank;
 					profile.userType = req.body.userType
 				}
 
@@ -98,17 +91,6 @@ module.exports = function(app, express) {
 				else
 				{
 					console.log("User is NOT privileged and needs approval to update the profile");
-					// user is trying to change their account rank
-					if (profile.rank != req.body.rank)
-					{
-						console.log("Users current Rank is " + profile.rank);
-						console.log("User is attempting to change the rank to " + req.body.rank);
-
-						isRankUpdateRequest = true;
-
-						// set temporary requested_rank in database
-						profile.requested_rank = req.body.rank;
-					}
 
 					// user is trying to change their account usertype
 					if (profile.userType != req.body.userType)
@@ -131,30 +113,32 @@ module.exports = function(app, express) {
 				})
 
 				// user wants to update "Rank" or "userType", send PI an email to accept/reject the request
-				if (isRankUpdateRequest || isUserTypeUpdateRequest)
+				if (isUserTypeUpdateRequest)
 				{
+					// init
 					var vm = {};
 					vm.userData = {};
-					vm.objectId = null;
-					vm.userData.recipient = '';
-					vm.userData.text = '';
-					vm.userData.subject = '';
-
-					console.log("Sending PI approval email for rank/usertype update request");
-
-					// Here we have the user ID so we can send an email to user
-					vm.objectId = profile.objectId;
-
-					vm.userData.recipient = profile.email;
-					vm.userData.text = "Dear "+ profile.firstName +",\n\nNew Profile Update Request!"+
-					   " Vlad is trying to update his profile.\n\n http://localhost:3000/#/verifyprofile/" + profile._id +"";
-					vm.userData.subject = "Profile Update Request!";
-
 					var host = req.get('host');
 
 					// build the path to the nodeemail script
 					var postDomain = "http://" + host + "/vip/nodeemail2";
 
+					// user ID in database for cross-reference
+					vm.objectId = profile.objectId;
+
+					// recipient email(s)
+					vm.userData.recipient = profile.email;
+
+					// email body text
+					vm.userData.text = "Dear Pi/CoPi, \n\n" + profile.firstName + " " + profile.lastName + "is attempting to update their <font color = 'red'>userType</font> from <font color = 'red'> "
+						+ profile.userType + "</font> to <font color = 'red'>" + profile.requested_userType + "</font>.\n\n Accept/Reject the changes using this URL: http://localhost:3000/#/verifyprofile/" + profile._id;
+
+					// email subject line
+					vm.userData.subject = "Profile update request from " + profile.firstName + " " + profile.lastName;
+
+					console.log("Sending PI approval email for userType update request");
+
+					// deploy email
 					request.post(
 						postDomain,
 						{ form: { vm } },
@@ -167,6 +151,7 @@ module.exports = function(app, express) {
 				}
             });
         })
+
         .get(function (req, res) {
 			console.log('POST /profile');
             Profile.find({email:req.user.email}, function (err, profile) {
