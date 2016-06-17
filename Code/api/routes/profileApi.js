@@ -4,10 +4,7 @@ var passport      = require('passport');
 
 module.exports = function(app, express) {
     var apiRouter = express.Router();
-<<<<<<< HEAD
-=======
 
->>>>>>> danny
 
 	// used to update the rank/usertype of a profile that the PI has authorized the changes to
     apiRouter.route('/updateprofile')
@@ -57,13 +54,10 @@ module.exports = function(app, express) {
             });
         })
 
-<<<<<<< HEAD
-=======
 
         
 		
 
->>>>>>> danny
     apiRouter.route('/profile')
         .put(function (req, res) {
 			console.log('POST /profile');
@@ -74,11 +68,6 @@ module.exports = function(app, express) {
             //     console.log(WriteResult);
             //     return res.json(profile);
             // });
-<<<<<<< HEAD
-            // note to future devs: function finds profile via req.body._id data, and returns the found information to profile variable
-            Profile.findById(req.body._id, function(err, profile)
-            {
-=======
 
             Profile.findById(req.body._id, function(err, profile){
                 profile.firstName = req.body.firstName;
@@ -100,7 +89,6 @@ module.exports = function(app, express) {
                     res.json(profile);
                 })
 
->>>>>>> danny
 
 				// note to future devs: "profile.rank" is the users current rank in database, "req.body.rank" is the rank they are attempting to obtain
 
@@ -156,6 +144,8 @@ module.exports = function(app, express) {
 				}
             });
         })
+	
+		
         .get(function (req, res) {
 			console.log('POST /profile');
             Profile.find({email:req.user.email}, function (err, profile) {
@@ -167,6 +157,47 @@ module.exports = function(app, express) {
             });
 
         });
+		
+	
+	apiRouter.route('/reviewuser/')
+		.get(function (req, res) {
+			console.log('POST /reviewuser');
+            Profile.find({}, function (err, profile) {
+				if(err) {
+                    console.log(err);
+                    return res.send('error');
+                }
+                return res.json(profile);
+            });
+        });	
+		
+	//route for adding a member to a project(after approval)
+		apiRouter.route('/reviewusers/:userid/:pid')
+		.put(function (req, res) {
+			console.log("PUT /reviewusers/:userid/:pid");
+			console.log(req.params);
+			var id = req.params.userid;
+			var pid = req.params.pid;
+			Profile.findOne({_id: id}, function(err, profile){
+				if (err){
+					res.send(err);
+					 res.json({message: 'Error!'});
+				}
+				else if (profile){
+					profile.project = pid;
+					profile.save(function(err){
+						if(err)  {
+							res.status(400);
+							res.send(err);
+						}
+						res.json({message: 'Project Id Added to Users Profile'});
+					})
+					
+				}
+			});
+		});
+			
+		
 
 
     apiRouter.route('/verifyuser/:user_id')
