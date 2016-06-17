@@ -57,6 +57,12 @@ app.use('/api', profileRoutes);
 app.use('/todo', toDoRoutes);
 app.use('/support', supportRoutes);
 
+app.get('/checklogin',function(req,res) {
+  if (req.user)
+    res.send(true);
+  else
+    res.send(false);
+});
 
 //home page
 app.get('*', function (req, res) {
