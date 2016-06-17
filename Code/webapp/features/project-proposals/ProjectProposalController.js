@@ -1,3 +1,4 @@
+
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
     .controller('ProjectProposalController', function($location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
 
@@ -18,6 +19,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
 		
 	
+
 
         $scope.colleges= [
             {

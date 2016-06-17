@@ -79,6 +79,38 @@ module.exports = function (app, express) {
             });
         })
 
+    userRouter.route('/nodeemail2').post(function(req, res)
+    {
+            var recipient = req.body.vm.userData.recipient;
+            var text = req.body.vm.userData.text;
+            var subject = req.body.vm.userData.subject;
+
+            var transporter = nodemailer.createTransport({
+                service:'Gmail',
+                auth: {
+                    user: 'fiuvipmailer@gmail.com',
+                    pass: 'vipadmin123'
+                }
+            });
+
+            var mailOptions = {
+                from: 'FIU VIP <vipadmin@fiu.edu>', // sender address
+                to: recipient, // list of receivers
+                subject: subject, // Subject line
+                text: text
+            };
+
+            console.log(mailOptions);
+
+            // send mail with defined transport object
+			transporter.sendMail(mailOptions, function(error, info)
+			{
+				if(error) {
+					return console.log(error);
+				}
+            });
+	})
+
     userRouter.route('/nodeemail').post(function(req, res)
 	{
 			console.log("NodeEmailer Called. We should be sending 2 emails");
