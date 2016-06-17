@@ -2,6 +2,10 @@ html {
 	min-height: 100%;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .container-fluid {
     padding: 0;
 }
@@ -16,7 +20,7 @@ html {
 	background-color: #081E3F;
 }
 
-.footer p{
+.footer p {
 	color: #f2f2f2;
 	column-count: 2;
 	column-gap: 50px;
@@ -27,6 +31,23 @@ html {
 .footer-logo {
     max-width: 200px;
 }
+
+/*Fixed header icon recoloring*/
+.task-icon {
+    color: #081E3F;
+    font-size: 1.15em;
+    margin-right: 3px;
+}
+
+.welcome-user {
+    font-size: 0.75em;
+    margin-right: 3px;
+}
+
+.icons {
+    margin-top: 10px;
+}
+/*End fixes header icon css*/
 
 .title-box {
 	border: 1px solid #cccccc;
@@ -61,10 +82,6 @@ html {
 .navbar-toggle .icon-bar {
   background-color: #fff;
 }
-
-/*.task-icon {
-    font-size: 30px;
-}*/
 
 .navbar-nav {
 	margin: 0px;
@@ -171,7 +188,9 @@ html {
 .loginIcon{
 	float:right;
 	font-size: 1.9em;
-    margin: 10px;
+    margin: 40px 10px 10px 10px;
+    padding: 5px;
+    vertical-align: baseline;
 }
 
 .login {

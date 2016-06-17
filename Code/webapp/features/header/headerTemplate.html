@@ -1,17 +1,21 @@
 <div class = "loginIcon">
-	<span ng-show="header.logged_in" >Welcome <a ui-sref="profile">{{header.current_user}}!</a></span>
-    <a ui-sref="toDo" ng-show="header.logged_in" ng-click="header.count = 0">
+
+	<span ng-show="header.logged_in" class="welcome-user">Welcome {{header.current_user}}! | </span>
+    <a ui-sref="toDo" ng-show="header.logged_in" ng-click="header.count = 0" title="To-Do's" class="icons">
+	<!-- <span ng-show="header.logged_in" >Welcome <a ui-sref="profile">{{header.current_user}}!</a></span>
+    <a ui-sref="toDo" ng-show="header.logged_in" ng-click="header.count = 0"> -->
+
 	    <i class="fa fa-list-alt task-icon" aria-hidden="true"></i>
 	    <span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span>
     </a>
 	<a ng-hide="header.logged_in" ui-sref="login">
-		  <button type="button" class="btn btn-primary">Log In</button>
+		  <button type="button" class="btn btn-primary btn-user-signin" style="background-color: #081E3F;">Log In</button>
+	</a>
+	<a ng-show="header.logged_in" ui-sref="profile" title="User Profile" href="/logout" class="icons">
+		<i class="fa fa-user task-icon" aria-hidden="true"></i>
 	</a>
 	<a ng-show="header.logged_in" ng-click="header.logged_in = false" href="/logout">
-		<i class="fa fa-user" aria-hidden="true"></i>
-	</a>
-	<a ng-show="header.logged_in" ng-click="header.logged_in = false" href="/logout">
-		<button type="button" class="btn btn-primary">Log Out</button>
+		<button type="button" class="btn btn-primary btn-user-signin" style="background-color: #081E3F;">Log Out</button>
 	</a>
 </div>
 <div>
@@ -75,7 +79,7 @@
 					<a ui-sref="#" class="dropdown-toggle">FACULTY<span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a ng-show="header.user_type == 'Staff/Faculty' || header.user_type == 'Pi/CoPi'" ui-sref="projectProposal">PROPOSE PROJECT</a></li>
-						<li><a ng-show="header.user_type == 'Pi/CoPi' && header.logged_in" ui-sref="#">REVIEW PROJECT PROPOSALS</a></li>
+						<li><a ng-show="header.user_type == 'Pi/CoPi' && header.logged_in" ui-sref="reviewproject">REVIEW PROJECT PROPOSALS</a></li>
 						<li><a href="https://docs.google.com/spreadsheets/d/1XQYTPXd0UPv95STe6MS_ydXhvBlbzBUlG8EayvGyBrM/edit#gid=351988271" target="_blank">CLASS DAYS, TIMES, & LOCATIONS</a></li>
 					</ul>
 				</li>

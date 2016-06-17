@@ -3,18 +3,18 @@ angular
     .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, $stateParams) {
         var vm = this;
 
-        vm.mockData = [{
-            firstName: "Marlon",
-            lastName: "Rowe",
-            email: "mrowe009@fiu.edu",
-            pID: "1234567",
-            rank: "Senior",
-            gender: 'Male',
-            type: 'Student',
-            college: "'Engineering & Computing",
-            school: "School of Computing and Information Sciences",
-            semester: "Spring 2016"
-        }];
+        // vm.mockData = [{
+        //     firstName: "Marlon",
+        //     lastName: "Rowe",
+        //     email: "mrowe009@fiu.edu",
+        //     pID: "1234567",
+        //     rank: "Senior",
+        //     gender: 'Male',
+        //     type: 'Student',
+        //     college: "'Engineering & Computing",
+        //     school: "School of Computing and Information Sciences",
+        //     semester: "Spring 2016"
+        // }];
 
         vm.Colleges = [
             {
@@ -202,13 +202,10 @@ angular
 					}
 		});
 				
-
-
-
        
 
 
-        vm.save = function() {
+       vm.save = function() {
 
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
