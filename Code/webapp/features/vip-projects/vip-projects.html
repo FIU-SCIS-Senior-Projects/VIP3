@@ -1,0 +1,53 @@
+<div class="row team-project">
+    <div class="projects-top-bar">
+        <div>
+            <h3>VIP Teams</h3>
+        </div>
+        <div class="col">
+            <div class="col-sm-4 team-info">
+                <h5>Showing {{vm.projects.length}} out of {{vm.backupProjects.length}}</h5>
+            </div>
+            <div class="col-sm-8 sort-by-padding">
+                <label class=""><h5>Sort By:</h5></label>
+                <select class="btn btn-default dropdown-toggle top-margin">
+                    <option value="Title">Title</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="">     
+        <div class="col-sm-3">
+            <div class="col-sm-12 project-second-section-sidebar">
+                <div class="input-group">
+                    <span class="input-group-addon disciplines">
+                        <input id="showAll" type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.showAllDisciplinesToggle()" ng-model="vm.showAllCheckBox">
+                    </span>
+                    <input type="text" class="form-control disciplines" aria-label="..." value="Show All" readonly>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="btn"><h4>Disciplines</h4></div>
+            </div>
+            <div class="col-sm-12" ng-repeat="discipline in vm.disciplines">
+                <div class="input-group">
+                    <span class="input-group-addon disciplines">
+                        <input type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.filterByDiscipline(discipline)">
+                    </span>
+                    <input type="text" class="form-control disciplines" aria-label="..." value={{discipline}} readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 project-second-section-middle">
+            <div class="col-sm-6 project-info" ng-repeat="project in vm.projects" ng-click="vm.viewDetails(project)">
+                <div class="">
+                    <div class="col-sm-5">
+                        <img ng-src="{{project.image}}" alt="Smiley face" height="120" width="120">
+                    </div>
+                    <div class="col-sm-7 team-info-name">
+                        <h4>{{project.title}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

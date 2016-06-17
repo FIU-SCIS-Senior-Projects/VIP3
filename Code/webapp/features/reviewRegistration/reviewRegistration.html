@@ -1,0 +1,87 @@
+<div class="register">
+    <h3 align="center"> Review User </h3>
+    <form name="Profile"  >
+        <div class="form-group">
+            <table class="table">
+                <tr>
+                    <td>
+                        <input  ng-model="vm.profile.firstName" class="form-control" >
+
+                    </td>
+                    <td>
+                        <input  type="text" ng-model="vm.profile.lastName" class="form-control" >
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input   ng-model="vm.profile.email" class="form-control" >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>User Type:</label>
+                        <div>
+                            <input  class = 'form-control' ng-model="vm.profile.userType">
+                            </input>
+                        </div><br>
+
+                    </td>
+                    <td>
+                        <label>Rank:</label>
+                        <div>
+                            <input    class = "form-control" ng-model="vm.profile.rank" >
+                            </input>
+                        </div>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Panther ID:</label>
+
+                        <div>
+                            <input   ng-model="vm.profile.pantherID" class="form-control" />
+                        </div>
+                    </td>
+                    <td>
+
+                        <label>Gender:</label>
+                        <div>
+                            <input   ng-model="vm.profile.gender" class="form-control" ></input>
+                        </div>
+                    </td>
+                <tr>
+                    <td colspan="4">
+
+                        <label>College:</label>
+                        <input    ng-model="vm.profile.college" class="form-control"  >
+                        </input>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+
+                        <label>School/Department:</label>
+                        <input   ng-model="vm.profile.department" class="form-control" >
+                        </input>
+
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="buttoninline">
+                <button style= "width: 150px;" ng-click="vm.acceptProfile()" class="btn btn-success btn-block" ng-disabled="vm.profile.$invalid" >
+                    <i></i> Accept
+                </button>
+                </div>
+            <div class="buttoninline">
+                <button style= "width: 150px;" ng-click ="vm.rejectProfile()" class="btn btn-danger btn-block" ng-disabled="vm.profile.$invalid" >
+                    <i></i> Reject
+                </button>
+            </div>
+
+        </div>
+</div><br>
+</div>
+
+</form>
+</div>

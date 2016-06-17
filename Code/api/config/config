@@ -1,0 +1,5 @@
+module.exports = {
+'port':3000,
+'database':'mongodb://localhost/admin', //this is blank, because I havent setup mongo yet.
+'secret':'whateveryouwant'
+};
