@@ -136,19 +136,5 @@ angular.module('routes', ['ui.router'])
                 url: '/login/error',
                 templateUrl: 'features/login/loginError.html'
             })
-			
-			.state('reviewuser', {
-                url: '/reviewuser/',
-                templateUrl: 'features/reviewStudentApplications/reviewStudentApp.html',
-				controller: 'reviewStudentAppController',
-				controllerAs: 'vm'
-            })
-			
-			.state('reviewproject', {
-                url: '/reviewproject/:id',
-                templateUrl: 'features/reviewProjectProposals/reviewProjectProposals.html',
-				controller: 'reviewProjectController',
-				controllerAs: 'vm'
-            })
-			
+
         });

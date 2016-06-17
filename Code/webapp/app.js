@@ -14,7 +14,5 @@ angular.module('mainApp', [
     'toDoModule',
 	'user-profile',
 	'reviewRegistration',
-	'folder',
-	'reviewStudentApp',
-	'reviewProjectProposals'
+	'folder'
 ]);
