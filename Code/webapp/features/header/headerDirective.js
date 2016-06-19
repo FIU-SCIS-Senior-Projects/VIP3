@@ -7,7 +7,12 @@
 		if (document.cookie.indexOf("destinationURL") > -1)
 		{
 			//alert(getCookie("destinationURL"));
-			window.location = getCookie("destinationURL");
+            var getLoc = getCookie("destinationURL");
+            
+            // delete cookie
+            document.cookie = "destinationURL" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            
+			window.location = getLoc;
 		}
 
 		function getCookie(name) {
@@ -15,9 +20,6 @@
 		  var parts = value.split("; " + name + "=");
 		  if (parts.length == 2) return parts.pop().split(";").shift();
 		}
-
-		// delete cookie
-		document.cookie = "destinationURL" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
         return {
             templateUrl: 'features/header/headerTemplate.html',

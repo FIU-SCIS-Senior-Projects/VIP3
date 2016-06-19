@@ -185,12 +185,18 @@ module.exports = function (app, express) {
             user.rank       = req.body.rank;    // set the users Rank within the program
             user.college      = req.body.college;   // sets the users college
             user.department      = req.body.department;  // sets the users college
-            user.piApproval = req.body.piApproval;
-            user.piDenial = req.body.piDenial;
-            user.verifiedEmail = req.body.verifiedEmail;
+            
+            // initially has to be init to false
+            user.piApproval = false;
+            user.piDenial = false;
+            user.verifiedEmail = false;
+            
             user.googleKey = " ";
             user.userType = req.body.userType;
             user.gender = req.body.gender;
+            
+            // always set to false, until the user is approved as a PI
+            user.isSuperUser = false;
 
             user.save(function (err)
             {

@@ -41,7 +41,6 @@
         function rejectProfile ()
         {
 			// a decision has been made, clear the requested fields for this user
-			vm.profile.requested_rank = null;
 			vm.profile.userType = null;
 
             reviewProfileService.rejectProfile(vm.profile).then(function(data){

@@ -6,7 +6,7 @@ angular
     .module('userRegistrationController', ['userService','toDoModule'])
     .controller('registrationController', function (User,ToDoService,ProfileService) {
         var vm = this;
-		var host = "vip.fiu.edu";
+		var host = "localhost:3000";
 
         vm.Users = [
             {

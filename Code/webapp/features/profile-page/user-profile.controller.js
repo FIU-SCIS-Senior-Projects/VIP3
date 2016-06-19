@@ -33,12 +33,30 @@
 			ProfileService.requestProfileUpdate(vm.profile).then(function(data)
 			{
 				console.log(data.userType);
+				console.log("Curr usertype: " + currRank);
+				console.log("Requested usertype: " + vm.profile.userType);
 
-				if (currRank == "Staff/Faculty" || currRank == "Pi/CoPi")
-					vm.message = "Profile Updated.";
+				// user is trying to change the userType, which may need approval
+				if (vm.profile.userType != currRank)
+				{
+					// however, Pi/CoPi/Coordinators can update the profile without approval
+					if (vm.profile.isSuperUser)
+					{
+						vm.message = "Profile Updated.";
+					}
 
+					// otherwise, this requested userType change needs approval
+					else
+					{
+						vm.message = "Profile Updated. Waiting for PI Approval.";
+					}
+				}
+
+				// changing anything else doesnt need approval
 				else
-					vm.message = "Profile Updated. Waiting for PI Approval.";
+				{
+					vm.message = "Profile Updated.";
+				}
 			});
 
 			// refresh the page after 3 seconds so the user can see the message

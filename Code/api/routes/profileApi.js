@@ -47,10 +47,6 @@ module.exports = function(app, express) {
             });
         })
 
-
-
-
-
     apiRouter.route('/profile')
         .put(function (req, res) {
 			console.log('POST /profile');
@@ -62,30 +58,21 @@ module.exports = function(app, express) {
             //     return res.json(profile);
             // });
 
+            // find the profile via _id
             Profile.findById(req.body._id, function(err, profile){
-                profile.firstName = req.body.firstName;
-                profile.lastName = req.body.lastName;
-                profile.rank       = req.body.rank;    // set the users Rank within the program
-                profile.college      = req.body.college;   // sets the users college
-                profile.department      = req.body.department;   // sets the users college
-                profile.userType = req.body.userType;
-                profile.gender = req.body.gender;
-                profile.minor = req.body.minor;
-                profile.pantherID        = req.body.pantherID;
-                profile.major        = req.body.major;
-				profile.piApproval = req.body.piApproval;
-				profile.project = req.body.project;
-                //Missing fields go here
-
-                profile.save(function(err){
-                    if(err) res.send(err);
-                    res.json(profile);
-                })
-
-
 				// note to future devs: "profile.rank" is the users current rank in database, "req.body.rank" is the rank they are attempting to obtain
+                // beyond this point, the profile has been found
+                
+                console.log("piApproval is " + req.body.piApproval);
 
 				var isUserTypeUpdateRequest = false;
+                
+                // set superuser status for a newly approved PI account
+                if (!profile.isSuperUser && profile.userType == "Pi/CoPi")
+                {
+                    console.log("User has been approved by PI, and is a PI himself, elevate privs");
+                    profile.isSuperUser = true;
+                }
 
 				console.log("Profile.findById rank is " + profile.rank);
 
@@ -98,22 +85,27 @@ module.exports = function(app, express) {
 				profile.minor = req.body.minor;
 				profile.pantherID = req.body.pantherID;
 				profile.major = req.body.major;
-
+                
 				// all user types are allowed to update their rankes without approval
 				profile.rank = req.body.rank;
-
-
-				// user is privileged and should be allowed to update profile without approval
-				if (profile.userType == "Staff/Faculty" || profile.userType == "Pi/CoPi")
+                
+                // this field will be set to true if the acceptProfile() function called us
+                if (req.body.piApproval)
+                {
+                    profile.piApproval = req.body.piApproval;
+                }
+               
+				// user is privileged and should be allowed to update userType without approval
+				if (profile.isSuperUser)
 				{
 					console.log("User is privileged and allowed to update profile without approval");
-					profile.userType = req.body.userType
+					profile.userType = req.body.userType;
 				}
 
-				// user needs approval before updating the profile
+				// user needs approval before updating the userType
 				else
 				{
-					console.log("User is NOT privileged and needs approval to update the profile");
+					console.log("User is NOT privileged and needs approval to update the userType");
 
 					// user is trying to change their account usertype
 					if (profile.userType != req.body.userType)
@@ -145,6 +137,7 @@ module.exports = function(app, express) {
 
 					// build the path to the nodeemail script
 					var postDomain = "http://" + host + "/vip/nodeemail2";
+                    var reviewDomain = "http://" + host + "/#/verifyprofile/" + profile._id;
 
 					// user ID in database for cross-reference
 					vm.objectId = profile.objectId;
@@ -153,8 +146,8 @@ module.exports = function(app, express) {
 					vm.userData.recipient = profile.email;
 
 					// email body text
-					vm.userData.text = "Dear Pi/CoPi, \n\n" + profile.firstName + " " + profile.lastName + "is attempting to update their <font color = 'red'>userType</font> from <font color = 'red'> "
-						+ profile.userType + "</font> to <font color = 'red'>" + profile.requested_userType + "</font>.\n\n Accept/Reject the changes using this URL: http://localhost:3000/#/verifyprofile/" + profile._id;
+					vm.userData.text = "Dear Pi/CoPi, \n\n" + profile.firstName + " " + profile.lastName + " is attempting to update their userType FROM "
+						+ profile.userType + " TO " + profile.requested_userType + ".\n\n Accept/Reject the changes using this URL: " + reviewDomain;
 
 					// email subject line
 					vm.userData.subject = "Profile update request from " + profile.firstName + " " + profile.lastName;
