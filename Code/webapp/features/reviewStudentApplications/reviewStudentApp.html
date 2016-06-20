@@ -2,13 +2,14 @@
     <h3 align="center"> Review Student Applications for Projects </h3>
             <table class="table">
 			<tr>
-			<td><label>First Name</label></td><td><label>Last Name</label></td><td><label>Gender</label></td><td><label>Department</label></td>
+			<td><label>First Name</label></td><td><label>Last Name</label></td><td><label>Gender</label></td><td><label>Email</label></td><td><label>Department</label></td>
 			<td><label>College</label></td><td><label>Major</label></td><td><label>Selected Project</label></td><td><label>Approve</label></td><td><label>Reject</label></td>
 			</tr>
 			<tr ng-repeat="user in vm.membs track by $index">
 			<td><input type="text" class="form-control profile" value={{user.firstName}} readonly></input></td>
 			<td><input type="text" class="form-control profile" value={{user.lastName}} readonly></input></td>
 			<td><input type="text" class="form-control profile" value={{user.gender}} readonly></input></td>
+			<td><input type="text" class="form-control profile" value={{user.email}} readonly></input></td>
 			<td><input type="text" class="form-control profile" value={{user.department}} readonly></input></td>
 			<td><input type="text" class="form-control profile" value={{user.college}} readonly></input></td>
 			<td><input type="text" class="form-control profile" value={{user.major}} readonly></input></td>

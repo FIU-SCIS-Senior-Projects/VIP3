@@ -2,11 +2,14 @@
     <h3 align="center"> Review Projects Proposals </h3>
             <table class="table">
 			<tr>
-			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Approve</label></td><td><label>Reject</label></td>
+			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td>
+			<td><label>Approve</label></td><td><label>Reject</label></td>
 			</tr>
 			<tr ng-repeat="project in vm.projects">
 			<td><input type="text" class="form-control projects" value={{project.title}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.description}} readonly></input></td>
+			<td><input type="text" class="form-control projects" value={{project.owner_name}} readonly></input></td>
+			<td><input type="text" class="form-control projects" value={{project.owner_email}} readonly></input></td>
 			<td>
             <div class="text-center">
                 <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project._id,project.owner,project.title,project.owner_email,project.owner_rank)">

@@ -6,6 +6,7 @@ var ProjectSchema = new Schema({
     title: String,
 	owner_email: String,
 	owner_rank: String,
+	owner_name: String,
     description: String,
     disciplines: [String],
     firstSemester: Number,
@@ -22,7 +23,6 @@ var ProjectSchema = new Schema({
     status: String,
     image: String,
     term: { type: String, default: 1 }
-	
 });
 
 module.exports = mongoose.model('Projects', ProjectSchema);

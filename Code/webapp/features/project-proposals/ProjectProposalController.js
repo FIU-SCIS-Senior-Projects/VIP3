@@ -180,6 +180,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 			$scope.project.owner = profile._id; // Set the project owner to the person who proposed the project used later for contacting the faculty member.
 			$scope.project.owner_email = profile.email;
 			$scope.project.owner_rank = profile.userType;
+			$scope.project.owner_name = profile.firstName + " " + profile.lastName;
 			var obj = document.getElementById('teamImage');
 			if (obj.files.length == 0) {
 				    $scope.project.image = "";
