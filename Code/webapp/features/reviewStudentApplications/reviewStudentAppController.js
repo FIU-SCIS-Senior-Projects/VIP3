@@ -5,9 +5,9 @@
         .module('reviewStudentApp')
         .controller('reviewStudentAppController', reviewStudentAppCtrl);
 
-    reviewStudentAppCtrl.$inject = ['$state', '$scope', 'reviewStudentAppService'];
+    reviewStudentAppCtrl.$inject = ['$state', '$scope', 'reviewStudentAppService','ToDoService','User'];
     /* @ngInject */
-    function reviewStudentAppCtrl($state, $scope, reviewStudentAppService) {
+    function reviewStudentAppCtrl($state, $scope, reviewStudentAppService, ToDoService,User) {
         var vm = this;
         vm.profile;
 		vm.projects;
@@ -54,23 +54,58 @@
 						}
 					}
 				}
+				vm.membs = vm.membs.filter(function(n){ return n != undefined });
+				
             });
         }
 		
-		function ApproveData(pid, members, userid)
+		function ApproveData(pid, members, userid,name)
 		{
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Approved";
+				
 			});
 			reviewStudentAppService.AddToProject(userid, pid).then(function(data){
 				$scope.result = "Approved";
+				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "#" };
+				ToDoService.createTodo(todo).then(function(success)  {
+					
+				}, function(error) {
+					
+				});
+				var email_msg = 
+				{
+					recipient: members, 
+					text:  "Dear student, the project you joined has accepted you to participate.",
+					subject: "Project Approved", 
+					recipient2: "test@example.com", 
+					text2: "", 
+					subject2: "" 
+				};
+				User.nodeEmail(email_msg);
 			});
 		}
 		
-		function RejectData(pid, members)
+		function RejectData(pid, members,userid,name)
 		{
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Rejected";
+				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "#" };
+				ToDoService.createTodo(todo).then(function(success)  {
+					
+				}, function(error) {
+					
+				});
+				var email_msg = 
+				{
+					recipient: members, 
+					text:  "Dear student, the project you joined has rejected you from joining.",
+					subject: "Project Approved", 
+					recipient2: "test@example.com", 
+					text2: "", 
+					subject2: "" 
+				};
+				User.nodeEmail(email_msg);
 			});
 		}
 

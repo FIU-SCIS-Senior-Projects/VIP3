@@ -24,6 +24,34 @@ html {
 	font-weight: 300;
 }
 
+/*Fixed header icons*/
+a {
+    text-decoration: none !important;
+}
+
+.task-icon {
+    color: #081E3F;
+    margin-right: 3px;
+    font-size: 1.1em;
+}
+
+.welcome-icon {
+    font-size: 0.9em;
+    margin-right: 3px;
+}
+
+.log-btn {
+    background-color: #081E3F;
+}
+
+.loginHeader {
+    float:right;
+    font-size: 1.9em;
+    margin-top: 35px;
+}
+
+/*End fixed header icons*/
+
 .footer-logo {
     max-width: 200px;
 }
@@ -61,10 +89,6 @@ html {
 .navbar-toggle .icon-bar {
   background-color: #fff;
 }
-
-/*.task-icon {
-    font-size: 30px;
-}*/
 
 .navbar-nav {
 	margin: 0px;
@@ -168,11 +192,11 @@ html {
     margin-bottom: 5px;
 }
 
-.loginIcon{
+/*.loginIcon{
 	float:right;
 	font-size: 1.9em;
     margin: 10px;
-}
+}*/
 
 .login {
 	max-width: 500px;
