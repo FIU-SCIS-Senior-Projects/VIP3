@@ -136,7 +136,7 @@ module.exports = function(app, express) {
 					var host = req.get('host');
 
 					// build the path to the nodeemail script
-					var postDomain = "http://" + host + "/vip/nodeemail2";
+					var postDomain = "http://" + "127.0.0.1:3000" + "/vip/nodeemail2";
                     var reviewDomain = "http://" + host + "/#/verifyprofile/" + profile._id;
 
 					// user ID in database for cross-reference
@@ -160,8 +160,13 @@ module.exports = function(app, express) {
 						{ form: { vm } },
 						function (error, response, body) {
 							if (!error && response.statusCode == 200) {
-								console.log(body)
+								console.log(body);
+                                console.log(error);
+                                console.log(response);
 							}
+                                console.log(body);
+                                console.log(error);
+                                console.log(response);
 						}
 					);
 				}

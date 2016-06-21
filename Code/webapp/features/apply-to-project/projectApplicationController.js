@@ -13,22 +13,25 @@ angular
                 console.log("Usertype found is " + profile.userType);
                 
                 // if the user is a PI or Faculty member, render the page
-				if (profile.userType == "Pi/CoPi" || profile.userType == "Staff/Faculty") {
+				if (profile.userType == "Pi/CoPi" || profile.userType == "Student") {
                     console.log("User type is " + profile.userType + " and user is allowed to view this page");
 				}
                 
-                // otherwise, redirect to login
+                // otherwise, the user doesnt have permission, so show homepage instead
                 else
                 {
-                    console.log("User type is Student, redirecting to home page");
+                    console.log("User type is Faculty/Staff, redirecting to home page");
                     $location.path("/");
                 }
 			}
             
-            // handler for guest
+            // handler for guest - redirect them to login, store cookie
 			else {
 				profile = null;
                 console.log("User type is guest, redirecting to login");
+                
+                document.cookie = "destinationURL=http://vip.fiu.edu/#/studentConfirmation/";
+                
 				$location.path("login");
 			}
 		});

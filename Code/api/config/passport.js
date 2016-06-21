@@ -86,7 +86,10 @@ module.exports = function(passport,app) {
 								   newUser.email = profile._json.emails[0].value;
 								   newUser.image = profile._json.image.url;
 								   newUser.google.email = profile.emails[0].value; // pull the first email
-								   newUser.piApproval = false;
+								   
+                                   newUser.userType = "Student";
+                                   newUser.rank = "Freshman";
+                                   
 								   // save the user
 								   newUser.save(function (err)
 								   {

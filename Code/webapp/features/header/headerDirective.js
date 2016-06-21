@@ -2,7 +2,6 @@
     angular.module('vipHeader', ['toDoModule'])
     .directive('vipHeader', function (ToDoService,ProfileService)
     {
-
 		// if redirect cookie exists, navigate the user back to the page they were at
 		if (document.cookie.indexOf("destinationURL") > -1)
 		{

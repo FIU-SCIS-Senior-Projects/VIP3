@@ -13,13 +13,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					}
 					else {
 						profile = null;
+                        document.cookie = "destinationURL=http://vip.fiu.edu/#/project-proposal";
 						$location.path("login");
 					}
 		});
-		
-		
-	
-
 
         $scope.colleges= [
             {
