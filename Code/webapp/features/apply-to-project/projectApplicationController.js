@@ -213,7 +213,7 @@ angular
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
 				if (project.members[i] === vm.email) {
-					vm.message = "You already joined the project!";
+					vm.message = "You have already applied for this project and it is pending approval or already accepted";
 					return;
 				}
 			}
@@ -221,7 +221,7 @@ angular
 			ProjectService.editProject(project,project._id).then(
 				   function(response){
 					 // success callback
-					 vm.message = response.data.message;
+					 vm.message = "Your application has been submitted, please wait for PI approval";
 					 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
 					ToDoService.createTodo(todo).then(function(success)  {
 						
@@ -239,6 +239,10 @@ angular
 						subject2: "New Student Applied Has Applied To " + project.title 
 					};
 					User.nodeEmail(email_msg);
+
+                    // refresh the page after 3 seconds so the user can see the message
+                    setTimeout(function () { location.reload(true); }, 3000);
+
 			   }, 
 			   function(response){
 				 // failure callback
