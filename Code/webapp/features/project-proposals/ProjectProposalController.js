@@ -197,7 +197,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 										recipient: profile.email, 
 										text: "Dear " + profile.firstName + ", thank you for proposing " + profile.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 										subject: "Project Proposal Submission Pending", 
-										recipient2: "dlope073@fiu.edu", 
+										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",
 										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
 										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
 									};
