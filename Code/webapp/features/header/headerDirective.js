@@ -49,8 +49,10 @@
 												vm.count++;
 											}
 											else {
-												if (data.data[i].owner_id == id) { // Or Only count the todo tasks if it is the recipient of the todo. 
-													vm.count++;
+												if (data.data[i].owner_id) {
+													if (data.data[i].owner_id == id) { // Or Only count the todo tasks if it is the recipient of the todo. 
+														vm.count++;
+													}
 												}
 											}
 										}
