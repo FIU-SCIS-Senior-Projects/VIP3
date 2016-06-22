@@ -222,7 +222,7 @@ angular
 				   function(response){
 					 // success callback
 					 vm.message = response.data.message;
-					 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
+					 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "/#/to-do" };
 					ToDoService.createTodo(todo).then(function(success)  {
 						
 					}, function(error) {
