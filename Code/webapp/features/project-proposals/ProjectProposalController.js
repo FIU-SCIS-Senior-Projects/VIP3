@@ -13,7 +13,6 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					}
 					else {
 						profile = null;
-                        document.cookie = "destinationURL=http://vip.fiu.edu/#/project-proposal";
 						$location.path("login");
 					}
 		});
@@ -152,19 +151,13 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         init();
         function init () {
             if($stateParams.id != null){
-				loadData();
                 vm.id = $stateParams.id;
                 vm.editingMode = true;
                 getProjectById();
             }
         }
 
-        function loadData(){
-            reviewProfileService.getReg($state.params.user_id).then(function(data){
-                vm.profile = data;
 
-            });
-        }
 
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){

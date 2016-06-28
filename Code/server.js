@@ -14,7 +14,7 @@ var app			= express();
 
 
 //Set HOST 
-app.set("host", "vip.fiu.edu");
+app.set("host", "localhost:3000");
 
 
 //connect to mongodb
