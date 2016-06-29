@@ -41,10 +41,10 @@
             <div class="col-sm-6 project-info" ng-repeat="project in vm.projects" ng-click="vm.viewDetails(project)">
                 <div class="">
                     <div class="col-sm-5">
-                        <img ng-src="{{project.image}}" alt="Smiley face" height="120" width="120">
-                    </div>
-                    <div class="col-sm-7 team-info-name">
-                        <h4>{{project.title}}</h4>
+                        <img ng-src="{{project.image}}" alt="A project" class="proj-image">
+                    <!-- </div>
+                    <div class="col-sm-7 team-info-name"> -->
+                        <h4 class="proj-title-teams">{{project.title}}</h4>
                     </div>
                 </div>
             </div>
