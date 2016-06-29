@@ -85,6 +85,7 @@
 				};
 				User.nodeEmail(email_msg);
 			});
+			 $location.route("reviewuser");
 		}
 		
 		function RejectData(pid, members,userid,name)
@@ -109,6 +110,7 @@
 				};
 				User.nodeEmail(email_msg);
 			});
+			$location.route("reviewuser");
 		}
     }
 })();
