@@ -61,6 +61,7 @@
 		
 		function ApproveData(pid, members, userid,name)
 		{
+            vm.message = "Application has been Accepted!";
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Approved";
 				
@@ -88,6 +89,7 @@
 		
 		function RejectData(pid, members,userid,name)
 		{
+            vm.message = "Application has been Rejected!";
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Rejected";
 				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "#" };
@@ -108,7 +110,5 @@
 				User.nodeEmail(email_msg);
 			});
 		}
-
-
     }
 })();
