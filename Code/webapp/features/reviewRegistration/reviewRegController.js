@@ -45,6 +45,7 @@
         function acceptProfile () {
             vm.profile.piApproval = true;
             console.log("piApproval set to true");
+            vm.message = "User has been Accepted!";
 
 			// if a Pi is approved, mark him in the DB as a super user, so he can switch usertypes to student/faculty/pi without approval
             if (vm.profile.userType == "Pi/CoPi")
@@ -62,13 +63,14 @@
 
             reviewRegService.acceptProfile(vm.profile).then(function(data){ });
 
-            reviewRegService.acceptProfile(vm.profile).then(function(data){
-            });
             success_msg();
+
         }
+        
         function rejectProfile () {
             vm.profile.piApproval = false;
             vm.profile.piDenial = true;
+            vm.message = "User has been Rejected!";
             reviewRegService.rejectProfile(vm.profile).then(function(data){
             });
             reject_msg();

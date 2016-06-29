@@ -251,7 +251,7 @@ angular
 						recipient: profile.email, 
 						text: "Dear " + profile.firstName + ", thank you for applying to " + project.title + " you are currently pending and this is just a confirmation that you applied to the project please keep checking the VIP to-do or your email as the PI will approve or deny your request to join the project.\n\nProject: " + project.title + "\nStatus: Pending", 
 						subject: "Project Application Submission Pending", 
-						recipient2: "dlope073@fiu.edu", 
+						recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
 						text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project please approve him/her by logging into your VIP account and choosing student applications.", 
 						subject2: "New Student Applied Has Applied To " + project.title 
 					};

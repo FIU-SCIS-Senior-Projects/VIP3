@@ -5,7 +5,7 @@
         .module('reviewProjectProposals')
         .controller('reviewProjectController', reviewProjectCtrl);
 
-    reviewProjectCtrl.$inject = ['$state', '$scope', 'reviewPPS','ToDoService','User'];
+    reviewProjectCtrl.$inject = ['$location','$state', '$scope', 'reviewPPS','ToDoService','User'];
     /* @ngInject */
     function reviewProjectCtrl($state, $scope, reviewPPS,ToDoService,User) {
         var vm = this;
@@ -27,6 +27,8 @@
         }
 		
 		function AcceptProject(projectid,owner,title,email,rank){
+            
+            vm.message = "Project has been Approved!";
 		
             reviewPPS.AcceptProjects(projectid).then(function(data){
 				$scope.result = "Project Approved";
@@ -46,7 +48,6 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
-            });
 
             success_msg();
 			
@@ -54,10 +55,13 @@
 				reviewPPS.createLog(log).then(function(success)  {
 				}, function(error) {
 				});
-            }); 
+        	});
         }
 		
-		function RejectProject(projectid,owner,title,email,rank){
+		function RejectProject(projectid,owner,title,email,rank)
+        {
+            
+            // vm.message = "Project has been Rejected!";
 			
             reviewPPS.RejectProjects(projectid).then(function(data){
 				$scope.result = "Project Rejected";
@@ -82,9 +86,7 @@
 				reviewPPS.createLog(log).then(function(success)  {
 				}, function(error) {
 				});
-				
             });
-
             reject_msg();
 		}
 
