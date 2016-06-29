@@ -5,9 +5,9 @@
         .module('reviewStudentApp')
         .controller('reviewStudentAppController', reviewStudentAppCtrl);
 
-    reviewStudentAppCtrl.$inject = ['$state', '$scope', 'reviewStudentAppService','ToDoService','User'];
+    reviewStudentAppCtrl.$inject = ['$window','$state', '$scope', 'reviewStudentAppService','ToDoService','User'];
     /* @ngInject */
-    function reviewStudentAppCtrl($state, $scope, reviewStudentAppService, ToDoService,User) {
+    function reviewStudentAppCtrl($window,$state, $scope, reviewStudentAppService, ToDoService,User) {
         var vm = this;
         vm.profile;
 		vm.projects;
@@ -85,7 +85,7 @@
 				};
 				User.nodeEmail(email_msg);
 			});
-			 $location.route("reviewuser");
+			$window.location.reload();
 		}
 		
 		function RejectData(pid, members,userid,name)
@@ -109,8 +109,9 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
+				$window.location.reload();
 			});
-			$location.route("reviewuser");
+			
 		}
     }
 })();
