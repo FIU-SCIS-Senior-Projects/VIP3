@@ -5,19 +5,21 @@
         .module('reviewProjectProposals')
         .controller('reviewProjectController', reviewProjectCtrl);
 
-    reviewProjectCtrl.$inject = ['$state', '$scope', 'reviewPPS','ToDoService','User'];
+    reviewProjectCtrl.$inject = ['$location','$state', '$scope', 'reviewPPS','ToDoService','User'];
     /* @ngInject */
     function reviewProjectCtrl($state, $scope, reviewPPS,ToDoService,User) {
         var vm = this;
         vm.projects;
+		vm.logs;
 		vm.AcceptProject = AcceptProject;
 		vm.RejectProject = RejectProject;
-		
+		vm.Undo = Undo;
         init();
         function init(){
             loadData();
+			loadLogs();
         }
-
+		
         function loadData(){
             reviewPPS.loadProjects().then(function(data){
                 vm.projects = data;
@@ -46,8 +48,19 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
+
             });
-            setTimeout(function () { location.reload(true); }, 2000);
+
+			
+			var log = {student: owner, studentemail: email, action: "accept", type: "project"};
+				reviewPPS.createLog(log).then(function(success)  {
+				}, function(error) {
+				});
+            }); 
+			
+			
+			 $location.route("reviewproject");
+
         }
 		
 		function RejectProject(projectid,owner,title,email,rank)
@@ -73,9 +86,26 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
+				
+				var log = {student: owner, studentemail: email, action: "reject", type: "project"};
+				reviewPPS.createLog(log).then(function(success)  {
+				}, function(error) {
+				});
+				
             });
             
-            setTimeout(function () { location.reload(true); }, 2000);
+            $location.route("reviewproject");
+		}
+		
+		function loadLogs(){
+            reviewPPS.loadLog("project").then(function(data){
+                vm.logs = data;
+            });
+        }
+		
+		function Undo(id){
+			console.log("UNDER CONSTRUCTION");
+			alert("UNDER CONSTRUCTION!");
 		}
 		
 	}
