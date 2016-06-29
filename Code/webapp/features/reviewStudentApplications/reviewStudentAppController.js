@@ -85,7 +85,6 @@
 				};
 				User.nodeEmail(email_msg);
 			});
-
 			success_msg();
 		}
 		
@@ -111,8 +110,12 @@
 				};
 				User.nodeEmail(email_msg);
 			});
+<<<<<<< HEAD
 
 			reject_msg();
+=======
+			$location.route("reviewuser");
+>>>>>>> dfcbcec3fdd90a9f295d3a461ed864ca77ce5498
 		}
 
 		function success_msg()
