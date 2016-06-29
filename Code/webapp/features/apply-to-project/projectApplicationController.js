@@ -28,10 +28,7 @@ angular
             // handler for guest - redirect them to login, store cookie
 			else {
 				profile = null;
-                console.log("User type is guest, redirecting to login");
-                
-                document.cookie = "destinationURL=http://vip.fiu.edu/#/studentConfirmation/";
-                
+
 				$location.path("login");
 			}
 		});
