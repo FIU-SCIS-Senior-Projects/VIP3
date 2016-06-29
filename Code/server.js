@@ -14,7 +14,7 @@ var app			= express();
 
 
 //Set HOST 
-app.set("host", "vip.fiu.edu");
+app.set("host", "localhost:3000");
 
 
 //connect to mongodb
@@ -50,12 +50,15 @@ var projectRoutes = require('./api/routes/projectsRoutes')(app,express);
 var toDoRoutes = require('./api/routes/toDoRoutes')(app,express);
 var profileRoutes = require('./api/routes/profileApi')(app,express);
 var supportRoutes = require('./api/routes/support')(app,express);
+var logRoutes = require('./api/routes/logRoutes')(app,express);
+
 
 app.use('/api', projectRoutes);
 app.use('/vip', userRoutes);
 app.use('/api', profileRoutes);
 app.use('/todo', toDoRoutes);
 app.use('/support', supportRoutes);
+app.use('/log', logRoutes);
 
 app.get('/checklogin',function(req,res) {
   if (req.user)
