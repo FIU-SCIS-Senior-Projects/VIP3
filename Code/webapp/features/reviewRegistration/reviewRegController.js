@@ -47,16 +47,41 @@
 
             reviewRegService.acceptProfile(vm.profile).then(function(data){
             });
-            alert("User Accepted!");
+            success_msg();
         }
         function rejectProfile () {
             vm.profile.piApproval = false;
             vm.profile.piDenial = true;
             reviewRegService.rejectProfile(vm.profile).then(function(data){
             });
-            alert("User Rejected!");
-
+            reject_msg();
         }
+
+        function success_msg()
+         {
+            swal({   
+                title: "Accepted",   
+                text: "User has been accepted and notified",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }
+            );
+        };
+
+        function reject_msg()
+         {
+            swal({   
+                title: "User Rejected",   
+                text: "User has been denied and notified",   
+                type: "warning",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }
+            );
+        };
 
     }
 })();

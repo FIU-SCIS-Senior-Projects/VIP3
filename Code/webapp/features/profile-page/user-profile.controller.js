@@ -35,10 +35,10 @@
 				console.log(data.userType);
 
 				if (currRank == "Staff/Faculty" || currRank == "Pi/CoPi")
-					vm.message = "Profile Updated.";
+					success_msg();
 
 				else
-					vm.message = "Profile Updated. Waiting for PI Approval.";
+					success_msg_student()
 			});
 
 			// refresh the page after 3 seconds so the user can see the message
@@ -51,6 +51,36 @@
             });
             */
 		}
+
+		function success_msg()
+         {
+            swal({   
+                title: "Profile Updated!",   
+                text: "Your profile will now reflect the changes",   
+                type: "success",   
+                confirmButtonText: "Great!" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                window.location = "http://localhost:3000/#/profile";
+            }
+            );
+        };
+
+        function success_msg_student()
+         {
+            swal({   
+                title: "Profile Updated!",   
+                text: "Your profile will now reflect the changes once approved by PI",   
+                type: "success",   
+                confirmButtonText: "Great!" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                window.location = "http://localhost:3000/#/profile";
+            }
+            );
+        };
 
 
 		vm.users = ["Student",

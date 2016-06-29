@@ -277,7 +277,7 @@ angular
 				// only insert user if return value of user.save in userRoutes.js returns success
 				if (data.success)
 				{
-					vm.message = data.message;
+					success_msg();
 
 					// Here we have the user ID so we can send an email to user
 					vm.objectId = data.objectId;
@@ -323,7 +323,7 @@ angular
 				// user already exists in the database, or some other error occured in user.save function
 				else
 				{
-					vm.message = data.message;
+					error_msg();
 				}
             })
         };
@@ -530,6 +530,34 @@ function gender_validation(gender) {
 
     return true;
 }
+
+function success_msg()
+         {
+            swal({   
+                title: "Account Created!",   
+                text: "Thanks for joining VIP! Please approve your account through your email.",   
+                type: "success",   
+                confirmButtonText: "Will do!" ,
+                allowOutsideClick: true,
+                timer: 9000,
+            }, function () {
+                window.location = "http://localhost:3000/#";
+            }
+            );
+        };
+
+function error_msg()
+         {
+            swal({   
+                title: "You are already a user",   
+                text: "This email is already in our system. Please try logging in or resetting your password.",   
+                type: "error",   
+                confirmButtonText: "I will try that!" ,
+                allowOutsideClick: true,
+                timer: 9000,
+            }
+            );
+        };
 
 
 

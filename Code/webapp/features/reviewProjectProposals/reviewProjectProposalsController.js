@@ -45,6 +45,8 @@
 				};
 				User.nodeEmail(email_msg);
             });
+
+            success_msg();
         }
 		
 		function RejectProject(projectid,owner,title,email,rank){
@@ -68,7 +70,39 @@
 				};
 				User.nodeEmail(email_msg);
             });
+
+            reject_msg();
 		}
+
+		function success_msg()
+         {
+            swal({   
+                title: "Accepted",   
+                text: "Project has been accepted and user notified",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                window.location.reload();
+            }
+            );
+        };
+
+        function reject_msg()
+         {
+            swal({   
+                title: "Project Rejected",   
+                text: "Project has been denied and user notified",   
+                type: "warning",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                window.location.reload();
+            }
+            );
+        };
 		
 	}
 })();
