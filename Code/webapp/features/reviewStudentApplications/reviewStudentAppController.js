@@ -127,6 +127,8 @@
                 confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
                 timer: 7000,
+            }, function (){
+            	window.location.reload();
             }
             );
         };
@@ -140,6 +142,8 @@
                 confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
                 timer: 7000,
+            }, function (){
+            	window.location.reload();
             }
             );
         };
