@@ -138,14 +138,14 @@ angular.module('routes', ['ui.router'])
             })
 			
 			.state('reviewuser', {
-                url: '/reviewuser/',
+                url: '/reviewuser',
                 templateUrl: 'features/reviewStudentApplications/reviewStudentApp.html',
 				controller: 'reviewStudentAppController',
 				controllerAs: 'vm'
             })
 			
 			.state('reviewproject', {
-                url: '/reviewproject/:id',
+                url: '/reviewproject',
                 templateUrl: 'features/reviewProjectProposals/reviewProjectProposals.html',
 				controller: 'reviewProjectController',
 				controllerAs: 'vm'

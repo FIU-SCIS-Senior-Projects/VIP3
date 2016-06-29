@@ -5,9 +5,9 @@
         .module('reviewStudentApp')
         .controller('reviewStudentAppController', reviewStudentAppCtrl);
 
-    reviewStudentAppCtrl.$inject = ['$state', '$scope', 'reviewStudentAppService','ToDoService','User'];
+    reviewStudentAppCtrl.$inject = ['$window','$state', '$scope', 'reviewStudentAppService','ToDoService','User'];
     /* @ngInject */
-    function reviewStudentAppCtrl($state, $scope, reviewStudentAppService, ToDoService,User) {
+    function reviewStudentAppCtrl($window,$state, $scope, reviewStudentAppService, ToDoService,User) {
         var vm = this;
         vm.profile;
 		vm.projects;
@@ -61,7 +61,7 @@
 		
 		function ApproveData(pid, members, userid,name)
 		{
-            vm.message = "Application has been Accepted!";
+           
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Approved";
 				
@@ -85,12 +85,14 @@
 				};
 				User.nodeEmail(email_msg);
 			});
+
 			success_msg();
+
 		}
 		
 		function RejectData(pid, members,userid,name)
 		{
-            vm.message = "Application has been Rejected!";
+            
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Rejected";
 				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "/#/to-do" };
@@ -109,13 +111,12 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
+
 			});
-<<<<<<< HEAD
+
 
 			reject_msg();
-=======
-			$location.route("reviewuser");
->>>>>>> dfcbcec3fdd90a9f295d3a461ed864ca77ce5498
+
 		}
 
 		function success_msg()
@@ -128,7 +129,7 @@
                 allowOutsideClick: true,
                 timer: 7000,
             }, function (){
-            	window.location.reload();
+				$window.location.reload();
             }
             );
         };
@@ -143,7 +144,7 @@
                 allowOutsideClick: true,
                 timer: 7000,
             }, function (){
-            	window.location.reload();
+				$window.location.reload();
             }
             );
         };
