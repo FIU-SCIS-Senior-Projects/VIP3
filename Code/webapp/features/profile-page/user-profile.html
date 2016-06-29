@@ -33,7 +33,7 @@
 					<td>
 						<label>Rank:</label>
 						<div>
-							<select class = "form-control" ng-model="vm.profile.rank" ng-options="rank for rank in vm.ranks">
+							<select class = 'form-control' ng-model="vm.profile.rank" ng-options="rank.name as rank.name for rank in vm.ranks | filter:rank.rank=vm.profile.userType">
 							</select>
 						</div>
 				</tr>

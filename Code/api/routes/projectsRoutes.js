@@ -163,6 +163,8 @@ module.exports = function(app, express) {
 			console.log(req.params);
 			var id = req.params.id;
 			var memberemail = req.params.members;
+			if (id != null && memberemail != null)
+			{
 			Project.findOne({_id: id}, function(err, proj){
 				if (err){
 					res.send(err);
@@ -180,6 +182,7 @@ module.exports = function(app, express) {
 					
 				}
 			});
+			}
 		});
 		
 		

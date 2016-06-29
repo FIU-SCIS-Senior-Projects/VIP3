@@ -33,12 +33,30 @@
 			ProfileService.requestProfileUpdate(vm.profile).then(function(data)
 			{
 				console.log(data.userType);
+				console.log("Curr usertype: " + currRank);
+				console.log("Requested usertype: " + vm.profile.userType);
 
-				if (currRank == "Staff/Faculty" || currRank == "Pi/CoPi")
-					success_msg();
+				// user is trying to change the userType, which may need approval
+				if (vm.profile.userType != currRank)
+				{
+					// however, Pi/CoPi/Coordinators can update the profile without approval
+					if (vm.profile.isSuperUser)
+					{
+						success_msg();
+					}
 
+					// otherwise, this requested userType change needs approval
+					else
+					{
+						success_msg_student();
+					}
+				}
+
+				// changing anything else doesnt need approval
 				else
-					success_msg_student()
+				{
+					success_msg();
+				}
 			});
 
 			// refresh the page after 3 seconds so the user can see the message
@@ -89,23 +107,23 @@
 		];
 
 		vm.ranks = [
-			'Freshman',
-			'Sophmore',
-			'Junior',
-			'Senior',
-			'Masters',
-			'PhD',
-			'postDoc',
-			'PI',
-			'CoPI',
-			'Coordinator',
-			'External Member',
-			'Administrator',
-			'Director',
-			'Instructor',
-			'Assitant Professor',
-			'Associate Professor',
-			'Full Professor'
+			{ "name" : "Freshman", "rank" : "Student" },
+			{ "name" : "Sophmore", "rank" : "Student" },
+			{ "name" : "Junior", "rank" : "Student" },
+			{ "name" : "Senior", "rank" : "Student" },
+			{ "name" : "Masters", "rank" : "Student" },
+			{ "name" : "PhD", "rank" : "Student" },
+			{ "name" : "postDoc", "rank" : "Student" },
+			{ "name" : "PI", "rank" : "Pi/CoPi" },
+			{ "name" : "CoPI", "rank" : "Pi/CoPi" },
+			{ "name" : "Coordinator", "rank" : "Pi/CoPi" },
+			{ "name" : "External Member", "rank" : "Pi/CoPi" },
+			{ "name" : "Administrator", "rank" : "Staff/Faculty" },
+			{ "name" : "Director", "rank" : "Staff/Faculty" },
+			{ "name" : "Instructor", "rank" : "Staff/Faculty" },
+			{ "name" : "Assitant Professor", "rank" : "Staff/Faculty" },
+			{ "name" : "Associate Professor", "rank" : "Staff/Faculty" },
+			{ "name" : "Full Professor", "rank" : "Staff/Faculty" }
 		];
 
 

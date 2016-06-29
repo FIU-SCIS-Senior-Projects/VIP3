@@ -67,7 +67,7 @@
 			});
 			reviewStudentAppService.AddToProject(userid, pid).then(function(data){
 				$scope.result = "Approved";
-				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "#" };
+				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -92,7 +92,7 @@
 		{
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Rejected";
-				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "#" };
+				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -102,7 +102,7 @@
 				{
 					recipient: members, 
 					text:  "Dear student, the project you joined has rejected you from joining.",
-					subject: "Project Approved", 
+					subject: "Project Rejected", 
 					recipient2: "test@example.com", 
 					text2: "", 
 					subject2: "" 

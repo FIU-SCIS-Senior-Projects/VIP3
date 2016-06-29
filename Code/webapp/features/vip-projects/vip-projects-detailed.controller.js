@@ -5,9 +5,9 @@
         .module('vip-projects')
         .controller('VIPProjectsDetailedCtrl', VIPProjectsDetailedCtrl);
 
-    VIPProjectsDetailedCtrl.$inject = ['$state', '$scope', '$stateParams', 'ProjectService'];
+    VIPProjectsDetailedCtrl.$inject = ['$location','$state', '$scope', '$stateParams', 'ProjectService', 'ProfileService'];
     /* @ngInject */
-    function VIPProjectsDetailedCtrl($state, $scope, $stateParams, ProjectService) {
+    function VIPProjectsDetailedCtrl($location, $state, $scope, $stateParams, ProjectService, ProfileService) {
         var vm = this;
         vm.data = null;
         vm.applyForProject = applyForProject;
@@ -38,6 +38,9 @@
             {'id':4, 'name':"Aerospace"},
             {'id':5, 'name':"Big Data"},
         ];
+	
+	
+		var profile = null;
         
         init();
         function init(){
@@ -47,6 +50,9 @@
                 vm.id = $stateParams.id;
                 getProjectById();
             }
+			ProfileService.loadProfile().then(function(data){
+				profile = data;
+			});
         }
         
         function getProjectById (){
@@ -61,13 +67,36 @@
         }
          
          function deleteProject() {
-             ProjectService.delete(vm.id).then(function(data){
-                 console.log("Returned from the BackEnd");
-             })
+			 if (profile) {
+				 if (profile._id == vm.data.owner || profile.userType == "Pi/CoPi") {
+					ProjectService.delete(vm.id).then(function(data){
+						console.log("Returned from the BackEnd");
+						$location.path('vip-projects');
+					});
+				 }
+				 else {
+					 alert('Access Denied must have proposed project or be PI!');
+				 }
+			 }
+			 else {
+				 alert('Access Denied must have proposed project or be PI!');
+			 }
          }
          
          function editProject() {
-             $state.go('projectProposal', {id: vm.id});
+			 if (profile) {
+				 if (profile._id == vm.data.owner || profile.userType == "Pi/CoPi") {
+				 $state.go('projectProposal', {id: vm.id});
+				 }
+				 else {
+					 alert('Access Denied must have proposed project or be PI!');
+				 }
+			 }
+			 else {
+				 alert('Access Denied must have proposed project or be PI!');
+			 }
+			 
+             
          }
     }
 })();

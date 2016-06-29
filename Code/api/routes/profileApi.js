@@ -30,20 +30,12 @@ module.exports = function(app, express) {
 				console.log("rank = " + req.body.rank);
 				console.log("userType = " + req.body.userType);
 
-				// only update rank if user has requested it
-				if (profile.requested_rank != null)
-				{
-					profile.rank = profile.requested_rank;
-				}
-
 				// only update usertype if user requested it
 				if (profile.requested_userType != null)
 				{
 					profile.userType = profile.requested_userType;
 				}
 
-				// clear the requested usertypes
-				profile.requested_rank = null;
 				profile.requested_userType = null;
 
 				// update users rank
@@ -54,10 +46,6 @@ module.exports = function(app, express) {
 
             });
         })
-
-
-        
-		
 
     apiRouter.route('/profile')
         .put(function (req, res) {
@@ -70,31 +58,21 @@ module.exports = function(app, express) {
             //     return res.json(profile);
             // });
 
+            // find the profile via _id
             Profile.findById(req.body._id, function(err, profile){
-                profile.firstName = req.body.firstName;
-                profile.lastName = req.body.lastName;
-                profile.rank       = req.body.rank;    // set the users Rank within the program
-                profile.college      = req.body.college;   // sets the users college
-                profile.department      = req.body.department;   // sets the users college
-                profile.userType = req.body.userType;
-                profile.gender = req.body.gender;
-                profile.minor = req.body.minor;
-                profile.pantherID        = req.body.pantherID;
-                profile.major        = req.body.major;
-				profile.piApproval = req.body.piApproval;
-				profile.project = req.body.project;
-                //Missing fields go here
-                
-                profile.save(function(err){
-                    if(err) res.send(err);
-                    res.json(profile);
-                })
-
-
 				// note to future devs: "profile.rank" is the users current rank in database, "req.body.rank" is the rank they are attempting to obtain
+                // beyond this point, the profile has been found
+                
+                console.log("piApproval is " + req.body.piApproval);
 
-				var isRankUpdateRequest = false;
 				var isUserTypeUpdateRequest = false;
+                
+                // set superuser status for a newly approved PI account
+                if (!profile.isSuperUser && profile.userType == "Pi/CoPi")
+                {
+                    console.log("User has been approved by PI, and is a PI himself, elevate privs");
+                    profile.isSuperUser = true;
+                }
 
 				console.log("Profile.findById rank is " + profile.rank);
 
@@ -107,31 +85,27 @@ module.exports = function(app, express) {
 				profile.minor = req.body.minor;
 				profile.pantherID = req.body.pantherID;
 				profile.major = req.body.major;
-
-
-				// user is privileged and should be allowed to update profile without approval
-				if (profile.userType == "Staff/Faculty" || profile.userType == "Pi/CoPi")
+                
+				// all user types are allowed to update their rankes without approval
+				profile.rank = req.body.rank;
+                
+                // this field will be set to true if the acceptProfile() function called us
+                if (req.body.piApproval)
+                {
+                    profile.piApproval = req.body.piApproval;
+                }
+               
+				// user is privileged and should be allowed to update userType without approval
+				if (profile.isSuperUser)
 				{
 					console.log("User is privileged and allowed to update profile without approval");
-					profile.rank = req.body.rank;
-					profile.userType = req.body.userType
+					profile.userType = req.body.userType;
 				}
 
-				// user needs approval before updating the profile
+				// user needs approval before updating the userType
 				else
 				{
-					console.log("User is NOT privileged and needs approval to update the profile");
-					// user is trying to change their account rank
-					if (profile.rank != req.body.rank)
-					{
-						console.log("Users current Rank is " + profile.rank);
-						console.log("User is attempting to change the rank to " + req.body.rank);
-
-						isRankUpdateRequest = true;
-
-						// set temporary requested_rank in database
-						profile.requested_rank = req.body.rank;
-					}
+					console.log("User is NOT privileged and needs approval to update the userType");
 
 					// user is trying to change their account usertype
 					if (profile.userType != req.body.userType)
@@ -154,44 +128,51 @@ module.exports = function(app, express) {
 				})
 
 				// user wants to update "Rank" or "userType", send PI an email to accept/reject the request
-				if (isRankUpdateRequest || isUserTypeUpdateRequest)
+				if (isUserTypeUpdateRequest)
 				{
+					// init
 					var vm = {};
 					vm.userData = {};
-					vm.objectId = null;
-					vm.userData.recipient = '';
-					vm.userData.text = '';
-					vm.userData.subject = '';
-
-					console.log("Sending PI approval email for rank/usertype update request");
-
-					// Here we have the user ID so we can send an email to user
-					vm.objectId = profile.objectId;
-
-					vm.userData.recipient = profile.email;
-					vm.userData.text = "Dear "+ profile.firstName +",\n\nNew Profile Update Request!"+
-					   " Vlad is trying to update his profile.\n\n http://localhost:3000/#/verifyprofile/" + profile._id +"";
-					vm.userData.subject = "Profile Update Request!";
-
 					var host = req.get('host');
 
 					// build the path to the nodeemail script
-					var postDomain = "http://" + host + "/vip/nodeemail2";
+					var postDomain = "http://" + "127.0.0.1:3000" + "/vip/nodeemail2";
+                    var reviewDomain = "http://" + host + "/#/verifyprofile/" + profile._id;
 
+					// user ID in database for cross-reference
+					vm.objectId = profile.objectId;
+
+					// recipient email(s)
+					vm.userData.recipient = profile.email;
+
+					// email body text
+					vm.userData.text = "Dear Pi/CoPi, \n\n" + profile.firstName + " " + profile.lastName + " is attempting to update their userType FROM "
+						+ profile.userType + " TO " + profile.requested_userType + ".\n\n Accept/Reject the changes using this URL: " + reviewDomain;
+
+					// email subject line
+					vm.userData.subject = "Profile update request from " + profile.firstName + " " + profile.lastName;
+
+					console.log("Sending PI approval email for userType update request");
+
+					// deploy email
 					request.post(
 						postDomain,
 						{ form: { vm } },
 						function (error, response, body) {
 							if (!error && response.statusCode == 200) {
-								console.log(body)
+								console.log(body);
+                                console.log(error);
+                                console.log(response);
 							}
+                                console.log(body);
+                                console.log(error);
+                                console.log(response);
 						}
 					);
 				}
             });
         })
-	
-		
+
         .get(function (req, res) {
 			console.log('POST /profile');
             Profile.find({email:req.user.email}, function (err, profile) {
@@ -203,8 +184,8 @@ module.exports = function(app, express) {
             });
 
         });
-		
-	
+
+
 	apiRouter.route('/reviewuser/')
 		.get(function (req, res) {
 			console.log('POST /reviewuser');
@@ -215,8 +196,8 @@ module.exports = function(app, express) {
                 }
                 return res.json(profile);
             });
-        });	
-		
+        });
+
 	//route for adding a member to a project(after approval)
 		apiRouter.route('/reviewusers/:userid/:pid')
 		.put(function (req, res) {
@@ -238,12 +219,12 @@ module.exports = function(app, express) {
 						}
 						res.json({message: 'Project Id Added to Users Profile'});
 					})
-					
+
 				}
 			});
 		});
-			
-		
+
+
 
 
     apiRouter.route('/verifyuser/:user_id')

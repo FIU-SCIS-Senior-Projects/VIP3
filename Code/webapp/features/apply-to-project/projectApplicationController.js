@@ -1,20 +1,37 @@
 angular
     .module('projectApplicationController', ['ProjectProposalService','user-profile','toDoModule', 'userService'])
-    .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, $stateParams) {
+    .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, $stateParams, $location) {
         var vm = this;
 
-        vm.mockData = [{
-            firstName: "Marlon",
-            lastName: "Rowe",
-            email: "mrowe009@fiu.edu",
-            pID: "1234567",
-            rank: "Senior",
-            gender: 'Male',
-            type: 'Student',
-            college: "'Engineering & Computing",
-            school: "School of Computing and Information Sciences",
-            semester: "Spring 2016"
-        }];
+		var profile;
+
+		ProfileService.loadProfile().then(function(data)
+		{
+			if (data) {
+				profile = data;
+                
+                console.log("Usertype found is " + profile.userType);
+                
+                // if the user is a PI or Faculty member, render the page
+				if (profile.userType == "Pi/CoPi" || profile.userType == "Student") {
+                    console.log("User type is " + profile.userType + " and user is allowed to view this page");
+				}
+                
+                // otherwise, the user doesnt have permission, so show homepage instead
+                else
+                {
+                    console.log("User type is Faculty/Staff, redirecting to home page");
+                    $location.path("/");
+                }
+			}
+            
+            // handler for guest - redirect them to login, store cookie
+			else {
+				profile = null;
+
+				$location.path("login");
+			}
+		});
 
         vm.Colleges = [
             {
@@ -197,7 +214,7 @@ angular
 						vm.rank = data.rank;
 						vm.school = data.department;
 						vm.college = data.college;
-						vm.semester = vm.mockData[0].semester;
+						vm.semester = "1";
 						
 					}
 		});
