@@ -10,14 +10,16 @@
     function reviewProjectCtrl($state, $scope, reviewPPS,ToDoService,User) {
         var vm = this;
         vm.projects;
+		vm.logs;
 		vm.AcceptProject = AcceptProject;
 		vm.RejectProject = RejectProject;
-		
+		vm.Undo = Undo;
         init();
         function init(){
             loadData();
+			loadLogs();
         }
-
+		
         function loadData(){
             reviewPPS.loadProjects().then(function(data){
                 vm.projects = data;
@@ -44,7 +46,12 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
-            });
+			
+			var log = {student: owner, studentemail: email, action: "accept", type: "project"};
+				reviewPPS.createLog(log).then(function(success)  {
+				}, function(error) {
+				});
+            }); 
         }
 		
 		function RejectProject(projectid,owner,title,email,rank){
@@ -67,7 +74,24 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
+				
+				var log = {student: owner, studentemail: email, action: "reject", type: "project"};
+				reviewPPS.createLog(log).then(function(success)  {
+				}, function(error) {
+				});
+				
             });
+		}
+		
+		function loadLogs(){
+            reviewPPS.loadLog("project").then(function(data){
+                vm.logs = data;
+            });
+        }
+		
+		function Undo(id){
+			console.log("UNDER CONSTRUCTION");
+			alert("UNDER CONSTRUCTION!");
 		}
 		
 	}
