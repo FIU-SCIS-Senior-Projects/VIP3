@@ -84,7 +84,7 @@
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                window.location = "http://localhost:3000/#/profile";
+                $window.location.reload();
             }
             );
         };
@@ -99,7 +99,7 @@
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                window.location = "http://localhost:3000/#/profile";
+                $window.location.reload();
             }
             );
         };

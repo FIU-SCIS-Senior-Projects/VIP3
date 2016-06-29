@@ -277,7 +277,7 @@ angular
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                window.location = "http://localhost:3000/#/";
+                $window.location.reload();
             }
             );
         };
@@ -292,7 +292,7 @@ angular
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                window.location = "http://localhost:3000/#/";
+                $window.location.reload();
             }
             );
         };
