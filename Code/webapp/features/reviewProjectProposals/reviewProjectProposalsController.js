@@ -25,6 +25,8 @@
         }
 		
 		function AcceptProject(projectid,owner,title,email,rank){
+            
+            vm.message = "Project has been Approved!";
 		
             reviewPPS.AcceptProjects(projectid).then(function(data){
 				$scope.result = "Project Approved";
@@ -45,9 +47,13 @@
 				};
 				User.nodeEmail(email_msg);
             });
+            setTimeout(function () { location.reload(true); }, 2000);
         }
 		
-		function RejectProject(projectid,owner,title,email,rank){
+		function RejectProject(projectid,owner,title,email,rank)
+        {
+            
+            vm.message = "Project has been Rejected!";
 			
             reviewPPS.RejectProjects(projectid).then(function(data){
 				$scope.result = "Project Rejected";
@@ -68,6 +74,8 @@
 				};
 				User.nodeEmail(email_msg);
             });
+            
+            setTimeout(function () { location.reload(true); }, 2000);
 		}
 		
 	}

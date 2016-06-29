@@ -16,10 +16,10 @@
 
         init();
         function init(){
-            loadData();
+            loadProfileData();
         }
 
-        function loadData(){
+        function loadProfileData(){
             ProfileService.loadProfile().then(function(data){
                 vm.profile = data;
                 console.log(vm.profile.userType);
@@ -27,6 +27,7 @@
             });
         }
 
+        // save changes to profile
 		function updateProfile () {
 			//saveProfile() needs to temporarily store the updated values the user wants
 			console.log(vm.profile.userType);
@@ -60,7 +61,7 @@
 			});
 
 			// refresh the page after 3 seconds so the user can see the message
-			setTimeout(function () { location.reload(true); }, 3000);
+			refreshProfilePage();
 
 			/*
 			ProfileService.saveProfile(vm.profile).then(function(data)
@@ -69,6 +70,9 @@
             });
             */
 		}
+        
+        // refresh profile page after changes are saved
+        function refreshProfilePage () { setTimeout(function () { location.reload(true); }, 3000); }
 
 
 		vm.users = ["Student",

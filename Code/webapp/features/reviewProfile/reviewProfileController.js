@@ -23,18 +23,19 @@
         function loadData(){
             	reviewProfileService.getReg($state.params.user_id).then(function(data){
                 vm.profile = data;
-
             });
         }
 
 		// accepts the updated rank/usertype
         function acceptProfile ()
         {
-			// update the profile
+            vm.message = "Profile changes Accepted!";
+            
+			// dont update the profile
             reviewProfileService.acceptProfile(vm.profile).then(function(data){
             });
-
-            alert("User's Rank / User Type have been updated!");
+            
+            setTimeout(function () { location.reload(true); }, 2000);
         }
 
 		// rejects the rank/usertype
@@ -43,10 +44,9 @@
 			// a decision has been made, clear the requested fields for this user
 			vm.profile.userType = null;
 
-            reviewProfileService.rejectProfile(vm.profile).then(function(data){
-            });
+            vm.message = "Profile changes Rejected!";
 
-            alert("Rejected this users Rank/User Type Request!");
+            setTimeout(function () { location.reload(true); }, 2000);
 
         }
 

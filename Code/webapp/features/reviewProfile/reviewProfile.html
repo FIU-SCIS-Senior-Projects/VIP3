@@ -73,10 +73,21 @@
                     <i></i> Accept
                 </button>
                 </div>
+                
             <div class="buttoninline">
                 <button style= "width: 150px;" ng-click ="vm.rejectProfile()" class="btn btn-danger btn-block" ng-disabled="vm.profile.$invalid" >
                     <i></i> Reject
                 </button>
+            </div>
+            
+             <div style = "margin-left:23px;" class="row show-hide-message" ng-show="vm.message">
+             <div style = "margin-left:23px;"class="col-sm-10 col-sm-offset-10">
+
+            <div style = "margin-left:23px;" class="alert alert-info">
+                <center> {{ vm.message }} </center>
+            </div>
+
+            </div>
             </div>
 
         </div>
