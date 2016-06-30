@@ -11,14 +11,14 @@
 			<td><input type="text" class="form-control projects" value={{project.owner_email}} readonly></input></td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project.owner_name,project.owner,project.title,project.owner_email,project.owner_rank)">
+                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project._id,project.owner,project.title,project.owner_email,project.owner_rank)">
                     <i></i> Yes
                 </button>
                 </div>
 			</td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectProject(project.owner_name,project.owner,project.title,project.owner_email,project.owner_rank)">
+                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectProject(project._id,project.owner,project.title,project.owner_email,project.owner_rank)">
                     <i></i> No
                 </button>
 			</td>

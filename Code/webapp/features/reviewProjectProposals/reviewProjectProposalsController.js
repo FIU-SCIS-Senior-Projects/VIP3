@@ -26,11 +26,11 @@
             });
         }
 		
-		function AcceptProject(user_name,owner,title,email,rank){
+		function AcceptProject(projectid,owner,title,email,rank){
             
            
 		
-            reviewPPS.AcceptProjects(user_name).then(function(data){
+            reviewPPS.AcceptProjects(projectid).then(function(data){
 				$scope.result = "Project Approved";
 				var todo = {owner: rank, owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been approved by the PI." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
@@ -61,12 +61,12 @@
 			});
 		}
 		
-		function RejectProject(user_name,owner,title,email,rank)
+		function RejectProject(projectid,owner,title,email,rank)
         {
             
 
 			
-            reviewPPS.RejectProjects(user_name).then(function(data){
+            reviewPPS.RejectProjects(projectid).then(function(data){
 				$scope.result = "Project Rejected";
 				var todo = {owner: rank , owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been rejected by the PI. Please contact the PI for the specific reason why the project didn't meet the criteria for acceptance." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {

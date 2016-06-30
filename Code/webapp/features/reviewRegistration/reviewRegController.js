@@ -19,6 +19,8 @@
 		{
 			if (data) {
 				profile = data;
+                
+                // redirect if user is not a Pi, or if a decision has been made
 				if (profile.userType != "Pi/CoPi") {
 					$location.path("/");
 				}
@@ -38,12 +40,16 @@
         function loadData(){
             reviewRegService.getReg($state.params.user_id).then(function(data){
                 vm.profile = data;
+                
+                if (vm.profile.isDecisionMade)
+                    $location.path("/");
 
             });
         }
 
         function acceptProfile () {
             vm.profile.piApproval = true;
+            vm.profile.isDecisionMade = true;
             console.log("piApproval set to true");
             vm.message = "User has been Accepted!";
 
@@ -70,6 +76,8 @@
         function rejectProfile () {
             vm.profile.piApproval = false;
             vm.profile.piDenial = true;
+            vm.profile.isDecisionMade = true;
+            
             vm.message = "User has been Rejected!";
             reviewRegService.rejectProfile(vm.profile).then(function(data){
             });

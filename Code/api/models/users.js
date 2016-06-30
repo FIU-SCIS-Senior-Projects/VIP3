@@ -23,6 +23,7 @@ var UsersSchema = new Schema({
     minor:String,
     image: String,
     userType: {type: String},
+    isDecisionMade: Boolean, // whether or not a decision has been made to approve/deny the profile
     requested_userType: {type: String, required: false},
     google: {
         id: String,
