@@ -5,24 +5,25 @@
         .module('reviewProfile')
         .controller('reviewProfileController', reviewProfileController);
 
-    reviewProfileController.$inject = ['$state', '$scope', 'reviewProfileService', '$location', '$window'];
+    reviewProfileController.$inject = ['$state', '$scope', 'reviewProfileService', '$location', '$window', 'ProfileService'];
 
     /* @ngInject */
     // function undefined reviewProfileService???
-    function reviewProfileController($state, $scope, reviewProfileService, $location, $window) {
-        
-        reviewProfileService.getReg($state.params.user_id).then(function(data)
-        {
-            var vm = {};
-            vm.profile = data;
-        
-            // only PI can view this page
-            if (vm.profile.userType != "Pi/CoPi" && !vm.profile.isSuperUser)
-            {
-                //console.log("User isnt allowed to view this page");
-                $location.path("/");
-            }
-        });
+    function reviewProfileController($state, $scope, reviewProfileService, $location, $window, ProfileService) {        
+		var profile;
+		
+		ProfileService.loadProfile().then(function(data){
+					if (data) {
+						profile = data;
+                        
+                        // only PI can view this page
+                        if (profile.userType != "Pi/CoPi")
+                        {
+                            console.log("User isnt allowed to view this page");
+                            $location.path("/");
+                        }
+					}
+		});
         
         var vm = this;
         vm.profile;
@@ -36,8 +37,18 @@
         }
 
         function loadData(){
-            	reviewProfileService.getReg($state.params.user_id).then(function(data){
+            	reviewProfileService.getReg($state.params.user_id).then(function(data)
+            {
                 vm.profile = data;
+                
+                console.log("Requ user = " + vm.profile.requested_userType);
+                console.log("Requ rank = " + vm.profile.requested_rank);
+                
+                // no usertype or rank updates, so no changes to be made
+                if (vm.profile.requested_rank == null && vm.profile.requested_userType == null)
+                {
+                    $window.location.href = "/";
+                }
             });
         }
 
