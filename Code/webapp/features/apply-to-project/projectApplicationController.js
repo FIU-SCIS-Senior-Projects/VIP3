@@ -224,12 +224,9 @@ angular
 
 
         vm.save = function() {
-			console.log("BEFORE BEFORE BEFORE");
 			vm.profile.rank = vm.rank;
-			console.log(vm.profile);
-			reviewProfileService.acceptProfile(vm.profile).then(function(data){
+			reviewProfileService.updateProfile(vm.profile).then(function(data){
             });
-			console.log("AFTER AFTER AFTER");
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
 				if (project.members[i] === vm.email) {
