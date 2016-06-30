@@ -28,10 +28,7 @@ angular
             // handler for guest - redirect them to login, store cookie
 			else {
 				profile = null;
-                console.log("User type is guest, redirecting to login");
-                
-                document.cookie = "destinationURL=http://vip.fiu.edu/#/studentConfirmation/";
-                
+
 				$location.path("login");
 			}
 		});
@@ -233,7 +230,7 @@ angular
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
 				if (project.members[i] === vm.email) {
-					vm.message = "You have already applied for this project and it is pending approval or already accepted";
+					 error_msg();
 					return;
 				}
 			}
@@ -241,7 +238,7 @@ angular
 			ProjectService.editProject(project,project._id).then(
 				   function(response){
 					 // success callback
-					 vm.message = "Your application has been submitted, please wait for PI approval";
+					 success_msg();
 					 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
 					ToDoService.createTodo(todo).then(function(success)  {
 						
@@ -260,14 +257,43 @@ angular
 					};
 					User.nodeEmail(email_msg);
 
-                    // refresh the page after 3 seconds so the user can see the message
-                    setTimeout(function () { location.reload(true); }, 3000);
-
+                    // // refresh the page after 3 seconds so the user can see the message
+                    // setTimeout(function () { location.reload(true); }, 7000);
 			   }, 
 			   function(response){
 				 // failure callback
 				 vm.message = response.data;
 			   }
 			);
+        };
+
+         function success_msg()
+         {
+            swal({   
+                title: "You've submitted your application!",   
+                text: "Now please wait for approval by a Faculty member and you will be notified via email!",   
+                type: "success",   
+                confirmButtonText: "Cool!" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                $window.location.reload();
+            }
+            );
+        };
+
+        function error_msg()
+         {
+            swal({   
+                title: "Oops!",   
+                text: "You've already applied for this project, please wait for approval",   
+                type: "warning",   
+                confirmButtonText: "Ok" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                $window.location.reload();
+            }
+            );
         };
     });

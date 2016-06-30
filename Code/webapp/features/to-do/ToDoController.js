@@ -24,6 +24,8 @@
             else if(todo.type == 'project') vm.projectCount--;
 
             else if(todo.type == 'student') vm.studentCount--;
+			
+			//$route.reload();
         };
 
         function getToDo (profile) {
@@ -33,10 +35,14 @@
                     for(i = 0; i < vm.list.length; i++) {
                         if(vm.list[i].read) continue;
 						
-						if (vm.list[i].owner != profile.userType) continue;
+						if (vm.list[i].owner != profile.userType) {
+							vm.list[i] = null; // Make null so it ignores it in ng-repeat the null value doesn't persist i.e not stored in db.
+							continue;
+						} 
 						
 						if (vm.list[i].owner_id) {
 							if (vm.list[i].owner_id != profile._id) {
+								vm.list[i] = null; // Make null so it ignores it in ng-repeat the null value doesn't persist i.e not stored in db.
 								continue;
 							}
 						}
@@ -49,6 +55,7 @@
 
                         else if(vm.list[i].type == 'student') vm.studentCount++;
                     }
+					
                 });
         }
 		

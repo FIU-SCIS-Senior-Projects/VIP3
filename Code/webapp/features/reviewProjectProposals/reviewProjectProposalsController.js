@@ -5,19 +5,21 @@
         .module('reviewProjectProposals')
         .controller('reviewProjectController', reviewProjectCtrl);
 
-    reviewProjectCtrl.$inject = ['$state', '$scope', 'reviewPPS','ToDoService','User'];
+    reviewProjectCtrl.$inject = ['$window','$state', '$scope', 'reviewPPS','ToDoService','User'];
     /* @ngInject */
-    function reviewProjectCtrl($state, $scope, reviewPPS,ToDoService,User) {
+    function reviewProjectCtrl($window,$state, $scope, reviewPPS,ToDoService,User) {
         var vm = this;
         vm.projects;
+		vm.logs;
 		vm.AcceptProject = AcceptProject;
 		vm.RejectProject = RejectProject;
-		
+		vm.Undo = Undo;
         init();
         function init(){
             loadData();
+			loadLogs();
         }
-
+		
         function loadData(){
             reviewPPS.loadProjects().then(function(data){
                 vm.projects = data;
@@ -26,11 +28,11 @@
 		
 		function AcceptProject(user_name,owner,title,email,rank){
             
-            vm.message = "Project has been Approved!";
+           
 		
             reviewPPS.AcceptProjects(user_name).then(function(data){
 				$scope.result = "Project Approved";
-				var todo = {owner: rank, owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been approved by the PI." , type: "project", link: "#" };
+				var todo = {owner: rank, owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been approved by the PI." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -46,18 +48,27 @@
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
-            });
-            setTimeout(function () { location.reload(true); }, 2000);
-        }
+
+            success_msg();
+			
+			var log = {student: owner, studentemail: email, action: "accept", type: "project"};
+				reviewPPS.createLog(log).then(function(success)  {
+					
+				}, function(error) {
+				});
+
+
+			});
+		}
 		
 		function RejectProject(user_name,owner,title,email,rank)
         {
             
-            vm.message = "Project has been Rejected!";
+
 			
             reviewPPS.RejectProjects(user_name).then(function(data){
 				$scope.result = "Project Rejected";
-				var todo = {owner: rank , owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been rejected by the PI. Please contact the PI for the specific reason why the project didn't meet the criteria for acceptance." , type: "project", link: "#" };
+				var todo = {owner: rank , owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been rejected by the PI. Please contact the PI for the specific reason why the project didn't meet the criteria for acceptance." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -67,15 +78,63 @@
 				{
 					recipient: email, 
 					text:  "Dear proposer of project, the project titled: " + title + " has been rejected by the PI. Please contact the PI for the specific reason why the project didn't meet the criteria for acceptance.",
-					subject: "Project Approved", 
+					subject: "Project Rejected", 
 					recipient2: "test@example.com", 
 					text2: "", 
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
+				
+				var log = {student: owner, studentemail: email, action: "reject", type: "project"};
+				reviewPPS.createLog(log).then(function(success)  {
+					 
+				}, function(error) {
+				});
             });
-            
-            setTimeout(function () { location.reload(true); }, 2000);
+
+            reject_msg();
+
+		}
+
+		function success_msg()
+         {
+            swal({   
+                title: "Accepted",   
+                text: "Project has been accepted and user notified",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                $window.location.reload();
+            }
+            );
+        };
+
+        function reject_msg()
+         {
+            swal({   
+                title: "Project Rejected",   
+                text: "Project has been denied and user notified",   
+                type: "warning",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                $window.location.reload();
+            }
+            );
+        };
+		
+		function loadLogs(){
+            reviewPPS.loadLog("project").then(function(data){
+                vm.logs = data;
+            });
+        }
+		
+		function Undo(id){
+			console.log("UNDER CONSTRUCTION");
+			alert("UNDER CONSTRUCTION!");
 		}
 		
 	}

@@ -279,16 +279,34 @@ a {
 
 .project-second-section-middle {
     font-family: "Helvetica Neue", Arial, Helvetica, "Trebuchet MS", sans-serif;
-    font-size: 87.5%;
+    color: #202020 !important;
 }
 
 .project-info {
     margin-bottom:30px;
     padding-top: 14px;
 }
+
+.proj-title-teams {
+    text-align: center;
+}
+
 .team-info {
     padding-left: 0px;
     font-size: 0.8em;
+}
+
+.proj-image {
+    padding: 0px 10px 10px 10px; 
+    height: 135px; 
+    width:135px; 
+    border-radius: 2px;
+    float:left;
+}
+
+.proj-description {
+    font-size: 1.2em;
+    line-height: 1.5em;
 }
 
 .sort-by-padding {

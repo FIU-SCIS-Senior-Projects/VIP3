@@ -20,12 +20,21 @@ function projectService($http) {
     };
         
 	projectFactory.RejectProjects = function (id) {
-        return $http.delete('/api/reviewproject/' + id).then(function(data){
+        return $http.delete('/api/reviewproject/'+ id).then(function(data){
             console.log("Deleting response just arrived");
         });;
     };	
-
-
+	
+    projectFactory.createLog = function (log) {
+            return $http.post('/log/log', log);
+    };
+	
+	projectFactory.loadLog = function (type) {
+			return $http.get('/log/log/' + type).then(function(data){
+				return data.data;
+	  });
+    };
+	
 
     return projectFactory;
 }

@@ -43,20 +43,20 @@
 					// however, Pi/CoPi/Coordinators can update the profile without approval
 					if (vm.profile.isSuperUser)
 					{
-						vm.message = "Profile Updated.";
+						success_msg();
 					}
 
 					// otherwise, this requested userType change needs approval
 					else
 					{
-						vm.message = "Profile Updated. Waiting for PI Approval.";
+						success_msg_student();
 					}
 				}
 
 				// changing anything else doesnt need approval
 				else
 				{
-					vm.message = "Profile Updated.";
+					success_msg();
 				}
 			});
 
@@ -73,6 +73,36 @@
         
         // refresh profile page after changes are saved
         function refreshProfilePage () { setTimeout(function () { location.reload(true); }, 3000); }
+
+		function success_msg()
+         {
+            swal({   
+                title: "Profile Updated!",   
+                text: "Your profile will now reflect the changes",   
+                type: "success",   
+                confirmButtonText: "Great!" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                $window.location.reload();
+            }
+            );
+        };
+
+        function success_msg_student()
+         {
+            swal({   
+                title: "Profile Updated!",   
+                text: "Your profile will now reflect the changes once approved by PI",   
+                type: "success",   
+                confirmButtonText: "Great!" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                $window.location.reload();
+            }
+            );
+        };
 
 
 		vm.users = ["Student",

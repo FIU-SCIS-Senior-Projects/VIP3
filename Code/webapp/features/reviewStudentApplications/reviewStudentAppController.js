@@ -5,9 +5,9 @@
         .module('reviewStudentApp')
         .controller('reviewStudentAppController', reviewStudentAppCtrl);
 
-    reviewStudentAppCtrl.$inject = ['$state', '$scope', 'reviewStudentAppService','ToDoService','User'];
+    reviewStudentAppCtrl.$inject = ['$window','$state', '$scope', 'reviewStudentAppService','ToDoService','User'];
     /* @ngInject */
-    function reviewStudentAppCtrl($state, $scope, reviewStudentAppService, ToDoService,User) {
+    function reviewStudentAppCtrl($window,$state, $scope, reviewStudentAppService, ToDoService,User) {
         var vm = this;
         vm.profile;
 		vm.projects;
@@ -61,14 +61,14 @@
 		
 		function ApproveData(pid, members, userid,name)
 		{
-            vm.message = "Application has been Accepted!";
+           
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Approved";
 				
 			});
 			reviewStudentAppService.AddToProject(userid, pid).then(function(data){
 				$scope.result = "Approved";
-				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "#" };
+				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -85,14 +85,17 @@
 				};
 				User.nodeEmail(email_msg);
 			});
+
+			success_msg();
+
 		}
 		
 		function RejectData(pid, members,userid,name)
 		{
-            vm.message = "Application has been Rejected!";
+            
 			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 				$scope.result = "Rejected";
-				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "#" };
+				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -102,13 +105,48 @@
 				{
 					recipient: members, 
 					text:  "Dear student, the project you joined has rejected you from joining.",
-					subject: "Project Approved", 
+					subject: "Project Rejected", 
 					recipient2: "test@example.com", 
 					text2: "", 
 					subject2: "" 
 				};
 				User.nodeEmail(email_msg);
+
 			});
+
+
+			reject_msg();
+
 		}
+
+		function success_msg()
+         {
+            swal({   
+                title: "Accepted",   
+                text: "User has been accepted and notified",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
+
+        function reject_msg()
+         {
+            swal({   
+                title: "User Rejected",   
+                text: "User has been denied and notified",   
+                type: "warning",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
     }
 })();

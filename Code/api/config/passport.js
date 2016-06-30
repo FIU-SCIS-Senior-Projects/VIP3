@@ -37,6 +37,7 @@ module.exports = function(passport,app) {
 				if (!user.piApproval) {
 					return done(null, false, {message: 'Account must be aprroved by PI' });
 				}
+				console.log("Logging in...");
                 return done(null, user);
             });
         }
@@ -65,6 +66,7 @@ module.exports = function(passport,app) {
 					   if (!user.verifiedEmail) {
 						   return done(null, false, {message: 'You must be PI approved.' });
 					   }*/
+					   console.log("Found user");
                        return done(null, user);
                    }
                    else {
@@ -75,7 +77,8 @@ module.exports = function(passport,app) {
 								return done(err); 
 							}
 							if (!user) {
-											 // if the user isnt in our database, create a new user
+								   console.log("User not found.");
+								   // if the user isnt in our database, create a new user
 								   var newUser = new User();
 								   // set all of the relevant information.
 								   newUser.google.id = profile.id;
@@ -102,7 +105,15 @@ module.exports = function(passport,app) {
 								   });
 							}
 							else {
-								return done(null, false, {message: 'You are not a student please use regular login.' });
+								user.google.id = profile.id;
+								user.google.token = token;
+								user.google.name = profile.displayName;
+								user.google.email = profile.emails[0].value;
+								console.log("Email: " + user.email);
+								User.findOneAndUpdate({'email': user.email}, user, function(err) {
+									console.log("Error: " + err);
+								});
+								return done(null, user);
 							}
 					   });
 					   

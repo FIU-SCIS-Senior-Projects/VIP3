@@ -136,7 +136,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             var name = $scope.fixedColleges[school]['name']
             var fixedNames = name.split(' ').join('_');
             fixedNames = fixedNames.split('&').join('and');
-            console.log(fixedNames);
+            //console.log(fixedNames);
             $scope.fixedColleges[school]['name'] = fixedNames;
         };
 
@@ -178,8 +178,9 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 							$scope.project.status='pending'
 							ProjectService.createProject($scope.project)
 								.then(function(data){
-									$scope.result = "Project Proposal Submitted and Pending!";
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
+									success_msg();
+                                    
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
 									ToDoService.createTodo(todo).then(function(success)  {
 										
 									}, function(error) {
@@ -302,5 +303,20 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             else {
               vm.disciplines.push(majors);
             }
+        };
+
+        function success_msg()
+         {
+            swal({   
+                title: "Project Proposed!",   
+                text: "Thank you for submitting your wonderful idea. A PI/Co-PI will now review it and notify you if it is accepted",   
+                type: "success",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 9000,
+            }, function () {
+                window.location.reload();
+            }
+            );
         };
     });
