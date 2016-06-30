@@ -24,25 +24,93 @@ module.exports = function(app, express) {
 				profile.minor = req.body.minor;
 				profile.pantherID = req.body.pantherID;
 				profile.major = req.body.major;
-				profile.rank = req.body.rank;
-				profile.userType = req.body.userType;
+                profile.rank = req.body.rank;
 
 				console.log("rank = " + req.body.rank);
 				console.log("userType = " + req.body.userType);
+                console.log("requested userType = " + profile.requested_userType);
 
-				// only update usertype if user requested it
-				if (profile.requested_userType != null)
-				{
-					profile.userType = profile.requested_userType;
-				}
+                // we only update userType with approval
+                if (req.body.isApproved)
+                {
+                    // only update usertype if user requested it
+                    if (profile.requested_userType != null)
+                    {
+                        // if the user has been accepted as Pi/CoPi, make them a superuser as well
+                        if (profile.requested_userType == "Pi/CoPi")
+                        {
+                            console.log("Set SUPERUSER");
+                            profile.isSuperUser = 1;
+                        }
+                        
+                        // set the usertype to the requested usertype
+                        profile.userType = profile.requested_userType;
+                    }
+                }
 
+                // remove the requested vars from db
 				profile.requested_userType = null;
+                profile.requested_rank = null;
 
 				// update users rank
 				profile.save(function(err){
 					if(err) res.send(err);
 					res.json(profile);
 				})
+                
+                /* notify user that the profile has been accepted */
+                // init
+                var vm = {};
+                vm.userData = {};
+                var host = req.get('host');
+
+                // build the path to the nodeemail script
+                var postDomain = "http://" + "127.0.0.1:3000" + "/vip/nodeemail2";
+                var reviewDomain = "http://" + host + "/#/profile";
+
+                // recipient email(s)
+                vm.userData.recipient = profile.email;
+
+                // define the message if a user has been approved
+                if (req.body.isApproved)
+                {
+                    console.log("profile changes have been approved");
+                    // email body text
+                    vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\n"  + "Your request to update your profile has been approved. You can view your new profile information by visiting this URL: " + reviewDomain;
+
+                    // email subject line
+                    vm.userData.subject = "Profile Changes have been Approved";
+                }
+                
+                // define the message if a user has been rejected
+                else
+                {
+                    console.log("profile changes have been rejected");
+                    
+                    // email body text
+                    vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\n"  + "Unfortunantly, your request to update your profile has been rejected. You can view your current profile information by visiting this URL: " + reviewDomain;
+
+                    // email subject line
+                    vm.userData.subject = "Profile Changes have been Denied";
+                }
+
+                console.log("Sending notification of profile approval to the User");
+
+                // deploy email
+                request.post(
+                    postDomain,
+                    { form: { vm } },
+                    function (error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            console.log(body);
+                            console.log(error);
+                            console.log(response);
+                        }
+                            console.log(body);
+                            console.log(error);
+                            console.log(response);
+                    }
+                );
 
             });
         })
@@ -72,6 +140,14 @@ module.exports = function(app, express) {
                 {
                     console.log("User has been approved by PI, and is a PI himself, elevate privs");
                     profile.isSuperUser = true;
+                }
+                
+                console.log("decision made is " + req.body.isDecisionMade);
+                
+                // profile has been accepted or rejected, update in db
+                if (!profile.isDecisionMade && req.body.isDecisionMade)
+                {
+                    profile.isDecisionMade = req.body.isDecisionMade;
                 }
 
 				console.log("Profile.findById rank is " + profile.rank);

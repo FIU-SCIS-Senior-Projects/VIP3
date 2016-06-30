@@ -188,6 +188,7 @@ module.exports = function (app, express) {
             user.piApproval = false;
             user.piDenial = false;
             user.verifiedEmail = false;
+            user.isDecisionMade = false;
             
             user.googleKey = " ";
             user.userType = req.body.userType;

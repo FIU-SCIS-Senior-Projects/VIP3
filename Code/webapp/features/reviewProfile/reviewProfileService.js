@@ -12,18 +12,10 @@ function userNewService($http) {
         });
     };
 
-    profileFactory.acceptProfile = function (profileData) {
+    profileFactory.updateProfile = function (profileData) {
         return $http.put('/api/updateprofile/',profileData).then(function(data){
             return data.data;
         });
-    };
-    profileFactory.rejectProfile = function (profileData) {
-        //return $http.put('/api/updateprofile/',profileData).then(function(data){
-            //return data.data;
-
-            // do nothing....right??
-
-        //});
     };
 
     return profileFactory;

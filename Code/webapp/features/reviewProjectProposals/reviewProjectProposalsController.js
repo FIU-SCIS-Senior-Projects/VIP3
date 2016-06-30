@@ -63,9 +63,6 @@
 		
 		function RejectProject(projectid,owner,title,email,rank)
         {
-            
-
-			
             reviewPPS.RejectProjects(projectid).then(function(data){
 				$scope.result = "Project Rejected";
 				var todo = {owner: rank , owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been rejected by the PI. Please contact the PI for the specific reason why the project didn't meet the criteria for acceptance." , type: "project", link: "/#/to-do" };
