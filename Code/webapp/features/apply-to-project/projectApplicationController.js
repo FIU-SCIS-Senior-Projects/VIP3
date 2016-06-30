@@ -149,7 +149,7 @@ angular
         ];
 
         vm.genders = ['Male', 'Female'];
-        vm.semesters = ['Spring 2016', 'Summer 2016'];
+        vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
 
         vm.ranks =  [
             'Freshman',
@@ -219,9 +219,6 @@ angular
 					}
 		});
 				
-
-
-
        
 
 
@@ -273,11 +270,11 @@ angular
                 title: "You've submitted your application!",   
                 text: "Now please wait for approval by a Faculty member and you will be notified via email!",   
                 type: "success",   
-                confirmButtonText: "Cool!" ,
+                confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                $window.location.reload();
+                window.location.reload();
             }
             );
         };
@@ -285,14 +282,14 @@ angular
         function error_msg()
          {
             swal({   
-                title: "Oops!",   
-                text: "You've already applied for this project, please wait for approval",   
+                title: "Sorry",   
+                text: "You've already applied for this project or are already joined.",   
                 type: "warning",   
                 confirmButtonText: "Ok" ,
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                $window.location.reload();
+                window.location.reload();
             }
             );
         };
