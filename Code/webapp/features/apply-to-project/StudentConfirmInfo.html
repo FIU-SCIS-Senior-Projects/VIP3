@@ -44,7 +44,11 @@
                         <td>
                             <label>Rank:</label>
                             <div>
-                                <select  ng-model="projApp.rank" ng-options=" rank for rank in projApp.ranks" class="form-control" Required="True">
+                                <select  ng-show="projApp.google" ng-model="projApp.rank" ng-options=" rank for rank in projApp.ranks" class="form-control" Required="True">
+                                </select>
+                            </div>
+							<div>
+                                <select  ng-hide="projApp.google" ng-model="projApp.rank" ng-options=" rank for rank in projApp.ranks" class="form-control" ng-readonly="true">
                                 </select>
                             </div>
                     </tr>

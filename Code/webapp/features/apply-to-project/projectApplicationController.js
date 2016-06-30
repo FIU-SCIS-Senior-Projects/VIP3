@@ -1,6 +1,6 @@
 angular
-    .module('projectApplicationController', ['ProjectProposalService','user-profile','toDoModule', 'userService'])
-    .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, $stateParams, $location) {
+    .module('projectApplicationController', ['ProjectProposalService','user-profile','toDoModule', 'userService', 'reviewProfile'])
+    .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, reviewProfileService, $stateParams, $location) {
         var vm = this;
 
 		var profile;
@@ -202,7 +202,7 @@ angular
 					if (data) {
 						
 						profile = data;
-
+						
 						vm.user_info = data.firstName;
 						vm.user_type = data.userType;
 						vm.firstName = data.firstName;
@@ -215,7 +215,8 @@ angular
 						vm.school = data.department;
 						vm.college = data.college;
 						vm.semester = "1";
-						
+						vm.google = data.google;
+						vm.profile = data;
 					}
 		});
 				
@@ -226,7 +227,12 @@ angular
 
 
         vm.save = function() {
-
+			console.log("BEFORE BEFORE BEFORE");
+			vm.profile.rank = vm.rank;
+			console.log(vm.profile);
+			reviewProfileService.acceptProfile(vm.profile).then(function(data){
+            });
+			console.log("AFTER AFTER AFTER");
 			var project = vm.sProject;
 			for (i = 0; i < project.members.length; i++) {
 				if (project.members[i] === vm.email) {
@@ -265,6 +271,7 @@ angular
 				 vm.message = response.data;
 			   }
 			);
+			
         };
 
          function success_msg()
