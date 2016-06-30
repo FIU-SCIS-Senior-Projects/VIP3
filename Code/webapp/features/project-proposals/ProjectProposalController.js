@@ -1,6 +1,6 @@
 
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
-    .controller('ProjectProposalController', function($location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
+    .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
 
 		var profile;
 		
@@ -204,7 +204,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 							$scope.project.id = $stateParams.id
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){
-									$scope.result = "Project Proposal Submitted and Pending!";
+									success_msg();
 									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
 									ToDoService.createTodo(todo).then(function(success)  {
 										
@@ -215,7 +215,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 									var email_msg = 
 									{
 										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", thank you for proposing " + project.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 										subject: "Project Proposal Submission Pending", 
 										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
 										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
@@ -239,7 +239,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 							$scope.project.status='pending'
 							ProjectService.createProject($scope.project)
 								.then(function(data){
-									$scope.result = "Project Proposal Submitted and Pending!";
+									success_msg();
 									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
 									ToDoService.createTodo(todo).then(function(success)  {
 										
@@ -249,7 +249,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 									var email_msg = 
 									{
 										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", thank you for proposing " + profile.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 										subject: "Project Proposal Submission Pending", 
 										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",   
 										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
@@ -257,24 +257,25 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 									};
 									User.nodeEmail(email_msg);
 								}, function (error) {
-									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
+									error_msg();
 								});
 					}
 					else{
 							$scope.project.id = $stateParams.id
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){
-									$scope.result = "Project Proposal Submitted and Pending!";
+									success_msg();
 									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
 									ToDoService.createTodo(todo).then(function(success)  {
 										
 									}, function(error) {
+										error_msg();
 										
 									});
 									var email_msg = 
 									{
 										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", thank you for proposing " + profile.title + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.s  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 										subject: "Project Proposal Submission Pending", 
 										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",  
 										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
@@ -282,7 +283,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 									};
 									User.nodeEmail(email_msg);
 								}, function(error) {
-									$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
+									error_msg();
 								});
 					}
 
@@ -304,6 +305,21 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
               vm.disciplines.push(majors);
             }
         };
+		
+		 function error_msg()
+         {
+            swal({   
+                title: "Oops!",   
+                text: "An uknown error has occured!",   
+                type: "warning",   
+                confirmButtonText: "Ok" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                $window.location.reload();
+            }
+            );
+        };
 
         function success_msg()
          {
@@ -315,7 +331,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 allowOutsideClick: true,
                 timer: 9000,
             }, function () {
-                window.location.reload();
+                $window.location.reload();
             }
             );
         };

@@ -89,11 +89,11 @@ angular.module('routes', ['ui.router'])
                 controllerAs: 'vm'
             })
            .state('projectsDetailed',{
-                url:'/vip-projects-detailed',
+                url:'/vip-projects-detailed/:id',
                 templateUrl:'features/vip-projects/vip-projects-detailed.html',
                 controller: 'VIPProjectsDetailedCtrl',
                 controllerAs: 'vm',
-                params: { id: null }
+                /*params: { id: null }*/
             })
             .state('studentconfirminfo', {
                 url:'/studentConfirmation/:id',
