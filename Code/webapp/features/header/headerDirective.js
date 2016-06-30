@@ -17,7 +17,7 @@
 					if (data) {
 						vm.current_user = data.firstName;
 						vm.user_type = data.userType;
-						var id = data.id;
+						var id = data._id;
 						vm.logged_in = true;
 
 						
@@ -28,6 +28,7 @@
 									if(data.data[i].read) {
 										continue;
 									} else {
+										
 										if (data.data[i].owner == vm.user_type) { //Only count the todo tasks related to the account type.
 											if (!data.data[i].owner_id) {
 												vm.count++;
@@ -44,6 +45,7 @@
 										
 									}
 								}
+								
 						});
 
 					}

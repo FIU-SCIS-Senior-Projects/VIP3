@@ -1,7 +1,7 @@
 <div class="loginHeader">
 	<span class="welcome-icon" ng-show="header.logged_in" >Welcome {{header.current_user}}! | </span>
 
-    <a ui-sref="toDo" ng-show="header.logged_in" ng-click="header.count = 0" title="To-Do's">
+    <a ui-sref="toDo" ng-show="header.logged_in" title="To-Do's">
 	    <i class="fa fa-list-alt task-icon" aria-hidden="true"></i>
 	    <span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span>
     </a>
