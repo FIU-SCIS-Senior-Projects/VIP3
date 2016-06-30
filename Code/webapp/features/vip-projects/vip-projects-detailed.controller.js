@@ -67,36 +67,66 @@
         }
          
          function deleteProject() {
-			 if (profile) {
-				 if (profile._id == vm.data.owner || profile.userType == "Pi/CoPi") {
-					ProjectService.delete(vm.id).then(function(data){
-						console.log("Returned from the BackEnd");
-						$location.path('vip-projects');
-					});
-				 }
-				 else {
-					 alert('Access Denied must have proposed project or be PI!');
-				 }
-			 }
-			 else {
-				 alert('Access Denied must have proposed project or be PI!');
-			 }
+                 if (profile) 
+                 {
+                    swal({   
+                        title: "You're about to delete this project!",   
+                        text: "Are you sure you want to delete this project?",   
+                        type: "warning",   
+                        confirmButtonText: "I'm sure" ,
+                        showCancelButton: true,
+                    }, function ()
+                    {     
+                         if (profile._id == vm.data.owner || profile.userType == "Pi/CoPi") 
+                         {
+                            ProjectService.delete(vm.id).then(function(data)
+                            {
+                                //console.log("Returned from the BackEnd");
+                                $location.path('vip-projects');
+                            });
+                         }
+                         else 
+                         {
+                             deny_msg();
+                         }
+                     });
+                 }
+                 else 
+                 {
+                     deny_msg();
+                 }
          }
          
          function editProject() {
-			 if (profile) {
-				 if (profile._id == vm.data.owner || profile.userType == "Pi/CoPi") {
-				 $state.go('projectProposal', {id: vm.id});
+			 if (profile) 
+             {
+				 if (profile._id == vm.data.owner || profile.userType == "Pi/CoPi") 
+                 {
+				    $state.go('projectProposal', {id: vm.id});
 				 }
-				 else {
-					 alert('Access Denied must have proposed project or be PI!');
+				 else 
+                 {
+					 deny_msg();
 				 }
 			 }
-			 else {
-				 alert('Access Denied must have proposed project or be PI!');
+			 else 
+             {
+				 deny_msg();
 			 }
 			 
              
          }
+
+        function deny_msg()
+         {
+            swal({   
+                title: "You can't do that",   
+                text: "You don't have permissions to perform this action.",   
+                type: "info",   
+                confirmButtonText: "Ok" ,
+            }
+            );
+        }
+
     }
 })();

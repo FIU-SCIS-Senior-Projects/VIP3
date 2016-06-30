@@ -30,13 +30,10 @@
         // save changes to profile
 		function updateProfile () {
 			//saveProfile() needs to temporarily store the updated values the user wants
-			console.log(vm.profile.userType);
-			ProfileService.requestProfileUpdate(vm.profile).then(function(data)
+			//console.log(vm.profile.userType);
+			ProfileService.saveProfile(vm.profile).then(function(data)
 			{
-				console.log(data.userType);
-				console.log("Curr usertype: " + currRank);
-				console.log("Requested usertype: " + vm.profile.userType);
-
+			
 				// user is trying to change the userType, which may need approval
 				if (vm.profile.userType != currRank)
 				{
@@ -59,20 +56,10 @@
 					success_msg();
 				}
 			});
-
-			// refresh the page after 3 seconds so the user can see the message
-			refreshProfilePage();
-
-			/*
-			ProfileService.saveProfile(vm.profile).then(function(data)
-			{
-                vm.message = "Profile Updated. Waiting for PI Approval.";
-            });
-            */
 		}
         
         // refresh profile page after changes are saved
-        function refreshProfilePage () { setTimeout(function () { location.reload(true); }, 3000); }
+        //function refreshProfilePage () { setTimeout(function () { location.reload(true); }, 3000); }
 
 		function success_msg()
          {
@@ -84,7 +71,7 @@
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                $window.location.reload();
+                window.location.reload();
             }
             );
         };
@@ -99,7 +86,7 @@
                 allowOutsideClick: true,
                 timer: 7000,
             }, function () {
-                $window.location.reload();
+                window.location.reload();
             }
             );
         };
@@ -260,18 +247,122 @@
 			"Women's Studies"
 		];
 
-		vm.schools = ['Architecture + The Arts ',
-			'Business',
-			'Chaplin School of Hospitality and Tourism Management',
-			'Engineering & Computing',
-			'Herbert Wertheim College of Medicine',
-			'Journalism and Mass Communication',
-			'Law',
-			'Nicole Wertheim College of Nursing & Health Sciences',
-			'Robert Stempel College of Public Health & Social Work',
-			'Steven J. Green School of International and Public Affairs'
+		vm.Colleges = [
+            {
+                name: 'Architecture + The Arts ',
+                schools: [
+                    'Architecture',
+                    'Interior Architecture',
+                    'Landscape Architecture and Environmental Urban Design',
+                    'Art and Art History',
+                    'Communication Arts',
+                    'School of Music',
+                    'Theatre']
+            },
+            {
+                name: 'Arts and Sciences & Education',
+                schools: [
+                    'Biological Sciences',
+                    'Chemistry and Biochemistry',
+                    'Earth and Environment',
+                    'English',
+                    'Mathematics and Statistics',
+                    'Philosophy',
+                    'Physics',
+                    'Psychology',
+                    'Teaching and Learning',
+                    'Leadership and Professional Studies',
+                    'School of Education',
+                    'School of Enviroment, Arts & Society',
+                    'School of Integrated Science & Humanity'
 
-		];
+                ]
+            },
+            {
+                name: 'Business',
+                schools: [
+                    'Decision Sciences and Information Systems',
+                    'Alvah H. Chapman Jr. Graduate School of Business',
+                    'R. Kirk Landon Undergraduate School of Business',
+                    'Finance',
+                    'Management and International Business',
+                    'Marketing',
+                    'School of Accounting',
+                    'Real Estate'
+                ]
+            },
+            {
+                name: 'Chaplin School of Hospitality and Tourism Management',
+                schools: [
+                    'Hospitality and Tourism Management'
+                ]
+            },
+            {
+                name: 'Engineering & Computing',
+                schools: [
+                    'School of Computing and Information Sciences',
+                    'OHL School of Construction',
+                    'Department of Biomedical Engineering',
+                    'Department of Civil and Environment Engineering',
+                    'Department of Electrical and Computer Engineering',
+                    'Department of Mechanical and Materials Engineering'
+                ]
+            },
+            {
+                name: 'Herbert Wertheim College of Medicine',
+                schools: [
+                    'Cellular Biology and Pharmacology',
+                    'Human and Molecular Genetics',
+                    'Immunology',
+                    'Medical and Population Health Sciences Research'
+                ]
+            },
+            {
+                name: 'Journalism and Mass Communication',
+                schools: [
+                    'Advertising and Public Relations',
+                    'Journalism Broadcasting and Digital Media'
+                ]
+            },
+            {
+                name: 'Law',
+                schools: [
+                    'College of Law'
+                ]
+            },
+            {
+                name: 'Nicole Wertheim College of Nursing & Health Sciences',
+                schools: [
+                    'Biostatistics',
+                    'Dietetics and Nutrition',
+                    'Environmental and Occupational Health',
+                    'Epidemiology',
+                    'Health Policy and Management',
+                    'Health Promotion and Disease Prevention'
+                ]
+
+            },
+            {
+                name: 'Robert Stempel College of Public Health & Social Work',
+                schools: [
+                    'School of Social Work'
+                ]
+            },
+            {
+                name: 'Steven J. Green School of International and Public Affairs',
+                schools: [
+                    'Criminal Justice',
+                    'Economics',
+                    'Global and Sociocultural Studies',
+                    'History',
+                    'Modern Languages',
+                    'Public Administration',
+                    'Religious Studies'
+                ]
+            }
+        ];
+
+        vm.selectedCollege = vm.Colleges[1];
 
 		vm.genders = ['Male', 'Female'];
 
