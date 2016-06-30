@@ -175,7 +175,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 			if (obj.files.length == 0) {
 				    $scope.project.image = "";
 					if(!vm.editingMode){
-							$scope.project.status='pending'
+							$scope.project.status='pending';
 							ProjectService.createProject($scope.project)
 								.then(function(data){
 									success_msg();
@@ -201,7 +201,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 								});
 					}
 					else{
-							$scope.project.id = $stateParams.id
+							$scope.project.status='pending';
+							$scope.project.id = $stateParams.id;
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){
 									success_msg();
@@ -236,7 +237,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
 					$scope.project.image = dataURL;
 					if(!vm.editingMode){
-							$scope.project.status='pending'
+							$scope.project.status='pending';
 							ProjectService.createProject($scope.project)
 								.then(function(data){
 									success_msg();
@@ -261,7 +262,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 								});
 					}
 					else{
-							$scope.project.id = $stateParams.id
+							$scope.project.status='pending';
+							$scope.project.id = $stateParams.id;
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){
 									success_msg();

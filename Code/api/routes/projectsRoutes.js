@@ -117,6 +117,7 @@ module.exports = function(app, express) {
 					res.status(400);
 					res.send(err);
 				}
+				proj.status = req.body.status;
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
                 if(req.body.disciplines!=="") proj.disciplines = req.body.disciplines;
@@ -204,7 +205,7 @@ module.exports = function(app, express) {
 	//route for accepting pending projects
 	apiRouter.route('/reviewproject/:id')
 		.put(function (req, res) {
-			console.log("PUT /reviewproject/:id");
+			console.log("PUT /reviewproject/:id "  );
 			 Project.findById(req.params.id, function(err, proj){
 	
 				 if(err) {
