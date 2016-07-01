@@ -133,7 +133,7 @@
                 type: "info",   
                 confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
-                timer: 7000,
+                timer: 10000,
             }, function (){
 				$window.location.reload();
             }
@@ -148,7 +148,7 @@
                 type: "warning",   
                 confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
-                timer: 7000,
+                timer: 10000,
             }, function (){
 				$window.location.reload();
             }

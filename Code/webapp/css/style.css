@@ -287,6 +287,12 @@ a {
     padding-top: 14px;
 }
 
+.student-list {
+    list-style: none;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .proj-title-teams {
     text-align: center;
 }

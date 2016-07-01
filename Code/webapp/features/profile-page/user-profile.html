@@ -1,6 +1,6 @@
 <div class="register">
 	<h3 align="center"> User Profile </h3>
-	<form name="Profile" ng-submit="vm.updateProfile()">
+	<form name="Profile">
 		<div style = "text-align: center;">
 			<img src = "img/user_icon.png" ng-src="{{vm.profile.image}}" style = " border: 1px solid black;" alt="img/user_icon.png" height="120" width="120" >
 		</div>
@@ -93,23 +93,18 @@
 				</tr>
 			</table>
 
-			<div align="center">
-				<button style= "width: 150px;" type="submit" class="btn btn-primary btn-block" ng-disabled="vm.profile.$invalid" >
-					<i></i> Update
-				</button>
-
-					</div>
-					<!-- Old notifications -->
-					<!--  <div style = "margin-left:23px;" class="row show-hide-message" ng-show="vm.message">
-               		 	<div style = "margin-left:23px;"class="col-sm-10 col-sm-offset-10">
-                    	<div style = "margin-left:23px;" class="alert alert-info">
-                        <center> {{ vm.message }} </center>
-                    		</div> 
-                		</div>
-					</div> -->
+				<div align="center">
+					<button style= "max-width: 300px;" type="submit" class="btn btn-primary btn-block" ng-disabled="vm.profile.$invalid" ng-click="vm.updateProfile()">
+						 Update
+					</button>
 				</div>
-			</div><br>
-		</div>
 
+				<button style= "max-width:150px; margin-top: 10px;" type="submit" class="btn btn-danger" ng-disabled="vm.profile.$invalid" ng-click="vm.destroyAccount()">
+					 Delete Account
+				</button>
+				</div>
+			</div>
+			<br>
+		</div>
 	</form>
 </div>
