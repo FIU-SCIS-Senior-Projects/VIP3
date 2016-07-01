@@ -12,17 +12,19 @@
     function reviewProfileController($state, $scope, reviewProfileService, $location, $window, ProfileService) {        
 		var profile;
 		
-		ProfileService.loadProfile().then(function(data){
-					if (data) {
-						profile = data;
-                        
-                        // only PI can view this page
-                        if (profile.userType != "Pi/CoPi")
-                        {
-                            console.log("User isnt allowed to view this page");
-                            $location.path("/");
-                        }
-					}
+		ProfileService.loadProfile().then(function(data)
+        {
+            if (data)
+            {
+                profile = data;
+                
+                // only PI can view this page
+                if (profile.userType != "Pi/CoPi")
+                {
+                    console.log("User isnt allowed to view this page");
+                    $location.path("/").replace();
+                }
+            }
 		});
         
         var vm = this;
@@ -36,8 +38,9 @@
             loadData();
         }
 
-        function loadData(){
-            	reviewProfileService.getReg($state.params.user_id).then(function(data)
+        function loadData()
+        {
+           	reviewProfileService.getReg($state.params.user_id).then(function(data)
             {
                 vm.profile = data;
                 
@@ -47,7 +50,8 @@
                 // no usertype or rank updates, so no changes to be made
                 if (vm.profile.requested_rank == null && vm.profile.requested_userType == null)
                 {
-                    $window.location.href = "/";
+                    //$window.location.href = "/";
+                    $location.path("/").replace();
                 }
             });
         }

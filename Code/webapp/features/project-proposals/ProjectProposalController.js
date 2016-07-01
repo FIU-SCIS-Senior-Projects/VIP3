@@ -8,12 +8,14 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					if (data) {
 						profile = data;
 						if (profile.userType == "Student") {
-							$location.path("/");
+							//$location.path("/");
+                            $location.path('/').replace();
 						}
 					}
 					else {
 						profile = null;
-						$location.path("login");
+						//$location.path("login");
+                        $location.path('login').replace();
 					}
 		});
 
