@@ -2,6 +2,7 @@ var mongoose    = require('mongoose');
 var Schema      = mongoose.Schema;
 
 var LogSchema = new Schema({
+	projectid: {type: String, required: false},
 	student: {type: String, required: true},
 	firstName: {type: String, required: false},
 	lastName: {type: String, required: false},

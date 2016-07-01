@@ -12,7 +12,6 @@ function projectService($http) {
         });
     };
 	
-	
 	 projectFactory.AcceptProjects = function (id) {
         return $http.put('/api/reviewproject/'+ id).then(function(data){
 			return data.data;
