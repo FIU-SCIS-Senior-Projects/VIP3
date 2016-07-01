@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('user-profile')
+        .module('user-profile', ['userService'])
         .controller('profileController', profileController);
 
     profileController.$inject = ['$state', '$scope', 'ProfileService'];
@@ -12,6 +12,7 @@
         var vm = this;
         vm.profile;
 		vm.updateProfile = updateProfile;
+		vm.destroyAccount = destroyAccount;
 		var currRank;
 
         init();
@@ -59,8 +60,8 @@
 		}
 
 
-		function deleteProfile () {
-			swal({   
+		function destroyAccount () {
+			 swal({   
                 title: "You are about to delete your account!",   
                 text: "You will lose your spot in any joined projects and will need to be reapproved.",   
                 type: "warning",   
@@ -68,23 +69,37 @@
                 showCancelButton: true,
             }, function () 
             {
-                swal({   
-                title: "Final warning!",   
-                text: "You will not be able to redo this action",   
-                type: "warning",   
-                confirmButtonText: "Delete my account" ,
-                showCancelButton: true,
-	            }, function () 
-	            {
-	                User.delete(vm.profile._id);
-	            }
-	            );
+            	setTimeout(function () { deleteUser(); }, 500);
             }
             );
 		}
         
         // refresh profile page after changes are saved
         //function refreshProfilePage () { setTimeout(function () { location.reload(true); }, 3000); }
+
+        function deleteUser() {
+        	swal({   
+                title: "Final warning!",   
+                text: "You will not be able to redo this action",   
+                type: "warning",   
+                confirmButtonText: "Delete my account" ,
+                showCancelButton: true
+	             }, function () 
+	             {
+	                 User.delete(vm.profile._id).then(function(){
+	                 	   $location.path('home').then(function(){
+	                 	   		setTimeout(function () { 
+	                 	   			swal({   
+					                 title: "Account deleted",   
+					                 text: "You will need to create a new account if you wish to join",   
+					                 type: "info",   
+					                 confirmButtonText: "Continue" ,
+						             }) 
+	                 	   		}, 1000);
+	                 	   });
+	                 });
+	            });
+        }
 
 		function success_msg()
          {

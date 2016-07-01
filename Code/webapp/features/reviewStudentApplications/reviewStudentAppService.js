@@ -22,12 +22,6 @@ function userService($http) {
 				 return data.data;
 			});
         };
-
-        profileFactory.LeaveProject = function (id, members) {
-             return $http.delete('/api/project/'+ id + '/' + members).then(function (data){
-                 return data.data;
-            });
-        };
 		
 		profileFactory.AddToProject = function (userid, pid) {
 			 return $http.put('/api/reviewusers/'+ userid + '/' + pid).then(function (data){

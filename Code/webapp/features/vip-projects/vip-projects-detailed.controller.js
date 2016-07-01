@@ -101,16 +101,6 @@
              
          }
 
-         function leaveProject(){
-            reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
-                $scope.result = "Approved";
-                
-            });
-         }
-
-         function joinProject(){
-
-         }
 
         function deny_msg()
          {

@@ -31,24 +31,29 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-md-3">
 
             <div class="col-sm-12 project-second-section-sidebar">
                 <button class="btn btn-primary" ng-click="vm.filterByDiscipline(discipline)">Show All</button>
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-md-12">
                     <h4>Mentor</h4>
                 <div>
-                    <ul>
-                        <li>{{vm.data.owner_name}}</li>
+                    <ul class="student-list">
+                        <li class="student-in-list">
+                            <a href="#">{{vm.data.owner_name}}</a>
+                            <button style="margin-left: 10px;" ng-show=" vm.profile.userType == 'Pi/CoPi'" class="btn btn-primary msg-btn">Message</button>
+                        </li>
                     </ul>
                 </div>
                     <h4>Students</h4>
                 <div>
                     <ul class="student-list" ng-repeat="student in vm.data.members">
-                        <li class="student-in-list">{{student}}</li> 
-                        <button class="btn btn-primary">Message</button>
+                        <li class="student-in-list">
+                        <a href="#">{{student}}</a>
+                        <button ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" class="btn btn-primary msg-btn">Message</button>
+                        </li>
                     </ul>
                 </div>
             </div>
