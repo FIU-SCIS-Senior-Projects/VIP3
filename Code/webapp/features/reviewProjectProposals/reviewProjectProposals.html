@@ -56,7 +56,7 @@
 			<td><input type="text" class="form-control log" value={{log.type}} readonly></input></td>
 			<td>
             <div class="text-center">
-                <button style= "width: 75px;" class="btn btn-danger btn-block" ng-click="vm.UndoProject(log._id, log.student, log.fullName, log.selectProject,log.studentemail, log.description, log.image, log.term, log.minStudents, log.maxStudents)">
+                <button style= "width: 75px;" class="btn btn-danger btn-block" ng-click="vm.UndoProject(log.projectid, log._id, log.action, log.student, log.fullName, log.selectProject,log.studentemail, log.description, log.image, log.term, log.minStudents, log.maxStudents)">
                     <i></i> Undo
                 </button>
                 </div>
