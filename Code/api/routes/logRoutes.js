@@ -39,6 +39,13 @@ module.exports = function(app, express) {
                     res.send('read');
                 }
             });
+        })
+		.delete(function (req, res) {
+            Log.remove({_id: req.params.id}, function(err, log){
+            if(err)
+                res.send(err);
+                res.json({message: 'successfully deleted!'});
+            });
         });
 		
 	apiRouter.route('/log/:type')
@@ -50,7 +57,7 @@ module.exports = function(app, express) {
                     res.send(log);
                 }
             });
-        })
+        });
 
     return apiRouter;
 }

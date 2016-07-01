@@ -33,8 +33,12 @@ function projectService($http) {
 			return $http.get('/log/log/' + type).then(function(data){
 				return data.data;
 	  });
-    };
-	
+	}
+	projectFactory.UndoLog = function (id) {
+			return $http.delete('/log/log/' + id).then(function(data){
+               console.log("Deleting response just arrived");
+            });;
+        };
 
     return projectFactory;
 }

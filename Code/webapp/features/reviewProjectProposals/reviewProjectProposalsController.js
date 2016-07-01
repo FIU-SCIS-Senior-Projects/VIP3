@@ -2,33 +2,34 @@
     'use strict';
 
     angular
-        .module('reviewProjectProposals')
+        .module('reviewProjectProposals', ['ProjectProposalService'])
         .controller('reviewProjectController', reviewProjectCtrl);
 
-    reviewProjectCtrl.$inject = ['$window','$state', '$scope', 'reviewPPS','ToDoService','User'];
+    reviewProjectCtrl.$inject = ['$window','$state', '$scope', 'reviewPPS','ToDoService','User', 'ProjectService'];
     /* @ngInject */
-    function reviewProjectCtrl($window,$state, $scope, reviewPPS,ToDoService,User) {
+    function reviewProjectCtrl($window,$state, $scope, reviewPPS,ToDoService,User, ProjectService) {
         var vm = this;
         vm.projects;
 		vm.logs;
 		vm.AcceptProject = AcceptProject;
 		vm.RejectProject = RejectProject;
-		vm.Undo = Undo;
+		vm.UndoProject = UndoProject;
         init();
-        function init(){
+        function init()
+		{
             loadData();
 			loadLogs();
         }
 		
-        function loadData(){
+        function loadData()
+		{
             reviewPPS.loadProjects().then(function(data){
                 vm.projects = data;
             });
         }
 		
-		function AcceptProject(projectid,owner,title,email,rank){
-            
-           
+		function AcceptProject(projectid,owner, owner_name, title,email,rank,description, image, term, firstSemester, maxStudents)
+		{
 		
             reviewPPS.AcceptProjects(projectid).then(function(data){
 				$scope.result = "Project Approved";
@@ -51,7 +52,8 @@
 
             success_msg();
 			
-			var log = {student: owner, studentemail: email, action: "accept", type: "project"};
+			console.log(owner_name);
+			var log = {student: owner, firstName: owner_name, lastName: owner_name, fullName: owner_name, studentemail: email, selectProject: title, description: description, image: image, term: term, minStudents: firstSemester, maxStudents: maxStudents, action: "Approved", type: "project"};
 				reviewPPS.createLog(log).then(function(success)  {
 					
 				}, function(error) {
@@ -61,7 +63,7 @@
 			});
 		}
 		
-		function RejectProject(projectid,owner,title,email,rank)
+		function RejectProject(projectid,owner, owner_name, title,email,rank, description, image, term, firstSemester, maxStudents)
         {
             reviewPPS.RejectProjects(projectid).then(function(data){
 				$scope.result = "Project Rejected";
@@ -82,7 +84,8 @@
 				};
 				User.nodeEmail(email_msg);
 				
-				var log = {student: owner, studentemail: email, action: "reject", type: "project"};
+				console.log(owner_name);
+				var log = {student: owner, firstName: owner_name, lastName: owner_name, fullName: owner_name, studentemail: email, selectProject: title, description: description,image: image,term: term, minStudents: firstSemester, maxStudents: maxStudents, action: "Rejected", type: "project"};
 				reviewPPS.createLog(log).then(function(success)  {
 					 
 				}, function(error) {
@@ -91,6 +94,20 @@
 
             reject_msg();
 
+		}
+		
+		function UndoProject(logid, ownerid, owner_name, title, email, desc, image, term, minStud, maxStud)
+		{
+			
+			//Call service to create a project:
+			var proj = {owner: ownerid, title: title, owner_email: email, owner_rank: "", owner_name: owner_name, firstSemester: minStud, maxStudents: maxStud, description: desc, status: "pending", image: image, term: term};
+			ProjectService.createProject(proj).then(function(success){
+				}, function(error) {
+				});
+			//Call service to delete in log
+			reviewPPS.UndoLog(logid).then(function(success){
+				}, function(error) {
+				});
 		}
 
 		function success_msg()
@@ -123,16 +140,13 @@
             );
         };
 		
-		function loadLogs(){
+		function loadLogs()
+		{
             reviewPPS.loadLog("project").then(function(data){
                 vm.logs = data;
             });
         }
 		
-		function Undo(id){
-			console.log("UNDER CONSTRUCTION");
-			alert("UNDER CONSTRUCTION!");
-		}
 		
 	}
 })();
