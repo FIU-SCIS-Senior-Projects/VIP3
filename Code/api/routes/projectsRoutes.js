@@ -130,6 +130,15 @@ module.exports = function(app, express) {
 				}
 				else {
 					proj.members = req.body.members;
+					
+				}
+				if (req.body.members_detailed.length > proj.maxStudents) {
+					res.status(400);
+					res.send("Max capacity reach no more students can join");
+				}
+				else {
+					proj.members_detailed = req.body.members_detailed;
+					
 				}
                 proj.save(function(err){
                     if(err)  {
@@ -164,6 +173,7 @@ module.exports = function(app, express) {
 			console.log(req.params);
 			var id = req.params.id;
 			var memberemail = req.params.members;
+			var members_detailed = req.body.detailed;
 			if (id != null && memberemail != null)
 			{
 			Project.findOne({_id: id}, function(err, proj){
@@ -172,7 +182,9 @@ module.exports = function(app, express) {
 					 res.json({message: 'Error!'});
 				}
 				else if (proj){
+					console.log("Members: " + memberemail + " Detailed: " + members_detailed);
 					proj.members.pull(memberemail);
+					proj.members_detailed.pull(members_detailed);
 					proj.save(function(err){
 						if(err)  {
 							res.status(400);

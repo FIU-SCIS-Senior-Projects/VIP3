@@ -19,6 +19,7 @@ var ProjectSchema = new Schema({
     sponsors: [{name: String, detail: String}],
     majPrepInt: [String],
     members: [String],
+	members_detailed: [String],
     contact: [{name: String, phone: String, email: String, office: String}],
     status: String,
     image: String,

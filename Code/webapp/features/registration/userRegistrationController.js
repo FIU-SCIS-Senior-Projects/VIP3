@@ -310,7 +310,7 @@ angular
 					
 					var todo2 = {owner: vm.userData.userType, 
 					owner_id: vm.objectId + "", 
-					todo: "Welcome to VIP " + vm.userData.firstName + ", as a faculty you will be able to propose projects that students can join. Please check this page for importatnt notificcations.", type: "personal", link: "http://" + host + "/#/" };
+					todo: "Welcome to VIP " + vm.userData.firstName + ", as a faculty you will be able to propose projects that students can join. Please check this page for importatnt notificcations.", type: "personal", link: "/#/to-do" };
 					
 					ToDoService.createTodo(todo2).then(function(success)  {
 						

@@ -5,6 +5,7 @@
     toDoController.$inject = ['ToDoService','ProfileService'];
 
     function toDoController (ToDoService,ProfileService) {
+		var done = false;
         var vm = this;
         vm.list = [];
         vm.personalCount = 0;
@@ -55,13 +56,14 @@
 
                         else if(vm.list[i].type == 'student') vm.studentCount++;
                     }
-					
+					done = true;
                 });
         }
 		
 		ProfileService.loadProfile().then(function(data){
 					if (data) {
 						getToDo(data);
+					
 					}
 					else {
 						

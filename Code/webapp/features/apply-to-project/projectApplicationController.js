@@ -234,7 +234,14 @@ angular
 					return;
 				}
 			}
+			for (i = 0; i < project.members_detailed.length; i++) {
+				if (project.members_detailed[i] === (profile.firstName + " " + profile.lastName)) {
+					 error_msg();
+					return;
+				}
+			}
 			project.members[project.members.length] = vm.email;
+			project.members_detailed[project.members_detailed.length] = profile.firstName + " " + profile.lastName;
 			ProjectService.editProject(project,project._id).then(
 				   function(response){
 					 // success callback
