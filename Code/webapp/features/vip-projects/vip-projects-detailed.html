@@ -30,10 +30,13 @@
                     </p>
             </div>
         </div>
+
         <div class="col-sm-3">
+
             <div class="col-sm-12 project-second-section-sidebar">
                 <button class="btn btn-primary" ng-click="vm.filterByDiscipline(discipline)">Show All</button>
             </div>
+
             <div class="col-sm-12">
                     <h4>Mentor</h4>
                 <div>
@@ -43,20 +46,37 @@
                 </div>
                     <h4>Students</h4>
                 <div>
-                    <ul ng-repeat="student in vm.data.members">
-                        <li>{{student}}</li>
+                    <ul class="student-list" ng-repeat="student in vm.data.members">
+                        <li class="student-in-list">{{student}}</li> 
+                        <button class="btn btn-primary">Message</button>
                     </ul>
                 </div>
             </div>
+
              <div class="col-sm-12">
                     <h4>Options</h4>
             </div>
+
             <div class="col-sm-12" ng-repeat="discipline in vm.data.disciplines">
                 <div class="btn side-bar-button">{{discipline}}</div>
             </div>
-            <div class="btn btn-primary" ng-click="vm.applyForProject()"> <strong>Apply</strong></div>
-            <div class="btn btn-primary" ng-click="vm.editProject()"> <strong>Edit</strong></div>
-            <div class="btn btn-primary" ng-click="vm.deleteProject()"> <strong>Delete</strong></div>
+
+            <script>
+                console.log("The user type is :" + vm.profile.userType);
+            </script>
+
+            <div class="btn btn-primary" ng-click="vm.applyForProject()" ng-hide=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'"> 
+                <strong>Apply</strong>
+            </div>
+            <div class="btn btn-primary" ng-click="vm.applyForProject()" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'"> 
+                <strong>Join</strong>
+            </div>
+            <div class="btn btn-primary" ng-click="vm.editProject()" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'"> 
+                <strong>Edit</strong>
+            </div>
+            <div class="btn btn-primary" ng-click="vm.deleteProject()" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'"> 
+                <strong>Delete</strong>
+            </div>
         </div>
     </div>
 </div>

@@ -22,7 +22,7 @@
         function loadProfileData(){
             ProfileService.loadProfile().then(function(data){
                 vm.profile = data;
-                console.log(vm.profile.userType);
+                //console.log(vm.profile.userType);
                 currRank = vm.profile.userType;
             });
         }
@@ -56,6 +56,31 @@
 					success_msg();
 				}
 			});
+		}
+
+
+		function deleteProfile () {
+			swal({   
+                title: "You are about to delete your account!",   
+                text: "You will lose your spot in any joined projects and will need to be reapproved.",   
+                type: "warning",   
+                confirmButtonText: "Continue" ,
+                showCancelButton: true,
+            }, function () 
+            {
+                swal({   
+                title: "Final warning!",   
+                text: "You will not be able to redo this action",   
+                type: "warning",   
+                confirmButtonText: "Delete my account" ,
+                showCancelButton: true,
+	            }, function () 
+	            {
+	                User.delete(vm.profile._id);
+	            }
+	            );
+            }
+            );
 		}
         
         // refresh profile page after changes are saved
