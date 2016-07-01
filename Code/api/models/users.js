@@ -30,7 +30,8 @@ var UsersSchema = new Schema({
         token: String,
         email: String,
         name: String
-    }
+    },
+	joined_project: Boolean
 
 });
 

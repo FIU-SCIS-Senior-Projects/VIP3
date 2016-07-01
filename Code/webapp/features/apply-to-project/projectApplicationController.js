@@ -224,6 +224,7 @@ angular
 
 
         vm.save = function() {
+			
 			vm.profile.rank = vm.rank;
 			reviewProfileService.updateProfile(vm.profile).then(function(data){
             });
@@ -240,6 +241,10 @@ angular
 					return;
 				}
 			}
+			
+			profile.joined_project = false;
+			User.update({user: profile});
+			
 			project.members[project.members.length] = vm.email;
 			project.members_detailed[project.members_detailed.length] = profile.firstName + " " + profile.lastName;
 			ProjectService.editProject(project,project._id).then(

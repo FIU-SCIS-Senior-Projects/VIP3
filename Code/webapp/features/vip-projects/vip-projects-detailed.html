@@ -54,9 +54,10 @@
             <div class="col-sm-12" ng-repeat="discipline in vm.data.disciplines">
                 <div class="btn side-bar-button">{{discipline}}</div>
             </div>
-            <div class="btn btn-primary" ng-click="vm.applyForProject()"> <strong>Apply</strong></div>
-            <div class="btn btn-primary" ng-click="vm.editProject()"> <strong>Edit</strong></div>
-            <div class="btn btn-primary" ng-click="vm.deleteProject()"> <strong>Delete</strong></div>
+            <div ng-if="!vm.already_joined" class="btn btn-primary" ng-click="vm.applyForProject()"> <strong>Join</strong></div>
+			<div ng-if="vm.already_joined" class="btn btn-primary" ng-click="vm.leaveProject()"> <strong>Leave</strong></div>
+            <div ng-hide="vm.not_signed_in" class="btn btn-primary" ng-click="vm.editProject()"> <strong>Edit</strong></div>
+            <div ng-hide="vm.not_signed_in" class="btn btn-primary" ng-click="vm.deleteProject()"> <strong>Delete</strong></div>
         </div>
     </div>
 </div>
