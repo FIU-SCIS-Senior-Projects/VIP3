@@ -67,8 +67,12 @@
         </ul>
     </div>
 
-    <div ng-if="todo.personalCount < 1 && todo.userCount < 1 && todo.projectCount < 1 && todo.studentCount < 1" class="jumbotron">
+    <div ng-if="done && todo.personalCount < 1 && todo.userCount < 1 && todo.projectCount < 1 && todo.studentCount < 1" class="jumbotron">
         <h1 class="text-center">All clear here!</h1>
         <p class="text-center">You have no more tasks to do.</p>
     </div>
+	<div ng-if="done == true" class="jumbotron">
+	 <h1 class="text-center">Loading!</h1>
+        <p class="text-center">Seems like the background process is still gathering the notifications please be patient.</p>
+	</div>
 </div>

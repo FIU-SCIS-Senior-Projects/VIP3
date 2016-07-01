@@ -173,15 +173,21 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 			$scope.project.owner_name = profile.firstName + " " + profile.lastName;
 			var obj = document.getElementById('teamImage');
 			if (obj.files.length == 0) {
-				    $scope.project.image = "";
+				    $scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
 					if(!vm.editingMode){
 							$scope.project.status='pending';
 							ProjectService.createProject($scope.project)
 								.then(function(data){
 									success_msg();
                                     
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
 									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
+									ToDoService.createTodo(todo2).then(function(success)  {
 										
 									}, function(error) {
 										
@@ -206,20 +212,25 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){
 									success_msg();
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
 									ToDoService.createTodo(todo).then(function(success)  {
 										
 									}, function(error) {
 										
 									});
-									
+									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
+									ToDoService.createTodo(todo2).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
 									var email_msg = 
 									{
 										recipient: profile.email, 
 										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 										subject: "Project Proposal Submission Pending", 
 										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
 										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
 									};
 									User.nodeEmail(email_msg);
@@ -241,8 +252,14 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 							ProjectService.createProject($scope.project)
 								.then(function(data){
 									success_msg();
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "#" };
+									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
 									ToDoService.createTodo(todo).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
+									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
+									ToDoService.createTodo(todo2).then(function(success)  {
 										
 									}, function(error) {
 										
@@ -253,7 +270,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 										subject: "Project Proposal Submission Pending", 
 										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",   
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
 										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
 									};
 									User.nodeEmail(email_msg);
@@ -274,13 +291,19 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 										error_msg();
 										
 									});
+									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
+									ToDoService.createTodo(todo2).then(function(success)  {
+										
+									}, function(error) {
+										
+									});
 									var email_msg = 
 									{
 										recipient: profile.email, 
 										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.s  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
 										subject: "Project Proposal Submission Pending", 
 										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",  
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP.", 
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
 										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
 									};
 									User.nodeEmail(email_msg);
