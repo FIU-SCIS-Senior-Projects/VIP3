@@ -1,0 +1,64 @@
+<div class="register">
+	<h3 align="center"> {{vm.profile.firstName}} {{vm.profile.lastName}}'s Profile </h3>
+	<form name="Profile">
+		<div style = "text-align: center;">
+			<img src = "img/user_icon.png" ng-src="{{vm.profile.image}}" style = " border: 1px solid black;" alt="img/user_icon.png" height="120" width="120" >
+		</div>
+
+		<div class="form-group">
+			<table class="table">
+				<tr>
+					<td>
+						<input disabled type="text" placeholder="First Name" ng-model="vm.profile.firstName" class="form-control" >
+
+					</td>
+					<td>
+						<input disabled type="text"  placeholder="Last Name" ng-model="vm.profile.lastName" class="form-control" >
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<input disabled ng-model="vm.profile.email" class="form-control" >
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>User Type:</label>
+						<div>
+							<input disabled="" class ='form-control' ng-model="vm.profile.userType">
+							
+						</div>
+						<br>
+
+					</td>
+					<td>
+						<label>Rank:</label>
+						<div>
+							<input disabled class = 'form-control' ng-model="vm.profile.rank">
+							
+						</div>
+				</tr>
+
+				<tr>
+					<td colspan="4">
+						<label>College:</label>
+							<input disabled  ng-model="vm.profile.college" class="form-control">
+							
+					</td>
+				</tr>
+				<tr ng-if="vm.profile.userType == 'Student'">
+					<td colspan="4">
+						<label>Major:</label>
+						<div>
+							<input disabled class ='form-control' ng-model="vm.profile.major">
+							
+						</div>
+					</td>
+				</tr>
+			</table>
+				</div>
+			</div>
+			<br>
+		</div>
+	</form>
+</div>

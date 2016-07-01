@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 buttons-container">
 
             <div class="col-sm-12 project-second-section-sidebar">
                 <button class="btn btn-primary" ng-click="vm.filterByDiscipline(discipline)">Show All</button>
@@ -43,7 +43,7 @@
                     <ul class="student-list">
                         <li class="student-in-list">
                             <a href="#">{{vm.data.owner_name}}</a>
-                            <button style="margin-left: 10px;" ng-show=" vm.profile.userType == 'Pi/CoPi'" class="btn btn-primary msg-btn">Message</button>
+                            <button ng-show=" vm.profile.userType == 'Pi/CoPi'" class="btn btn-primary msg-btn">Message</button>
                         </li>
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
                 <strong>Apply</strong>
             </div>
 
-            <div class="btn btn-primary" ng-click="vm.applyForProject()" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'"> 
+            <div class="btn btn-primary" ng-click="vm.applyForProject()" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" ng-if="!vm.already_joined"> 
                 <strong>Join</strong>
             </div>
 
