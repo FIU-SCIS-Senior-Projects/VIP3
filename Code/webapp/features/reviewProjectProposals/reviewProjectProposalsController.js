@@ -108,6 +108,7 @@
 			reviewPPS.UndoLog(logid).then(function(success){
 				}, function(error) {
 				});
+			$window.location.reload();
 		}
 
 		function success_msg()
