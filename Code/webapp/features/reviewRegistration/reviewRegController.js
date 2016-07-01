@@ -22,12 +22,12 @@
                 
                 // redirect if user is not a Pi, or if a decision has been made
 				if (profile.userType != "Pi/CoPi") {
-					$location.path("/");
+					$location.path("/").replace();
 				}
 			}
 			else {
 				profile = null;
-				$location.path("login");
+				$location.path("login").replace();
 			}
 		});
 
@@ -42,7 +42,7 @@
                 vm.profile = data;
                 
                 if (vm.profile.isDecisionMade)
-                    $location.path("/");
+                    $location.path("/").replace();
 
             });
         }

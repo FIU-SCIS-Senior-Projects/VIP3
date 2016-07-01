@@ -1,9 +1,15 @@
 angular
     .module('projectApplicationController', ['ProjectProposalService','user-profile','toDoModule', 'userService', 'reviewProfile'])
-    .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, reviewProfileService, $stateParams, $location) {
+    .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, reviewProfileService, $stateParams, $location, $window, $scope, $state, $document) {
         var vm = this;
 
 		var profile;
+        
+        $scope.getLinkUrl = function()
+        {
+            var referrer = $document.referrer;
+            console.log(referrer);
+        };
 
 		ProfileService.loadProfile().then(function(data)
 		{
@@ -21,7 +27,7 @@ angular
                 else
                 {
                     console.log("User type is Faculty/Staff, redirecting to home page");
-                    $location.path("/");
+                    $location.path('/').replace();
                 }
 			}
             
@@ -29,7 +35,7 @@ angular
 			else {
 				profile = null;
 
-				$location.path("login");
+                $location.path('login').replace();
 			}
 		});
 

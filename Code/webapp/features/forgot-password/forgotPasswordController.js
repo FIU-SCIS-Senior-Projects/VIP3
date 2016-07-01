@@ -47,7 +47,7 @@ angular
     .controller('forgotPasswordPublishController', function (forgotPasswordService, $state, $location) {
 
         if (!($location.search() && $location.search().auth_id && $location.search().code)) {
-            $location.path('/')
+            $location.path('/').replace();
         }
 
         var vm = this
