@@ -28,7 +28,7 @@
             });
         }
 		
-		function AcceptProject(projectid,owner, owner_name, title,email,rank,description, image, term, firstSemester, maxStudents)
+		function AcceptProject(projectid, owner, owner_name, title,email,rank,description, image, term, firstSemester, maxStudents)
 		{
 		
             reviewPPS.AcceptProjects(projectid).then(function(data){
@@ -53,7 +53,7 @@
             success_msg();
 			
 			console.log(owner_name);
-			var log = {student: owner, firstName: owner_name, lastName: owner_name, fullName: owner_name, studentemail: email, selectProject: title, description: description, image: image, term: term, minStudents: firstSemester, maxStudents: maxStudents, action: "Approved", type: "project"};
+			var log = {projectid: projectid, student: owner, firstName: owner_name, lastName: owner_name, fullName: owner_name, studentemail: email, selectProject: title, description: description, image: image, term: term, minStudents: firstSemester, maxStudents: maxStudents, action: "Approved", type: "project"};
 				reviewPPS.createLog(log).then(function(success)  {
 					
 				}, function(error) {
@@ -85,7 +85,7 @@
 				User.nodeEmail(email_msg);
 				
 				console.log(owner_name);
-				var log = {student: owner, firstName: owner_name, lastName: owner_name, fullName: owner_name, studentemail: email, selectProject: title, description: description,image: image,term: term, minStudents: firstSemester, maxStudents: maxStudents, action: "Rejected", type: "project"};
+				var log = {projectid: projectid, student: owner, firstName: owner_name, lastName: owner_name, fullName: owner_name, studentemail: email, selectProject: title, description: description,image: image,term: term, minStudents: firstSemester, maxStudents: maxStudents, action: "Rejected", type: "project"};
 				reviewPPS.createLog(log).then(function(success)  {
 					 
 				}, function(error) {
@@ -96,9 +96,10 @@
 
 		}
 		
-		function UndoProject(logid, ownerid, owner_name, title, email, desc, image, term, minStud, maxStud)
+		function UndoProject(projectid, logid, action, ownerid, owner_name, title, email, desc, image, term, minStud, maxStud)
 		{
-			
+			if (action == "Rejected")
+			{
 			//Call service to create a project:
 			var proj = {owner: ownerid, title: title, owner_email: email, owner_rank: "", owner_name: owner_name, firstSemester: minStud, maxStudents: maxStud, description: desc, status: "pending", image: image, term: term};
 			ProjectService.createProject(proj).then(function(success){
@@ -108,6 +109,19 @@
 			reviewPPS.UndoLog(logid).then(function(success){
 				}, function(error) {
 				});
+			}
+			if (action == "Approved")
+			{
+			//Call service to create a project:
+			var proj = {owner: ownerid, title: title, owner_email: email, owner_rank: "", owner_name: owner_name, firstSemester: minStud, maxStudents: maxStud, description: desc, status: "Active", image: image, term: term};
+			ProjectService.editProject(projectid, proj).then(function(success){
+			}, function(error) {
+			});
+			//Call service to delete in log
+			//reviewPPS.UndoLog(logid).then(function(success){
+			//	}, function(error) {
+			//	});
+			}
 		}
 
 		function success_msg()
