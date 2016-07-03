@@ -13,39 +13,13 @@
         vm.acceptProfile = acceptProfile;
         vm.rejectProfile = rejectProfile;
 
-		var profile;
+        reviewRegService.getReg($state.params.user_id).then(function(data){
+            vm.profile = data;
+            
+            if (vm.profile.isDecisionMade)
+                $location.path("/").replace();
 
-		ProfileService.loadProfile().then(function(data)
-		{
-			if (data) {
-				profile = data;
-                
-                // redirect if user is not a Pi, or if a decision has been made
-				if (profile.userType != "Pi/CoPi") {
-					$location.path("/").replace();
-				}
-			}
-			else {
-				profile = null;
-				$location.path("login").replace();
-			}
-		});
-
-        init();
-
-        function init(){
-            loadData();
-        }
-
-        function loadData(){
-            reviewRegService.getReg($state.params.user_id).then(function(data){
-                vm.profile = data;
-                
-                if (vm.profile.isDecisionMade)
-                    $location.path("/").replace();
-
-            });
-        }
+        });
 
         function acceptProfile () {
             vm.profile.piApproval = true;
