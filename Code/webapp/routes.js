@@ -138,7 +138,6 @@ angular.module('routes', ['ui.router'])
                             
                             // handler for guest - redirect them to login, store cookie
                             else {
-                                profile = null;
                                 //alert("guest user found, redirecting to login");
                                 $location.path('login').replace();
                             }
@@ -176,7 +175,6 @@ angular.module('routes', ['ui.router'])
                             // guest user, redirect to login
                             else
                             {
-                                profile = null;
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
                                 $location.path('login').replace();
@@ -213,7 +211,6 @@ angular.module('routes', ['ui.router'])
                             }
                             else {
                                 //alert("found guest, redir to login");
-                                profile = null;
                                 $location.path("login").replace();
                             }
                         });
@@ -274,7 +271,6 @@ angular.module('routes', ['ui.router'])
                             }
                             else {
                                 //alert("User not authorized, redirecting to login");
-                                profile = null;
                                 $location.path("login").replace();
                                 return;
                             }
@@ -318,7 +314,7 @@ angular.module('routes', ['ui.router'])
                 url: '/reviewuser',
                 resolve:{
                     //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,$location,$stateParams)
+                    "check":function(ProfileService,$location,$stateParams,$window)
                     {
                         var profile;
                         
@@ -332,17 +328,17 @@ angular.module('routes', ['ui.router'])
                                 {
                                     //$location.path("/");
                                     //alert("students arent allowed to view this page, redir to home");
-                                    $location.path('/').replace();
+                                    $location.path('/');
                                 }
                             }
                             
                             // guest user, redirect to login
                             else
                             {
-                                profile = null;
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
-                                $location.path('login').replace();
+                                //$location.path('login');
+                                $window.location.href = "/";
                             }
                         });
                     }
@@ -371,17 +367,16 @@ angular.module('routes', ['ui.router'])
                                 {
                                     //$location.path("/");
                                     //alert("students/faculty/staff arent allowed to view this page, redir to home");
-                                    $location.path('/').replace();
+                                    $location.path('/');
                                 }
                             }
                             
                             // guest user, redirect to login
                             else
                             {
-                                profile = null;
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
-                                $location.path('login').replace();
+                                $location.path('login');
                             }
                         });
                     }
