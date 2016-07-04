@@ -397,5 +397,4 @@ angular.module('routes', ['ui.router'])
                 controller: 'profileController',
                 controllerAs: 'vm'
             })
-
         });
