@@ -24,6 +24,12 @@ function projectService($http) {
         });;
     };	
 	
+	projectFactory.UndoActiveProject = function (pid, proj) {
+		return $http.put('/api/reviewproject/'+ pid + '/' + proj).then(function(data){
+			return data.data;
+        });
+    };
+	
     projectFactory.createLog = function (log) {
             return $http.post('/log/log', log);
     };

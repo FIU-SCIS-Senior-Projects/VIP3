@@ -44,16 +44,15 @@
     <h3 align="center">Review Project Proposal History </h3>
             <table class="table">
 			<tr>
-			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td><td><label>Action</label></td><td><label>Type</label></td>
+			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td><td><label>Action</label></td>
 			<td><label>Undo</label></td>
 			</tr>
-			<tr ng-repeat="log in vm.logs">
+			<tr ng-repeat="log in vm.logs | filter:{ type: 'project' }">
 			<td><input type="text" class="form-control log" value={{log.selectProject}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.description}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.fullName}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.studentemail}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.action}} readonly></input></td>
-			<td><input type="text" class="form-control log" value={{log.type}} readonly></input></td>
 			<td>
             <div class="text-center">
                 <button style= "width: 75px;" class="btn btn-danger btn-block" ng-click="vm.UndoProject(log.projectid, log._id, log.action, log.student, log.fullName, log.selectProject,log.studentemail, log.description, log.image, log.term, log.minStudents, log.maxStudents)">

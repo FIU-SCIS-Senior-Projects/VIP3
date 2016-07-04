@@ -23,7 +23,7 @@
 			</td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectData(user.projectid, user.email, user.members_detailed, user._id,user.project)">
+                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectData(user.projectid, user.email, user.members_detailed, user._id,user.project, user)">
                     <i></i> No
                 </button>
 			</td>
@@ -33,4 +33,34 @@
 			</div>
 <br>
 </table>
+<h3 align="center"> Review Student Applications History</h3>
+<table class="table">
+			<tr>
+			<td><label>First Name</label></td><td><label>Last Name</label></td><td><label>Gender</label></td><td><label>Email</label></td><td><label>Department</label></td>
+			<td><label>College</label></td><td><label>Major</label></td><td><label>Selected Project</label></td><td><label>Action</label></td><td><label>Undo</label></td>
+			</tr>
+			<tr ng-repeat="log in vm.logs | filter:{ type: 'student' }">
+			<td><input type="text" class="form-control log" value={{log.firstName}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.lastName}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.gender}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.studentemail}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.department}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.college}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.major}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.selectProject}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.action}} readonly></input></td>
+			<td>
+            <div class="text-center">
+                <button style= "width: 75px;" class="btn btn-danger btn-block" ng-click="vm.UndoStudent(log)">
+                    <i></i> Undo
+                </button>
+                </div>
+			</td>
+			</tr>
+			</div>
+            
+			</div>
+<br>
+</table>
+
 </div>

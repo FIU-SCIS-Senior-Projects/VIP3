@@ -197,6 +197,7 @@ module.exports = function(app, express) {
 			});
 			}
 		});
+
 		
 		
 		
@@ -242,6 +243,28 @@ module.exports = function(app, express) {
                 res.json({message: 'successfully deleted!'});
             });
         });
+		
+		
+	//route for making an approved project back to a pending project
+		apiRouter.route('/reviewproject/:pid/:project')
+		.put(function (req, res) {
+			console.log("PUT /reviewproject/:pid/:project "  );
+			 Project.findById(req.params.pid, function(err, proj){
+	
+				 if(err) {
+						res.status(400);
+						res.send(err);
+					}
+					proj.status = 'pending';
+					proj.save(function(err){
+						if(err)  {
+							res.status(400);
+							res.send(err);
+						}
+						res.json({message: 'Success: Active project turned into a pending project!'});
+					})
+				});
+		})
 		
     return apiRouter;
 };
