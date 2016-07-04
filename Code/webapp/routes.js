@@ -133,6 +133,7 @@ angular.module('routes', ['ui.router'])
                                 {
                                     //alert("User type is Faculty/Staff, redirecting to home page");
                                     $location.path('/').replace();
+                                    $window.location.href = "/#/";
                                 }
                             }
                             
@@ -140,6 +141,7 @@ angular.module('routes', ['ui.router'])
                             else {
                                 //alert("guest user found, redirecting to login");
                                 $location.path('login').replace();
+                                $window.location.href = "/#/login";
                             }
                         });
                     }
@@ -169,6 +171,7 @@ angular.module('routes', ['ui.router'])
                                     //$location.path("/");
                                     //alert("students arent allowed to view this page, redir to home");
                                     $location.path('/').replace();
+                                    $window.location.href = "/#/";
                                 }
                             }
                             
@@ -178,6 +181,7 @@ angular.module('routes', ['ui.router'])
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
                                 $location.path('login').replace();
+                                $window.location.href = "/#/login";
                             }
                         });
                     }
@@ -207,11 +211,13 @@ angular.module('routes', ['ui.router'])
                                 if (profile.userType != "Pi/CoPi") {
                                     //alert("only Pi is allowed to view this page, redir to home");
                                     $location.path("/").replace();
+                                    $window.location.href = "/#/";
                                 }
                             }
                             else {
                                 //alert("found guest, redir to login");
                                 $location.path("login").replace();
+                                $window.location.href = "/#/login";
                             }
                         });
                         
@@ -222,6 +228,7 @@ angular.module('routes', ['ui.router'])
                             
                             if (vm.profile.isDecisionMade)
                                 $location.path("/").replace();
+                                $window.location.href = "/#/";
 
                         });
                         
@@ -266,13 +273,13 @@ angular.module('routes', ['ui.router'])
                                 if (profile.userType != "Pi/CoPi")
                                 {
                                     $location.path("/").replace();
-                                    return;
+                                    $window.location.href = "/#/";
                                 }
                             }
                             else {
                                 //alert("User not authorized, redirecting to login");
                                 $location.path("login").replace();
-                                return;
+                                $window.location.href = "/#/login";
                             }
                         });
                         
@@ -294,7 +301,7 @@ angular.module('routes', ['ui.router'])
                                 
                                 // TODO: Redirect to a page that says that this user has no pending profile request changes to be approved/denied
                                 $location.path("/").replace();
-                                return;
+                                $window.location.href = "/#/";
                             }
                         });
                     }
@@ -329,6 +336,7 @@ angular.module('routes', ['ui.router'])
                                     //$location.path("/");
                                     //alert("students arent allowed to view this page, redir to home");
                                     $location.path('/');
+                                    $window.location.href = "/#/";
                                 }
                             }
                             
@@ -337,8 +345,8 @@ angular.module('routes', ['ui.router'])
                             {
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
-                                //$location.path('login');
-                                $window.location.href = "/";
+                                $location.path('login');
+                                $window.location.href = "/#/login";
                             }
                         });
                     }
@@ -368,6 +376,7 @@ angular.module('routes', ['ui.router'])
                                     //$location.path("/");
                                     //alert("students/faculty/staff arent allowed to view this page, redir to home");
                                     $location.path('/');
+                                    $window.location.href = "/#/";
                                 }
                             }
                             
@@ -377,6 +386,7 @@ angular.module('routes', ['ui.router'])
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
                                 $location.path('login');
+                                $window.location.href = "/#/login";
                             }
                         });
                     }
