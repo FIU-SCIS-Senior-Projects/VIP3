@@ -17,6 +17,19 @@ function userService($http) {
             });
         };
 		
+		//Gets the individual member
+		profileFactory.loadUser = function (id) {
+			return $http.get('/api/profilestudent/' + id).then(function(data){
+               return data.data;
+            });
+		}
+		
+		profileFactory.setJoinedProjectFalse = function (id) {
+			 return $http.put('/api/profilejoinedproject/'+ id).then(function (data){
+				 return data.data;
+			});
+        };
+		
 		profileFactory.RemoveFromProject = function (id, members,members_detailed) {
 			 return $http.put('/api/project/'+ id + '/' + members,members_detailed).then(function (data){
 				 return data.data;

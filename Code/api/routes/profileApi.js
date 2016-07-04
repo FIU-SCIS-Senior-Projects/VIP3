@@ -261,6 +261,60 @@ module.exports = function(app, express) {
 
         });
 
+	
+	apiRouter.route('/profile/:email')	
+		.get(function (req, res) {
+			console.log('POST /profile/:email ');
+            Profile.find({email:req.user.email}, function (err, profile) {
+                if(err) {
+                    console.log(err);
+                    return res.send('error');
+                }
+                return res.json(profile);
+            });
+
+        });
+		
+	apiRouter.route('/profilestudent/:id')	
+		.get(function (req, res) {
+			console.log('POST /profilestudent/:id ');
+			var id = req.params.id;
+            Profile.findOne({_id: id}, function (err, profile) {
+                if(err) {
+                    console.log(err);
+                    return res.send('error');
+                }
+				console.log(profile);
+                return res.json(profile);
+            });
+
+        });	
+		
+	//Set joinedproject to false
+	apiRouter.route('/profilejoinedproject/:id')	
+		.put(function (req, res) {
+			console.log("PUT /profilejoinedproject/:id ");
+			var id = req.params.id;
+			Profile.findOne({_id: id}, function(err, profile){
+				if (err){
+					res.send(err);
+					 res.json({message: 'Error!'});
+				}
+				else if (profile){
+					profile.joined_project = false;
+					console.log("SUCCESS!!")
+					profile.save(function(err){
+						if(err)  {
+							res.status(400);
+							res.send(err);
+						}
+						res.json(profile);
+					})
+
+				}
+			});
+		});
+		
 
 	apiRouter.route('/reviewuser/')
 		.get(function (req, res) {

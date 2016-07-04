@@ -109,20 +109,37 @@
 			reviewPPS.UndoLog(logid).then(function(success){
 				}, function(error) {
 				});
-			$window.location.reload();
+			undo_msg();
 			}
 			if (action == "Approved")
 			{
-			//Call service to create a project:
-			var proj = {owner: ownerid, title: title, owner_email: email, owner_rank: "", owner_name: owner_name, firstSemester: minStud, maxStudents: maxStud, description: desc, status: "Active", image: image, term: term};
-			ProjectService.editProject(projectid, proj).then(function(success){
-			}, function(error) {
-			});
-			//Call service to delete in log
-			//reviewPPS.UndoLog(logid).then(function(success){
-			//	}, function(error) {
-			//	});
-			$window.location.reload();
+			//Call service to check members, if no members then they can undo, else do not let them undo the project
+			ProjectService.getProject(projectid).then(function(data){
+				var thisProj = data;
+				//console.log(thisProj);
+				if (thisProj.members.length > 0)
+				{
+					undoerror_msg();
+				}
+				else
+				{
+				//Call service to create a project:
+				var proj = {owner: ownerid, title: title, owner_email: email, owner_rank: "", owner_name: owner_name, firstSemester: minStud, maxStudents: maxStud, description: desc, status: "pending", image: image, term: term};
+				reviewPPS.UndoActiveProject(projectid, proj).then(function(success){
+					console.log("WORKS!");}
+				, function(error) {
+					console.log(error);
+				});
+				//Call service to delete in log
+				reviewPPS.UndoLog(logid).then(function(success){
+					}, function(error) {
+					});
+				
+				}
+				}, function(error) {
+				});
+				undo_msg();
+			
 			}
 		}
 
@@ -137,6 +154,36 @@
                 timer: 7000,
             }, function () {
                 $window.location.reload();
+            }
+            );
+        };
+		
+		function undoerror_msg()
+         {
+            swal({   
+                title: "Undo Unsuccessful",   
+                text: "This project must have its members removed first.",   
+                type: "error",   
+                confirmButtonText: "Okay" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+               
+            }
+            );
+        };
+		
+		function undo_msg()
+         {
+            swal({   
+                title: "Undo Successful",   
+                text: "This projects status now requires approval",   
+                type: "info",   
+                confirmButtonText: "Okay" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+               $window.location.reload();
             }
             );
         };
