@@ -121,17 +121,17 @@ angular.module('routes', ['ui.router'])
                             if (data) {
                                 profile = data;
                                 
-                                alert("Usertype found is " + profile.userType);
+                                //alert("Usertype found is " + profile.userType);
                                 
                                 // if the user is a PI or Faculty member, render the page
                                 if (profile.userType == "Pi/CoPi" || profile.userType == "Student") {
-                                    alert("User type is " + profile.userType + " and user is allowed to view this page");
+                                    //alert("User type is " + profile.userType + " and user is allowed to view this page");
                                 }
                                 
                                 // otherwise, the user doesnt have permission, so show homepage instead
                                 else
                                 {
-                                    alert("User type is Faculty/Staff, redirecting to home page");
+                                    //alert("User type is Faculty/Staff, redirecting to home page");
                                     $location.path('/').replace();
                                 }
                             }
@@ -139,7 +139,7 @@ angular.module('routes', ['ui.router'])
                             // handler for guest - redirect them to login, store cookie
                             else {
                                 profile = null;
-                                alert("guest user found, redirecting to login");
+                                //alert("guest user found, redirecting to login");
                                 $location.path('login').replace();
                             }
                         });
@@ -168,7 +168,7 @@ angular.module('routes', ['ui.router'])
                                 if (profile.userType == "Student")
                                 {
                                     //$location.path("/");
-                                    alert("students arent allowed to view this page, redir to home");
+                                    //alert("students arent allowed to view this page, redir to home");
                                     $location.path('/').replace();
                                 }
                             }
@@ -178,7 +178,7 @@ angular.module('routes', ['ui.router'])
                             {
                                 profile = null;
                                 //$location.path("login");
-                                alert("found guest, redir to login");
+                                //alert("found guest, redir to login");
                                 $location.path('login').replace();
                             }
                         });
@@ -207,12 +207,12 @@ angular.module('routes', ['ui.router'])
                                 
                                 // redirect if user is not a Pi, or if a decision has been made
                                 if (profile.userType != "Pi/CoPi") {
-                                    alert("only Pi is allowed to view this page, redir to home");
+                                    //alert("only Pi is allowed to view this page, redir to home");
                                     $location.path("/").replace();
                                 }
                             }
                             else {
-                                alert("found guest, redir to login");
+                                //alert("found guest, redir to login");
                                 profile = null;
                                 $location.path("login").replace();
                             }
@@ -244,10 +244,10 @@ angular.module('routes', ['ui.router'])
                     "check":function(reviewProfileService,ProfileService,$location,$stateParams)
                     {
                         
-                        alert("Requsted user ID = " + $stateParams.user_id);
-                        //alert("Requsted user = " + vm.profile.requested_rank);
+                        //alert("Requsted user ID = " + $stateParams.user_id);
+                        ////alert("Requsted user = " + vm.profile.requested_rank);
                         
-                        alert("entered check function");
+                        //alert("entered check function");
                         console.log("entered check function");
                         
                         var profile;
@@ -257,13 +257,13 @@ angular.module('routes', ['ui.router'])
                         ProfileService.loadProfile().then(function(data)
                         {
                             console.log("loadProfile() success");
-                            alert("loadProfile() success");
+                            //alert("loadProfile() success");
                             if (data)
                             {
                                 profile = data;
                                 
                                 console.log("loadProfile() usertype is " + profile.userType);
-                                alert("loadProfile() usertype is " + profile.userType);
+                                //alert("loadProfile() usertype is " + profile.userType);
                                 
                                 // redirect if user is not a Pi, or if a decision has been made
                                 if (profile.userType != "Pi/CoPi")
@@ -273,7 +273,7 @@ angular.module('routes', ['ui.router'])
                                 }
                             }
                             else {
-                                alert("User not authorized, redirecting to login");
+                                //alert("User not authorized, redirecting to login");
                                 profile = null;
                                 $location.path("login").replace();
                                 return;
@@ -286,15 +286,15 @@ angular.module('routes', ['ui.router'])
                         {
                             vm.profile = data;
                             
-                            alert("Requ user name = " + vm.profile.email);
-                            alert("Requ user = " + vm.profile.requested_userType);
-                            alert("Requ rank = " + vm.profile.requested_rank);
+                            //alert("Requ user name = " + vm.profile.email);
+                            //alert("Requ user = " + vm.profile.requested_userType);
+                            //alert("Requ rank = " + vm.profile.requested_rank);
                             
                             // no usertype or rank updates, so no changes to be made
                             if (vm.profile.requested_rank == null && vm.profile.requested_userType == null)
                             {
                                 //$window.location.href = "/";
-                                alert("user has no pending profile changes!");
+                                //alert("user has no pending profile changes!");
                                 
                                 // TODO: Redirect to a page that says that this user has no pending profile request changes to be approved/denied
                                 $location.path("/").replace();
@@ -331,7 +331,7 @@ angular.module('routes', ['ui.router'])
                                 if (profile.userType == "Student")
                                 {
                                     //$location.path("/");
-                                    alert("students arent allowed to view this page, redir to home");
+                                    //alert("students arent allowed to view this page, redir to home");
                                     $location.path('/').replace();
                                 }
                             }
@@ -341,7 +341,7 @@ angular.module('routes', ['ui.router'])
                             {
                                 profile = null;
                                 //$location.path("login");
-                                alert("found guest, redir to login");
+                                //alert("found guest, redir to login");
                                 $location.path('login').replace();
                             }
                         });
@@ -370,7 +370,7 @@ angular.module('routes', ['ui.router'])
                                 if (profile.userType == "Student" || profile.userType == "Staff/Faculty")
                                 {
                                     //$location.path("/");
-                                    alert("students/faculty/staff arent allowed to view this page, redir to home");
+                                    //alert("students/faculty/staff arent allowed to view this page, redir to home");
                                     $location.path('/').replace();
                                 }
                             }
@@ -380,7 +380,7 @@ angular.module('routes', ['ui.router'])
                             {
                                 profile = null;
                                 //$location.path("login");
-                                alert("found guest, redir to login");
+                                //alert("found guest, redir to login");
                                 $location.path('login').replace();
                             }
                         });
