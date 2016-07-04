@@ -390,4 +390,12 @@ angular.module('routes', ['ui.router'])
 				controller: 'reviewProjectController',
 				controllerAs: 'vm'
             })
+
+            .state('viewProfile', {
+                url: '/userprofile/:user_id',
+                templateUrl: 'features/view-profile/view-profile.html',
+                controller: 'profileController',
+                controllerAs: 'vm'
+            })
+
         });

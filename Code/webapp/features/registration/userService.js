@@ -25,8 +25,8 @@ angular.module('userService', [])
         };
 
         // update a user
-        userFactory.update = function(id, userData) {
-            return $http.put('/vip/users/'+ id, userData);
+        userFactory.update = function( userData) {
+            return $http.put('/vip/users/', userData);
         };
 
         // delete a user

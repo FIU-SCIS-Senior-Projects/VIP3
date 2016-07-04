@@ -5,8 +5,9 @@
     toDoController.$inject = ['ToDoService','ProfileService'];
 
     function toDoController (ToDoService,ProfileService) {
-		var done = false;
+		
         var vm = this;
+		vm.done = false;
         vm.list = [];
         vm.personalCount = 0;
         vm.userCount = 0;
@@ -56,7 +57,7 @@
 
                         else if(vm.list[i].type == 'student') vm.studentCount++;
                     }
-					done = true;
+					vm.done = true;
                 });
         }
 		
@@ -66,7 +67,7 @@
 					
 					}
 					else {
-						
+						vm.done = true;
 					}
 		});
 

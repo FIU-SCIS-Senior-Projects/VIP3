@@ -287,8 +287,19 @@ a {
     padding-top: 14px;
 }
 
+.student-list {
+    list-style: none;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.msg-btn {
+    margin-left: 10px;
+}
+
 .proj-title-teams {
     text-align: center;
+    font-weight: bold;
 }
 
 .team-info {
@@ -302,6 +313,11 @@ a {
     width:135px; 
     border-radius: 2px;
     float:left;
+    cursor: pointer;
+}
+
+.buttons-container {
+    margin-bottom: 10px;
 }
 
 .proj-description {

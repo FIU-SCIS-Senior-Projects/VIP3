@@ -211,7 +211,31 @@ module.exports = function (app, express) {
                 // return the object id for validation and message for the client
                 res.json({success: true, objectId: user._id, message: 'User account created please verify the account via the registered email.' });
             });
-        });
+        }).put(function(req,res) {
+			console.log("PUT UPDATE USER");
+			User.findOne({'email': req.body.user.email}, function(err, user) {
+				if (user) {
+					 user.firstName     = req.body.user.firstName;  // set the users name (comes from the request)
+					 user.lastName     = req.body.user.lastName;  // set the users last name
+					 user.pantherID        = req.body.user.pantherID;     // set the users panther ID
+					 user.password   = req.body.user.password;  // set the users password (comes from the request)
+					 user.passwordConf = req.body.user.passwordConf;
+					 user.email      = req.body.user.email;   // sets the users email
+					 user.project    = req.body.user.project; // sets the users project
+					 user.rank       = req.body.user.rank;    // set the users Rank within the program
+					 user.college      = req.body.user.college;   // sets the users college
+					 user.department      = req.body.user.department;  // sets the users college
+					 user.joined_project = req.body.user.joined_project;
+					 console.log("User: " + req.body.user);
+					 console.log("Joined project: " + user.joined_project);
+					 user.save(function(err) {
+							if (err) {
+								console.log("Error updating user.");
+							}
+					 });
+				}
+			});
+		});
 
     return userRouter;
 };

@@ -11,14 +11,14 @@
 			<td><input type="text" class="form-control projects" value={{project.owner_email}} readonly></input></td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project._id,project.owner,project.title,project.owner_email,project.owner_rank)">
+                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project._id,project.owner, project.owner_name, project.title,project.owner_email,project.owner_rank, project.description, project.image, project.term, project.firstSemester, project.maxStudents)">
                     <i></i> Yes
                 </button>
                 </div>
 			</td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectProject(project._id,project.owner,project.title,project.owner_email,project.owner_rank)">
+                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectProject(project._id,project.owner, project.owner_name, project.title,project.owner_email,project.owner_rank, project.description, project.image, project.term, project.firstSemester, project.maxStudents)">
                     <i></i> No
                 </button>
 			</td>
@@ -41,20 +41,22 @@
 </div>
 
 
-    <h3 align="center"> Recent History </h3>
+    <h3 align="center">Review Project Proposal History </h3>
             <table class="table">
 			<tr>
-			<td><label>Name</label></td><td><label>Email</label></td><td><label>Action</label></td><td><label>Type</label></td>
+			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td><td><label>Action</label></td><td><label>Type</label></td>
 			<td><label>Undo</label></td>
 			</tr>
 			<tr ng-repeat="log in vm.logs">
-			<td><input type="text" class="form-control log" value={{log.student}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.selectProject}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.description}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.fullName}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.studentemail}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.action}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.type}} readonly></input></td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.Undo(log._id)">
+                <button style= "width: 75px;" class="btn btn-danger btn-block" ng-click="vm.UndoProject(log.projectid, log._id, log.action, log.student, log.fullName, log.selectProject,log.studentemail, log.description, log.image, log.term, log.minStudents, log.maxStudents)">
                     <i></i> Undo
                 </button>
                 </div>

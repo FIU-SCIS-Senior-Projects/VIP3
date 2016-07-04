@@ -55,18 +55,23 @@
 						}
 					}
 				}
-				vm.membs = vm.membs.filter(function(n){ return n != undefined });
+				vm.membs = vm.membs.filter(function(n){ return n != undefined && !n.joined_project });
 				
             });
         }
 		
-		function ApproveData(pid, members, userid,name)
+		function ApproveData(pid, members, userid,name,user)
 		{
            
-			reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
-				$scope.result = "Approved";
+			//reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
+			//	$scope.result = "Approved";
 				
-			});
+			//});
+			
+			user.joined_project = true;
+			
+			User.update({user: user});
+			
 			reviewStudentAppService.AddToProject(userid, pid).then(function(data){
 				$scope.result = "Approved";
 				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "/#/to-do" };
@@ -128,7 +133,7 @@
                 type: "info",   
                 confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
-                timer: 7000,
+                timer: 10000,
             }, function (){
 				$window.location.reload();
             }
@@ -143,7 +148,7 @@
                 type: "warning",   
                 confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
-                timer: 7000,
+                timer: 10000,
             }, function (){
 				$window.location.reload();
             }
