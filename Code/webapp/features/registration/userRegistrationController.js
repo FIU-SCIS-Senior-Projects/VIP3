@@ -3,7 +3,7 @@
  * Cleaned random garbage characters such as " " from this file - vlad, 5/29/2016
  */
  
-var host = "vip.fiu.edu"; 
+var host = "http://vip.fiu.edu"; 
  
 angular
     .module('userRegistrationController', ['userService','toDoModule'])
