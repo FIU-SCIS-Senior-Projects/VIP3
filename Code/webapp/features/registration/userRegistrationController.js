@@ -541,7 +541,7 @@ function success_msg()
                 allowOutsideClick: true,
                 timer: 9000,
             }, function () {
-                window.location = "http://localhost:3000/#";
+                window.location.reload();
             }
             );
         };
