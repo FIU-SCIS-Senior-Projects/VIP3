@@ -15,7 +15,7 @@ var headers = {
             pass: 'vipadmin123'
         }
     },
-    SMTP_Transport = nodemailer	.createTransport("SMTP", SMTP_config);
+    SMTP_Transport = nodemailer	.createTransport('smtps://fiuvipmailer%40gmail.com:vipadmin123@smtp.gmail.com');
   // SMTP_Transport = nodemailer.createTransport('smtps://visualnet2008@gmail.com:20001142h@smtp.gmail.com');
 	//SMTP_Transport = nodemailer.createTransport('smtps://vvega019@fiu.edu:Vega2016-@smtp.gmail.com');
 var CONFIG = {
@@ -41,7 +41,7 @@ exports.sendPinRecoveryCode = function (user_token, SCCallback, ERCallback) {
             object.date = Date.now()
 
             /*var content = "http://45.32.254.22:3000/#/password_request?auth_id=" + object.user_id + "&code=" + object.verifyCode*/
-            var content = "Dear VIP user, you received this email in order to a password reset request. Please click on the link below: http://vip-dev.cis.fiu.edu/#/password_request?auth_id=" + object.user_id + "&code=" + object.verifyCode
+            var content = "Dear VIP user, you received this email in order to a password reset request. Please click on the link below: http://localhost:3000/#/password_request?auth_id=" + object.user_id + "&code=" + object.verifyCode
 
             var mailOptions = {
                 from: CONFIG.Sender,

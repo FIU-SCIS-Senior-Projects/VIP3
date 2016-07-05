@@ -42,8 +42,11 @@ UsersSchema.pre('save', function(next) {
     console.log("Called 'save' function for User");
 
     //Hash the password only if the password has been changed or user is new
-    if (!user.isModified('password')) return next();
-
+    if (!user.isModified('password')) {
+		return next();
+	}
+		
+		
     //Generate the hash
     bcrypt.hash(user.password, null, null, function (err, hash) {
         if (err)

@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');    // get body-parser
 var User = require('../models/users');
 var Support = require('../models/support');
 var mailingService = require('../services/mailing');
+var bcrypt      = require('bcrypt-nodejs');
 
 module.exports = function (app, express) {
 
@@ -50,18 +51,28 @@ module.exports = function (app, express) {
 
     supportRouter.route('/recover/publish_password').post(function (req, res) {
         var d = req.body
-        User.update({ _id: require('mongoose').Types.ObjectId(d.user_id) }, { password: d.password }, function (err, object) {
-            if (err) {
-                throw err
-            }
-            res.json({ validated: true })
+		var hash = null;
+		bcrypt.hash(d.password, null, null, function (err, h) {
+			if (err) {
+				console.log("Update Password Error");
+				res.json({ validated: false });
+			}
+			hash = h;
+			User.update({ _id: require('mongoose').Types.ObjectId(d.user_id) }, { password: hash, passwordConf: hash}, function (err, object) {
+				if (err) {
+					res.json({ validated: false });
+				}
+				res.json({ validated: true });
 
-            Support.remove({ user_id: d.user_id }, function (err) {
-                if (err) {
-                    throw err
-                }
-            })
-        })
+				Support.remove({ user_id: d.user_id }, function (err) {
+					if (err) {
+						res.json({ validated: false });
+					}
+				});
+			});
+        
+		});
+       
 
     });
 
