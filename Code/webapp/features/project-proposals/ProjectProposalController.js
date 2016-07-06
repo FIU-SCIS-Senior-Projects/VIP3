@@ -1,6 +1,23 @@
 
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
     .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
+        
+		var profile;
+		
+		ProfileService.loadProfile().then(function(data){
+					if (data) {
+						profile = data;
+						if (profile.userType == "Student") {
+							//$location.path("/");
+                            $location.path('/').replace();
+						}
+					}
+					else {
+						profile = null;
+						//$location.path("login");
+                        $location.path('login').replace();
+					}
+		});
 
         $scope.colleges= [
             {
@@ -192,7 +209,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 								});
 					}
 					else{
-							$scope.project.status='pending';
+							$scope.project.status='modified';
 							$scope.project.id = $stateParams.id;
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){

@@ -6,15 +6,18 @@
         .controller('reviewProjectController', reviewProjectCtrl);
 
     reviewProjectCtrl.$inject = ['$window','$state', '$scope', 'reviewPPS','ToDoService','User', 'ProjectService'];
+    
     /* @ngInject */
     function reviewProjectCtrl($window,$state, $scope, reviewPPS,ToDoService,User, ProjectService) {
         var vm = this;
         vm.projects;
+        vm.modified_projects;
 		vm.logs;
 		vm.AcceptProject = AcceptProject;
 		vm.RejectProject = RejectProject;
 		vm.UndoProject = UndoProject;
         init();
+        
         function init()
 		{
             loadData();
@@ -23,10 +26,11 @@
 		
         function loadData()
 		{
-            reviewPPS.loadProjects().then(function(data){
+            reviewPPS.loadProjects().then(function(data)
+            {
                 vm.projects = data;
             });
-        }
+        }        
 		
 		function AcceptProject(projectid, owner, owner_name, title,email,rank,description, image, term, firstSemester, maxStudents)
 		{

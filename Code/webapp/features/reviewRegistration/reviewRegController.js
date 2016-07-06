@@ -51,6 +51,7 @@
             vm.profile.piApproval = false;
             vm.profile.piDenial = true;
             vm.profile.isDecisionMade = true;
+            //vm.profile = null;
             
             vm.message = "User has been Rejected!";
             reviewRegService.rejectProfile(vm.profile).then(function(data){

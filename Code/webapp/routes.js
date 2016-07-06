@@ -197,7 +197,7 @@ angular.module('routes', ['ui.router'])
                 url: '/verifyuser/:user_id',
                 resolve:{
                     //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,$location,$stateParams)
+                    "check":function(ProfileService,reviewRegService,$location,$stateParams)
                     {
                         var profile;
                         
@@ -225,10 +225,12 @@ angular.module('routes', ['ui.router'])
                         reviewRegService.getReg($stateParams.user_id).then(function(data)
                         {
                             vm.profile = data;
-                            
+
                             if (vm.profile.isDecisionMade)
+                            {
                                 $location.path("/").replace();
                                 $window.location.href = "/#/";
+                            }
 
                         });
                         

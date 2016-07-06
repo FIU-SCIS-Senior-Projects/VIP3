@@ -96,7 +96,7 @@ module.exports = function(app, express) {
         })
         .get(function (req, res) {
 
-            Project.find({ term: currentTerm[0]._id, status: "Active" }, function (err, projects) {
+            Project.find({ term: currentTerm[0]._id }, function (err, projects) {
 
                 if(err) {
                     console.log(err);
@@ -205,7 +205,9 @@ module.exports = function(app, express) {
 	apiRouter.route('/reviewproject')
 		.get(function (req, res) {
 
-            Project.find({ term: currentTerm[0]._id, status: "pending" }, function (err, projects) {
+            console.log("Looking for projs");
+        
+            Project.find({ term: currentTerm[0]._id, status: "pending", status: "modified" }, function (err, projects) {
 
                 if(err) {
                     console.log(err);
