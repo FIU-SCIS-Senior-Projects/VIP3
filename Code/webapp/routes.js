@@ -9,7 +9,9 @@ angular.module('routes', ['ui.router'])
             })
             .state('contact', {
                 url:'/contact',
-                templateUrl: 'features/contact/contact.html'
+                templateUrl: 'features/contact/contact.html',
+                controller: 'contactController',
+                controllerAs: 'vm',
             })
             .state('competitionInformation', {
                 url:'/competition-information',
