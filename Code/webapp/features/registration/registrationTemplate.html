@@ -21,7 +21,23 @@
 
                 <tr>
                     <td colspan="4"><input class="form-control" placeholder="Password" type="password"
-                                           ng-model="regCtlr.userData.password"></input><font color="blue" size=1><b>Minimum 8 characters. 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character.</font></b></td>
+                                           ng-model="regCtlr.userData.password"></input>
+                                            <div class="alert alert-info">
+                                                <p>
+                                                    <b>Please Note:</b> Password must have at least 8 characters and include:
+                                                    <br><br>                  
+                                                    i) at least one upper case letter (A – Z).
+                                                    <br>
+                                                    ii) at least one lower case letter(a-z).
+                                                    <br>
+                                                    iii) At least one digit (0 – 9) .
+                                                    <br>
+                                                    iv) at least one special Characters of !@#$%&*()
+                                                    <br>
+                                                </p>
+                                            </div>
+                                           
+                                           </td>
                 </tr>
                 <tr>
                     <td colspan="4"><input class="form-control" placeholder="Confirm Password" type="password"

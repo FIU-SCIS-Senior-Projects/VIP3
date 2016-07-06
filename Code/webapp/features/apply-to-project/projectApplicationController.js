@@ -1,43 +1,9 @@
 angular
     .module('projectApplicationController', ['ProjectProposalService','user-profile','toDoModule', 'userService', 'reviewProfile'])
     .controller('projAppCtrl',  function (ProjectService, ProfileService, ToDoService, User, reviewProfileService, $stateParams, $location, $window, $scope, $state, $document) {
-        var vm = this;
-
-		var profile;
         
-        $scope.getLinkUrl = function()
-        {
-            var referrer = $document.referrer;
-            console.log(referrer);
-        };
-
-		ProfileService.loadProfile().then(function(data)
-		{
-			if (data) {
-				profile = data;
-                
-                console.log("Usertype found is " + profile.userType);
-                
-                // if the user is a PI or Faculty member, render the page
-				if (profile.userType == "Pi/CoPi" || profile.userType == "Student") {
-                    console.log("User type is " + profile.userType + " and user is allowed to view this page");
-				}
-                
-                // otherwise, the user doesnt have permission, so show homepage instead
-                else
-                {
-                    console.log("User type is Faculty/Staff, redirecting to home page");
-                    $location.path('/').replace();
-                }
-			}
-            
-            // handler for guest - redirect them to login, store cookie
-			else {
-				profile = null;
-
-                $location.path('login').replace();
-			}
-		});
+        var vm = this;
+		var profile;
 
         vm.Colleges = [
             {

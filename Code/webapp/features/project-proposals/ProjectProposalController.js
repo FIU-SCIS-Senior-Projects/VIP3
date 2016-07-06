@@ -1,7 +1,7 @@
 
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
     .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
-
+        
 		var profile;
 		
 		ProfileService.loadProfile().then(function(data){
@@ -209,7 +209,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 								});
 					}
 					else{
-							$scope.project.status='pending';
+							$scope.project.status='modified';
 							$scope.project.id = $stateParams.id;
 							$scope.project.edited = true;
 							ProjectService.editProject($scope.project, $stateParams.id)

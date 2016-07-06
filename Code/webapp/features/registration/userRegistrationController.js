@@ -3,7 +3,7 @@
  * Cleaned random garbage characters such as " " from this file - vlad, 5/29/2016
  */
  
-var host = "http://vip.fiu.edu"; 
+var host = "vip.fiu.edu"; 
  
 angular
     .module('userRegistrationController', ['userService','toDoModule'])
@@ -286,7 +286,7 @@ angular
 					vm.objectId = data.objectId;
 
 					vm.userData.recipient = vm.userData.email;
-					vm.userData.text = "Dear "+vm.userData.firstName +",\n\nWelcome to FIU's VIP Project!"+
+					vm.userData.text = "Dear "+ vm.userData.firstName +",\n\nWelcome to FIU's VIP Project!"+
 					   " Please verify your email with the link below and standby for your account to be verified by the PI.\n\n http://" + host + "/vip/verifyEmail/" + vm.objectId + "";
 					vm.userData.subject = "Welcome to FIU VIP Project!";
 
@@ -294,8 +294,8 @@ angular
 					vm.userData.recipient2 = "mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu"; // NEED TO PUT MAIN PI EMAIL HERE FOR NOW
 
 					vm.userData.text2 = "Dear PI/CoPI,"+
-						" A new user is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/" + vm.objectId +"";
-					vm.userData.subject2 = "User Registration Request";
+						vm.userData.firstName + " " + vm.userData.lastName + " is attempting to register, please accept or reject using the following link:\n\ http://" + host + "/#/verifyuser/" + vm.objectId +"";
+					vm.userData.subject2 = vm.userData.firstName + " " + vm.userData.lastName + " is attempting to Register a New Account";
 
 					User.nodeEmail(vm.userData);
 					
