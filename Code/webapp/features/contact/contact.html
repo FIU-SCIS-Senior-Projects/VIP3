@@ -1,4 +1,4 @@
-<div><h1>Contact</h1></div>
+<h1>Contact</h1>
 <div>
     <table class="table">
             <tr class="active">
@@ -118,5 +118,45 @@
                     </p>
                 </td>
             </tr>
+
+            <tr class="active">
+                <td><strong>Technical Support or Concerns</strong></td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <strong>Any technical issus or concerns please email us by using the form below
+                        </strong>
+                        <br>
+                    </p>
+                    <!-- <button id="email_btn" onclick="showEmail()" class="btn btn-primary">Send a ticket to technical support</button> -->
+                </td>
+            </tr>
     </table>
+</div>
+
+<div id="hide_form">
+    <form action="" id="email_form" class="email_form">
+        <h3>TECHNICAL SUPPORT TICKET FORM</h3>
+
+        <fieldset class="form-group">
+          <label>Select your topic</label>
+          <select class="form-control">
+            <option>Technical issue</option>
+            <option>Vip Educational credits</option>
+          </select>
+        </fieldset>
+
+        <fieldset class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" ng-model="vm.title" placeholder="Subject of your email" required>
+        </fieldset>
+
+        <fieldset class="form-group">
+        <label for="Description">Describe your issue</label>
+        <textarea type="text" class="form-control" placeholder="Please describe your issue as best as you can" rows="8" ng-model="vm.issue" required></textarea>
+        </fieldset>
+
+        <button class="btn btn-primary" ng-click="vm.send_msg()">Submit</button>
+    </form>
 </div>
