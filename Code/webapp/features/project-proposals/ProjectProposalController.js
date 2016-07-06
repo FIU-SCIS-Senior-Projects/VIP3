@@ -211,6 +211,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					else{
 							$scope.project.status='pending';
 							$scope.project.id = $stateParams.id;
+							$scope.project.edited = true;
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){
 									success_msg();
@@ -283,6 +284,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					else{
 							$scope.project.status='pending';
 							$scope.project.id = $stateParams.id;
+							$scope.project.edited = true;
 							ProjectService.editProject($scope.project, $stateParams.id)
 								.then(function(data){
 									success_msg();
