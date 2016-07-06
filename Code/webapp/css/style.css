@@ -503,7 +503,7 @@ a {
 #hide_form {
     height: 60%;
     width: 70%;
-    margin: 15px 15px 45px 0px;
+    margin: 20px auto;
 }
 
 #hide_form label {

@@ -1,22 +1,45 @@
 
-angular.module('contactController', ['ProjectProposalService', 'userService'])
+angular.module('contactController', ['userService'])
     .controller('contactController', function($window,$location,$scope, User, $stateParams){
 
         var vm = this;
         vm.title = "";
         vm.issue = "";
+        vm.option = "";
+        vm.email = "";
 
-        function send_msg() 
+        $scope.send = function send() 
         {
-            //Add if/else for topic type. Send VIP credits to mohsen and franciso only
-    		var email_msg = 
+            if(vm.title != "" && vm.option != "" && vm.issue != "")
+            {
+                if(vm.option == "Technical issue")
                 {
-                    recipient: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu,jjens011@fiu.edu,mmart196@fiu.edu", 
-                    text: issue, 
-                    subject: "New technical support ticket issued: " + title
-                };
-                User.nodeEmail(email_msg);
-                success_msg();
+                    //, dlope073@fiu.edu, mtahe006@fiu.edu, vlalo001@fiu.edu, mmart196@fiu.edu
+                    var email_msg = 
+                    {
+                        recipient: "jjens011@fiu.edu, mtahe006@fiu.edu, dlope073@fiu.edu, vlalo001@fiu.edu, mmart196@fiu.edu", 
+                        text: vm.issue + "  YOU CAN REPLY TO THE USER AT THIS EMAIL ADDRESS IF NECESSARY: " + vm.email, 
+                        subject: "TECH SUPPORT ticket VIP: " + vm.title
+                    };
+                    
+                    User.nodeEmail(email_msg);
+                    success_msg();
+                    return;
+                }
+
+                if(vm.option == "Vip Educational credits")
+                {
+                    var email_msg = 
+                    {
+                        recipient: "fortega@cis.fiu.edu, mtahe006@fiu.edu", 
+                        text: vm.issue + "  YOU CAN REPLY TO THE USER AT THIS EMAIL ADDRESS: " + vm.email, 
+                        subject: "New Question VIP: " + vm.title
+                    };
+                    User.nodeEmail(email_msg);
+                    success_msg();
+                    return;
+                }
+            }
         };
 
         function success_msg()
@@ -28,6 +51,9 @@ angular.module('contactController', ['ProjectProposalService', 'userService'])
                 confirmButtonText: "Continue" ,
                 allowOutsideClick: true,
                 timer: 9000,
-            });
+            }, function(){
+                $window.location.reload();
+            }
+            );
         };
       });

@@ -137,14 +137,18 @@
 
 <div id="hide_form">
     <form action="" id="email_form" class="email_form">
-        <h3>TECHNICAL SUPPORT TICKET FORM</h3>
-
         <fieldset class="form-group">
           <label>Select your topic</label>
-          <select class="form-control">
+          <select class="form-control" ng-model="vm.option">
             <option>Technical issue</option>
             <option>Vip Educational credits</option>
           </select>
+        </fieldset>
+
+        <fieldset class="form-group">
+        <label for="Description">Your email address</label>
+        <input type="text" ng-model="vm.email" class="form-control" required>
+        <small><i>We will not share your email info, this is used for replies only</i></small>
         </fieldset>
 
         <fieldset class="form-group">
@@ -157,6 +161,6 @@
         <textarea type="text" class="form-control" placeholder="Please describe your issue as best as you can" rows="8" ng-model="vm.issue" required></textarea>
         </fieldset>
 
-        <button class="btn btn-primary" ng-click="vm.send_msg()">Submit</button>
+        <button class="btn btn-primary" ng-click="send()">Submit</button>
     </form>
 </div>

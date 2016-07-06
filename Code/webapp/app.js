@@ -10,6 +10,7 @@ angular.module('mainApp', [
 	'userRegistrationController',
 	'forgotPasswordController',
 	'forgotPasswordService',
+	'contactController',
 	'userService',
     'toDoModule',
 	'user-profile',
