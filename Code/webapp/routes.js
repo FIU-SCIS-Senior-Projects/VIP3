@@ -112,7 +112,7 @@ angular.module('routes', ['ui.router'])
                 url:'/studentConfirmation/:id',
                 resolve:{
                     //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,$location,$stateParams)
+                    "check":function(ProfileService,$location,$stateParams,$window)
                     {
                         var profile;
                         
@@ -156,7 +156,7 @@ angular.module('routes', ['ui.router'])
                 url:'/project-proposal',
                 resolve:{
                     //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,$location,$stateParams)
+                    "check":function(ProfileService,$location,$stateParams,$window)
                     {
                         var profile;
                         
@@ -197,9 +197,10 @@ angular.module('routes', ['ui.router'])
                 url: '/verifyuser/:user_id',
                 resolve:{
                     //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,reviewRegService,$location,$stateParams)
+                    "check":function(ProfileService,reviewRegService,$location,$stateParams,$window)
                     {
                         var profile;
+                        var profile_check = {};
                         
                         // check if user is allowed to view this page
                         ProfileService.loadProfile().then(function(data)
@@ -224,9 +225,9 @@ angular.module('routes', ['ui.router'])
                         // check if a decision has already been made for this user, if it has, redir to home
                         reviewRegService.getReg($stateParams.user_id).then(function(data)
                         {
-                            vm.profile = data;
+                            profile_check = data;
 
-                            if (vm.profile.isDecisionMade)
+                            if (profile_check.isDecisionMade)
                             {
                                 $location.path("/").replace();
                                 $window.location.href = "/#/";
@@ -247,7 +248,7 @@ angular.module('routes', ['ui.router'])
                 url: '/verifyprofile/:user_id',
                 resolve:{
                     //function to be resolved, accessFac and $location Injected
-                    "check":function(reviewProfileService,ProfileService,$location,$stateParams)
+                    "check":function(reviewProfileService,ProfileService,$location,$stateParams,$window)
                     {
                         
                         //alert("Requsted user ID = " + $stateParams.user_id);
@@ -363,7 +364,7 @@ angular.module('routes', ['ui.router'])
                 url: '/reviewproject',
                 resolve:{
                     //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,$location,$stateParams)
+                    "check":function(ProfileService,$location,$stateParams,$window)
                     {
                         var profile;
                         

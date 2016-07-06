@@ -1,1 +1,0 @@
-1) vip-projects - name of the project need to display in the Teams page

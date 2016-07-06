@@ -24,6 +24,7 @@
         function acceptProfile () {
             vm.profile.piApproval = true;
             vm.profile.isDecisionMade = true;
+            vm.profile.__v = 1;
             console.log("piApproval set to true");
             vm.message = "User has been Accepted!";
 
@@ -51,7 +52,7 @@
             vm.profile.piApproval = false;
             vm.profile.piDenial = true;
             vm.profile.isDecisionMade = true;
-            //vm.profile = null;
+            vm.profile.__v = 2;
             
             vm.message = "User has been Rejected!";
             reviewRegService.rejectProfile(vm.profile).then(function(data){
