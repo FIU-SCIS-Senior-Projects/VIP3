@@ -35,7 +35,7 @@ module.exports = function(passport,app) {
 					return done(null, false, {message: 'Account must be verified' });
 				}
 				if (!user.piApproval) {
-					return done(null, false, {message: 'Account must be aprroved by PI' });
+					return done(null, false, {message: 'Account must be approved by PI' });
 				}
 				console.log("Logging in...");
                 return done(null, user);

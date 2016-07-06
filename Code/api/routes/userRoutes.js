@@ -23,7 +23,17 @@ module.exports = function (app, express) {
     );
 
 	app.get('/status', function(req,res) {
-		res.redirect('/#/login/error');
+		var error = req.flash('error');
+		if (error == 'Incorrect username/password.') {
+			res.redirect('/#/login/error');
+		}
+		else if (error == 'Account must be verified') {
+			res.redirect('/#/login/error_email');
+		}
+		else {
+			res.redirect('/#/login/error_pi');
+		}
+		
 	});
 
     passport.serializeUser(function(user, done) {

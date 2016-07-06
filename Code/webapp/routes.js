@@ -137,8 +137,14 @@ angular.module('routes', ['ui.router'])
 			.state('loginError', {
                 url: '/login/error',
                 templateUrl: 'features/login/loginError.html'
+            }).state('loginErrorPI', {
+                url: '/login/error_pi',
+                templateUrl: 'features/login/loginPI.html'
             })
-			
+			.state('loginErrorEmail', {
+                url: '/login/error_email',
+                templateUrl: 'features/login/loginEmail.html'
+            })
 			.state('reviewuser', {
                 url: '/reviewuser',
                 templateUrl: 'features/reviewStudentApplications/reviewStudentApp.html',
