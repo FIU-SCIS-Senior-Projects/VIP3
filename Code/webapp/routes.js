@@ -158,4 +158,11 @@ angular.module('routes', ['ui.router'])
                 controllerAs: 'vm'
             })
 			
+			.state('admin', {
+                url: '/adminpanel',
+                templateUrl: 'features/admin-panel/admin.html',
+                controller: 'adminController',
+                controllerAs: 'vm'
+            })
+			
         });
