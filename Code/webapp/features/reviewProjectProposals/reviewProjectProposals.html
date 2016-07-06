@@ -1,10 +1,14 @@
     <h3 align="center"> Review Projects Proposals </h3>
             <table class="table">
 			<tr>
-			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td>
+			<td><label>Status</label></td><td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td>
 			<td><label>Approve</label></td><td><label>Reject</label></td>
 			</tr>
 			<tr ng-repeat="project in vm.projects">
+			<td>
+				<input ng-if="project.edited" type="text" class="form-control projects"    value="Changes Proposed" readonly></input>
+				<input ng-if="!project.edited" type="text" class="form-control projects"    value="Newly Proposed" readonly></input>
+			</td>
 			<td><input type="text" class="form-control projects" value={{project.title}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.description}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.owner_name}} readonly></input></td>

@@ -117,6 +117,7 @@ module.exports = function(app, express) {
 					res.status(400);
 					res.send(err);
 				}
+				proj.edited = req.body.edited;
 				proj.status = req.body.status;
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
