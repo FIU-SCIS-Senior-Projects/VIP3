@@ -164,6 +164,15 @@ module.exports = function (app, express) {
                 }
             });
 	})
+	
+	userRouter.route('/users/:id').delete(function (req, res) {
+			console.log("DELETE /users/:id");
+            User.remove({_id: req.params.id}, function(err, user){
+            if(err)
+                res.send(err);
+                res.json({message: 'successfully deleted!'});
+            });
+	});
 
 	// User.create(vm.userData).success(function(data) from userRegistrationController.js calls this function
 	// BUG: This function is returning success even if the user already exists in the database

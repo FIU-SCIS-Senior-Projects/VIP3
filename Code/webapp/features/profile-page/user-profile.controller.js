@@ -5,9 +5,9 @@
         .module('user-profile', ['userService'])
         .controller('profileController', profileController);
 
-    profileController.$inject = ['$state', '$scope', 'ProfileService'];
+    profileController.$inject = ['$location','$state', '$scope', 'ProfileService','User'];
     /* @ngInject */
-    function profileController($state, $scope, ProfileService)
+    function profileController($location,$state, $scope, ProfileService,User)
     {
         var vm = this;
         vm.profile;

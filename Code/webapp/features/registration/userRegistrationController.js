@@ -2,11 +2,14 @@
  * Created by tmoore on 4/4/16.
  * Cleaned random garbage characters such as " " from this file - vlad, 5/29/2016
  */
+ 
+var host = "http://vip.fiu.edu"; 
+ 
 angular
     .module('userRegistrationController', ['userService','toDoModule'])
     .controller('registrationController', function (User,ToDoService,ProfileService) {
         var vm = this;
-		var host = "vip.fiu.edu";
+		
 
         vm.Users = [
             {
@@ -541,7 +544,7 @@ function success_msg()
                 allowOutsideClick: true,
                 timer: 9000,
             }, function () {
-                window.location = "http://localhost:3000/#";
+                window.location = host;
             }
             );
         };
