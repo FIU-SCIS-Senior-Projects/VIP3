@@ -4,136 +4,165 @@ angular
         
         var vm = this;
 		var profile;
+		$scope.done = false;
+		
+		ProfileService.loadProfile().then(function(data)
+		{
+			if (data) {
+				
+				
+					vm.Colleges = [
+					{
+						name: 'Architecture + The Arts ',
+						schools: [
+							'Architecture',
+							'Interior Architecture',
+							'Landscape Architecture and Environmental Urban Design',
+							'Art and Art History',
+							'Communication Arts',
+							'School of Music',
+							'Theatre']
+					},
+					{
+						name: 'Arts and Sciences & Education',
+						schools: [
+							'Biological Sciences',
+							'Chemistry and Biochemistry',
+							'Earth and Environment',
+							'English',
+							'Mathematics and Statistics',
+							'Philosophy',
+							'Physics',
+							'Psychology',
+							'Teaching and Learning',
+							'Leadership and Professional Studies',
+							'School of Education',
+							'School of Enviroment, Arts & Society',
+							'School of Integrated Science & Humanity'
 
-        vm.Colleges = [
-            {
-                name: 'Architecture + The Arts ',
-                schools: [
-                    'Architecture',
-                    'Interior Architecture',
-                    'Landscape Architecture and Environmental Urban Design',
-                    'Art and Art History',
-                    'Communication Arts',
-                    'School of Music',
-                    'Theatre']
-            },
-            {
-                name: 'Arts and Sciences & Education',
-                schools: [
-                    'Biological Sciences',
-                    'Chemistry and Biochemistry',
-                    'Earth and Environment',
-                    'English',
-                    'Mathematics and Statistics',
-                    'Philosophy',
-                    'Physics',
-                    'Psychology',
-                    'Teaching and Learning',
-                    'Leadership and Professional Studies',
-                    'School of Education',
-                    'School of Enviroment, Arts & Society',
-                    'School of Integrated Science & Humanity'
+						]
+					},
+					{
+						name: 'Business',
+						schools: [
+							'Decision Sciences and Information Systems',
+							'Alvah H. Chapman Jr. Graduate School of Business',
+							'R. Kirk Landon Undergraduate School of Business',
+							'Finance',
+							'Management and International Business',
+							'Marketing',
+							'School of Accounting',
+							'Real Estate'
+						]
+					},
+					{
+						name: 'Chaplin School of Hospitality and Tourism Management',
+						schools: [
+							'Hospitality and Tourism Management'
+						]
+					},
+					{
+						name: 'Engineering & Computing',
+						schools: [
+							'School of Computing and Information Sciences',
+							'OHL School of Construction',
+							'Department of Biomedical Engineering',
+							'Department of Civil and Environment Engineering',
+							'Department of Electrical and Computer Engineering',
+							'Department of Mechanical and Materials Engineering'
+						]
+					},
+					{
+						name: 'Herbert Wertheim College of Medicine',
+						schools: [
+							'Cellular Biology and Pharmacology',
+							'Human and Molecular Genetics',
+							'Immunology',
+							'Medical and Population Health Sciences Research'
+						]
+					},
+					{
+						name: 'Journalism and Mass Communication',
+						schools: [
+							'Advertising and Public Relations',
+							'Journalism Broadcasting and Digital Media'
+						]
+					},
+					{
+						name: 'Law',
+						schools: [
+							'College of Law'
+						]
+					},
+					{
+						name: 'Nicole Wertheim College of Nursing & Health Sciences',
+						schools: [
+							'Biostatistics',
+							'Dietetics and Nutrition',
+							'Environmental and Occupational Health',
+							'Epidemiology',
+							'Health Policy and Management',
+							'Health Promotion and Disease Prevention'
+						]
 
-                ]
-            },
-            {
-                name: 'Business',
-                schools: [
-                    'Decision Sciences and Information Systems',
-                    'Alvah H. Chapman Jr. Graduate School of Business',
-                    'R. Kirk Landon Undergraduate School of Business',
-                    'Finance',
-                    'Management and International Business',
-                    'Marketing',
-                    'School of Accounting',
-                    'Real Estate'
-                ]
-            },
-            {
-                name: 'Chaplin School of Hospitality and Tourism Management',
-                schools: [
-                    'Hospitality and Tourism Management'
-                ]
-            },
-            {
-                name: 'Engineering & Computing',
-                schools: [
-                    'School of Computing and Information Sciences',
-                    'OHL School of Construction',
-                    'Department of Biomedical Engineering',
-                    'Department of Civil and Environment Engineering',
-                    'Department of Electrical and Computer Engineering',
-                    'Department of Mechanical and Materials Engineering'
-                ]
-            },
-            {
-                name: 'Herbert Wertheim College of Medicine',
-                schools: [
-                    'Cellular Biology and Pharmacology',
-                    'Human and Molecular Genetics',
-                    'Immunology',
-                    'Medical and Population Health Sciences Research'
-                ]
-            },
-            {
-                name: 'Journalism and Mass Communication',
-                schools: [
-                    'Advertising and Public Relations',
-                    'Journalism Broadcasting and Digital Media'
-                ]
-            },
-            {
-                name: 'Law',
-                schools: [
-                    'College of Law'
-                ]
-            },
-            {
-                name: 'Nicole Wertheim College of Nursing & Health Sciences',
-                schools: [
-                    'Biostatistics',
-                    'Dietetics and Nutrition',
-                    'Environmental and Occupational Health',
-                    'Epidemiology',
-                    'Health Policy and Management',
-                    'Health Promotion and Disease Prevention'
-                ]
+					},
+					{
+						name: 'Robert Stempel College of Public Health & Social Work',
+						schools: [
+							'School of Social Work'
+						]
+					},
+					{
+						name: 'Steven J. Green School of International and Public Affairs',
+						schools: [
+							'Criminal Justice',
+							'Economics',
+							'Global and Sociocultural Studies',
+							'History',
+							'Modern Languages',
+							'Public Administration',
+							'Religious Studies'
+						]
+					}
+				];
 
-            },
-            {
-                name: 'Robert Stempel College of Public Health & Social Work',
-                schools: [
-                    'School of Social Work'
-                ]
-            },
-            {
-                name: 'Steven J. Green School of International and Public Affairs',
-                schools: [
-                    'Criminal Justice',
-                    'Economics',
-                    'Global and Sociocultural Studies',
-                    'History',
-                    'Modern Languages',
-                    'Public Administration',
-                    'Religious Studies'
-                ]
-            }
-        ];
+				vm.genders = ['Male', 'Female'];
+				vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
 
-        vm.genders = ['Male', 'Female'];
-        vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+				
+				
+				vm.selectedCollege = vm.Colleges.find(function (element) {
+					return element.name === data.college;
+				});;
+						
+				$scope.done = true;
+				profile = data;
+				vm.user_info = data.firstName;
+				vm.user_type = data.userType;
+				vm.firstName = data.firstName;
+				vm.type = data.userType;
+				vm.lastName = data.lastName;
+				vm.gender = data.gender;
+				vm.email = data.email;
+				vm.pID = data.pantherID;
+				vm.rank = data.rank;
+				vm.school = data.department;
+				vm.college = data.college;
+				vm.semester = "1";
+				vm.google = data.google;
+				vm.profile = data;
+				
+			}
+			else {
+				$scope.done = true;
+				$location.path('login').replace();
+				$window.location.href = "/#/login";
+			}
+		});
 
-        vm.ranks =  [
-            'Freshman',
-            'Sophmore',
-            'Junior',
-            'Senior',
-            'Masters',
-            'PhD',
-            'postDoc'
-        ];
+        
 
-        vm.selectedCollege = vm.Colleges[1];
+        
 
         init();
         function init () {
@@ -168,29 +197,7 @@ angular
             });
         }
 		
-		var profile;
 		
-		ProfileService.loadProfile().then(function(data){
-					if (data) {
-						
-						profile = data;
-						
-						vm.user_info = data.firstName;
-						vm.user_type = data.userType;
-						vm.firstName = data.firstName;
-						vm.type = data.userType;
-						vm.lastName = data.lastName;
-						vm.gender = data.gender;
-						vm.email = data.email;
-						vm.pID = data.pantherID;
-						vm.rank = data.rank;
-						vm.school = data.department;
-						vm.college = data.college;
-						vm.semester = "1";
-						vm.google = data.google;
-						vm.profile = data;
-					}
-		});
 				
        
 
