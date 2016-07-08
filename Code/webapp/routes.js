@@ -345,4 +345,13 @@ angular.module('routes', ['ui.router'])
                 controller: 'profileController',
                 controllerAs: 'vm'
             })
+
+			
+			.state('admin', {
+                url: '/adminpanel',
+                templateUrl: 'features/admin-panel/admin.html',
+                controller: 'adminController',
+                controllerAs: 'vm'
+            })
+			
         });

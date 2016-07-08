@@ -453,6 +453,25 @@ module.exports = function(app, express) {
                 }
             });
         });
+		
+	
+	//Gets all users
+	apiRouter.route('/getallusers')
+        .get(function (req, res) {
+			Profile.find({}, function(err,prof)
+				{
+					if (!err)
+					{
+						res.json(prof);
+					}
+					else {
+						res.json('Error getting all users.');
+						return;
+					}
+				});
+                
+        });
+		
 
     return apiRouter;
 };
