@@ -4,9 +4,9 @@ angular.module('admin')
 function adminService($http) {
     // create a new object
     var adminFactory = {};
-
-        adminFactory.loadProfile = function () {
-            return $http.get('/api/reviewuser/').then(function(data){
+		
+        adminFactory.loadAllUsers = function () {
+            return $http.get('/api/getallusers/').then(function(data){
                return data.data;
             });
         };

@@ -16,5 +16,6 @@ angular.module('mainApp', [
 	'reviewRegistration',
 	'folder',
 	'reviewStudentApp',
-	'reviewProjectProposals'
+	'reviewProjectProposals',
+	'admin'
 ]);

@@ -1,26 +1,218 @@
-<table class="table" border="2">
-<h2 align="center"> Admin Panel </h2>
-	<tr>		
-		<th>
-			<h3 align="center"> Remove Users </h3>
-			<table class="table" border="1">	
-			</table>
-		</th>
-		<th>
-			<h3 align="center"> Unconfirmed Users </h3>
-			<table class="table" border="1">	
-			</table>
-		</th>
-		<th>
-			<h3 align="center"> Change UserType </h3>
-			<table class="table" border="1">	
-			</table>
-		</th>
-	</tr></table>
-		<th>
-			<h3 align="center"> Profile Lookup </h3>
-			<table class="table" border="1">	
-			</table>
-		</th>
 
+<html>
+
+<div class="container">
+<div class="well well-lg">
+<div class="row" >
+	<h2 align="center"> Admin Panel </h2>
+<div class="row">
+
+	<div class="col-md-6">
+				<div class="panel panel-default">
+					<h3 align="center"> Remove Users </h3>
+					<div class="form-group users">
+					<table class="table">
+					<tr>
+					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.users"></select>
+					</tr>
+					<tr>
+							<th>
+								<button style= "width: 120px;" class="btn btn-danger btn-block" ng-click="vm.destroyAccount(user)">Delete Account</button>
+							</th>
+						</tr>
+					</table>
+					</div>
+				</div>
+	</div>
+	<div class="col-md-6">
+				<div class="panel panel-default">
+					<h3 align="center"> Unconfirmed Users </h3>
+					<div class="form-group">
+					<table class="table">
+					<tr>
+					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.unconfirmedusers"></select>
+					</tr>
+						<tr>
+							<th>
+								<button style= "width: 80px;" class="btn btn-success btn-block">Confirm</button>
+							</th>
+							<th>
+								<button style= "width: 80px;" class="btn btn-danger btn-block">Reject</button>
+							</th>
+						</tr>
+					</table>
+					</div>
+				</div>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-md-6">
+				<div class="panel panel-default">
+					<h3 align="center"> Change UserType </h3>
+					<div class="form-group">
+					<table class="table">
+					<tr>
+						<th>
+							<b>User:</b> <select  class="form-control" ></select>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<b>change usertype to: </b>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<select  class="form-control" ></select>
+						</th>
+					</tr>
+					<tr>
+						<th>
+								<button style= "width: 80px;" class="btn btn-success btn-block">Change</button>
+						</th>
+					</tr>
+					</table>
+					</div>
+				</div>
+	</div>
+	<div class="col-md-6">
+				<div class="panel panel-default">
+					<h3 align="center"> Change User's Project </h3>
+					<div class="form-group">
+					<table class="table">
+					<tr>
+						<th>
+							<b>User:</b> <select  class="form-control" ></select>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<b>change user's project from (THIS) to:  </b>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<select  class="form-control" ></select>
+						</th>
+					</tr>
+					<tr>
+						<th>
+								<button style= "width: 80px;" class="btn btn-success btn-block">Change</button>
+						</th>
+					</tr>
+					</table>
+					</div>
+				</div>
+	</div>
+	
 </div>
+<div class="row">
+<h3 align="center"> Profile Lookup </h3>
+			<div class="row">
+				<div class="col-md-3">
+				<div class="panel panel-default">
+					<table class="table">
+					<tr>
+						<th>
+							<b>Select User:</b><select class="form-control"></select>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<p><b>Name:</b></p>	
+							<p><b>Gender:</b></p>
+							<p><b>UserType:</b></p>
+							<p><b>UserRank:</b></p>
+							<p><b>Email:</b></p>	
+							<p><b>Department:</b></p>	
+							<p><b>College:</b></p>	
+							<p><b>Project:</b></p>		
+						</th>
+					</tr>
+					<tr>
+					<th>
+					<button style= "width: 80px;" class="btn btn-info btn-block">Message</button>
+					</th>
+					</tr>
+					</table>
+				</div>
+				</div>
+					<div class="col-md-3">
+					<div class="panel panel-default">
+					<table class="table">
+					<tr>
+						<th>
+							<b>Filter Users: 
+							<p><input type="checkbox">UserType:<select class="form-control"></select></input></p>
+							<p><input type="checkbox">UserRank:<select class="form-control"></select></input></p>
+							<p><input type="checkbox">Unconfirmed Email</input></p>
+							<p><input type="checkbox">Gmail Login</input></p>
+							<p><input type="checkbox">Super Users</input></p>
+							<p><input type="checkbox">Mentor</input></p>
+							<p><input type="checkbox">Multiple Projects</input></p>
+						</th>
+					</tr>
+					<tr>
+					<th>
+					<button style= "width: 80px;" class="btn btn-info btn-block">Lookup</button>
+					</th>
+					</tr>
+					</table>
+					</div>
+					</div>
+					<div class="col-md-3">
+					<div class="panel panel-default">
+						<table class="table">
+						<tr>
+							<th>
+								<b>List of Users:
+							</th>
+						</tr>
+						<tr>
+							<th>
+								
+							</th>
+							
+						</tr>
+						<tr>
+						<th>
+						Page <1>
+						</th>
+						</tr>
+						</table>
+					</div>
+					</div>
+					<div class="col-md-3">
+				<div class="panel panel-default">
+					<table class="table">
+					<tr>
+						<th>
+							<b>Detailed User Info:</b>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<p><b>Name:</b></p>	
+							<p><b>Gender:</b></p>
+							<p><b>UserType:</b></p>
+							<p><b>UserRank:</b></p>
+							<p><b>Email:</b></p>	
+							<p><b>Department:</b></p>	
+							<p><b>College:</b></p>	
+							<p><b>Project:</b></p>		
+						</th>
+					</tr>
+					<tr>
+					<th>
+					<button style= "width: 80px;" class="btn btn-info btn-block">Message</button>
+					</th>
+					</tr>
+					</table>
+				</div>
+				</div>
+			</div>
+</div>
+</div>
+</div>
+</div>
+</html>
