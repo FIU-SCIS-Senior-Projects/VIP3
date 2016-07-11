@@ -5,9 +5,9 @@
         .module('admin')
         .controller('adminController', adminCtrl);
 
-    adminCtrl.$inject = ['$window','$state', '$scope', 'adminService'];
+    adminCtrl.$inject = ['$window','$state', '$scope', 'adminService', 'User'];
     /* @ngInject */
-    function adminCtrl($window, $state, $scope, adminService) {
+    function adminCtrl($window, $state, $scope, adminService, User) {
         var vm = this;
         vm.users; //Confirmed users only (Email is verified)
 		vm.allusers; //All confirmed and unconfirmed users
