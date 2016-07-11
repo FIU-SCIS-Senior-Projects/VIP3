@@ -92,6 +92,11 @@ module.exports = function(app, express) {
 
                     // email subject line
                     vm.userData.subject = "Profile Changes have been Denied";
+					
+					profile.remove(function(err) {
+						if (err)
+							console.log("Could not delete rejected account please manually delete rejected account!");
+					});
                 }
 
                 console.log("Sending notification of profile approval to the User");
@@ -170,6 +175,10 @@ module.exports = function(app, express) {
                 {
                     profile.piApproval = req.body.piApproval;
                 }
+				else {
+					console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
+					profile.remove(function(err) { if (err) { console.log("Failed to delete account!"); }});
+				}
                
 				// user is privileged and should be allowed to update userType without approval
 				if (profile.isSuperUser)
@@ -453,6 +462,25 @@ module.exports = function(app, express) {
                 }
             });
         });
+		
+	
+	//Gets all users
+	apiRouter.route('/getallusers')
+        .get(function (req, res) {
+			Profile.find({}, function(err,prof)
+				{
+					if (!err)
+					{
+						res.json(prof);
+					}
+					else {
+						res.json('Error getting all users.');
+						return;
+					}
+				});
+                
+        });
+		
 
     return apiRouter;
 };

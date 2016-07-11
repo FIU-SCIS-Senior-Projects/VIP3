@@ -3,9 +3,11 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
     .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
         
 		var profile;
-		
+		var vm = this;
+		$scope.done = false;
 		ProfileService.loadProfile().then(function(data){
 					if (data) {
+						$scope.done = true;
 						profile = data;
 						if (profile.userType == "Student") {
 							//$location.path("/");
@@ -13,6 +15,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 						}
 					}
 					else {
+						$scope.done = true;
 						profile = null;
 						//$location.path("login");
                         $location.path('login').replace();
@@ -142,7 +145,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             $scope.fixedColleges[school]['name'] = fixedNames;
         };
 
-        var vm = this;
+        
         vm.title = "";
         vm.image = ""
         vm.description = "";

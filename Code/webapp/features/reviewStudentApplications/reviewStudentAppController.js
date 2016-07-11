@@ -16,6 +16,7 @@
 		vm.ApproveData = ApproveData;
 		vm.RejectData = RejectData;
 		vm.UndoStudent = UndoStudent;
+		vm.DeleteLog = deletelog;
 		vm.logs;
 		
 		
@@ -241,6 +242,33 @@
 			}
 			
 		}
+		
+				
+		function deletelog(log)
+		{
+			//Call service to delete in log
+			reviewPPS.UndoLog(log._id).then(function(success){
+				logdelete_msg()
+			}, function(error) {
+			});
+		}
+		
+		function logdelete_msg()
+         {
+            swal({   
+                title: "Log Deleted",   
+                text: "This log has been successfully deleted",   
+                type: "info",   
+                confirmButtonText: "Okay" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+               $window.location.reload();
+            }
+            );
+        };
+
+
 		
 		
 		

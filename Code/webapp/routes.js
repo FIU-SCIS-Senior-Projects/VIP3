@@ -112,42 +112,6 @@ angular.module('routes', ['ui.router'])
             // sensitive page:
             .state('studentconfirminfo', {
                 url:'/studentConfirmation/:id',
-                resolve:{
-                    //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,$location,$stateParams,$window)
-                    {
-                        var profile;
-                        
-                        ProfileService.loadProfile().then(function(data)
-                        {
-                            if (data) {
-                                profile = data;
-                                
-                                //alert("Usertype found is " + profile.userType);
-                                
-                                // if the user is a PI or Faculty member, render the page
-                                if (profile.userType == "Pi/CoPi" || profile.userType == "Student") {
-                                    //alert("User type is " + profile.userType + " and user is allowed to view this page");
-                                }
-                                
-                                // otherwise, the user doesnt have permission, so show homepage instead
-                                else
-                                {
-                                    //alert("User type is Faculty/Staff, redirecting to home page");
-                                    $location.path('/').replace();
-                                    $window.location.href = "/#/";
-                                }
-                            }
-                            
-                            // handler for guest - redirect them to login, store cookie
-                            else {
-                                //alert("guest user found, redirecting to login");
-                                $location.path('login').replace();
-                                $window.location.href = "/#/login";
-                            }
-                        });
-                    }
-                },
                 templateUrl: 'features/apply-to-project/StudentConfirmInfo.html',
                 controller: 'projAppCtrl',
                 controllerAs: 'projApp'
@@ -156,38 +120,6 @@ angular.module('routes', ['ui.router'])
             // sensitive function
             .state('projectProposal', {
                 url:'/project-proposal',
-                resolve:{
-                    //function to be resolved, accessFac and $location Injected
-                    "check":function(ProfileService,$location,$stateParams,$window)
-                    {
-                        var profile;
-                        
-                        ProfileService.loadProfile().then(function(data)
-                        {
-                            // user is logged in, check perms
-                            if (data)
-                            {
-                                profile = data;
-                                if (profile.userType == "Student")
-                                {
-                                    //$location.path("/");
-                                    //alert("students arent allowed to view this page, redir to home");
-                                    $location.path('/').replace();
-                                    $window.location.href = "/#/";
-                                }
-                            }
-                            
-                            // guest user, redirect to login
-                            else
-                            {
-                                //$location.path("login");
-                                //alert("found guest, redir to login");
-                                $location.path('login').replace();
-                                $window.location.href = "/#/login";
-                            }
-                        });
-                    }
-                },
                 templateUrl: 'features/project-proposals/projectProposal.html',
                 controller: 'ProjectProposalController',
                 controllerAs: 'project',
@@ -413,4 +345,13 @@ angular.module('routes', ['ui.router'])
                 controller: 'profileController',
                 controllerAs: 'vm'
             })
+
+			
+			.state('admin', {
+                url: '/adminpanel',
+                templateUrl: 'features/admin-panel/admin.html',
+                controller: 'adminController',
+                controllerAs: 'vm'
+            })
+			
         });
