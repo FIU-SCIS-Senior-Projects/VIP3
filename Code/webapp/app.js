@@ -18,5 +18,6 @@ angular.module('mainApp', [
 	'folder',
 	'reviewStudentApp',
 	'reviewProjectProposals',
-	'admin'
+	'admin',
+    'MessengerController'
 ]);

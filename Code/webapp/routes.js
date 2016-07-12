@@ -97,6 +97,7 @@ angular.module('routes', ['ui.router'])
                 controller: 'registrationController',
                 controllerAs: 'regCtlr'
             })
+            
             .state('toDo', {
                 url: '/to-do',
                 templateUrl: 'features/to-do/toDo.html',
@@ -351,6 +352,13 @@ angular.module('routes', ['ui.router'])
                 url: '/adminpanel',
                 templateUrl: 'features/admin-panel/admin.html',
                 controller: 'adminController',
+                controllerAs: 'vm'
+            })
+            
+			.state('message', {
+                url: '/sendmessage',
+                templateUrl: 'features/messenger/Messenger.html',
+                controller: 'MessengerController',
                 controllerAs: 'vm'
             })
 			
