@@ -7,13 +7,94 @@
 	<h2 align="center"> Admin Panel </h2>
 <div class="row">
 
+<div class="row">
+<h3 align="center"> Profile Lookup </h3>
+			<div class="row">
+				
+					<div class="col-md-4">
+					<div class="panel panel-default">
+					<table class="table">
+					<tr>
+						<th>
+							<b>Filter Users: 
+							<p><input type="checkbox" ng-model="usertype">UserType:<select class="form-control"></select></input></p>
+							<p><input type="checkbox"ng-model="userrank">UserRank:<select class="form-control"></select></input></p>
+							<p><input type="checkbox"ng-model="unconfirmed">Unconfirmed Email</input></p>
+							<p><input type="checkbox"ng-model="gmail">Gmail Login</input></p>
+							<p><input type="checkbox"ng-model="superusers">Super Users</input></p>
+							<p><input type="checkbox"ng-model="mentor">Mentor</input></p>
+							<p><input type="checkbox"ng-model="multiple">Multiple Projects</input></p>
+						</th>
+					</tr>
+					<tr>
+					<th>
+					<button style= "width: 80px;" class="btn btn-info btn-block" ng-click="vm.filterUsers(usertype,userrank,unconfirmed,gmail,superusers,mentor,multiple)">Lookup</button>
+					</th>
+					</tr>
+					</table>
+					</div>
+					</div>
+					<div class="col-md-4">
+					<div class="panel panel-default">
+						<table class="table">
+						<tr>
+							<th>
+								<b>List of Users:
+							</th>
+							<tr ng-repeat="user in vm.filteredusers track by $index">
+							<td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
+						</tr>
+						<tr>
+							<th>
+								
+							</th>
+							
+						</tr>
+						<tr>
+						<th>
+						Page <1>
+						</th>
+						</tr>
+						</table>
+					</div>
+					</div>
+					<div class="col-md-4">
+				<div class="panel panel-default">
+					<table class="table">
+					<tr>
+						<th>
+							<b>Detailed User Info:</b>
+						</th>
+					</tr>
+					<tr >
+						<th ng-repeat="user in vm.currentuserview">
+							<p><b>Name: {{user.firstName}} {{user.lastName}} </b></p>	
+							<p><b>Gender: {{user.gender}} </b></p>
+							<p><b>UserType: {{user.userType}} </b></p>
+							<p><b>UserRank: {{user.userRank}} </b></p>
+							<p><b>Email: {{user.email}} </b></p>	
+							<p><b>Department: {{user.department}} </b></p>	
+							<p><b>College: {{user.college}} </b></p>	
+							<p><b>Project: {{user.project}} </b></p>		
+						</th>
+					</tr>
+					<tr>
+					<th>
+					<button style= "width: 80px;" class="btn btn-info btn-block">Message</button>
+					</th>
+					</tr>
+					</table>
+				</div>
+				</div>
+			</div>
+			
 	<div class="col-md-6">
 				<div class="panel panel-default">
 					<h3 align="center"> Remove Users </h3>
 					<div class="form-group users">
 					<table class="table">
 					<tr>
-					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.users"></select>
+					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers"></select>
 					</tr>
 					<tr>
 							<th>
@@ -30,7 +111,7 @@
 					<div class="form-group">
 					<table class="table">
 					<tr>
-					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.unconfirmedusers"></select>
+					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers"></select>
 					</tr>
 						<tr>
 							<th>
@@ -53,7 +134,7 @@
 					<table class="table">
 					<tr>
 						<th>
-							<b>User:</b> <select  class="form-control" ></select>
+							<b>User:</b> <select  class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers"></select>
 						</th>
 					</tr>
 					<tr>
@@ -82,12 +163,12 @@
 					<table class="table">
 					<tr>
 						<th>
-							<b>User:</b> <select  class="form-control" ></select>
+							<b>User:</b> <select  class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName + ' ' + '(' + user.project + ')' for user in vm.filteredusers" ></select>
 						</th>
 					</tr>
 					<tr>
 						<th>
-							<b>change user's project from (THIS) to:  </b>
+							<b>change user's project to:  </b>
 						</th>
 					</tr>
 					<tr>
@@ -106,111 +187,7 @@
 	</div>
 	
 </div>
-<div class="row">
-<h3 align="center"> Profile Lookup </h3>
-			<div class="row">
-				<div class="col-md-3">
-				<div class="panel panel-default">
-					<table class="table">
-					<tr>
-						<th>
-							<b>Select User:</b><select class="form-control"></select>
-						</th>
-					</tr>
-					<tr>
-						<th>
-							<p><b>Name:</b></p>	
-							<p><b>Gender:</b></p>
-							<p><b>UserType:</b></p>
-							<p><b>UserRank:</b></p>
-							<p><b>Email:</b></p>	
-							<p><b>Department:</b></p>	
-							<p><b>College:</b></p>	
-							<p><b>Project:</b></p>		
-						</th>
-					</tr>
-					<tr>
-					<th>
-					<button style= "width: 80px;" class="btn btn-info btn-block">Message</button>
-					</th>
-					</tr>
-					</table>
-				</div>
-				</div>
-					<div class="col-md-3">
-					<div class="panel panel-default">
-					<table class="table">
-					<tr>
-						<th>
-							<b>Filter Users: 
-							<p><input type="checkbox">UserType:<select class="form-control"></select></input></p>
-							<p><input type="checkbox">UserRank:<select class="form-control"></select></input></p>
-							<p><input type="checkbox">Unconfirmed Email</input></p>
-							<p><input type="checkbox">Gmail Login</input></p>
-							<p><input type="checkbox">Super Users</input></p>
-							<p><input type="checkbox">Mentor</input></p>
-							<p><input type="checkbox">Multiple Projects</input></p>
-						</th>
-					</tr>
-					<tr>
-					<th>
-					<button style= "width: 80px;" class="btn btn-info btn-block">Lookup</button>
-					</th>
-					</tr>
-					</table>
-					</div>
-					</div>
-					<div class="col-md-3">
-					<div class="panel panel-default">
-						<table class="table">
-						<tr>
-							<th>
-								<b>List of Users:
-							</th>
-						</tr>
-						<tr>
-							<th>
-								
-							</th>
-							
-						</tr>
-						<tr>
-						<th>
-						Page <1>
-						</th>
-						</tr>
-						</table>
-					</div>
-					</div>
-					<div class="col-md-3">
-				<div class="panel panel-default">
-					<table class="table">
-					<tr>
-						<th>
-							<b>Detailed User Info:</b>
-						</th>
-					</tr>
-					<tr>
-						<th>
-							<p><b>Name:</b></p>	
-							<p><b>Gender:</b></p>
-							<p><b>UserType:</b></p>
-							<p><b>UserRank:</b></p>
-							<p><b>Email:</b></p>	
-							<p><b>Department:</b></p>	
-							<p><b>College:</b></p>	
-							<p><b>Project:</b></p>		
-						</th>
-					</tr>
-					<tr>
-					<th>
-					<button style= "width: 80px;" class="btn btn-info btn-block">Message</button>
-					</th>
-					</tr>
-					</table>
-				</div>
-				</div>
-			</div>
+			
 </div>
 </div>
 </div>
