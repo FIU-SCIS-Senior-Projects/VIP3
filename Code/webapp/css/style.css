@@ -262,29 +262,55 @@ a {
 
 .projects-top-bar {
     margin-bottom: 1.5em;
-    padding: 3.5em;
+    padding: 3em;
     border-bottom: solid 1px #d7d7d7;
-    background: -webkit-gradient(linear, 0 93%, 0 100%, from(#fff), to(#f0f0f0));
+    /*background: -webkit-gradient(linear, 0 93%, 0 100%, from(#fff), to(#f0f0f0));*/
     font-family: "Helvetica Neue", Arial, Helvetica, "Trebuchet MS", sans-serif;
     font-size: 87.5%;
     padding-left: 30px;
     padding-right: 30px;
 }
 
+.projects-top-bar h1 {
+    text-align: center;
+    color: #202020;
+    text-shadow: 1px 1px 2px #6B6B6B;
+    font-size: 5.3em;
+    font-weight: bold;
+}
+
 .project-second-section-sidebar {
     padding: 1em;
     font-size: 1em;
-    border-bottom: 1px solid #e1e1e1;
 }
 
-.project-second-section-middle {
+.proj-container {
     font-family: "Helvetica Neue", Arial, Helvetica, "Trebuchet MS", sans-serif;
-    color: #202020 !important;
+    color: #6B6B6B !important;
+    margin: 0 auto 25px auto;
+    width: 100%;
 }
 
 .project-info {
-    margin-bottom:30px;
-    padding-top: 14px;
+    margin: 10px 10px 20px 10px;
+    height: 260px;
+    width: 48%;
+    padding: 10px;
+    border: 1px solid #C2C2C2;
+    border-radius: 3px;
+    box-shadow: 0px 2px 4px #C2C2C2;
+    overflow: hidden;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 26%);
+}
+
+.proj-info-box {
+    margin: 0 auto;
+    overflow-y: scroll;
+    cursor: pointer;
+}
+
+.proj-info-box p {
+    font-size: 0.95em;
 }
 
 .student-list {
@@ -297,9 +323,18 @@ a {
     margin-left: 10px;
 }
 
+.proj-sidebar {
+    width: 100% !important;
+}
+
 .proj-title-teams {
     text-align: center;
     font-weight: bold;
+    letter-spacing: 5px;
+}
+
+.proj-title-owner {
+
 }
 
 .team-info {
@@ -309,8 +344,8 @@ a {
 
 .proj-image {
     padding: 0px 10px 10px 10px; 
-    height: 135px; 
-    width:135px; 
+    max-height: 135px; 
+    max-width:135px; 
     border-radius: 2px;
     float:left;
     cursor: pointer;
@@ -413,6 +448,8 @@ a {
 .red-text {
     color:red;
 }
+
+
 
 .team-project {
     margin-left: 0px;
