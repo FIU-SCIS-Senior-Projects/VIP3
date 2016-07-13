@@ -22,6 +22,7 @@ var ProjectSchema = new Schema({
 	members_detailed: [String],
     contact: [{name: String, phone: String, email: String, office: String}],
     status: String,
+	edited: Boolean,
     image: String,
     term: { type: String, default: 1 }
 });

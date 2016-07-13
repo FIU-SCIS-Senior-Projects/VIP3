@@ -4,7 +4,49 @@
 			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td>
 			<td><label>Approve</label></td><td><label>Reject</label></td>
 			</tr>
-			<tr ng-repeat="project in vm.projects">
+			<tr ng-repeat="project in vm.projects | filter:{ status: 'pending' }">
+			<td><input type="text" class="form-control projects" value={{project.title}} readonly></input></td>
+			<td><input type="text" class="form-control projects" value={{project.description}} readonly></input></td>
+			<td><input type="text" class="form-control projects" value={{project.owner_name}} readonly></input></td>
+			<td><input type="text" class="form-control projects" value={{project.owner_email}} readonly></input></td>
+			<td>
+            <div class="text-center">
+                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project._id,project.owner, project.owner_name, project.title,project.owner_email,project.owner_rank, project.description, project.image, project.term, project.firstSemester, project.maxStudents)">
+                    <i></i> Yes
+                </button>
+                </div>
+			</td>
+			<td>
+            <div class="text-center">
+                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectProject(project._id,project.owner, project.owner_name, project.title,project.owner_email,project.owner_rank, project.description, project.image, project.term, project.firstSemester, project.maxStudents)">
+                    <i></i> No
+                </button>
+			</td>
+			</tr>
+			</div>
+            <!-- 
+             <div style = "margin-left:23px;" class="row show-hide-message" ng-show="vm.message">
+             <div style = "margin-left:23px;"class="col-sm-10 col-sm-offset-10">
+
+            <div style = "margin-left:23px;" class="alert alert-info">
+                <center> {{ vm.message }} </center>
+            </div>
+
+            </div>
+            </div> -->
+            
+			</div>
+<br>
+</table>
+</div>
+
+    <h3 align="center"> Review <font color = 'red'>Modified</font> Projects </h3>
+            <table class="table">
+			<tr>
+			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td>
+			<td><label>Approve</label></td><td><label>Reject</label></td>
+			</tr>
+			<tr ng-repeat="project in vm.projects | filter:{ status: 'modified' }">
 			<td><input type="text" class="form-control projects" value={{project.title}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.description}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.owner_name}} readonly></input></td>
@@ -57,6 +99,13 @@
             <div class="text-center">
                 <button style= "width: 75px;" class="btn btn-danger btn-block" ng-click="vm.UndoProject(log.projectid, log._id, log.action, log.student, log.fullName, log.selectProject,log.studentemail, log.description, log.image, log.term, log.minStudents, log.maxStudents)">
                     <i></i> Undo
+                </button>
+                </div>
+			</td>
+			<td>
+            <div class="text-center">
+                <button style= "width: 75px;" class="btn btn-danger btn-block" ng-click="vm.DeleteLog(log)">
+                    <i></i> Delete
                 </button>
                 </div>
 			</td>

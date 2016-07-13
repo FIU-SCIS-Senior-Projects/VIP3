@@ -11,50 +11,11 @@
     // function undefined reviewProfileService???
     function reviewProfileController($state, $scope, reviewProfileService, $location, $window, ProfileService) {        
 		var profile;
-		
-		ProfileService.loadProfile().then(function(data)
-        {
-            if (data)
-            {
-                profile = data;
-                
-                // only PI can view this page
-                if (profile.userType != "Pi/CoPi")
-                {
-                    console.log("User isnt allowed to view this page");
-                    $location.path("/").replace();
-                }
-            }
-		});
         
         var vm = this;
         vm.profile;
         vm.acceptProfile = acceptProfile;
         vm.rejectProfile = rejectProfile;
-
-        init();
-        
-        function init(){
-            loadData();
-        }
-
-        function loadData()
-        {
-           	reviewProfileService.getReg($state.params.user_id).then(function(data)
-            {
-                vm.profile = data;
-                
-                console.log("Requ user = " + vm.profile.requested_userType);
-                console.log("Requ rank = " + vm.profile.requested_rank);
-                
-                // no usertype or rank updates, so no changes to be made
-                if (vm.profile.requested_rank == null && vm.profile.requested_userType == null)
-                {
-                    //$window.location.href = "/";
-                    $location.path("/").replace();
-                }
-            });
-        }
 
 		// accepts the updated rank/usertype
         function acceptProfile ()
