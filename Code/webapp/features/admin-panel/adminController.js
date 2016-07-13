@@ -9,6 +9,7 @@
     /* @ngInject */
     function adminCtrl($window, $state, $scope, adminService, User, reviewStudentAppService) {
         var vm = this;
+		
         vm.users; //Confirmed users only (Email is verified)
 		vm.allusers; //All confirmed and unconfirmed users
 		vm.unconfirmedusers;//Unconfirmed users (Email is not verified)
@@ -17,6 +18,9 @@
 		vm.filterUsers = filterUsers;
 		vm.currentuserview;
 		vm.currentview = currentview;
+		vm.deleteUser = RemoveUser;
+		
+		
         init();
 		
         function init(){
@@ -173,6 +177,20 @@
 		//Remove users
 		function RemoveUser(user)
 		{
+			
+			swal({   
+                title: "Final warning!",   
+                text: "You will not be able to redo this action",   
+                type: "warning",   
+                confirmButtonText: "Delete my account" ,
+                showCancelButton: true
+	             }, function () 
+	             {
+	                 User.delete(user._id).then(function(){
+						$window.location.reload();
+	                 });
+	            });
+			
 			
 		}
 		

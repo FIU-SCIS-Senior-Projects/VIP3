@@ -1,18 +1,16 @@
 
 <html>
 
-<div class="container">
 <div class="well well-lg">
-<div class="row" >
-	<h2 align="center"> Admin Panel </h2>
-<div class="row">
+<h2 align="center"> Admin Panel </h2>
 
-<div class="row">
-<h3 align="center"> Profile Lookup </h3>
+	
+
+
 			<div class="row">
 				
-					<div class="col-md-4">
-					<div class="panel panel-default">
+					<div class="col-md-4 panel panel-default" style="height: 392px;">
+					
 					<table class="table">
 					<tr>
 						<th>
@@ -32,34 +30,24 @@
 					</th>
 					</tr>
 					</table>
+					
 					</div>
-					</div>
-					<div class="col-md-4">
-					<div class="panel panel-default">
+					<div class="col-md-4 panel panel-default"  style="height: 392px;  overflow:scroll;">
+				
 						<table class="table">
 						<tr>
 							<th>
-								<b>List of Users:
+								<b>List of Users (Click to View their Profile):
 							</th>
 							<tr ng-repeat="user in vm.filteredusers track by $index">
 							<td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
 						</tr>
-						<tr>
-							<th>
-								
-							</th>
-							
-						</tr>
-						<tr>
-						<th>
-						Page <1>
-						</th>
-						</tr>
+						
 						</table>
+				
 					</div>
-					</div>
-					<div class="col-md-4">
-				<div class="panel panel-default">
+					<div class="col-md-4 panel panel-default" style="height: 392px;">
+				
 					<table class="table">
 					<tr>
 						<th>
@@ -67,6 +55,7 @@
 						</th>
 					</tr>
 					<tr >
+						<th ng-if="!vm.currentuserview"><center><h1>No User Selected</h1></center></th>
 						<th ng-repeat="user in vm.currentuserview">
 							<p><b>Name: {{user.firstName}} {{user.lastName}} </b></p>	
 							<p><b>Gender: {{user.gender}} </b></p>
@@ -76,36 +65,15 @@
 							<p><b>Department: {{user.department}} </b></p>	
 							<p><b>College: {{user.college}} </b></p>	
 							<p><b>Project: {{user.project}} </b></p>		
+							<button  class="btn btn-info btn-block">Message {{user.firstName}} {{user.lastName}}</button> <button ng-click="vm.deleteUser(user)" class="btn btn-danger btn-block">Delete Account (Cannot Be Undone)</button>
 						</th>
 					</tr>
-					<tr>
-					<th>
-					<button style= "width: 80px;" class="btn btn-info btn-block">Message</button>
-					</th>
-					</tr>
 					</table>
-				</div>
+				
 				</div>
 			</div>
-			
-	<div class="col-md-6">
-				<div class="panel panel-default">
-					<h3 align="center"> Remove Users </h3>
-					<div class="form-group users">
-					<table class="table">
-					<tr>
-					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers"></select>
-					</tr>
-					<tr>
-							<th>
-								<button style= "width: 120px;" class="btn btn-danger btn-block">Delete Account</button>
-							</th>
-						</tr>
-					</table>
-					</div>
-				</div>
-	</div>
-	<div class="col-md-6">
+	
+	<div class="row">
 				<div class="panel panel-default">
 					<h3 align="center"> Unconfirmed Users </h3>
 					<div class="form-group">
@@ -124,11 +92,11 @@
 					</table>
 					</div>
 				</div>
-	</div>
+	
 	</div>
 	<div class="row">
-	<div class="col-md-6">
-				<div class="panel panel-default">
+	<div class="col-md-6 panel panel-default">
+				
 					<h3 align="center"> Change UserType </h3>
 					<div class="form-group">
 					<table class="table">
@@ -154,10 +122,10 @@
 					</tr>
 					</table>
 					</div>
-				</div>
+				
 	</div>
-	<div class="col-md-6">
-				<div class="panel panel-default">
+	<div class="col-md-6 panel panel-default">
+				
 					<h3 align="center"> Change User's Project </h3>
 					<div class="form-group">
 					<table class="table">
@@ -183,13 +151,12 @@
 					</tr>
 					</table>
 					</div>
-				</div>
+				
 	</div>
 	
 </div>
 			
-</div>
-</div>
-</div>
+
+
 </div>
 </html>
