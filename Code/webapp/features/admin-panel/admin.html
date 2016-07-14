@@ -79,7 +79,7 @@
 					<div class="form-group">
 					<table class="table">
 					<tr>
-					 <select class="form-control" ng-model="Selecteduserconfirm" ng-options="user as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers" value={{"vm.userinUnconfirmedfunc(Selecteduserconfirm)"}}></select>
+					 <select class="form-control" ng-model="Selecteduserconfirm" ng-options="user as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers" value="{{vm.userinUnconfirmedfunc(Selecteduserconfirm)}}"></select>
 					</tr>
 						<tr>
 							<th>

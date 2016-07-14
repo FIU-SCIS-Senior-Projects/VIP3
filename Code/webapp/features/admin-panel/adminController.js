@@ -11,22 +11,6 @@
         var vm = this;
 		
 		
-		
-		ProfileService.loadProfile().then(function(data){
-					if (data) {
-						$scope.done = true;
-						var profile = data;
-						if (profile.userType == "Pi/CoPi") {
-							//$location.path("/");
-                            $location.path('/').replace();
-						}
-					}
-					else {
-						$scope.done = true;
-                        $location.path('login').replace();
-					}
-		});
-		
         vm.users; //Confirmed users only (Email is verified)
 		vm.allusers; //All confirmed and unconfirmed users
 		vm.unconfirmedusers;//Unconfirmed users (Email is not verified)
