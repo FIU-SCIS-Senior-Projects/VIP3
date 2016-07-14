@@ -1,5 +1,5 @@
 <div class="row team-project">
-    <div class="projects-top-bar">
+   <!--  <div class="projects-top-bar">
         <div>
             <h3></h3>
         </div>
@@ -15,47 +15,44 @@
                 </select>
             </div>
         </div>
-    </div>
-    <div class="">
+    </div> -->
+        <div class="video-container">
+            <iframe width="600" height="350" src="https://www.youtube.com/embed/4CO_IGe1UD0" frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
+        </div>
+
         <div class="col-sm-9 project-second-section-middle">
-            <div class="col-sm-12 project-info">
-                <img src="{{vm.data.image}}" class="proj-image" />
-                    <h2 class="proj-title">
+            <div class="col-sm-12 detailed-project-info">
+                    <h2 class="proj-title-teams">
                         <strong>{{vm.data.title}}</strong>
                     </h2>
-                    <h3>Description</h3>
-                        <hr>
+                    <hr>
+                    <img src="{{vm.data.image}}" class="proj-image" />
+                    <h4>About this project</h4>
                     <p class="proj-description">
                         {{vm.data.description}}
                     </p>
             </div>
         </div>
 
-        <div class="col-md-3 buttons-container">
-
-            <div class="col-sm-12 project-second-section-sidebar">
-                <button class="btn btn-primary" ng-click="vm.filterByDiscipline(discipline)">Show All</button>
-            </div>
-
+        <div class="col-md-3 sidebar-container">
             <div class="col-md-12">
-                    <h4>Mentor</h4>
-                <div>
-                    <ul class="student-list">
-                        <li class="student-in-list">
-                            <a href="#">{{vm.data.owner_name}}</a>
-                            <button ng-show=" vm.profile.userType == 'Pi/CoPi'" class="btn btn-primary msg-btn">Message</button>
-                        </li>
-                    </ul>
-                </div>
-                    <h4>Students</h4>
-                <div>
-                    <ul class="student-list" ng-repeat="student in vm.data.members_detailed">
-                        <li class="student-in-list">
-                        <a href="#">{{student}}</a>
-                        <button ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" class="btn btn-primary msg-btn">Message</button>
-                        </li>
-                    </ul>
-                </div>
+
+                <h4>Mentor</h4>
+                <ul class="student-list">
+                    <li class="student-in-list">
+                        <a href="#">{{vm.data.owner_name}}</a>
+                        <button ng-show=" vm.profile.userType == 'Pi/CoPi'" class="btn btn-primary msg-btn">Message</button>
+                    </li>
+                </ul>
+                <h4>Students</h4>
+                <hr>
+                <ul class="student-list" ng-repeat="student in vm.data.members_detailed">
+                    <li class="student-in-list">
+                    <a href="#">{{student}}</a>
+                    <button ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" class="btn btn-primary msg-btn">Message</button>
+                    </li>
+                </ul>
+
             </div>
 
              <div class="col-sm-12">
@@ -86,5 +83,4 @@
                 <strong>Delete</strong>
             </div>
         </div>
-    </div>
 </div>
