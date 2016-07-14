@@ -176,8 +176,10 @@ module.exports = function(app, express) {
                     profile.piApproval = req.body.piApproval;
                 }
 				else {
-					console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
-					profile.remove(function(err) { if (err) { console.log("Failed to delete account!"); }});
+					if (!profile.google) {
+						console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
+						profile.remove(function(err) { if (err) { console.log("Failed to delete account!"); }});
+					}
 				}
                
 				// user is privileged and should be allowed to update userType without approval
