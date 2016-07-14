@@ -73,7 +73,7 @@ module.exports = function(app, express) {
                 vm.userData.recipient = profile.email;
 
                 // define the message if a user has been approved
-                if (req.body.isApproved && !req.body.modifying)
+                if (req.body.isApproved || !req.body.modifying)
                 {
                     console.log("profile changes have been approved");
                     // email body text
@@ -81,10 +81,11 @@ module.exports = function(app, express) {
 
                     // email subject line
                     vm.userData.subject = "Profile Changes have been Approved";
+					
                 }
                 
                 // define the message if a user has been rejected
-                else if (!req.body.modifying)
+                else 
                 {
                     console.log("profile changes have been rejected");
                     
@@ -99,10 +100,7 @@ module.exports = function(app, express) {
 							console.log("Could not delete rejected account please manually delete rejected account!");
 					});
                 }
-				else
-				{
-					profile.modifying = false;
-				}
+				
 
                 console.log("Sending notification of profile approval to the User");
 

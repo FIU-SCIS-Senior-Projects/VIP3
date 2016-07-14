@@ -9,7 +9,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					if (data) {
 						$scope.done = true;
 						profile = data;
-						if (profile.userType == "Pi/CoPi") {
+						if (profile.userType != "Pi/CoPi") {
 							//$location.path("/");
                             $location.path('/').replace();
 						}

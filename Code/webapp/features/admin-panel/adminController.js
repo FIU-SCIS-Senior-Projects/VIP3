@@ -5,9 +5,9 @@
         .module('admin')
         .controller('adminController', adminCtrl);
 
-    adminCtrl.$inject = ['$location','$window','$state', '$scope', 'adminService', 'User', 'reviewStudentAppService', 'ProfileService', 'reviewRegService', 'reviewProfileService'];
+    adminCtrl.$inject = ['$location','$window','$state', '$scope', 'adminService', 'User', 'reviewStudentAppService', 'ProfileService', 'reviewRegService', 'reviewProfileService','ProjectService'];
     /* @ngInject */
-    function adminCtrl($location,$window, $state, $scope, adminService, User, reviewStudentAppService, ProfileService, reviewRegService, reviewProfileService) {
+    function adminCtrl($location,$window, $state, $scope, adminService, User, reviewStudentAppService, ProfileService, reviewRegService, reviewProfileService,ProjectService) {
         var vm = this;
 		
 
@@ -52,7 +52,9 @@
 		vm.projectinprojects;
 		vm.userinunconfirmed;
 		
-		
+		vm.currentUser = function(user) { vm.cuser = user; }
+		vm.currentProject = function(project) {  vm.cproject = project; }
+		vm.sw = ChangeUserProject;
 		
         vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
 		
@@ -282,9 +284,37 @@
 		}
 		
 		//Change User's Project
-		function ChangeUserProject(user)
+		function ChangeUserProject()
 		{
-			
+			var user = vm.cuser;
+			var project = vm.cproject;
+			if (user && project) {
+				var formerProject;
+				var name = user.firstName + " " + user.lastName;
+				var email = user.email;
+				for(i = 0; i < vm.projects.length; i++) {
+					if (vm.projects[i].members.includes(email)) {
+						formerProject = vm.projects[i];
+					}
+				}
+				project.members = email;
+				project.members_detailed = name;
+				ProjectService.editProject(project,project._id);
+				if (formerProject) {
+					for (i = 0; i < formerProject.members_detailed.length; i++) {
+						if (formerProject.members_detailed[i] == name) {
+							formerProject.members_detailed.splice(i, 1);
+						}
+					}
+					for (i = 0; i < formerProject.members.length; i++) {
+						if (formerProject.members[i] == email) {
+							formerProject.members.splice(i, 1);
+						}
+					}
+					ProjectService.editProject(formerProject,formerProject._id);
+				}
+				alert("Done!");
+			}
 		}
 	}
 })();

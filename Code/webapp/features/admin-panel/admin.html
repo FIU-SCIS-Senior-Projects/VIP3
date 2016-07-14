@@ -131,7 +131,7 @@
 					<table class="table">
 					<tr>
 						<th>
-							<b>User:</b> <select  class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName + ' ' + '(' + user.project + ')' for user in vm.filteredusers" ></select>
+							<b>User:</b> <select  class="form-control" ng-model="selectedProjectMember" ng-options="user as '['+user.userType+'] '+user.firstName + ' ' + user.lastName + ' ' + '(' + user.project + ')' for user in vm.filteredusers" value="{{vm.currentUser(selectedProjectMember)}}" ></select>
 						</th>
 					</tr>
 					<tr>
@@ -141,12 +141,12 @@
 					</tr>
 					<tr>
 						<th>
-							<select  class="form-control" ng-model="projects.DisplayInfo" ng-options="projects.DisplayInfo as projects.title for projects in vm.projects"></select>
+							<select  class="form-control" ng-model="selectedProject" ng-options="projects as projects.title for projects in vm.projects" value="{{vm.currentProject(selectedProject)}}"></select>
 						</th>
 					</tr>
 					<tr>
 						<th>
-								<button style= "width: 80px;" class="btn btn-success btn-block">Change</button>
+								<button style= "width: 80px;" ng-click="vm.sw()" class="btn btn-success btn-block">Change</button>
 						</th>
 					</tr>
 					</table>
