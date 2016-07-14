@@ -166,7 +166,7 @@ module.exports = function(app, express) {
 				profile.minor = req.body.minor;
 				profile.pantherID = req.body.pantherID;
 				profile.major = req.body.major;
-                
+                profile.modifying = req.body.modifying;
 				// all user types are allowed to update their rankes without approval
 				profile.rank = req.body.rank;
                 
@@ -176,7 +176,7 @@ module.exports = function(app, express) {
                     profile.piApproval = req.body.piApproval;
                 }
 				else {
-					if (!profile.google) {
+					if (!profile.google || !profile.modifying) {
 						console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
 						profile.remove(function(err) { if (err) { console.log("Failed to delete account!"); }});
 					}

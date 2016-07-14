@@ -238,6 +238,7 @@
 			{
 			var profile = vm.userinusertype;
 			profile.userType = vm.usertypeinusertype;
+			profile.modifying = true;
 			ProfileService.saveProfile(profile).then(function(data)
 			{
 				Console.log("UserType Changed");
