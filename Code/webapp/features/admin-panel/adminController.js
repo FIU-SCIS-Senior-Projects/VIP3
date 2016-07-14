@@ -128,7 +128,7 @@
 				var tempArray = [];
 				vm.filteredusers.forEach(function (obj)
 				{
-					if (obj.verifiedEmail == false)
+					if (obj.piApproval == false)
 					{
 						tempArray.push(obj);
 					}
@@ -224,7 +224,7 @@
 	             }, function () 
 	             {
 	                 User.delete(user._id).then(function(){
-						$window.location.reload();
+						delete_msg();
 	                 });
 	            });
 		}
@@ -238,11 +238,28 @@
 			if (vm.userinunconfirmed)
 			{
 			var user = vm.userinunconfirmed;
-			user.verifiedEmail = true;
-			ProfileService.saveProfile(user).then(function(data)
+			user.piApproval = true;
+            user.isDecisionMade = true;
+            user.__v = 1;
+            console.log("piApproval set to true");
+            vm.message = "User has been Accepted!";
+
+			// if a Pi is approved, mark him in the DB as a super user, so he can switch usertypes to student/faculty/pi without approval
+            if (user.userType == "Pi/CoPi")
+            {
+				user.isSuperUser = true;
+                console.log("isSuperUser set to true");
+			}
+
+			// non-pi user must be restricted
+			else
 			{
-				console.log("User confirm");
-			});
+				user.isSuperUser = false;
+                console.log("isSuperUser set to false");
+			}
+
+            reviewRegService.acceptProfile(user).then(function(data){ });
+			confirm_msg();
 			}
 		}
 		
@@ -256,6 +273,7 @@
 			ProfileService.saveProfile(user).then(function(data)
 			{
 				console.log("User reject");
+				Reject_msg();
 			});
 			}
 		}
@@ -278,10 +296,88 @@
 			reviewProfileService.updateProfile(user).then(function(data)
 			{
 				console.log("UserType Changed");
+				changeut_msg();
 			});
 			});
 			}
+			
 		}
+		
+		function confirm_msg()
+        {
+            swal({   
+                title: "User Confirmed!",   
+                text: "User's account has been confirmed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
+		
+		function Reject_msg()
+        {
+            swal({   
+                title: "User Rejected!",   
+                text: "User's account has been deleted!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
+		
+		function delete_msg()
+        {
+            swal({   
+                title: "User Deleted!",   
+                text: "User's account has been deleted!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
+		
+		
+		function changeut_msg()
+         {
+            swal({   
+                title: "Usertype Changed",   
+                text: "User's type has been changed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+			
+            }
+            );
+        };
+		
+		function changepro_msg()
+         {
+            swal({   
+                title: "User's Project Changed",   
+                text: "User's project has been changed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+			
+            }
+            );
+        };
 		
 		//Change User's Project
 		function ChangeUserProject()
