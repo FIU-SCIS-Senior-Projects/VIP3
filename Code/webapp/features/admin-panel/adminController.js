@@ -20,16 +20,20 @@
 		vm.currentview = currentview;
 		vm.deleteUser = RemoveUser;
 		vm.changeUserType = changeUserType;
+		vm.ConfirmUser = ConfirmUser;
+		vm.RejectUser = RejectUser;
 		
 		//Out of scope functions
 		vm.userTypeChange = userTypeChange;
 		vm.userChange = userChange;
+		vm.userinUnconfirmedfunc = userinUnconfirmedfunc;
 		
 		//For out of scope variables:
 		vm.userinusertype;
 		vm.userinprojects;
 		vm.usertypeinusertype;
 		vm.projectinprojects;
+		vm.userinunconfirmed;
 		
 		
 		
@@ -206,24 +210,35 @@
 	            });
 		}
 		
+		//Out of scope function for Confirm/Reject unconfirmed users
+		function userinUnconfirmedfunc(user){vm.userinunconfirmed = user;}
+		
 		//Confirm unconfirmed users
-		function ConfirmUser(user)
+		function ConfirmUser()
 		{
+			if (vm.userinunconfirmed)
+			{
+			var user = vm.userinunconfirmed;
 			user.verifiedEmail = true;
 			ProfileService.saveProfile(user).then(function(data)
 			{
-				Console.log("User confirm");
+				console.log("User confirm");
 			});
+			}
 		}
 		
 		//Reject Unconfirmed users
-		function RejectUser(user)
+		function RejectUser()
 		{
+			if (vm.userinunconfirmed)
+			{
+			var user = vm.userinunconfirmed;
 			user.verifiedEmail = false;
 			ProfileService.saveProfile(user).then(function(data)
 			{
-				Console.log("User reject");
+				console.log("User reject");
 			});
+			}
 		}
 		
 		
@@ -236,12 +251,15 @@
 		{
 			if (vm.userinusertype || vm.usertypeinusertype)
 			{
-			var profile = vm.userinusertype;
-			profile.userType = vm.usertypeinusertype;
-			profile.modifying = true;
-			ProfileService.saveProfile(profile).then(function(data)
+			var user = vm.userinusertype;
+			user.userType = vm.usertypeinusertype;
+			console.log("HELLO");
+			user.modifying = true;
+			ProfileService.saveProfile(user).then(function(data){
+			reviewProfileService.updateProfile(user).then(function(data)
 			{
-				Console.log("UserType Changed");
+				console.log("UserType Changed");
+			});
 			});
 			}
 		}
