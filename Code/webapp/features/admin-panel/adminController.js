@@ -222,7 +222,7 @@
 	             }, function () 
 	             {
 	                 User.delete(user._id).then(function(){
-						$window.location.reload();
+						delete_msg();
 	                 });
 	            });
 		}
@@ -257,7 +257,7 @@
 			}
 
             reviewRegService.acceptProfile(user).then(function(data){ });
-			$window.location.reload();
+			confirm_msg();
 			}
 		}
 		
@@ -271,7 +271,7 @@
 			ProfileService.saveProfile(user).then(function(data)
 			{
 				console.log("User reject");
-				$window.location.reload();
+				Reject_msg();
 			});
 			}
 		}
@@ -294,11 +294,88 @@
 			reviewProfileService.updateProfile(user).then(function(data)
 			{
 				console.log("UserType Changed");
+				changeut_msg();
 			});
 			});
 			}
 			
 		}
+		
+		function confirm_msg()
+        {
+            swal({   
+                title: "User Confirmed!",   
+                text: "User's account has been confirmed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
+		
+		function Reject_msg()
+        {
+            swal({   
+                title: "User Rejected!",   
+                text: "User's account has been deleted!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
+		
+		function delete_msg()
+        {
+            swal({   
+                title: "User Deleted!",   
+                text: "User's account has been deleted!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+				$window.location.reload();
+            }
+            );
+        };
+		
+		
+		function changeut_msg()
+         {
+            swal({   
+                title: "Usertype Changed",   
+                text: "User's type has been changed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+			
+            }
+            );
+        };
+		
+		function changepro_msg()
+         {
+            swal({   
+                title: "User's Project Changed",   
+                text: "User's project has been changed!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+			
+            }
+            );
+        };
 		
 		//Change User's Project
 		function ChangeUserProject(user)
