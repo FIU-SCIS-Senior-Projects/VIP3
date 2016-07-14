@@ -79,14 +79,14 @@
 					<div class="form-group">
 					<table class="table">
 					<tr>
-					 <select class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers"></select>
+					 <select class="form-control" ng-model="Selecteduserconfirm" ng-options="user as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers" value="{{vm.userinUnconfirmedfunc(Selecteduserconfirm)}}"></select>
 					</tr>
 						<tr>
 							<th>
-								<button style= "width: 80px;" class="btn btn-success btn-block">Confirm</button>
+								<button style= "width: 80px;" class="btn btn-success btn-block" ng-click="vm.ConfirmUser()">Confirm</button>
 							</th>
 							<th>
-								<button style= "width: 80px;" class="btn btn-danger btn-block">Reject</button>
+								<button style= "width: 80px;" class="btn btn-danger btn-block" ng-click="vm.RejectUser()">Reject</button>
 							</th>
 						</tr>
 					</table>

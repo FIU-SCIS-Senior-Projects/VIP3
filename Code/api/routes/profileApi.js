@@ -25,13 +25,14 @@ module.exports = function(app, express) {
 				profile.pantherID = req.body.pantherID;
 				profile.major = req.body.major;
                 profile.rank = req.body.rank;
+				profile.modifying = req.body.modifying;
 
 				console.log("rank = " + req.body.rank);
 				console.log("userType = " + req.body.userType);
                 console.log("requested userType = " + profile.requested_userType);
 
                 // we only update userType with approval
-                if (req.body.isApproved)
+                if (req.body.isApproved || req.body.modifying)
                 {
                     // only update usertype if user requested it
                     if (profile.requested_userType != null)
@@ -72,7 +73,7 @@ module.exports = function(app, express) {
                 vm.userData.recipient = profile.email;
 
                 // define the message if a user has been approved
-                if (req.body.isApproved)
+                if (req.body.isApproved && !req.body.modifying)
                 {
                     console.log("profile changes have been approved");
                     // email body text
@@ -83,7 +84,7 @@ module.exports = function(app, express) {
                 }
                 
                 // define the message if a user has been rejected
-                else
+                else if (!req.body.modifying)
                 {
                     console.log("profile changes have been rejected");
                     
@@ -98,6 +99,10 @@ module.exports = function(app, express) {
 							console.log("Could not delete rejected account please manually delete rejected account!");
 					});
                 }
+				else
+				{
+					profile.modifying = false;
+				}
 
                 console.log("Sending notification of profile approval to the User");
 
