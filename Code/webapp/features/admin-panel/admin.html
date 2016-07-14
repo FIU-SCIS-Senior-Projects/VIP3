@@ -73,7 +73,7 @@
 				</div>
 			</div>
 	
-	<div class="row">
+	<div class="row"> 
 				<div class="panel panel-default">
 					<h3 align="center"> Unconfirmed Users </h3>
 					<div class="form-group">
@@ -102,7 +102,7 @@
 					<table class="table">
 					<tr>
 						<th>
-							<b>User:</b> <select  class="form-control" ng-model="user.DisplayInfo" ng-options="user.DisplayInfo as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers"></select>
+							<b>User:</b> <select  class="form-control" ng-model="Selecteduser" ng-options="user as '['+user.userType+'] '+user.firstName + ' ' + user.lastName for user in vm.filteredusers"  value="{{vm.userChange(Selecteduser)}}"></select>
 						</th>
 					</tr>
 					<tr>
@@ -112,12 +112,12 @@
 					</tr>
 					<tr>
 						<th>
-							<select  class="form-control" ></select>
+							<select  class="form-control" ng-model="Selectedusertype" ng-options="usertype for usertype in vm.usertype" value="{{vm.userTypeChange(Selectedusertype)}}"></select>
 						</th>
 					</tr>
 					<tr>
 						<th>
-								<button style= "width: 80px;" class="btn btn-success btn-block">Change</button>
+								<button style="width: 80px;" class="btn btn-success btn-block" ng-click="vm.changeUserType()">Change</button>
 						</th>
 					</tr>
 					</table>
@@ -141,7 +141,7 @@
 					</tr>
 					<tr>
 						<th>
-							<select  class="form-control" ></select>
+							<select  class="form-control" ng-model="projects.DisplayInfo" ng-options="projects.DisplayInfo as projects.title for projects in vm.projects"></select>
 						</th>
 					</tr>
 					<tr>

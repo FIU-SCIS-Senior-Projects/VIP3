@@ -5,9 +5,9 @@
         .module('admin')
         .controller('adminController', adminCtrl);
 
-    adminCtrl.$inject = ['$window','$state', '$scope', 'adminService', 'User', 'reviewStudentAppService'];
+    adminCtrl.$inject = ['$window','$state', '$scope', 'adminService', 'User', 'reviewStudentAppService', 'ProfileService', 'reviewRegService', 'reviewProfileService'];
     /* @ngInject */
-    function adminCtrl($window, $state, $scope, adminService, User, reviewStudentAppService) {
+    function adminCtrl($window, $state, $scope, adminService, User, reviewStudentAppService, ProfileService, reviewRegService, reviewProfileService) {
         var vm = this;
 		
         vm.users; //Confirmed users only (Email is verified)
@@ -19,6 +19,21 @@
 		vm.currentuserview;
 		vm.currentview = currentview;
 		vm.deleteUser = RemoveUser;
+		vm.changeUserType = changeUserType;
+		
+		//Out of scope functions
+		vm.userTypeChange = userTypeChange;
+		vm.userChange = userChange;
+		
+		//For out of scope variables:
+		vm.userinusertype;
+		vm.userinprojects;
+		vm.usertypeinusertype;
+		vm.projectinprojects;
+		
+		
+		
+        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
 		
 		
         init();
@@ -174,10 +189,9 @@
 			console.log(vm.currentuserview);
 		}
 		
-		//Remove users
+		//Remove users 
 		function RemoveUser(user)
 		{
-			
 			swal({   
                 title: "Final warning!",   
                 text: "You will not be able to redo this action",   
@@ -190,26 +204,45 @@
 						$window.location.reload();
 	                 });
 	            });
-			
-			
 		}
 		
 		//Confirm unconfirmed users
 		function ConfirmUser(user)
 		{
-			
+			user.verifiedEmail = true;
+			ProfileService.saveProfile(user).then(function(data)
+			{
+				Console.log("User confirm");
+			});
 		}
 		
 		//Reject Unconfirmed users
 		function RejectUser(user)
 		{
-			
+			user.verifiedEmail = false;
+			ProfileService.saveProfile(user).then(function(data)
+			{
+				Console.log("User reject");
+			});
 		}
 		
+		
+		//Out of scope functions for Change User Type function
+		function userTypeChange(usertype){vm.usertypeinusertype = usertype;}
+		function userChange(user){vm.userinusertype = user;}
+		
 		//Change User Type
-		function ChangeUserType(user)
+		function changeUserType()
 		{
-			
+			if (vm.userinusertype || vm.usertypeinusertype)
+			{
+			var profile = vm.userinusertype;
+			profile.userType = vm.usertypeinusertype;
+			ProfileService.saveProfile(profile).then(function(data)
+			{
+				Console.log("UserType Changed");
+			});
+			}
 		}
 		
 		//Change User's Project
