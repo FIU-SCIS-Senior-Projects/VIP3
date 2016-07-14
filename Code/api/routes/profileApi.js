@@ -185,6 +185,9 @@ module.exports = function(app, express) {
 						console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
 						profile.remove(function(err) { if (err) { console.log("Failed to delete account!"); }});
 					}
+					else {
+						profile.modifying = null;
+					}
 				}
                
 				// user is privileged and should be allowed to update userType without approval
