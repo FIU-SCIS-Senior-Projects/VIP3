@@ -24,6 +24,7 @@ var ProjectSchema = new Schema({
     status: String,
 	edited: Boolean,
     image: String,
+    video_url: String,
     term: { type: String, default: 1 }
 });
 

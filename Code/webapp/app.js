@@ -20,4 +20,21 @@ angular.module('mainApp', [
 	'reviewProjectProposals',
 	'admin',
     'MessengerController'
-]);
+]).filter('selectedTags', function() {
+    return function(users, members)
+    {
+         if (users && members)
+         {
+             for(i = 0; i < users.length; i++) 
+             {
+                 //alert("comparing " + users[i].email);
+                 if (!members.includes(users[i].email))
+                 {
+                    //alert("found " + users[i].email);
+                    users.splice(i,1);
+                 }
+             }
+             return users;
+         }
+    };
+});

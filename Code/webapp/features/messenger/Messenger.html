@@ -2,29 +2,52 @@
 <div ng-if="done">
     <center><h2>User Messaging Form</h2></center>
 	<p style="color:orange;"><strong>{{result}}</strong></p>
+    
+
+	<div class="form-group2">
+        <h3 align="center"> Add User to Recipients List </h3>
+        <div class="form-group">
+        <table class="table">
+        <tr>
+            <th>
+                <b>Project:</b> <select  class="form-control" ng-model="user.AllProjects" ng-options="projects.title for projects in vm.projects" ></select>
+                {{vm.projects.members}}
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <b>User:</b> <select class="form-control" ng-model="user.OwnerName" ng-options="users.email for users in vm.users | selectedTags:user.AllProjects.members" ></select>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                    <button style= "width: 80px;" class="btn btn-primary" ng-click="vm.updateUsers(user.OwnerName.email)">Add</button>
+                    <button style= "width: 140px;" class="btn btn-primary" ng-click="vm.clearUsers()">Clear Recipients</button>
+            </th>
+        </tr>
+        </table>
+        </div>
+	</div>
+    
     <form role="form">
-        <div class="form-group">
+        <div class="form-group2">
             <label>*User(s) to Message</label>
-            <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
+            <input type="text" id="usersmsg" class="form-control" placeholder="" ng-model="usersToMessage" required="True">
         </div>
 
-        <div class="form-group">
+        <div class="form-group2">
             <label>*Message Subject</label>
-            <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
+            <input type="text" id="msgsubject" class="form-control" placeholder="" ng-model="MessageSubject" required="True">
         </div>
 
-        <div class="form-group">
+        <div class="form-group2">
             <label>*Message Body:</label>
             <!-- <div text-angular ng-model="project.description"></div> -->
-            <textarea ng-model="project.description" name="" class="form-control" rows="10">    
+            <textarea ng-model="MessageBody" id="msgbody" name="" class="form-control" rows="10" required="True">    
             </textarea>
         </div>
 
-        <!-- <div ng-repeat = 'majors in majorList'>
-            <label><input type="checkbox" ng-click="toggleCheckbox(majors)"> {{majors}}</label>
-        </div> -->
-
-        <button type="submit" class="btn btn-default" ng-click="save()">Send Message</button>
+        <button style ="margin-top: 5px;" type="submit" class="btn btn-primary" ng-click="vm.sendMessage(usersToMessage, MessageSubject, MessageBody)">Send Message</button>
         <br>
         <br>
         <p><strong>* : required fields</strong></p>
