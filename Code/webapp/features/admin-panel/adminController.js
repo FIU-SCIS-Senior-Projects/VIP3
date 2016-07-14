@@ -409,7 +409,7 @@
 					}
 					ProjectService.editProject(formerProject,formerProject._id);
 				}
-				alert("Done!");
+				changepro_msg();
 			}
 		}
 	}
