@@ -45,7 +45,6 @@
             reviewRegService.acceptProfile(vm.profile).then(function(data){ });
 
             success_msg();
-
         }
         
         function rejectProfile () {

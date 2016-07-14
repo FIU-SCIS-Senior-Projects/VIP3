@@ -126,7 +126,7 @@
 				var tempArray = [];
 				vm.filteredusers.forEach(function (obj)
 				{
-					if (obj.verifiedEmail == false)
+					if (obj.piApproval == false)
 					{
 						tempArray.push(obj);
 					}
@@ -236,11 +236,28 @@
 			if (vm.userinunconfirmed)
 			{
 			var user = vm.userinunconfirmed;
-			user.verifiedEmail = true;
-			ProfileService.saveProfile(user).then(function(data)
+			user.piApproval = true;
+            user.isDecisionMade = true;
+            user.__v = 1;
+            console.log("piApproval set to true");
+            vm.message = "User has been Accepted!";
+
+			// if a Pi is approved, mark him in the DB as a super user, so he can switch usertypes to student/faculty/pi without approval
+            if (user.userType == "Pi/CoPi")
+            {
+				user.isSuperUser = true;
+                console.log("isSuperUser set to true");
+			}
+
+			// non-pi user must be restricted
+			else
 			{
-				console.log("User confirm");
-			});
+				user.isSuperUser = false;
+                console.log("isSuperUser set to false");
+			}
+
+            reviewRegService.acceptProfile(user).then(function(data){ });
+			$window.location.reload();
 			}
 		}
 		
@@ -254,6 +271,7 @@
 			ProfileService.saveProfile(user).then(function(data)
 			{
 				console.log("User reject");
+				$window.location.reload();
 			});
 			}
 		}
@@ -279,6 +297,7 @@
 			});
 			});
 			}
+			
 		}
 		
 		//Change User's Project
