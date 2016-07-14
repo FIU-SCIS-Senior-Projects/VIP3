@@ -356,7 +356,8 @@ angular.module('routes', ['ui.router'])
             })
             
 			.state('message', {
-                url: '/sendmessage',
+                //url: '/sendmessage',
+                url: '/sendmessage/:user_id',
                 templateUrl: 'features/messenger/Messenger.html',
                 controller: 'MessengerController',
                 controllerAs: 'vm'

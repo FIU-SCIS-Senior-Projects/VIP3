@@ -5,34 +5,17 @@ angular.module('MessengerService', [])
         // create a new object
         var projectFactory = {};
 
-        projectFactory.createProject = function (projectData) {
-            return $http.post('/api/projects', projectData)
+        projectFactory.getEmailByName = function (user_id) {
+            return $http.get('/api/getemail/'+user_id).then(function(data){
+                return data.data;
+            });
         };
-
-        projectFactory.editProject = function (projectData, id) {
-            return $http.put('/api/projects/' + id, projectData);
-        };
-
-        projectFactory.getProjects = function () {
-            return $http.get('/api/projects/').then(function(data){
-               console.log("Got the Projects");
+        
+        projectFactory.loadAllUsers = function () {
+            return $http.get('/api/getallusers/').then(function(data){
                return data.data;
             });
         };
-
-        projectFactory.getProject = function (id) {
-            return $http.get('/api/projects/'+ id).then(function(data){
-               console.log("Got the Project");
-               return data.data;
-            });
-        };
-
-        projectFactory.delete = function (id) {
-            return $http.delete('/api/projects/' + id).then(function(data){
-               console.log("Deleting response just arrived");
-            });;
-        };
-		
-		
+        
         return projectFactory;
     });

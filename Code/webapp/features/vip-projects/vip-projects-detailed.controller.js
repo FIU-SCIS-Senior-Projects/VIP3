@@ -20,6 +20,10 @@
 		vm.already_joined = null;
 		vm.not_signed_in = false;
         
+        $scope.go = function ( path ) {
+          alert(path);
+          $location.path( path );
+        };
         
         //Note this data will not be here this will be in the db and the data will come from a get request
         vm.disciplines = [
