@@ -1,53 +1,39 @@
 <div class="row team-project">
     <div class="projects-top-bar">
-        <div>
-            <h3>VIP Teams</h3>
+        <h1>VIP PROJECTS</h1>
+    </div>  
+    <!-- <div class="col-sm-3 proj-sidebar">
+        <div class="col-sm-12 project-second-section-sidebar">
+            <div class="input-group">
+                <span class="input-group-addon disciplines">
+                    <input id="showAll" type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.showAllDisciplinesToggle()" ng-model="vm.showAllCheckBox">
+                </span>
+                <input type="text" class="form-control disciplines" aria-label="..." value="Show All" readonly>
+            </div>
+            <h5 style="float: left;">Showing {{vm.projects.length}} out of {{vm.backupProjects.length}}</h5>
         </div>
-        <div class="col">
-            <div class="col-sm-4 team-info">
-                <h5>Showing {{vm.projects.length}} out of {{vm.backupProjects.length}}</h5>
-            </div>
-            <div class="col-sm-8 sort-by-padding">
-                <label class=""><h5>Sort By:</h5></label>
-                <select class="btn btn-default dropdown-toggle top-margin">
-                    <option value="Title">Title</option>
-                </select>
-            </div>
+        <div class="col-sm-12">
+            <div class="btn"><h4>Disciplines</h4></div>
         </div>
-    </div>
-    <div class="">     
-        <div class="col-sm-3">
-            <div class="col-sm-12 project-second-section-sidebar">
-                <div class="input-group">
-                    <span class="input-group-addon disciplines">
-                        <input id="showAll" type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.showAllDisciplinesToggle()" ng-model="vm.showAllCheckBox">
-                    </span>
-                    <input type="text" class="form-control disciplines" aria-label="..." value="Show All" readonly>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="btn"><h4>Disciplines</h4></div>
-            </div>
-            <div class="col-sm-12" ng-repeat="discipline in vm.disciplines">
-                <div class="input-group">
-                    <span class="input-group-addon disciplines">
-                        <input type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.filterByDiscipline(discipline)">
-                    </span>
-                    <input type="text" class="form-control disciplines" aria-label="..." value={{discipline}} readonly>
-                </div>
+        <div class="col-sm-12" ng-repeat="discipline in vm.disciplines">
+            <div class="input-group">
+                <span class="input-group-addon disciplines">
+                    <input type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.filterByDiscipline(discipline)">
+                </span>
+                <input type="text" class="form-control disciplines" aria-label="..." value={{discipline}} readonly>
             </div>
         </div>
-        <div class="col-sm-9 project-second-section-middle">
-            <div class="col-sm-6 project-info" ng-repeat="project in vm.projects" ng-click="vm.viewDetails(project)">
-                <div class="">
-                    <div class="col-sm-5">
-                        <img ng-src="{{project.image}}" alt="A project" class="proj-image">
-                    <!-- </div>
-                    <div class="col-sm-7 team-info-name"> -->
-                        <h4 class="proj-title-teams">{{project.title}}</h4>
-                    </div>
-                </div>
+    </div> -->
+    <!-- Project cards here -->
+    <div class="proj-container">
+        <div class="col-md-6 project-info" ng-repeat="project in vm.projects" ng-click="vm.viewDetails(project)">
+            <div class="proj-info-box">
+                <img ng-src="{{project.image}}" alt="{{project.title}}" class="proj-image">
+                <h3 class="proj-title-teams">{{project.title}}</h3>
+                <h5 class="proj-title-owner">Owner: {{project.owner_name}}</h5>
+                <p class="proj-descrip-teams">{{project.description}}</p>
             </div>
         </div>
     </div>
+        <!-- End here -->
 </div>
