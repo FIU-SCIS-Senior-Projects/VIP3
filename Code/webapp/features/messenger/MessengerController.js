@@ -154,25 +154,28 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                 return;
             }
 
-            swal({   
+            swal({
                 title: "Are you sure you wish to send this Message?",   
-                text: "Press Continue to send the Message!",   
+                text: "Press Send to send the Message!",   
                 type: "success",   
-                confirmButtonText: "Continue" ,
+                confirmButtonText: "Send",
                 allowOutsideClick: true,
                 showCancelButton: true
             }, function () {
-                sendMessage(usersToMessage);
+                sendMessage(usersToMessage, MessageSubject, MessageBody);
+                $location.path('/sendmessage/').replace();
             }
             );
         };
 
-       function sendMessage(usersToMessage)
+       function sendMessage(usersToMessage, MessageSubject, MessageBody)
        {
             var email_msg = 
             {
                 recipient: usersToMessage,
-                text: "Dear User, a new message has been sent to you from " + profile.firstName + " " + profile.lastName + ". Please reply to it using the following form: http://vip.fiu.edu",
+                text: "Dear User, you have recieved a new message!\n\n\nFrom: " + profile.firstName + " " + profile.lastName + "\n"
+                      + "Message Subject: " + MessageSubject + "\nMessage Text: " + MessageBody + "\n\nPlease reply to this message using the following form: http://vip.fiu.edu:8001/#/sendmessage/" + profile.firstName + "%20" + profile.lastName,
+                      
                 subject: "New Message from " + profile.firstName + " " + profile.lastName + "!",
                 
                 recipient2: "vlalo001@fiu.edu",

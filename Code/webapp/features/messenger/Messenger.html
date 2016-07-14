@@ -21,8 +21,8 @@
         </tr>
         <tr>
             <th>
-                    <button style= "width: 80px;" class="btn btn-success btn-block" ng-click="vm.updateUsers(user.OwnerName.email)">Add</button>
-                    <button style= "width: 140px;" class="btn btn-success btn-block" ng-click="vm.clearUsers()">Clear Recipients</button>
+                    <button style= "width: 80px;" class="btn btn-primary" ng-click="vm.updateUsers(user.OwnerName.email)">Add</button>
+                    <button style= "width: 140px;" class="btn btn-primary" ng-click="vm.clearUsers()">Clear Recipients</button>
             </th>
         </tr>
         </table>
@@ -47,7 +47,7 @@
             </textarea>
         </div>
 
-        <button type="submit" class="btn btn-default" ng-click="vm.sendMessage(usersToMessage, MessageSubject, MessageBody)">Send Message</button>
+        <button style ="margin-top: 5px;" type="submit" class="btn btn-primary" ng-click="vm.sendMessage(usersToMessage, MessageSubject, MessageBody)">Send Message</button>
         <br>
         <br>
         <p><strong>* : required fields</strong></p>
