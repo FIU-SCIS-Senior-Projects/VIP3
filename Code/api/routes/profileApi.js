@@ -28,7 +28,7 @@ module.exports = function(app, express) {
                 profile.rank = req.body.rank;
 				profile.isApproved = req.body.isApproved;
 				profile.userType = req.body.userType;
-				
+				profile.google = req.body.google;
 				console.log("rank = " + req.body.rank);
 				console.log("userType = " + req.body.userType);
                 console.log("requested userType = " + profile.requested_userType);
@@ -77,7 +77,7 @@ module.exports = function(app, express) {
                 vm.userData.recipient = profile.email;
 
                 // define the message if a user has been approved
-                if (!profile.isApproved || !profile.google)
+                if (profile.isApproved || profile.google)
                 {
                     console.log("profile changes have been approved");
                     // email body text
