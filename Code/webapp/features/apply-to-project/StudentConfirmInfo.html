@@ -1,3 +1,7 @@
+<div>
+<div ng-if="!done">
+ <center><img img width="250px" height="250px" src="img/loading.gif"/></center>
+</div>
 <div ng-if="done" class=register>
         <h3 align="center"> Confirm Information </h3>
         <form name="ProjectApplication" ng-submit="projApp.save()">
@@ -60,7 +64,7 @@
 
                             <label>Gender:</label>
                             <div>
-                                <select select  ng-model="projApp.gender" ng-options=" gender for gender in projApp.genders" class="form-control" Required="True" disabled>
+                                <select select  ng-model="projApp.gender" ng-options=" gender for gender in projApp.genders" class="form-control" Required="False" disabled>
                             </div>
                         </td>
 
@@ -68,7 +72,7 @@
                         <td colspan="4">
 
                             <label>College:</label>
-                            <select  ng-model="projApp.selectedCollege" ng-options="college as college.name for college in projApp.Colleges" class="form-control" Required="True" disabled>
+                            <select  ng-model="projApp.selectedCollege" ng-options="college as college.name for college in projApp.Colleges" class="form-control" Required="False" disabled>
                             </select>
                         </td>
                     </tr>
@@ -76,7 +80,7 @@
                         <td colspan="4">
 
                             <label>School/Department:</label>
-                            <select  ng-model="projApp.school" ng-options=" school for school in projApp.selectedCollege.schools" class="form-control" Required="True" disabled>
+                            <select  ng-model="projApp.school" ng-options=" school for school in projApp.selectedCollege.schools" class="form-control"  disabled>
                             </select>
 
                         </td>

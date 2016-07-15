@@ -58,7 +58,7 @@ module.exports = function(app, express) {
 	
 
 
-    //route get or adding products to a users account
+    //route get or adding projects to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
 
@@ -102,7 +102,7 @@ module.exports = function(app, express) {
                     console.log(err);
                     return res.send('error');
                 }
-                console.log
+                console.log("Got Current Term");
                 return res.json(projects);
             });
         });
@@ -127,7 +127,7 @@ module.exports = function(app, express) {
                 if(req.body.maxStudents!=="") proj.maxStudents = req.body.maxStudents;
 				if (req.body.members.length > proj.maxStudents) {
 					res.status(400);
-					res.send("Max capacity reach no more students can join");
+					return res.send("Max capacity reach no more students can join");
 				}
 				else {
 					proj.members = req.body.members;
@@ -135,7 +135,8 @@ module.exports = function(app, express) {
 				}
 				if (req.body.members_detailed.length > proj.maxStudents) {
 					res.status(400);
-					res.send("Max capacity reach no more students can join");
+					return res.send("Max capacity reach no more students can join");
+					
 				}
 				else {
 					proj.members_detailed = req.body.members_detailed;
@@ -144,7 +145,7 @@ module.exports = function(app, express) {
                 proj.save(function(err){
                     if(err)  {
 						res.status(400);
-						res.send(err);
+						return res.send(err);
 					}
                     res.json({message: 'Updated!'});
                 })
@@ -153,15 +154,14 @@ module.exports = function(app, express) {
         .get(function (req, res) {
             Project.findById(req.params.id, function(err, proj){
                 if(err)
-                    res.send(err);
-				//console.log(proj);
+                   return res.send(err);
                 res.json(proj);
             });
         })
         .delete(function (req, res) {
             Project.remove({_id: req.params.id}, function(err, proj){
             if(err)
-                res.send(err);
+               return res.send(err);
                 res.json({message: 'successfully deleted!'});
             });
         });
@@ -179,7 +179,7 @@ module.exports = function(app, express) {
 			{
 			Project.findOne({_id: id}, function(err, proj){
 				if (err){
-					res.send(err);
+					return res.send(err);
 					 res.json({message: 'Error!'});
 				}
 				else if (proj){
@@ -189,7 +189,7 @@ module.exports = function(app, express) {
 					proj.save(function(err){
 						if(err)  {
 							res.status(400);
-							res.send(err);
+							return res.send(err);
 						}
 						res.json({message: 'Application Removed from Project'});
 					})
@@ -226,13 +226,13 @@ module.exports = function(app, express) {
 	
 				 if(err) {
 						res.status(400);
-						res.send(err);
+						return res.send(err);
 					}
 					proj.status = 'Active';
 					proj.save(function(err){
 						if(err)  {
 							res.status(400);
-							res.send(err);
+							return res.send(err);
 						}
 						res.json({message: 'Approved!'});
 					})
@@ -242,7 +242,7 @@ module.exports = function(app, express) {
 		.delete(function (req, res) {
             Project.remove({_id: req.params.id}, function(err, proj){
             if(err)
-                res.send(err);
+                return res.send(err);
                 res.json({message: 'successfully deleted!'});
             });
         });
@@ -256,13 +256,13 @@ module.exports = function(app, express) {
 	
 				 if(err) {
 						res.status(400);
-						res.send(err);
+						return res.send(err);
 					}
 					proj.status = 'pending';
 					proj.save(function(err){
 						if(err)  {
 							res.status(400);
-							res.send(err);
+							return res.send(err);
 						}
 						res.json({message: 'Success: Active project turned into a pending project!'});
 					})
