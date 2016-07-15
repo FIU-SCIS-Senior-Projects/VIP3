@@ -57,6 +57,7 @@
 
                         else if(vm.list[i].type == 'student') vm.studentCount++;
                     }
+	
 					vm.done = true;
                 });
         }

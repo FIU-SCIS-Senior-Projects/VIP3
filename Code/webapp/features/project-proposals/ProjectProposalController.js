@@ -17,8 +17,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					else {
 						$scope.done = true;
 						profile = null;
-						//$location.path("login");
-                        $location.path('login').replace();
+						$location.path("login");
+                        
 					}
 		});
 

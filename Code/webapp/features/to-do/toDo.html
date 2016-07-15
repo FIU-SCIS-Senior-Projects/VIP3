@@ -1,4 +1,16 @@
 <div>
+
+	<div ng-if="!todo.done" >
+	 <center ng-if="!todo.done"><img ng-if="!todo.done" img width="30%" height="30%" src="img/loading.gif"/></center>
+	</div>
+
+	<div ng-if="todo.done && todo.personalCount < 1 && todo.userCount < 1 && todo.projectCount < 1 && todo.studentCount < 1" class="jumbotron">
+        <h1 class="text-center">All clear here!</h1>
+        <p class="text-center">You have no more tasks to do.</p>
+    </div>
+	
+	<span ng-show="todo.done">
+	
     <div ng-hide="todo.personalCount < 1" class="panel panel-default">
         <div class="panel-heading">
             <h4><b>General Messages</b></h4>
@@ -67,12 +79,6 @@
         </ul>
     </div>
 
-    <div ng-if="todo.done && todo.personalCount < 1 && todo.userCount < 1 && todo.projectCount < 1 && todo.studentCount < 1" class="jumbotron">
-        <h1 class="text-center">All clear here!</h1>
-        <p class="text-center">You have no more tasks to do.</p>
-    </div>
-	<div ng-if="!todo.done" class="jumbotron">
-	 <h1 class="text-center">Loading!</h1>
-        <p class="text-center">Seems like the background process is still gathering the notifications please be patient.</p>
-	</div>
+	</span>
+    
 </div>

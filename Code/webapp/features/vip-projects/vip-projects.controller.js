@@ -17,7 +17,7 @@
         vm.temProj = new Set();
         vm.filteringVariables = new Set();
         vm.showAllCheckBox = true;
-
+		vm.done = false;
         //Function Declarations
         vm.showAllDisciplinesToggle = showAllDisciplinesToggle; 
         vm.filterByDiscipline = filterByDiscipline;
@@ -42,6 +42,7 @@
                 vm.projects = data;
                 vm.backupProjects = vm.projects;
                 vm.backupDisciplines = vm.disciplines;
+				vm.done = true;
             });
         }
         
