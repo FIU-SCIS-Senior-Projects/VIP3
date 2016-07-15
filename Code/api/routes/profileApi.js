@@ -77,7 +77,7 @@ module.exports = function(app, express) {
                 vm.userData.recipient = profile.email;
 
                 // define the message if a user has been approved
-                if (!profile.isApproved || !profile.google || !req.body.modifying)
+                if (!profile.isApproved || !profile.google)
                 {
                     console.log("profile changes have been approved");
                     // email body text
@@ -183,7 +183,7 @@ module.exports = function(app, express) {
                     profile.piApproval = req.body.piApproval;
                 }
 				else {
-					if (!profile.google || !profile.modifying) {
+					if (!profile.google) {
 						console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
 						profile.remove(function(err) { if (err) { console.log("Failed to delete account!"); }});
 					}
