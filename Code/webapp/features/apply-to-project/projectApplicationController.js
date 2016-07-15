@@ -155,8 +155,8 @@ angular
 			}
 			else {
 				$scope.done = true;
-				$location.path('login').replace();
-				$window.location.href = "/#/login";
+				$location.path('login');
+				
 			}
 		});
 
