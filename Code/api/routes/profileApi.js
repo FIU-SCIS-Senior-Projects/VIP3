@@ -15,6 +15,7 @@ module.exports = function(app, express) {
 
 			Profile.findById(req.body._id, function(err, profile)
             {
+				console.log(req.body);
 				// populate all values
 				profile.firstName = req.body.firstName;
 				profile.lastName = req.body.lastName;
@@ -25,14 +26,17 @@ module.exports = function(app, express) {
 				profile.pantherID = req.body.pantherID;
 				profile.major = req.body.major;
                 profile.rank = req.body.rank;
-				profile.modifying = req.body.modifying;
-
+				profile.isApproved = req.body.isApproved;
+				profile.userType = req.body.userType;
+				
 				console.log("rank = " + req.body.rank);
 				console.log("userType = " + req.body.userType);
                 console.log("requested userType = " + profile.requested_userType);
+				
+				console.log("Approved:" + profile.isApproved);
 
                 // we only update userType with approval
-                if (req.body.isApproved || req.body.modifying)
+                if (profile.isApproved)
                 {
                     // only update usertype if user requested it
                     if (profile.requested_userType != null)
@@ -73,7 +77,7 @@ module.exports = function(app, express) {
                 vm.userData.recipient = profile.email;
 
                 // define the message if a user has been approved
-                if (req.body.isApproved || !req.body.modifying)
+                if (!profile.isApproved || !profile.google || !req.body.modifying)
                 {
                     console.log("profile changes have been approved");
                     // email body text
