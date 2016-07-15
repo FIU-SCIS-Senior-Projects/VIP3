@@ -208,7 +208,7 @@ module.exports = function(app, express) {
 
             console.log("Looking for projs");
         
-            Project.find({ term: currentTerm[0]._id, status: "pending", status: "modified" }, function (err, projects) {
+            Project.find({$or:[{ term: currentTerm[0]._id, status: "pending" }, { term: currentTerm[0]._id, status: "modified" }]}, function (err, projects) {
 
                 if(err) {
                     console.log(err);
