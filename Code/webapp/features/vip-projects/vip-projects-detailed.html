@@ -16,8 +16,10 @@
             </div>
         </div>
     </div> -->
-        <div class="video-container">
-            <iframe width="600" height="350" src="https://www.youtube.com/embed/4CO_IGe1UD0" frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
+        <div class="video-container" ng-show="vm.data.video_url">
+			
+            <iframe width="600" height="350" ng-src="{{vm.setVideo(vm.data.video_url)}}"  frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
+			
         </div>
 
         <div class="col-sm-9 project-second-section-middle">
