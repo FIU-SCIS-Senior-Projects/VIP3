@@ -15,18 +15,17 @@
 					<tr>
 						<th>
 							<b>Filter Users: 
-							<p><input type="checkbox" ng-model="usertype">UserType:<select class="form-control"></select></input></p>
-							<p><input type="checkbox"ng-model="userrank">UserRank:<select class="form-control"></select></input></p>
-							<p><input type="checkbox"ng-model="unconfirmed">Unconfirmed Email</input></p>
-							<p><input type="checkbox"ng-model="gmail">Gmail Login</input></p>
-							<p><input type="checkbox"ng-model="superusers">Super Users</input></p>
-							<p><input type="checkbox"ng-model="mentor">Mentor</input></p>
-							<p><input type="checkbox"ng-model="multiple">Multiple Projects</input></p>
+							<p><input type="checkbox" ng-model="usertype">UserType:<select class="form-control" ng-model="selectedusertype" ng-options="typerank as typerank.name for typerank in vm.typeranks" value="{{vm.getRank(selectedusertype)}}"></select></input></p>
+							<p><input type="checkbox" ng-model="userrank">UserRank:<select class="form-control" ng-model="selecteduserrank" ng-options="rank for rank in vm.filteredrank"></select></input></p>
+							<p><input type="checkbox" ng-model="unconfirmed">Unconfirmed Email</input></p>
+							<p><input type="checkbox" ng-model="gmail">Gmail Login</input></p>
+							<p><input type="checkbox" ng-model="mentor">Mentor</input></p>
+							<p><input type="checkbox" ng-model="multiple">Multiple Projects</input></p>
 						</th>
 					</tr>
 					<tr>
 					<th>
-					<button style= "width: 80px;" class="btn btn-info btn-block" ng-click="vm.filterUsers(usertype,userrank,unconfirmed,gmail,superusers,mentor,multiple)">Lookup</button>
+					<button style= "width: 80px;" class="btn btn-info btn-block" ng-click="vm.filterUsers(usertype,userrank,unconfirmed,gmail,mentor,multiple,selectedusertype,selecteduserrank)">Lookup</button>
 					</th>
 					</tr>
 					</table>
