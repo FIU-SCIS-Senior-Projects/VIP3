@@ -84,6 +84,9 @@ module.exports = function(app, express) {
 				res.status(400);
 				return res.send("Count cannot be greater than the maximum.");
 			}
+			
+			console.log("Pinga");
+			console.log(req.body);
 
 
            Project.create(req.body, function (err) {

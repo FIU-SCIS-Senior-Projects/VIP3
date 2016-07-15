@@ -472,8 +472,8 @@
 						formerProject = vm.projects[i];
 					}
 				}
-				project.members = email;
-				project.members_detailed = name;
+				project.members[project.members.length] = email;
+				project.members_detailed[project.members_detailed.length] = name;
 				ProjectService.editProject(project,project._id);
 				if (formerProject) {
 					for (i = 0; i < formerProject.members_detailed.length; i++) {

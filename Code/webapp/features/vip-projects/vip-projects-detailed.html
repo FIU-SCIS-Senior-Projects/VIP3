@@ -16,8 +16,10 @@
             </div>
         </div>
     </div> -->
-        <div class="video-container">
-            <iframe width="600" height="350" src="https://www.youtube.com/embed/4CO_IGe1UD0" frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
+        <div class="video-container" ng-show="vm.data.video_url">
+			
+            <iframe width="600" height="350" ng-src="{{vm.setVideo(vm.data.video_url)}}"  frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
+			
         </div>
 
         <div class="col-sm-9 project-second-section-middle">
@@ -50,7 +52,7 @@
                 </div>
                     <h4>Students</h4>
                 <div>
-                    <ul class="student-list" ng-repeat="student in vm.data.members_detailed">
+                    <ul class="student-list" ng-repeat="student in vm.data.members_detailed track by $index">
                         <li class="student-in-list">
                         <a href="#">{{student}}</a>
                         <a href="/#/sendmessage/{{student}}">
