@@ -25,7 +25,7 @@
         </div>
     </div> -->
     <!-- Project cards here -->
-    <div class="proj-container">
+    
         <div class="col-md-6 project-info" ng-repeat="project in vm.projects" ng-click="vm.viewDetails(project)">
             <div class="proj-info-box">
                 <img ng-src="{{project.image}}" alt="{{project.title}}" class="proj-image">
@@ -34,6 +34,6 @@
                 <p class="proj-descrip-teams">{{project.description}}</p>
             </div>
         </div>
-    </div>
+
         <!-- End here -->
 </div>

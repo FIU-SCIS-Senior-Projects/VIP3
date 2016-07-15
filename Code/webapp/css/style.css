@@ -319,6 +319,15 @@ a {
     font-size: 0.95em;
 }
 
+@media (max-width: 1200px) {
+    .project-info {
+    margin: 10px auto;
+    height: 260px;
+    width: 90%;
+    
+}
+}
+
 .student-list {
     list-style: none;
     text-decoration: none;
