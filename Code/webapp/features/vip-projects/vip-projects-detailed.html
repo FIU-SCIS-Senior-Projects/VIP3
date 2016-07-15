@@ -50,7 +50,7 @@
                 </div>
                     <h4>Students</h4>
                 <div>
-                    <ul class="student-list" ng-repeat="student in vm.data.members_detailed">
+                    <ul class="student-list" ng-repeat="student in vm.data.members_detailed track by $index">
                         <li class="student-in-list">
                         <a href="#">{{student}}</a>
                         <a href="/#/sendmessage/{{student}}">
