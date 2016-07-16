@@ -130,7 +130,7 @@
 					<table class="table">
 					<tr>
 						<th>
-							<b>User:</b> <select  class="form-control" ng-model="selectedProjectMember" ng-options="user as '['+user.userType+'] '+user.firstName + ' ' + user.lastName + ' ' + '(' + user.project + ')' for user in vm.filteredusers" value="{{vm.currentUser(selectedProjectMember)}}" ></select>
+							<b>User:</b> <select  class="form-control" ng-model="selectedProjectMember" ng-options="user as '['+user.userType+'] '+user.firstName + ' ' + user.lastName + ' ' + '(' + vm.getProjectTitle(user.email) + ')' for user in vm.filteredusers" value="{{vm.currentUser(selectedProjectMember)}}" ></select>
 						</th>
 					</tr>
 					<tr>

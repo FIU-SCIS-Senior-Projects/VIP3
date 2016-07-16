@@ -10,6 +10,7 @@
     function adminCtrl($location,$window, $state, $scope, adminService, User, reviewStudentAppService, ProfileService, reviewRegService, reviewProfileService,ProjectService) {
         var vm = this;
 		
+		
 
 		
 		ProfileService.loadProfile().then(function(data){
@@ -57,6 +58,18 @@
 		vm.sw = ChangeUserProject;
 		
         vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
+		
+		vm.getProjectTitle = function (email) {
+			var results = vm.projects.filter(function(project) {
+				return project.members.includes(email)
+			});
+			if (results.length >= 1) {
+				return "Member of " + results[0].title + ".";
+			}
+			else {
+				return "Hasn't joined any project!";
+			}
+		}
 		
 		//Used for filters
 		vm.getRank = getRank;
