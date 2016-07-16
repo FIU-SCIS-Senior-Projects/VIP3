@@ -17,6 +17,7 @@
 							<b>Filter Users: 
 							<p><input type="checkbox" ng-model="usertype">UserType:<select class="form-control" ng-model="selectedusertype" ng-options="typerank as typerank.name for typerank in vm.typeranks" value="{{vm.getRank(selectedusertype)}}"></select></input></p>
 							<p><input type="checkbox" ng-model="userrank">UserRank:<select class="form-control" ng-model="selecteduserrank" ng-options="rank for rank in vm.filteredrank"></select></input></p>
+							<p><input type="checkbox" ng-model="userproject">Project:<select class="form-control" ng-model="selecteduserproject" ng-options="projects as projects.title for projects in vm.projects" value="{{vm.getStudents(SelectedProject)}}"></select></input></p>
 							<p><input type="checkbox" ng-model="unconfirmed">Unconfirmed Email</input></p>
 							<p><input type="checkbox" ng-model="gmail">Gmail Login</input></p>
 							<p><input type="checkbox" ng-model="mentor">Mentor</input></p>
@@ -25,7 +26,7 @@
 					</tr>
 					<tr>
 					<th>
-					<button style= "width: 80px;" class="btn btn-info btn-block" ng-click="vm.filterUsers(usertype,userrank,unconfirmed,gmail,mentor,multiple,selectedusertype,selecteduserrank)">Lookup</button>
+					<button style= "width: 80px;" class="btn btn-info btn-block" ng-click="vm.filterUsers(usertype,userrank,unconfirmed,gmail,mentor,multiple,selectedusertype,selecteduserrank, selecteduserproject, userproject)">Lookup</button>
 					</th>
 					</tr>
 					</table>

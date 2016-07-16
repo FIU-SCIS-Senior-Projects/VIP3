@@ -161,9 +161,34 @@
 		}
 		
 		//Filters users based on parameters
-		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank)
+		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank, SelectedProject, userproject)
 		{
 			vm.filteredusers = vm.allusers;
+			 // n^2
+            if (SelectedProject && userproject)
+            {
+                //alert("not null SelectedProject");
+                var studentsArray = [];
+                
+				vm.filteredusers.forEach(function (obj)
+				{
+                    SelectedProject.members.forEach(function (obj2)
+                    {
+                        //alert(obj.email);
+                        //alert(obj2);
+                        
+                        // user is in project we selected
+                        if (obj.email == obj2)
+                        {
+                            studentsArray.push(obj);
+                            //alert(obj.email);
+                        }
+                        
+                    });
+				});
+                
+                vm.filteredusers = studentsArray;
+            }
 			if (usertype && selectedusertype)
 			{
 				usertype = selectedusertype.name;
