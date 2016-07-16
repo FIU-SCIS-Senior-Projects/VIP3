@@ -27,6 +27,7 @@ angular.module('mainApp', [
          {
              for(i = 0; i < users.length; i++) 
              {
+                 //alert("i see " + users[i].email);
                  //alert("comparing " + users[i].email);
                  if (!members.includes(users[i].email))
                  {

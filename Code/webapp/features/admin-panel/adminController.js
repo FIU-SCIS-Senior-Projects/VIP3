@@ -9,10 +9,7 @@
     /* @ngInject */
     function adminCtrl($location,$window, $state, $scope, adminService, User, reviewStudentAppService, ProfileService, reviewRegService, reviewProfileService,ProjectService) {
         var vm = this;
-		
-		
 
-		
 		ProfileService.loadProfile().then(function(data){
 					if (data) {
 						$scope.done = true;
@@ -110,8 +107,6 @@
             }
 
         ];
-		
-		
 		
 		function getRank(usertype)
 		{

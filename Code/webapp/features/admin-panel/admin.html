@@ -63,8 +63,11 @@
 							<p><b>Email: {{user.email}} </b></p>	
 							<p><b>Department: {{user.department}} </b></p>	
 							<p><b>College: {{user.college}} </b></p>	
-							<p><b>Project: {{user.project}} </b></p>		
-							<button  class="btn btn-info btn-block">Message {{user.firstName}} {{user.lastName}}</button> <button ng-click="vm.deleteUser(user)" class="btn btn-danger btn-block">Delete Account (Cannot Be Undone)</button>
+							<p><b>Project: {{user.project}} </b></p>
+                            <a href = "/#/sendmessage/{{user.firstName}} {{user.lastName}}">
+							<button class="btn btn-info btn-block">Message {{user.firstName}} {{user.lastName}}</button>
+                            </a>
+                            <button ng-click="vm.deleteUser(user)" class="btn btn-danger btn-block">Delete Account (Cannot Be Undone)</button>
 						</th>
 					</tr>
 					</table>

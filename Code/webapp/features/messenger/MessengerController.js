@@ -32,6 +32,71 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
         vm.clearUsers = ClearContacts;
         vm.users = null;
         
+		vm.allusers; //All confirmed and unconfirmed users
+		vm.unconfirmedusers;//Unconfirmed users (Email is not verified)
+		vm.filteredusers; //filteredusers affected by filter function
+		vm.filterUsers = filterUsers;
+		vm.currentuserview;
+		vm.currentview = currentview;
+		
+		//Out of scope functions
+		vm.userinUnconfirmedfunc = userinUnconfirmedfunc;
+        vm.getStudents = getStudents;
+        vm.studentsEmailInSelectedProjects;
+		
+		//For out of scope variables:
+		vm.userinusertype;
+		vm.userinprojects;
+		vm.usertypeinusertype;
+		vm.projectinprojects;
+		vm.userinunconfirmed;
+        vm.messageAllUsers = messageAllUsers;
+		
+		vm.currentUser = function(user) { vm.cuser = user; }
+		vm.currentProject = function(project) {  vm.cproject = project; }
+		
+        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
+		
+		//Used for filters
+		vm.getRank = getRank;
+		vm.filteredrank; //Value changed by getRank function after a usertype is selected in filter
+        vm.typeranks = [
+            {
+                name: 'Staff/Faculty',
+                ranks: [
+                    'Instructor',
+                    'Assitant Professor',
+                    'Associate Professor',
+                    'Full Professor',
+                    'Administrator',
+                    'Director'
+
+                ]
+            },
+            {
+                name: 'Pi/CoPi',
+                ranks: [
+                    'PI',
+                    'CoPI',
+                    'Coordinator',
+                    'External Member'
+                ]
+            },
+            {
+                name: 'Student',
+                ranks: [
+                    'Freshman',
+                    'Sophmore',
+                    'Junior',
+                    'Senior',
+                    'Masters',
+                    'PhD',
+                    'postDoc'
+                ]
+            }
+
+        ];
+        
         $scope.usersToMessage = "";
         $scope.MessageSubject = "Type the Subject of your Message here";
         $scope.MessageBody = "Type the Body of your Message here";
@@ -84,6 +149,24 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
 			});
         }
         
+        function getStudents(SelectedProject)
+        {
+            //alert("entered function");
+            if (SelectedProject)
+            {
+                //alert("not null SelectedProject");
+                studentsArray = [];
+                SelectedProject.members.forEach(function (obj)
+                {
+                    studentsArray.push(obj);
+                    //alert(obj);
+                    
+                });
+                vm.studentsEmailInSelectedProjects = studentsArray;
+            }
+        }
+        
+        // messages one particular user the user chooses in filters
         function AddContacts(email)
         {
             if (!$scope.usersToMessage.replace(/^\s+/g, '').length)
@@ -105,10 +188,207 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
             }
          }
          
+         // messages all filtered users
+         function messageAllUsers()
+         {
+            vm.filteredusers.forEach(function (obj)
+            {
+                AddContacts(obj.email);
+            });
+         }
+         
          function ClearContacts()
          {
              $scope.usersToMessage = '';
          }
+         
+		function getRank(usertype)
+		{
+			if (usertype)
+			{
+                vm.typeranks.forEach(function (obj)
+                {
+                    if (obj.name == usertype.name)
+                    {
+                        vm.filteredrank = obj.ranks;
+                    }
+
+                });
+			}
+		}
+         
+		//Filters users based on parameters
+		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype, selecteduserrank, SelectedProject, userproject)
+		{
+            //alert("gg");
+			vm.filteredusers = vm.allusers;
+            
+            // n^2
+            if (SelectedProject && userproject)
+            {
+                //alert("not null SelectedProject");
+                studentsArray = [];
+                
+				vm.filteredusers.forEach(function (obj)
+				{
+                    SelectedProject.members.forEach(function (obj2)
+                    {
+                        //alert(obj.email);
+                        //alert(obj2);
+                        
+                        // user is in project we selected
+                        if (obj.email == obj2)
+                        {
+                            studentsArray.push(obj);
+                            //alert(obj.email);
+                        }
+                        
+                    });
+				});
+                
+                vm.filteredusers = studentsArray;
+            }
+            
+			if (usertype && selectedusertype)
+			{
+				usertype = selectedusertype.name;
+				var tempArray = [];
+				vm.filteredusers.forEach(function (obj)
+				{
+					if (obj.userType == usertype)
+					{
+						tempArray.push(obj);
+					}
+				});
+				vm.filteredusers = tempArray;				
+			}
+			if (userrank && selecteduserrank)
+			{
+				userrank = selecteduserrank;
+				var tempArray = [];
+				vm.filteredusers.forEach(function (obj)
+				{
+					if (obj.userRank == userrank)
+					{
+						tempArray.push(obj);
+					}
+				});
+				vm.filteredusers = tempArray;				
+			}
+			if (unconfirmed)
+			{
+				var tempArray = [];
+				vm.filteredusers.forEach(function (obj)
+				{
+					if (obj.piApproval == false)
+					{
+						tempArray.push(obj);
+					}
+				});
+				vm.filteredusers = tempArray;				
+			}
+			if (gmaillogin)
+			{
+				var tempArray = [];
+				vm.filteredusers.forEach(function (obj)
+				{
+					if (obj.google)
+					{
+						tempArray.push(obj);
+					}
+				});
+				vm.filteredusers = tempArray;				
+			}
+			if (mentor) // O(n^3) Very slow.
+			{
+				var tempArray = [];
+				vm.filteredusers.forEach(function (obj)
+				{
+					vm.projects.forEach(function (proj)
+					{
+						var full = obj.firstName + " " + obj.lastName;
+						if (proj.owner_name == full && tempArray)
+						{
+							var contains;
+							tempArray.forEach(function (temp)
+							{
+								var full2 = temp.firstName + " " + temp.lastName;
+								if (full2 == full)
+								{
+								contains = true;
+								}
+							});
+							if (!contains)
+							{
+								tempArray.push(obj);
+							}
+						}
+						else if (proj.owner_name == full)
+						{
+							tempArray.push(obj);
+						}
+					});
+				});
+				vm.filteredusers = tempArray;				
+			}
+			if (multipleprojects) // O(n^3) Very slow.
+			{
+				var tempArray = [];
+				
+				vm.filteredusers.forEach(function (obj)
+				{
+					var counter = 0;
+					if (obj.joined_project == true)
+					{
+						vm.projects.forEach(function (proj)
+						{
+							proj.members.forEach(function (email)
+							{
+								if (email == obj.email)
+								{
+									counter++;
+									if (counter > 1) 
+									{
+										if (tempArray)
+										{
+											var contains;
+											tempArray.forEach(function (temp)
+											{
+												var full = obj.firstName + " " + obj.lastName;
+												var full2 = temp.firstName + " " + temp.lastName;
+												if (full2 == full)
+												{
+													contains = true;
+												}
+											});
+											if (!contains)
+											{
+												tempArray.push(obj);
+											}
+										}
+										else
+										{
+											tempArray.push(obj);
+										}
+									}
+								}
+							});
+						});
+					}
+				});
+				vm.filteredusers = tempArray;		
+			}
+		}
+        
+		function currentview(user)
+		{
+			vm.currentuserview = [];
+			vm.currentuserview.push(user);
+			console.log(vm.currentuserview);
+		}
+        
+		//Out of scope function for Confirm/Reject unconfirmed users
+		function userinUnconfirmedfunc(user){vm.userinunconfirmed = user;}
 		
 		//Loads all project information for active projects
 		function loadProjects(){
