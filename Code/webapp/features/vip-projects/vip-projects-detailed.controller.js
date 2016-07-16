@@ -5,10 +5,10 @@
         .module('vip-projects')
         .controller('VIPProjectsDetailedCtrl', VIPProjectsDetailedCtrl);
 
-    VIPProjectsDetailedCtrl.$inject = ['$location','$state', '$scope', '$stateParams', 'ProjectService', 'ProfileService','reviewStudentAppService','User','$window'];
+    VIPProjectsDetailedCtrl.$inject = ['$sce','$location','$state', '$scope', '$stateParams', 'ProjectService', 'ProfileService','reviewStudentAppService','User','$window'];
 
     /* @ngInject */
-    function VIPProjectsDetailedCtrl($location, $state, $scope, $stateParams, ProjectService, ProfileService,reviewStudentAppService,User,$window) {
+    function VIPProjectsDetailedCtrl($sce,$location, $state, $scope, $stateParams, ProjectService, ProfileService,reviewStudentAppService,User,$window) {
         var profile = null;
 		var vm = this;
         vm.data = null;
@@ -19,6 +19,10 @@
 		vm.leaveProject = leaveProject;
 		vm.already_joined = null;
 		vm.not_signed_in = false;
+		vm.setVideo = function(src) {
+			
+			return $sce.trustAsResourceUrl(src);
+		}
         
         $scope.go = function ( path ) {
           alert(path);

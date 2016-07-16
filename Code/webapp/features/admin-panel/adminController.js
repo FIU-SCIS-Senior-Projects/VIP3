@@ -58,6 +58,63 @@
 		
         vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
 		
+		//Used for filters
+		vm.getRank = getRank;
+		vm.filteredrank; //Value changed by getRank function after a usertype is selected in filter
+        vm.typeranks = [
+            {
+                name: 'Staff/Faculty',
+                ranks: [
+                    'Instructor',
+                    'Assitant Professor',
+                    'Associate Professor',
+                    'Full Professor',
+                    'Administrator',
+                    'Director'
+
+                ]
+            },
+            {
+                name: 'Pi/CoPi',
+                ranks: [
+                    'PI',
+                    'CoPI',
+                    'Coordinator',
+                    'External Member'
+                ]
+            },
+            {
+                name: 'Student',
+                ranks: [
+                    'Freshman',
+                    'Sophmore',
+                    'Junior',
+                    'Senior',
+                    'Masters',
+                    'PhD',
+                    'postDoc'
+                ]
+            }
+
+        ];
+		
+		
+		
+		function getRank(usertype)
+		{
+			if (usertype)
+			{
+			vm.typeranks.forEach(function (obj)
+			{
+				if (obj.name == usertype.name)
+				{
+					vm.filteredrank = obj.ranks;
+				}
+
+			});
+			}
+		}
+		
 		
         init();
 		
@@ -96,11 +153,12 @@
 		}
 		
 		//Filters users based on parameters
-		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, superuser, mentor, multipleprojects)
+		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank)
 		{
 			vm.filteredusers = vm.allusers;
-			if (usertype)
+			if (usertype && selectedusertype)
 			{
+				usertype = selectedusertype.name;
 				var tempArray = [];
 				vm.filteredusers.forEach(function (obj)
 				{
@@ -111,8 +169,9 @@
 				});
 				vm.filteredusers = tempArray;				
 			}
-			if (userrank)
+			if (userrank && selecteduserrank)
 			{
+				userrank = selecteduserrank;
 				var tempArray = [];
 				vm.filteredusers.forEach(function (obj)
 				{
@@ -147,34 +206,35 @@
 				});
 				vm.filteredusers = tempArray;				
 			}
-			if (superuser)
+			if (mentor) // O(n^3) Very slow.
 			{
 				var tempArray = [];
 				vm.filteredusers.forEach(function (obj)
 				{
-					if (obj.isSuperUser)
+					vm.projects.forEach(function (proj)
 					{
-						tempArray.push(obj);
-					}
-				});
-				vm.filteredusers = tempArray;				
-			}
-			if (mentor)
-			{
-				var tempArray = [];
-				vm.filteredusers.forEach(function (obj)
-				{
-					if (obj.joined_project == true)
-					{
-						vm.projects.forEach(function (proj)
+						var full = obj.firstName + " " + obj.lastName;
+						if (proj.owner_name == full && tempArray)
 						{
-							var full = obj.firstName + " " + obj.lastName;
-							if (proj.owner_name == full)
+							var contains;
+							tempArray.forEach(function (temp)
+							{
+								var full2 = temp.firstName + " " + temp.lastName;
+								if (full2 == full)
+								{
+								contains = true;
+								}
+							});
+							if (!contains)
 							{
 								tempArray.push(obj);
 							}
-						});
-					}
+						}
+						else if (proj.owner_name == full)
+						{
+							tempArray.push(obj);
+						}
+					});
 				});
 				vm.filteredusers = tempArray;				
 			}
@@ -194,7 +254,30 @@
 								if (email == obj.email)
 								{
 									counter++;
-									if (counter > 1) {tempArray.push(obj);}
+									if (counter > 1) 
+									{
+										if (tempArray)
+										{
+											var contains;
+											tempArray.forEach(function (temp)
+											{
+												var full = obj.firstName + " " + obj.lastName;
+												var full2 = temp.firstName + " " + temp.lastName;
+												if (full2 == full)
+												{
+													contains = true;
+												}
+											});
+											if (!contains)
+											{
+												tempArray.push(obj);
+											}
+										}
+										else
+										{
+											tempArray.push(obj);
+										}
+									}
 								}
 							});
 						});
@@ -393,8 +476,8 @@
 						formerProject = vm.projects[i];
 					}
 				}
-				project.members = email;
-				project.members_detailed = name;
+				project.members[project.members.length] = email;
+				project.members_detailed[project.members_detailed.length] = name;
 				ProjectService.editProject(project,project._id);
 				if (formerProject) {
 					for (i = 0; i < formerProject.members_detailed.length; i++) {
