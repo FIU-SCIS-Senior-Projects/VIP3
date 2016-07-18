@@ -44,7 +44,7 @@
                     <ul class="student-list">
                         <li class="student-in-list">
                             <a href="/#/userprofile/{{vm.data.owner}}">{{vm.data.owner_name}}</a>
-                            <a href="/#/sendmessage/{{vm.data.owner_name}}">
+                            <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
                            <i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
                             </a>
                         </li>
@@ -52,7 +52,7 @@
                 </div>
                     <h4>Students</h4>
                 <div>
-                    <ul class="student-list" ng-repeat="student in vm.data.members_detailed track by $index">
+                    <ul class="student-list" ng-repeat="student in vm.data.members track by $index">
                         <li class="student-in-list">
                         <a ng-click="vm.redirect($index)">{{student}}</a>
                         <a href="/#/sendmessage/{{student}}">
