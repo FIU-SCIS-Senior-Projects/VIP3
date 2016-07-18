@@ -175,13 +175,42 @@ module.exports = function (app, express) {
             });
 	})
 	
+	userRouter.route('/users/email/:email').get(function(req,res) {
+		console.log("GET /users/email/:email");
+		console.log(req.params.email);
+		User.findOne({email: req.params.email}, function(err, user) {
+			if (err) {
+				console.log("Error: " + err);
+			}
+			else {
+				if (user) {
+					return res.json(user._id);
+				}
+			}
+		});
+	});
+	
 	userRouter.route('/users/:id').delete(function (req, res) {
 			console.log("DELETE /users/:id");
             User.remove({_id: req.params.id}, function(err, user){
             if(err)
-                res.send(err);
+                return res.send(err);
                 res.json({message: 'successfully deleted!'});
             });
+	}).get(function(req,res) {
+		console.log("GET /users/:id");
+		console.log(req.params.id);
+		User.findOne({_id : req.params.id}, function(err, user) {
+			if (err) {
+				console.log("Error: " + err);
+			}
+			else {
+				if (user) {
+					console.log(user);
+					return res.json(user);
+				}
+			}
+		});
 	});
 
 	// User.create(vm.userData).success(function(data) from userRegistrationController.js calls this function
