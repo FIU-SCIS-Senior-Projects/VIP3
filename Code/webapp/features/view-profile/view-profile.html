@@ -58,7 +58,7 @@
 				<tr ng-if="vm.profile.resume">
 					<td colspan="4">
 						<label>Resume:</label>
-						<object width="100%" data="{{vm.profile.resume}}"/>
+						<object height="500px" width="100%" data="{{vm.profile.resume}}"/>
 					</td>
 				</tr>
 				<tr ng-if="!vm.profile.resume">
@@ -73,9 +73,4 @@
 			<br>
 		</div>
 	</form>
-	<div style="margin: 0 auto; text-align: center;" ng-show="header.user_type == 'Staff/Faculty' || header.user_type == 'Pi/CoPi'">
-		<h3 align="center" style="font-family: calibri;"> {{vm.profile.firstName}} {{vm.profile.lastName}}'s Resume </h3>
-		<iframe src="" frameborder="1" height="600" width="600">
-		</iframe>
-	</div>
 </div>

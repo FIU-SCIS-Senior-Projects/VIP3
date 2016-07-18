@@ -1,21 +1,5 @@
 <div class="row team-project">
-   <!--  <div class="projects-top-bar">
-        <div>
-            <h3></h3>
-        </div>
-        <div class="col">
-            <div class="col-sm-4 team-info">
-                <h5>{{vm.data.name}}</h5>
-            </div>
-            <div class="col-sm-8 sort-by-padding">
-                <label class=""><h5>Sort By:</h5></label>
-                <select class="btn btn-default dropdown-toggle top-margin">
-                    <option value="Title">Title</option>
-                    <option value="Start Year">Start Year</option>
-                </select>
-            </div>
-        </div>
-    </div> -->
+
         <div class="video-container" ng-show="vm.data.video_url">
 			
             <iframe width="600" height="350" ng-src="{{vm.setVideo(vm.data.video_url)}}"  frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
