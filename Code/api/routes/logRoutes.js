@@ -15,12 +15,12 @@ module.exports = function(app, express) {
             });
         })
         .post(function (req, res) {
-			console.log("POST /LOG");
-			console.log(req.body);
+			////console.log("POST /LOG");
+			////console.log(req.body);
             Log.create(req.body, function( err) {
                 if(err) {
-					console.log("Error:");
-					console.log(err);
+					////console.log("Error:");
+					////console.log(err);
                     return res.send('something went wrong');
                 } else {
                     res.send('Log added');

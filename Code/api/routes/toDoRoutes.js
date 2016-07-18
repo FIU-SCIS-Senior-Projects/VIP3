@@ -37,12 +37,12 @@ module.exports = function(app, express) {
             });
         })
         .post(function (req, res) {
-			console.log("POST /TODO");
-			console.log(req.body);
+			//console.log("POST /TODO");
+			//console.log(req.body);
             ToDo.create(req.body, function( err) {
                 if(err) {
-					console.log("Error:");
-					console.log(err);
+					//console.log("Error:");
+					//console.log(err);
                     return res.send('something went wrong');
                 } else {
                     res.send('to do added');

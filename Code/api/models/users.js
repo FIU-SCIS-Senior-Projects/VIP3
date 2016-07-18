@@ -22,6 +22,7 @@ var UsersSchema = new Schema({
     major:String,
     minor:String,
     image: String,
+	resume: String,
 	modifying: Boolean,
     userType: {type: String},
     isDecisionMade: Boolean, // whether or not a decision has been made to approve/deny the profile
@@ -40,7 +41,7 @@ var UsersSchema = new Schema({
 UsersSchema.pre('save', function(next) {
     var user = this;
 
-    console.log("Called 'save' function for User");
+    ////console.log("Called 'save' function for User");
 
     //Hash the password only if the password has been changed or user is new
     if (!user.isModified('password')) {

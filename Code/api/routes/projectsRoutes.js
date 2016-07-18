@@ -10,7 +10,7 @@ module.exports = function(app, express) {
     /*
     *Temporal Seed for the terms Starts here
     */
-    console.log("Seed file start");
+    ////console.log("Seed file start");
     var termsSeed = [
         {
             name: "Spring",
@@ -31,7 +31,7 @@ module.exports = function(app, express) {
 
         if (!err && count === 0) {
             Term.create(termsSeed, function(err){
-                console.log("Error found ", err);
+                ////console.log("Error found ", err);
             });
         }
     });
@@ -46,8 +46,8 @@ module.exports = function(app, express) {
 
         if(err)
         {
-            console.log("Error getting the term");
-            console.log(err);
+            ////console.log("Error getting the term");
+            ////console.log(err);
         }
         currentTerm = term;
 
@@ -85,8 +85,8 @@ module.exports = function(app, express) {
 				return res.send("Count cannot be greater than the maximum.");
 			}
 			
-			console.log("Pinga");
-			console.log(req.body);
+			////console.log("Pinga");
+			////console.log(req.body);
 
 
            Project.create(req.body, function (err) {
@@ -102,10 +102,10 @@ module.exports = function(app, express) {
             Project.find({ term: currentTerm[0]._id }, function (err, projects) {
 
                 if(err) {
-                    console.log(err);
+                    ////console.log(err);
                     return res.send('error');
                 }
-                console.log("Got Current Term");
+                ////console.log("Got Current Term");
                 return res.json(projects);
             });
         });
@@ -114,7 +114,7 @@ module.exports = function(app, express) {
 
 
         .put(function (req, res) {
-			//console.log("PUT /projects/:id");
+			//////console.log("PUT /projects/:id");
             Project.findById(req.params.id, function(err, proj){
                 if(err) {
 					res.status(400);
@@ -173,8 +173,8 @@ module.exports = function(app, express) {
 		//route for removing a member from a project (members in project are treated as student applications for the project)
 		apiRouter.route('/project/:id/:members')
 		.put(function (req, res) {
-			//console.log("PUT /project/:id/:members");
-			//console.log(req.params);
+			//////console.log("PUT /project/:id/:members");
+			//////console.log(req.params);
 			var id = req.params.id;
 			var memberemail = req.params.members;
 			var members_detailed = req.body.detailed;
@@ -186,7 +186,7 @@ module.exports = function(app, express) {
 					 res.json({message: 'Error!'});
 				}
 				else if (proj){
-					//console.log("Members: " + memberemail + " Detailed: " + members_detailed);
+					//////console.log("Members: " + memberemail + " Detailed: " + members_detailed);
 					proj.members.pull(memberemail);
 					proj.members_detailed.pull(members_detailed);
 					proj.save(function(err){
@@ -209,12 +209,12 @@ module.exports = function(app, express) {
 	apiRouter.route('/reviewproject')
 		.get(function (req, res) {
 
-            console.log("Looking for projs");
+            ////console.log("Looking for projs");
         
             Project.find({$or:[{ term: currentTerm[0]._id, status: "pending" }, { term: currentTerm[0]._id, status: "modified" }]}, function (err, projects) {
 
                 if(err) {
-                    console.log(err);
+                    ////console.log(err);
                     return res.send('error');
                 }
                 return res.json(projects);
@@ -224,7 +224,7 @@ module.exports = function(app, express) {
 	//route for accepting pending projects
 	apiRouter.route('/reviewproject/:id')
 		.put(function (req, res) {
-			console.log("PUT /reviewproject/:id "  );
+			////console.log("PUT /reviewproject/:id "  );
 			 Project.findById(req.params.id, function(err, proj){
 	
 				 if(err) {
@@ -254,7 +254,7 @@ module.exports = function(app, express) {
 	//route for making an approved project back to a pending project
 		apiRouter.route('/reviewproject/:pid/:project')
 		.put(function (req, res) {
-			console.log("PUT /reviewproject/:pid/:project "  );
+			////console.log("PUT /reviewproject/:pid/:project "  );
 			 Project.findById(req.params.pid, function(err, proj){
 	
 				 if(err) {
