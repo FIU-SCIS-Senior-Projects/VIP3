@@ -7,7 +7,7 @@ angular.module('user-profile')
 
         // profileFactory.loadProfile = function (email) {
         //     return $http.get('/api/profile/' + email).then(function(data){
-        //        console.log("Got the Projects");
+        //        //console.log("Got the Projects");
         //        return data.data;
         //     });
         // };

@@ -10,12 +10,12 @@ module.exports = function(app, express) {
 	// used to update the rank/usertype of a profile that the PI has authorized the changes to
     apiRouter.route('/updateprofile')
         .put(function (req, res) {
-			console.log('updateprofile has been called');
-			console.log('updating the profile for user ' + req.body._id);
+			////console.log('updateprofile has been called');
+			////console.log('updating the profile for user ' + req.body._id);
 
 			Profile.findById(req.body._id, function(err, profile)
             {
-				console.log(req.body);
+				////console.log(req.body);
 				// populate all values
 				profile.firstName = req.body.firstName;
 				profile.lastName = req.body.lastName;
@@ -29,11 +29,13 @@ module.exports = function(app, express) {
 				profile.isApproved = req.body.isApproved;
 				profile.userType = req.body.userType;
 				profile.google = req.body.google;
-				console.log("rank = " + req.body.rank);
-				console.log("userType = " + req.body.userType);
-                console.log("requested userType = " + profile.requested_userType);
+				profile.image = req.body.image;
+				profile.resume = req.body.resume;
+				////console.log("rank = " + req.body.rank);
+				////console.log("userType = " + req.body.userType);
+                ////console.log("requested userType = " + profile.requested_userType);
 				
-				console.log("Approved:" + profile.isApproved);
+				////console.log("Approved:" + profile.isApproved);
 
                 // we only update userType with approval
                 if (profile.isApproved)
@@ -44,7 +46,7 @@ module.exports = function(app, express) {
                         // if the user has been accepted as Pi/CoPi, make them a superuser as well
                         if (profile.requested_userType == "Pi/CoPi")
                         {
-                            console.log("Set SUPERUSER");
+                            ////console.log("Set SUPERUSER");
                             profile.isSuperUser = 1;
                         }
                         
@@ -79,7 +81,7 @@ module.exports = function(app, express) {
                 // define the message if a user has been approved
                 if (profile.isApproved || profile.google)
                 {
-                    console.log("profile changes have been approved");
+                    ////console.log("profile changes have been approved");
                     // email body text
                     vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\n"  + "Your request to update your profile has been approved. You can view your new profile information by visiting this URL: " + reviewDomain;
 
@@ -91,7 +93,7 @@ module.exports = function(app, express) {
                 // define the message if a user has been rejected
                 else 
                 {
-                    console.log("profile changes have been rejected");
+                    ////console.log("profile changes have been rejected");
                     
                     // email body text
                     vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\n"  + "Unfortunantly, your request to update your profile has been rejected. You can view your current profile information by visiting this URL: " + reviewDomain;
@@ -106,7 +108,7 @@ module.exports = function(app, express) {
                 }
 				
 
-                console.log("Sending notification of profile approval to the User");
+                ////console.log("Sending notification of profile approval to the User");
 
                 // deploy email
                 request.post(
@@ -114,13 +116,13 @@ module.exports = function(app, express) {
                     { form: { vm } },
                     function (error, response, body) {
                         if (!error && response.statusCode == 200) {
-                            console.log(body);
-                            console.log(error);
-                            console.log(response);
+                            ////console.log(body);
+                            ////console.log(error);
+                            ////console.log(response);
                         }
-                            console.log(body);
-                            console.log(error);
-                            console.log(response);
+                            ////console.log(body);
+                            ////console.log(error);
+                            ////console.log(response);
                     }
                 );
 
@@ -129,12 +131,12 @@ module.exports = function(app, express) {
 
     apiRouter.route('/profile')
         .put(function (req, res) {
-			console.log('POST /profile');
+			////console.log('POST /profile');
             /*
             * This update takes TOO LONG to complete therefore im using the not so short approach but the fastest of the two
             */
             // Profile.update({ _id: req.body._id }, req.body).then(function(WriteResult){
-            //     console.log(WriteResult);
+            //     ////console.log(WriteResult);
             //     return res.json(profile);
             // });
 
@@ -143,18 +145,18 @@ module.exports = function(app, express) {
 				// note to future devs: "profile.rank" is the users current rank in database, "req.body.rank" is the rank they are attempting to obtain
                 // beyond this point, the profile has been found
                 
-                console.log("piApproval is " + req.body.piApproval);
+                ////console.log("piApproval is " + req.body.piApproval);
 
 				var isUserTypeUpdateRequest = false;
                 
                 // set superuser status for a newly approved PI account
                 if (!profile.isSuperUser && profile.userType == "Pi/CoPi")
                 {
-                    console.log("User has been approved by PI, and is a PI himself, elevate privs");
+                    ////console.log("User has been approved by PI, and is a PI himself, elevate privs");
                     profile.isSuperUser = true;
                 }
                 
-                console.log("decision made is " + req.body.isDecisionMade);
+                ////console.log("decision made is " + req.body.isDecisionMade);
                 
                 // profile has been accepted or rejected, update in db
                 if (!profile.isDecisionMade && req.body.isDecisionMade)
@@ -162,7 +164,7 @@ module.exports = function(app, express) {
                     profile.isDecisionMade = req.body.isDecisionMade;
                 }
 
-				console.log("Profile.findById rank is " + profile.rank);
+				////console.log("Profile.findById rank is " + profile.rank);
 
 				// populate nonsensitive values
 				profile.firstName = req.body.firstName;
@@ -176,6 +178,8 @@ module.exports = function(app, express) {
                 profile.modifying = req.body.modifying;
 				// all user types are allowed to update their rankes without approval
 				profile.rank = req.body.rank;
+				profile.image = req.body.image;
+				profile.resume = req.body.resume;
                 
                 // this field will be set to true if the acceptProfile() function called us
                 if (req.body.piApproval)
@@ -184,7 +188,7 @@ module.exports = function(app, express) {
                 }
 				else {
 					if (!profile.google) {
-						console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
+						//console.log("Rejected account like most girls do to me...\nnow attempting to delete account forever!");
 						profile.remove(function(err) { if (err) { console.log("Failed to delete account!"); }});
 					}
 					else {
@@ -195,20 +199,20 @@ module.exports = function(app, express) {
 				// user is privileged and should be allowed to update userType without approval
 				if (profile.isSuperUser)
 				{
-					console.log("User is privileged and allowed to update profile without approval");
+					////console.log("User is privileged and allowed to update profile without approval");
 					profile.userType = req.body.userType;
 				}
 
 				// user needs approval before updating the userType
 				else
 				{
-					console.log("User is NOT privileged and needs approval to update the userType");
+					////console.log("User is NOT privileged and needs approval to update the userType");
 
 					// user is trying to change their account usertype
 					if (profile.userType != req.body.userType)
 					{
-						console.log("Users current userType is " + profile.userType);
-						console.log("User is attempting to change the userType to " + req.body.userType);
+						////console.log("Users current userType is " + profile.userType);
+						////console.log("User is attempting to change the userType to " + req.body.userType);
 
 						isUserTypeUpdateRequest = true;
 
@@ -240,7 +244,7 @@ module.exports = function(app, express) {
 					// email subject line
 					vm.userData.subject = "Your VIP Account has been Approved";
 
-					console.log("Sending account approval email");
+					////console.log("Sending account approval email");
 
 					// deploy email
 					request.post(
@@ -248,13 +252,13 @@ module.exports = function(app, express) {
 						{ form: { vm } },
 						function (error, response, body) {
 							if (!error && response.statusCode == 200) {
-								console.log(body);
-                                console.log(error);
-                                console.log(response);
+								////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
 							}
-                                console.log(body);
-                                console.log(error);
-                                console.log(response);
+                                ////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
 						}
 					);
                 }
@@ -282,7 +286,7 @@ module.exports = function(app, express) {
 					// email subject line
 					vm.userData.subject = "Sorry, your VIP Account has been Rejected";
 
-					console.log("Sending account rejection email");
+					////console.log("Sending account rejection email");
 
 					// deploy email
 					request.post(
@@ -290,13 +294,13 @@ module.exports = function(app, express) {
 						{ form: { vm } },
 						function (error, response, body) {
 							if (!error && response.statusCode == 200) {
-								console.log(body);
-                                console.log(error);
-                                console.log(response);
+								////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
 							}
-                                console.log(body);
-                                console.log(error);
-                                console.log(response);
+                                ////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
 						}
 					);                    
                 }
@@ -333,7 +337,7 @@ module.exports = function(app, express) {
 					// email subject line
 					vm.userData.subject = "Profile update request from " + profile.firstName + " " + profile.lastName;
 
-					console.log("Sending PI approval email for userType update request");
+					////console.log("Sending PI approval email for userType update request");
 
 					// deploy email
 					request.post(
@@ -341,13 +345,13 @@ module.exports = function(app, express) {
 						{ form: { vm } },
 						function (error, response, body) {
 							if (!error && response.statusCode == 200) {
-								console.log(body);
-                                console.log(error);
-                                console.log(response);
+								////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
 							}
-                                console.log(body);
-                                console.log(error);
-                                console.log(response);
+                                ////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
 						}
 					);
 				}
@@ -355,10 +359,10 @@ module.exports = function(app, express) {
         })
 
         .get(function (req, res) {
-			console.log('POST /profile');
+			////console.log('POST /profile');
             Profile.find({email:req.user.email}, function (err, profile) {
                 if(err) {
-                    console.log(err);
+                    ////console.log(err);
                     return res.send('error');
                 }
                 return res.json(profile);
@@ -369,10 +373,10 @@ module.exports = function(app, express) {
 	
 	apiRouter.route('/profile/:email')	
 		.get(function (req, res) {
-			console.log('POST /profile/:email ');
+			////console.log('POST /profile/:email ');
             Profile.find({email:req.user.email}, function (err, profile) {
                 if(err) {
-                    console.log(err);
+                    ////console.log(err);
                     return res.send('error');
                 }
                 return res.json(profile);
@@ -382,14 +386,14 @@ module.exports = function(app, express) {
 		
 	apiRouter.route('/profilestudent/:id')	
 		.get(function (req, res) {
-			console.log('POST /profilestudent/:id ');
+			////console.log('POST /profilestudent/:id ');
 			var id = req.params.id;
             Profile.findOne({_id: id}, function (err, profile) {
                 if(err) {
-                    console.log(err);
+                    ////console.log(err);
                     return res.send('error');
                 }
-				console.log(profile);
+				////console.log(profile);
                 return res.json(profile);
             });
 
@@ -398,7 +402,7 @@ module.exports = function(app, express) {
 	//Set joinedproject to false
 	apiRouter.route('/profilejoinedproject/:id')	
 		.put(function (req, res) {
-			console.log("PUT /profilejoinedproject/:id ");
+			////console.log("PUT /profilejoinedproject/:id ");
 			var id = req.params.id;
 			Profile.findOne({_id: id}, function(err, profile){
 				if (err){
@@ -407,7 +411,7 @@ module.exports = function(app, express) {
 				}
 				else if (profile){
 					profile.joined_project = false;
-					console.log("SUCCESS!!")
+					////console.log("SUCCESS!!")
 					profile.save(function(err){
 						if(err)  {
 							res.status(400);
@@ -423,10 +427,10 @@ module.exports = function(app, express) {
 
 	apiRouter.route('/reviewuser/')
 		.get(function (req, res) {
-			console.log('POST /reviewuser');
+			////console.log('POST /reviewuser');
             Profile.find({}, function (err, profile) {
 				if(err) {
-                    console.log(err);
+                    ////console.log(err);
                     return res.send('error');
                 }
                 return res.json(profile);
@@ -436,8 +440,8 @@ module.exports = function(app, express) {
 	//route for adding a member to a project(after approval)
 		apiRouter.route('/reviewusers/:userid/:pid')
 		.put(function (req, res) {
-			console.log("PUT /reviewusers/:userid/:pid");
-			console.log(req.params);
+			////console.log("PUT /reviewusers/:userid/:pid");
+			////console.log(req.params);
 			var id = req.params.userid;
 			var pid = req.params.pid;
 			Profile.findOne({_id: id}, function(err, profile){

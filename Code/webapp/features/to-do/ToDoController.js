@@ -2,9 +2,9 @@
     angular.module('toDoModule')
     .controller('toDoController', toDoController);
 
-    toDoController.$inject = ['ToDoService','ProfileService'];
+    toDoController.$inject = ['$rootScope','$scope','ToDoService','ProfileService'];
 
-    function toDoController (ToDoService,ProfileService) {
+    function toDoController ($rootScope,$scope,ToDoService,ProfileService) {
 		
         var vm = this;
 		vm.done = false;
@@ -13,11 +13,14 @@
         vm.userCount = 0;
         vm.projectCount = 0;
         vm.studentCount = 0;
+		
+		
 
         vm.markedAsRead = function(todo) {
             ToDoService.markAsRead(todo._id)
                 .then(function(data) {
                     todo.read = true;
+					$rootScope.$broadcast('refresh');
                 });
             if(todo.type == 'personal') vm.personalCount--;
 
@@ -27,7 +30,8 @@
 
             else if(todo.type == 'student') vm.studentCount--;
 			
-			//$route.reload();
+			
+			
         };
 
         function getToDo (profile) {

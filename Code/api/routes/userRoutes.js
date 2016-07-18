@@ -108,20 +108,20 @@ module.exports = function (app, express) {
                 text: text
             };
 
-            console.log(mailOptions);
+            //////console.log(mailOptions);
 
             // send mail with defined transport object
 			transporter.sendMail(mailOptions, function(error, info)
 			{
 				if(error) {
-					return console.log(error);
+					return //////console.log(error);
 				}
             });
 	})
 
     userRouter.route('/nodeemail').post(function(req, res)
 	{
-			console.log("NodeEmailer Called. We should be sending 2 emails");
+			//////console.log("NodeEmailer Called. We should be sending 2 emails");
 
             var recipient = req.body.recipient;
             var text = req.body.text;
@@ -147,13 +147,13 @@ module.exports = function (app, express) {
                 text: text
             };
 
-            console.log(mailOptions);
+            //////console.log(mailOptions);
 
             // send mail with defined transport object
 			transporter.sendMail(mailOptions, function(error, info)
 			{
 				if(error) {
-					return console.log(error);
+					return //////console.log(error);
 				}
             });
 
@@ -165,22 +165,22 @@ module.exports = function (app, express) {
                 text: text2
             };
 
-            console.log(mailOptions2);
+            //////console.log(mailOptions2);
 
             // send mail with defined transport object
             transporter.sendMail(mailOptions2, function(error, info){
                 if(error) {
-                    return console.log(error);
+                    return //////console.log(error);
                 }
             });
 	})
 	
 	userRouter.route('/users/email/:email').get(function(req,res) {
-		console.log("GET /users/email/:email");
-		console.log(req.params.email);
+		//////console.log("GET /users/email/:email");
+		//////console.log(req.params.email);
 		User.findOne({email: req.params.email}, function(err, user) {
 			if (err) {
-				console.log("Error: " + err);
+				//////console.log("Error: " + err);
 			}
 			else {
 				if (user) {
@@ -191,22 +191,22 @@ module.exports = function (app, express) {
 	});
 	
 	userRouter.route('/users/:id').delete(function (req, res) {
-			console.log("DELETE /users/:id");
+			//////console.log("DELETE /users/:id");
             User.remove({_id: req.params.id}, function(err, user){
             if(err)
                 return res.send(err);
                 res.json({message: 'successfully deleted!'});
             });
 	}).get(function(req,res) {
-		console.log("GET /users/:id");
-		console.log(req.params.id);
+		//////console.log("GET /users/:id");
+		//////console.log(req.params.id);
 		User.findOne({_id : req.params.id}, function(err, user) {
 			if (err) {
-				console.log("Error: " + err);
+				//////console.log("Error: " + err);
 			}
 			else {
 				if (user) {
-					console.log(user);
+					//////console.log(user);
 					return res.json(user);
 				}
 			}
@@ -260,7 +260,7 @@ module.exports = function (app, express) {
                 res.json({success: true, objectId: user._id, message: 'User account created please verify the account via the registered email.' });
             });
         }).put(function(req,res) {
-			console.log("PUT UPDATE USER");
+			//////console.log("PUT UPDATE USER");
 			User.findOne({'email': req.body.user.email}, function(err, user) {
 				if (user) {
 					 user.firstName     = req.body.user.firstName;  // set the users name (comes from the request)
@@ -274,11 +274,11 @@ module.exports = function (app, express) {
 					 user.college      = req.body.user.college;   // sets the users college
 					 user.department      = req.body.user.department;  // sets the users college
 					 user.joined_project = req.body.user.joined_project;
-					 console.log("User: " + req.body.user);
-					 console.log("Joined project: " + user.joined_project);
+					 //////console.log("User: " + req.body.user);
+					 //////console.log("Joined project: " + user.joined_project);
 					 user.save(function(err) {
 							if (err) {
-								console.log("Error updating user.");
+								//////console.log("Error updating user.");
 							}
 					 });
 				}

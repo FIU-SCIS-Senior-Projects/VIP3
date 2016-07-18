@@ -20,7 +20,6 @@ angular.module('mainApp', [
 	'reviewProjectProposals',
 	'admin',
     'MessengerController',
-    'flow'
 ]).filter('selectedTags', function() {
     return function(users, members)
     {

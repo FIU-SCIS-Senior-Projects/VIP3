@@ -20,7 +20,7 @@ app.set("host", "vip.fiu.edu");
 //connect to mongodb
 mongoose.connect(config.database);
 mongoose.connection.on('error', function(err){
-	console.log('Error: could not connect to MongoDB.');
+	//console.log('Error: could not connect to MongoDB.');
 });
 
 require('./api/config/passport')(passport,app);
@@ -72,10 +72,10 @@ app.get('/checklogin',function(req,res) {
 
 //home page
 app.get('*', function (req, res) {
-	console.log(req.user);
+	//console.log(req.user);
 	res.sendFile(path.join(__dirname + '/webapp/index.html'));
 });
 
 //start the server
 app.listen(config.port);
-console.log('Express router listening on port: ' + config.port);
+//console.log('Express router listening on port: ' + config.port);

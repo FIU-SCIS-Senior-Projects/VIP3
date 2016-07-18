@@ -17,9 +17,9 @@ module.exports = function (app, express) {
 
                 if (record && record._id) {
                     mailingService.sendPinRecoveryCode(record._id, function () {
-                        console.log('mail sent')
+                        //console.log('mail sent')
                     }, function () {
-                        console.log('error in mail sending')
+                        //console.log('error in mail sending')
                     })
                 }
                 var object = { validated: false }
@@ -54,7 +54,7 @@ module.exports = function (app, express) {
 		var hash = null;
 		bcrypt.hash(d.password, null, null, function (err, h) {
 			if (err) {
-				console.log("Update Password Error");
+				//console.log("Update Password Error");
 				res.json({ validated: false });
 			}
 			hash = h;

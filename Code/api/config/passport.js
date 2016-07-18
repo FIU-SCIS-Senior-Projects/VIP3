@@ -37,7 +37,7 @@ module.exports = function(passport,app) {
 				if (!user.piApproval) {
 					return done(null, false, {message: 'Account must be approved by PI' });
 				}
-				console.log("Logging in...");
+				////console.log("Logging in...");
                 return done(null, user);
             });
         }
@@ -59,25 +59,25 @@ module.exports = function(passport,app) {
                        return done(err);
                    if (user) {
                        // if a user is found, log them in
-                       //console.log('found user' , user);
+                       //////console.log('found user' , user);
 					   /*if (!user.piApproval) {
 						   return done(null, false, {message: 'You must be PI approved.' });
 					   }
 					   if (!user.verifiedEmail) {
 						   return done(null, false, {message: 'You must be PI approved.' });
 					   }*/
-					   console.log("Found user");
+					   ////console.log("Found user");
                        return done(null, user);
                    }
                    else {
 					   
 					   User.findOne({'email': profile.emails[0].value}, function(err, user) {
 							if (err) {
-								console.log("Error: " + err);
+								////console.log("Error: " + err);
 								return done(err); 
 							}
 							if (!user) {
-								   console.log("User not found.");
+								   ////console.log("User not found.");
 								   // if the user isnt in our database, create a new user
 								   var newUser = new User();
 								   // set all of the relevant information.
@@ -97,7 +97,7 @@ module.exports = function(passport,app) {
 								   newUser.save(function (err)
 								   {
 									  if (err)
-										console.log("Error: " + err);
+										////console.log("Error: " + err);
 									   
 														   
 									   return done(null, newUser);
@@ -109,9 +109,9 @@ module.exports = function(passport,app) {
 								user.google.token = token;
 								user.google.name = profile.displayName;
 								user.google.email = profile.emails[0].value;
-								console.log("Email: " + user.email);
+								////console.log("Email: " + user.email);
 								User.findOneAndUpdate({'email': user.email}, user, function(err) {
-									console.log("Error: " + err);
+									////console.log("Error: " + err);
 								});
 								return done(null, user);
 							}

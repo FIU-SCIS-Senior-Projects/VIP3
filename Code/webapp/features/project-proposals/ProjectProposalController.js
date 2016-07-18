@@ -141,7 +141,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             var name = $scope.fixedColleges[school]['name']
             var fixedNames = name.split(' ').join('_');
             fixedNames = fixedNames.split('&').join('and');
-            //console.log(fixedNames);
+            ////console.log(fixedNames);
             $scope.fixedColleges[school]['name'] = fixedNames;
         };
 

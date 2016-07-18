@@ -24,56 +24,173 @@
         function loadProfileData(){
             ProfileService.loadProfile().then(function(data){
                 vm.profile = data;
-                //console.log(vm.profile.userType);
+                ////console.log(vm.profile.userType);
                 currRank = vm.profile.userType;
             });
         }
 
         // save changes to profile
 		function updateProfile () {
+			
+			
 
 			var obj = document.getElementById('profileImage');
 			if (obj.files.length == 0) 
 			{
-				console.log("Do nothing");
+				
+				var obj2 = document.getElementById('profileResume');
+					
+					if (obj2.files.length == 0) 
+					{
+						ProfileService.saveProfile(vm.profile).then(function(data)
+						{
+						
+							// user is trying to change the userType, which may need approval
+							if (vm.profile.userType != currRank)
+							{
+								// however, Pi/CoPi/Coordinators can update the profile without approval
+								if (vm.profile.isSuperUser)
+								{
+									success_msg();
+								}
+
+								// otherwise, this requested userType change needs approval
+								else
+								{
+									success_msg_student();
+								}
+							}
+
+							// changing anything else doesnt need approval
+							else
+							{
+								success_msg();
+							}
+						});
+					}
+					else 
+					{
+						var f2 = obj2.files[0];
+						var r2 = new FileReader();
+						r2.onloadend = function(e2)
+						{
+							var dataURL2 = e2.target.result;
+							vm.profile.resume = dataURL2;
+							ProfileService.saveProfile(vm.profile).then(function(data)
+							{
+							
+								// user is trying to change the userType, which may need approval
+								if (vm.profile.userType != currRank)
+								{
+									// however, Pi/CoPi/Coordinators can update the profile without approval
+									if (vm.profile.isSuperUser)
+									{
+										success_msg();
+									}
+
+									// otherwise, this requested userType change needs approval
+									else
+									{
+										success_msg_student();
+									}
+								}
+
+								// changing anything else doesnt need approval
+								else
+								{
+									success_msg();
+								}
+							});
+						}
+						r2.readAsDataURL(f2);
+					}
 			}
 			else 
 			{
-				console.log("Did something");
+				
+				
+				
+				
 				var f = obj.files[0];
 				var r = new FileReader();
 				r.onloadend = function(e)
 				{
+					
 					var dataURL = e.target.result;
 					vm.profile.image = dataURL;
-					r.readAsDataURL(f);
+					
+					
+					var obj2 = document.getElementById('profileResume');
+					
+					if (obj2.files.length == 0) 
+					{
+						ProfileService.saveProfile(vm.profile).then(function(data)
+						{
+						
+							// user is trying to change the userType, which may need approval
+							if (vm.profile.userType != currRank)
+							{
+								// however, Pi/CoPi/Coordinators can update the profile without approval
+								if (vm.profile.isSuperUser)
+								{
+									success_msg();
+								}
+
+								// otherwise, this requested userType change needs approval
+								else
+								{
+									success_msg_student();
+								}
+							}
+
+							// changing anything else doesnt need approval
+							else
+							{
+								success_msg();
+							}
+						});
+					}
+					else {
+						var f2 = obj2.files[0];
+						var r2 = new FileReader();
+						r2.onloadend = function(e2)
+						{
+							var dataURL2 = e2.target.result;
+							vm.profile.resume = dataURL2;
+							ProfileService.saveProfile(vm.profile).then(function(data)
+							{
+							
+								// user is trying to change the userType, which may need approval
+								if (vm.profile.userType != currRank)
+								{
+									// however, Pi/CoPi/Coordinators can update the profile without approval
+									if (vm.profile.isSuperUser)
+									{
+										success_msg();
+									}
+
+									// otherwise, this requested userType change needs approval
+									else
+									{
+										success_msg_student();
+									}
+								}
+
+								// changing anything else doesnt need approval
+								else
+								{
+									success_msg();
+								}
+							});
+						}
+						r2.readAsDataURL(f2);
+					}
+					
+					
 				}
+				r.readAsDataURL(f);
 			}
-			ProfileService.saveProfile(vm.profile).then(function(data)
-			{
 			
-				// user is trying to change the userType, which may need approval
-				if (vm.profile.userType != currRank)
-				{
-					// however, Pi/CoPi/Coordinators can update the profile without approval
-					if (vm.profile.isSuperUser)
-					{
-						success_msg();
-					}
-
-					// otherwise, this requested userType change needs approval
-					else
-					{
-						success_msg_student();
-					}
-				}
-
-				// changing anything else doesnt need approval
-				else
-				{
-					success_msg();
-				}
-			});
 		}
 
 
