@@ -57,14 +57,18 @@
         vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
 		
 		vm.getProjectTitle = function (email) {
-			var results = vm.projects.filter(function(project) {
-				return project.members.includes(email)
-			});
-			if (results.length >= 1) {
-				return "Member of " + results[0].title + ".";
-			}
-			else {
-				return "Hasn't joined any project!";
+			if (email) {
+				if (vm.projects) {
+					var results = vm.projects.filter(function(project) {
+						return project.members.includes(email)
+					});
+					if (results.length >= 1) {
+						return "Member of " + results[0].title + ".";
+					}
+					else {
+						return "Hasn't joined any project!";
+					}
+				}
 			}
 		}
 		
