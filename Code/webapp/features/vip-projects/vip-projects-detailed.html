@@ -45,7 +45,7 @@
                         <li class="student-in-list">
                             <a href="/#/userprofile/{{vm.data.owner}}">{{vm.data.owner_name}}</a>
                             <a href="/#/sendmessage/{{vm.data.owner_name}}">
-                            <button ng-show=" vm.profile.userType == 'Pi/CoPi'" class="btn btn-primary msg-btn">Message</button>
+                           <i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
                             </a>
                         </li>
                     </ul>
@@ -56,7 +56,8 @@
                         <li class="student-in-list">
                         <a ng-click="vm.redirect($index)">{{student}}</a>
                         <a href="/#/sendmessage/{{student}}">
-                        <button ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" class="btn btn-primary msg-btn">Message</button>
+                        <i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
+
                         </a>
                         </li>
                     </ul>

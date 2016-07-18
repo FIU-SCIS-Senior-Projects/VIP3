@@ -6,6 +6,10 @@
 	    <span ng-hide="header.count < 1" class="badge todo-count">{{header.count}}</span>
     </a>
 
+    <a class="task-icons" ng-show="header.user_type == 'Pi/CoPi' && header.logged_in" ui-sref="admin">
+		  <i style="color: #081E3F; cursor: pointer;" class="fa fa-wrench" aria-hidden="true"></i>
+	</a>
+
 	<a class="task-icons" ng-hide="header.logged_in" ui-sref="login">
 		  <button type="button" class="btn btn-primary log-btn">Log In</button>
 	</a>
