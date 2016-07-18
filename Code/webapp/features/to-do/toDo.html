@@ -15,11 +15,11 @@
         <div class="panel-heading">
             <h4><b>General Messages</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="personal in todo.list | filter:emptyOrNull | filter: personal.type='personal' | filter: personal.read='false' | orderBy: todo.time">
+        <ul class="list-group" ng-repeat="personal in todo.list | filter:emptyOrNull | filter: personal.type='personal' | filter: personal.read='false' | orderBy: todo.time | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{personal.link}}" ng-click="todo.markedAsRead(personal)">
-                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{personal.time}}: </strong> <strong>{{personal.todo}}</strong>
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{personal.time | date:'medium'}}: </strong> <strong>{{personal.todo}}</strong>
 					
                 </a>
 				<strong>Mark As Read: </strong>
@@ -32,11 +32,11 @@
         <div class="panel-heading">
             <h4><b>User Account Registration Review</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="user in todo.list | filter:emptyOrNull |  filter: user.type='user' | filter: user.read='false' | orderBy: todo.time">
+        <ul class="list-group" ng-repeat="user in todo.list | filter:emptyOrNull |  filter: user.type='user' | filter: user.read='false' | orderBy: todo.time | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{user.link}}" ng-click="todo.markedAsRead(user)">
-                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{user.time}}: </strong> <strong>{{user.todo}}</strong>
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{user.time | date:'medium'}}: </strong> <strong>{{user.todo}}</strong>
 					
                 </a>
 				<strong>Mark As Read: </strong>
@@ -49,11 +49,11 @@
         <div class="panel-heading">
             <h4><b>Project Proposal Review</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="project in todo.list | filter:emptyOrNull | filter: project.type='project' | filter: project.read='false' | orderBy: todo.time">
+        <ul class="list-group" ng-repeat="project in todo.list | filter:emptyOrNull | filter: project.type='project' | filter: project.read='false' | orderBy: todo.time | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{project.link}}" ng-click="todo.markedAsRead(project)">
-                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{project.time}}: </strong> <strong>{{project.todo}}</strong>
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{project.time | date:'medium'}}: </strong> <strong>{{project.todo}}</strong>
 					
                 </a>
 				<strong>Mark As Read: </strong>
@@ -66,11 +66,11 @@
         <div class="panel-heading">
             <h4><b>Student Application Review</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="student in todo.list | filter:emptyOrNull | filter: student.type='student' | filter: student.read='false' | orderBy: todo.time">
+        <ul class="list-group" ng-repeat="student in todo.list | filter:emptyOrNull | filter: student.type='student' | filter: student.read='false' | orderBy: todo.time | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{student.link}}" ng-click="todo.markedAsRead(student)">
-                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{student.time}}: </strong><strong>{{student.todo}}</strong>
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{student.time | date:'medium'}}: </strong><strong>{{student.todo}}</strong>
 					
                 </a>
 				<strong>Mark As Read: </strong>
