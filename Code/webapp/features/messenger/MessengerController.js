@@ -152,7 +152,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                     if (my_id != null)
                     {
                          //alert(my_id + " vs " + obj.firstName + " " + obj.lastName);
-                         if (my_id == (obj.firstName + " " + obj.lastName))
+                         if (my_id == obj.email)
                          {
                             //alert("found id " + my_id + " email is " + obj.email);
                             $scope.usersToMessage = obj.email;
@@ -481,8 +481,9 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                     // if param with user's name is specified, cross reference the name to find the users email in the database
                     if (my_id != null)
                     {
+                        //alert("found param " + my_id);
                          //alert(my_id + " vs " + obj.firstName + " " + obj.lastName);
-                         if (my_id == (obj.firstName + " " + obj.lastName))
+                         if (my_id == obj.email)
                          {
                             //alert("found id " + my_id + " email is " + obj.email);
                             $scope.usersToMessage = obj.email;
@@ -534,7 +535,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
        function sendMessage(usersToMessage, MessageSubject, MessageBody)
        {
             // build email URL
-            var EmailURL = "http://vip.fiu.edu:8001/#/sendmessage/" + profile.firstName + "%20" + profile.lastName + "/" + "1/" + encodeURIComponent(MessageSubject.trim());
+            var EmailURL = "http://vip.fiu.edu:8001/#/sendmessage/" + profile.email + "/" + "1/" + encodeURIComponent(MessageSubject.trim());
            
             var email_msg = 
             {                
