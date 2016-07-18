@@ -11,6 +11,24 @@
 	
 	<span ng-show="todo.done">
 	
+	
+	<div ng-hide="todo.message < 1" class="panel panel-default">
+        <div class="panel-heading">
+            <h4><b>Email Messages</b></h4>
+        </div>
+        <ul class="list-group" ng-repeat="message in todo.list | filter:emptyOrNull | filter: message.type='message' | filter: message.read='false' | orderBy: todo.time | date:'medium'">
+            <li class="list-group-item">
+				
+                <a ng-href="{{message.link}}" ng-click="todo.markedAsRead(message)">
+                    <i class="fa fa-exclamation-circle red-text"></i> <strong> {{message.time | date:'medium'}}: </strong> <strong>{{message.todo}}</strong>
+					
+                </a>
+				<strong>Mark As Read: </strong>
+				<a ng-click="todo.markedAsRead(message)"><span class="glyphicon glyphicon-trash"></span></a>
+            </li>
+        </ul>
+    </div>
+	
     <div ng-hide="todo.personalCount < 1" class="panel panel-default">
         <div class="panel-heading">
             <h4><b>General Messages</b></h4>
