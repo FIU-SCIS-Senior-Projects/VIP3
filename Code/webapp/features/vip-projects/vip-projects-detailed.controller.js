@@ -17,6 +17,7 @@
         vm.deleteProject = deleteProject;
         vm.editProject = editProject;
 		vm.leaveProject = leaveProject;
+        vm.findProfile = findProfile;
 		vm.already_joined = null;
 		vm.not_signed_in = false;
 		vm.setVideo = function(src) {
@@ -29,14 +30,6 @@
           $location.path( path );
         };
         
-        //Note this data will not be here this will be in the db and the data will come from a get request
-        vm.disciplines = [
-            {'id':1, 'name':"Robotics"},
-            {'id':2, 'name':"Augmented Reality"},
-            {'id':3, 'name':"Virutal Reality"},
-            {'id':4, 'name':"Aerospace"},
-            {'id':5, 'name':"Big Data"},
-        ];
         
         //init();
         //function init(){
@@ -120,6 +113,11 @@
                  {
                      deny_msg();
                  }
+         }
+
+         function findProfile(name) {
+            console.log(name);
+            
          }
          
          function editProject() {

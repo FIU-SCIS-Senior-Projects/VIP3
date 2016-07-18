@@ -422,13 +422,14 @@ a {
     }
 
 .register {
-	background-color: rgba(172, 172, 172, 0.3);
+	background-color: #f1f1f1;
+    font-family: calibri, sans-serif;
 	width: 500px;
 	margin: 10px auto;
 	padding: 10px;
 	border-radius: 10px;
-	color: #444;
-	box-shadow: 0 0 20px 0 #000000;
+	color: #202020;
+	box-shadow: 3px 3px 5px #eee;
 }
 
 

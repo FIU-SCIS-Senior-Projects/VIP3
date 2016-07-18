@@ -95,7 +95,7 @@
 					                 type: "info",   
 					                 confirmButtonText: "Continue" ,
 						             }) 
-	                 	   		}, 1000);
+	                 	   		}, 3000);
 	                 	   });
 	                 });
 	            });
