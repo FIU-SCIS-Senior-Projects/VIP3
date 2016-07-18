@@ -18,7 +18,11 @@ angular.module('userService', [])
         userFactory.get = function(id) {
             return $http.get('/vip/users/'+ id);
         };
-
+		
+		userFactory.getByEmail = function(email) {
+			return $http.get('/vip/users/email/' + email);
+		}
+		
         // get all users
         userFactory.all = function() {
             return $http.get('/vip/users/');
