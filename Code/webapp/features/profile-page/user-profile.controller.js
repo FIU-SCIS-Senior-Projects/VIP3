@@ -11,6 +11,7 @@
     {
         var vm = this;
         vm.profile;
+        vm.image = "";
 		vm.updateProfile = updateProfile;
 		vm.destroyAccount = destroyAccount;
 		var currRank;
@@ -30,8 +31,24 @@
 
         // save changes to profile
 		function updateProfile () {
-			//saveProfile() needs to temporarily store the updated values the user wants
-			//console.log(vm.profile.userType);
+
+			var obj = document.getElementById('profileImage');
+			if (obj.files.length == 0) 
+			{
+				console.log("Do nothing");
+			}
+			else 
+			{
+				console.log("Did something");
+				var f = obj.files[0];
+				var r = new FileReader();
+				r.onloadend = function(e)
+				{
+					var dataURL = e.target.result;
+					vm.profile.image = dataURL;
+					r.readAsDataURL(f);
+				}
+			}
 			ProfileService.saveProfile(vm.profile).then(function(data)
 			{
 			

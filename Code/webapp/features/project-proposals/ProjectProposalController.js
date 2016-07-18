@@ -147,7 +147,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
         
         vm.title = "";
-        vm.image = ""
+        vm.image = "";
         vm.description = "";
         vm.disciplines = [];
         vm.editingMode = false;
