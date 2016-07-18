@@ -1,0 +1,26 @@
+
+	<div class="form-group2">
+        <h3 align="center"> Add User to Recipients List </h3>
+        <div class="form-group">
+        <table class="table">
+        <tr>
+            <th>
+                <b>Project:</b> <select class="form-control" ng-model="SelectedProject" ng-options="projects as projects.title for projects in vm.projects" value="{{vm.getStudents(SelectedProject)}}"></select>
+            </th>
+        </tr>
+        {{user.AllProjects.members}}
+        <tr>
+            <th>
+                <b>User:</b>
+                <select class="form-control" ng-model="SelectedUserEmail" ng-options="users for users in vm.studentsEmailInSelectedProjects"></select>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                    <button style= "width: 80px;" class="btn btn-primary" ng-click="vm.updateUsers(SelectedUserEmail)">Add</button>
+                    <button style= "width: 140px;" class="btn btn-primary" ng-click="vm.clearUsers()">Clear Recipients</button>
+            </th>
+        </tr>
+        </table>
+        </div>
+	</div>

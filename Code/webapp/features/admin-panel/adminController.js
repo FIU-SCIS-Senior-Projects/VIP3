@@ -9,9 +9,7 @@
     /* @ngInject */
     function adminCtrl($location,$window, $state, $scope, adminService, User, reviewStudentAppService, ProfileService, reviewRegService, reviewProfileService,ProjectService) {
         var vm = this;
-		
 
-		
 		ProfileService.loadProfile().then(function(data){
 					if (data) {
 						$scope.done = true;
@@ -58,6 +56,18 @@
 		
         vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
 		
+		vm.getProjectTitle = function (email) {
+			var results = vm.projects.filter(function(project) {
+				return project.members.includes(email)
+			});
+			if (results.length >= 1) {
+				return "Member of " + results[0].title + ".";
+			}
+			else {
+				return "Hasn't joined any project!";
+			}
+		}
+		
 		//Used for filters
 		vm.getRank = getRank;
 		vm.filteredrank; //Value changed by getRank function after a usertype is selected in filter
@@ -97,8 +107,6 @@
             }
 
         ];
-		
-		
 		
 		function getRank(usertype)
 		{
@@ -153,9 +161,34 @@
 		}
 		
 		//Filters users based on parameters
-		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank)
+		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank, SelectedProject, userproject)
 		{
 			vm.filteredusers = vm.allusers;
+			 // n^2
+            if (SelectedProject && userproject)
+            {
+                //alert("not null SelectedProject");
+                var studentsArray = [];
+                
+				vm.filteredusers.forEach(function (obj)
+				{
+                    SelectedProject.members.forEach(function (obj2)
+                    {
+                        //alert(obj.email);
+                        //alert(obj2);
+                        
+                        // user is in project we selected
+                        if (obj.email == obj2)
+                        {
+                            studentsArray.push(obj);
+                            //alert(obj.email);
+                        }
+                        
+                    });
+				});
+                
+                vm.filteredusers = studentsArray;
+            }
 			if (usertype && selectedusertype)
 			{
 				usertype = selectedusertype.name;
