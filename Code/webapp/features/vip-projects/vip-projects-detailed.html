@@ -44,7 +44,7 @@
                     <ul class="student-list">
                         <li class="student-in-list">
                             <a href="#">{{vm.data.owner_name}}</a>
-                            <a href="/#/sendmessage/{{vm.data.owner_name}}">
+                            <a href="/#/sendmessage/{{vm.data.owner_name}}/0/1">
                             <button ng-show=" vm.profile.userType == 'Pi/CoPi'" class="btn btn-primary msg-btn">Message</button>
                             </a>
                         </li>
@@ -55,7 +55,7 @@
                     <ul class="student-list" ng-repeat="student in vm.data.members_detailed track by $index">
                         <li class="student-in-list">
                         <a href="#">{{student}}</a>
-                        <a href="/#/sendmessage/{{student}}">
+                        <a href="/#/sendmessage/{{student}}/0/1">
                         <button ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" class="btn btn-primary msg-btn">Message</button>
                         </a>
                         </li>
