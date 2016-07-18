@@ -3,12 +3,12 @@
 
     angular
         .module('vip-projects')
-        .controller('viewProfileController', viewProfileController);
+        .controller('viewProfileController', viewProfile);
 
-    VIPProjectsDetailedCtrl.$inject = ['$sce','$location','$state', '$scope', '$stateParams', 'ProjectService', 'ProfileService','reviewStudentAppService','User','$window'];
+    viewProfile.$inject = ['$sce','$location','$state', '$scope', '$stateParams', 'ProjectService', 'ProfileService','reviewStudentAppService','User','$window'];
     /* @ngInject */
 
-    function viewProfileController($sce,$location, $state, $scope, $stateParams, ProjectService, ProfileService,reviewStudentAppService,User,$window){
+    function viewProfile($sce,$location, $state, $scope, $stateParams, ProjectService, ProfileService,reviewStudentAppService,User,$window){
     	var vm = this;
     	vm.profile = null;
 
