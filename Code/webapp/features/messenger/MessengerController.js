@@ -41,6 +41,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
 		vm.filterUsers = filterUsers;
 		vm.currentuserview;
 		vm.currentview = currentview;
+        vm.ShowDiv = ShowDiv;
 		
 		//Out of scope functions
 		vm.userinUnconfirmedfunc = userinUnconfirmedfunc;
@@ -54,6 +55,8 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
 		vm.projectinprojects;
 		vm.userinunconfirmed;
         vm.messageAllUsers = messageAllUsers;
+        
+        vm.SearchMessage = "Search for Contacts";
         
         my_id = $stateParams.user_id;
         
@@ -127,15 +130,34 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
         
         init();
         
-        function init () {            
+        function init ()
+        {            
             if (vm.users == null)
             {
                 loadUsers();
             }
-            
+
             //alert(vm.users);
+
+            loadProjects();
+        }
+        
+        // function to show/hide the filter
+        function ShowDiv ()
+        {            
+            if (document.getElementById("vlad_new").style.cssText == "height: 420px; overflow: hidden;")
+            {
+                console.log("the menu is showing, hide it " + document.getElementById("vlad_new").style.cssText);
+                document.getElementById("vlad_new").style = "display:none;";
+                vm.SearchMessage = "Search for Contacts";
+            }
             
-			loadProjects();
+            else
+            {
+                console.log("the menu is hidden, unhide it " + document.getElementById("vlad_new").style.cssText);
+                document.getElementById("vlad_new").style = "height: 420px; overflow:hidden;";
+                vm.SearchMessage = "Hide Search";
+            }
         }
         
 		//Load all user information
@@ -463,7 +485,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                 showCancelButton: true
             }, function () {
                 sendMessage(usersToMessage, MessageSubject, MessageBody);
-                $location.path('/sendmessage/0/1').replace();
+                $location.path('/sendmessage/0/1/').replace();
             }
             );
         };
@@ -545,7 +567,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                       
                 subject: "New Message from " + profile.firstName + " " + profile.lastName + "!",
                 
-                recipient2: "vlalo001@fiu.edu",
+                recipient2: curr_profile,
                 subject2: "You have sent a new message",
                 text2: "Your message to " + usersToMessage + " has been sent sucessfully. Thank you!"
             };
