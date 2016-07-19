@@ -31,6 +31,7 @@ module.exports = function(app, express) {
 				profile.google = req.body.google;
 				profile.image = req.body.image;
 				profile.resume = req.body.resume;
+				profile.modifying = req.body.modifying;
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
                 ////console.log("requested userType = " + profile.requested_userType);
@@ -313,7 +314,7 @@ module.exports = function(app, express) {
 				})
 
 				// user wants to update "Rank" or "userType", send PI an email to accept/reject the request
-				if (isUserTypeUpdateRequest)
+				if (isUserTypeUpdateRequest && !profile.modifying)
 				{
 					// init
 					var vm = {};
