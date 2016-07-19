@@ -420,7 +420,6 @@
 			});
 			});
 			}
-			
 		}
 		
 		function confirm_msg()

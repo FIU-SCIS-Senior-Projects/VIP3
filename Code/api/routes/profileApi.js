@@ -31,6 +31,7 @@ module.exports = function(app, express) {
 				profile.google = req.body.google;
 				profile.image = req.body.image;
 				profile.resume = req.body.resume;
+				profile.modifying = req.body.modifying;
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
                 ////console.log("requested userType = " + profile.requested_userType);
@@ -78,8 +79,22 @@ module.exports = function(app, express) {
                 // recipient email(s)
                 vm.userData.recipient = profile.email;
 
-                // define the message if a user has been approved
-                if (profile.isApproved || profile.google)
+               
+				
+				if (profile.modifying)
+				{
+				
+                    ////console.log("profile changes have been approved");
+                    // email body text
+                    vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\n"  + "An admin has changed your usertype. You can view your new profile information by visiting this URL: " + reviewDomain;
+
+                    // email subject line
+                    vm.userData.subject = "Profile Changes have been changed";
+					
+                }
+				
+				 // define the message if a user has been approved
+                else if (profile.isApproved || profile.google)
                 {
                     ////console.log("profile changes have been approved");
                     // email body text
@@ -89,6 +104,7 @@ module.exports = function(app, express) {
                     vm.userData.subject = "Profile Changes have been Approved";
 					
                 }
+				
                 
                 // define the message if a user has been rejected
                 else 
@@ -313,7 +329,7 @@ module.exports = function(app, express) {
 				})
 
 				// user wants to update "Rank" or "userType", send PI an email to accept/reject the request
-				if (isUserTypeUpdateRequest)
+				if (isUserTypeUpdateRequest && !profile.modifying)
 				{
 					// init
 					var vm = {};

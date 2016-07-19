@@ -24,6 +24,11 @@
 			
 			return $sce.trustAsResourceUrl(src);
 		}
+		
+		vm.getEmail = function(index) {
+			return vm.data.members[index];
+		}
+		
         vm.redirect = function(index) {
 			
 			User.getByEmail(vm.data.members[index]).then(function(res) {
