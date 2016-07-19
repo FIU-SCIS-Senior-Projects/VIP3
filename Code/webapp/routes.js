@@ -259,6 +259,9 @@ angular.module('routes', ['ui.router'])
 			.state('loginErrorEmail', {
                 url: '/login/error_email',
                 templateUrl: 'features/login/loginEmail.html'
+            }).state('loginErrorNon', {
+                url: '/login/error_non',
+                templateUrl: 'features/login/loginNon.html'
             })
 
 			.state('reviewuser', {
@@ -341,7 +344,7 @@ angular.module('routes', ['ui.router'])
             })
 
             .state('viewProfile', {
-                url: '/userprofile/:user_id',
+                url: '/userprofile/:user_id/:project_id',
                 templateUrl: 'features/view-profile/view-profile.html',
                 controller: 'viewProfileController',
                 controllerAs: 'vm'

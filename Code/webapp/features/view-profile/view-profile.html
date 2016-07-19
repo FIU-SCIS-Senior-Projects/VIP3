@@ -1,4 +1,5 @@
-<div class="register">
+<div ng-hide="vm.done"><center><img src="img/loading.gif" width="250px" height="250px"/></center></div>
+<div class="register" ng-if="vm.done">
 	<h3 align="center"> {{vm.profile.firstName}} {{vm.profile.lastName}}'s Profile </h3>
 	<form name="Profile">
 		<div style = "text-align: center;">

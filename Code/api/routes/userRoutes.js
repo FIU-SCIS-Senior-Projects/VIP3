@@ -30,6 +30,9 @@ module.exports = function (app, express) {
 		else if (error == 'Account must be verified') {
 			res.redirect('/#/login/error_email');
 		}
+		else if (error == 'Must be FIU.EDU for Gmail login.') {
+			res.redirect('/#/login/error_non');
+		}
 		else {
 			res.redirect('/#/login/error_pi');
 		}
