@@ -4,13 +4,15 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
 		var profile;
         var curr_profile;
 		var vm = this;
-
+        vm.userTypeNew;
         
 		ProfileService.loadProfile().then(function(data){
             if (data) {
                 $scope.done = true;
                 profile = data;
                 curr_profile = data.email;
+                vm.userTypeNew = data.userType;
+                //alert(vm.userTypeNew);
                 if (profile.userType == "Student") {
                     //$location.path("/");
                     //$location.path('/').replace();
@@ -19,7 +21,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
             else {
                 $scope.done = true;
                 profile = null;
-                //$location.path("login");
+                $location.path("login");
                 //$location.path('login').replace();
             }
 		});

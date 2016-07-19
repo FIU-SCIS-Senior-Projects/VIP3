@@ -3,14 +3,14 @@
     <center><h2>User Messaging Form</h2></center>
 	<p style="color:orange;"><strong>{{result}}</strong></p>
 
-    <button id="searchbutton" type="button" style= "width: 180px;" name="answer" class="btn btn-primary" ng-click="vm.ShowDiv()"/>{{vm.SearchMessage}}</button><br><br>
+    <button ng-show="vm.userTypeNew == 'Pi/CoPi'" id="searchbutton" type="button" style= "width: 180px;" name="answer" class="btn btn-primary" ng-click="vm.ShowDiv()"/>{{vm.SearchMessage}}</button><br><br>
         <div id="vlad_new" class="row" style="display:none;">
             <div class="col-md-4 panel panel-default" style="height: 420px;">
 
             <table class="table">
             <tr>
                 <th>
-                    <b>Filter Users: 
+                    <b>Filter Users:
                     <p><input type="checkbox" ng-model="usertype">UserType:<select class="form-control" ng-model="selectedusertype" ng-options="typerank as typerank.name for typerank in vm.typeranks" value="{{vm.getRank(selectedusertype)}}"></select></input></p>
                     <p><input type="checkbox" ng-model="userrank">UserRank:<select class="form-control" ng-model="selecteduserrank" ng-options="rank for rank in vm.filteredrank"></select></input></p>
                     <p><input type="checkbox" ng-model="userproject">Project:<select class="form-control" ng-model="selecteduserproject" ng-options="projects as projects.title for projects in vm.projects" value="{{vm.getStudents(SelectedProject)}}"></select></input></p>
