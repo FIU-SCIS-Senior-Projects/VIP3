@@ -1,7 +1,7 @@
     <h3 align="center"> Review Projects Proposals </h3>
             <table class="table">
 			<tr>
-			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td>
+			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td><td><label>Min/Max Students</label></td>
 			<td><label>Approve</label></td><td><label>Reject</label></td>
 			</tr>
 			<tr ng-repeat="project in vm.projects | filter:{ status: 'pending' }">
@@ -9,6 +9,7 @@
 			<td><input type="text" class="form-control projects" value={{project.description}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.owner_name}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.owner_email}} readonly></input></td>
+			<td><input type="text" class="form-control projects" value={{project.firstSemester}}/{{project.maxStudents}} readonly></input></td>
 			<td>
             <div class="text-center">
                 <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project._id,project.owner, project.owner_name, project.title,project.owner_email,project.owner_rank, project.description, project.image, project.term, project.firstSemester, project.maxStudents)">
@@ -43,7 +44,7 @@
     <h3 align="center"> Review <font color = 'red'>Modified</font> Projects </h3>
             <table class="table">
 			<tr>
-			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td>
+			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td><td><label>Min/Max Students</label></td>
 			<td><label>Approve</label></td><td><label>Reject</label></td>
 			</tr>
 			<tr ng-repeat="project in vm.projects | filter:{ status: 'modified' }">
@@ -51,6 +52,7 @@
 			<td><input type="text" class="form-control projects" value={{project.description}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.owner_name}} readonly></input></td>
 			<td><input type="text" class="form-control projects" value={{project.owner_email}} readonly></input></td>
+			<td><input type="text" class="form-control projects" value={{project.firstSemester}}/{{project.maxStudents}} readonly></input></td>
 			<td>
             <div class="text-center">
                 <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.AcceptProject(project._id,project.owner, project.owner_name, project.title,project.owner_email,project.owner_rank, project.description, project.image, project.term, project.firstSemester, project.maxStudents)">
@@ -86,7 +88,7 @@
     <h3 align="center">Review Project Proposal History </h3>
             <table class="table">
 			<tr>
-			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td><td><label>Action</label></td>
+			<td><label>Projects Name</label></td><td><label>Description</label></td><td><label>Proposer Name</label></td><td><label>Proposer Email</label></td><td><label>Min/Max Students</label></td><td><label>Action</label></td>
 			<td><label>Undo</label></td>
 			</tr>
 			<tr ng-repeat="log in vm.logs | filter:{ type: 'project' }">
@@ -94,6 +96,7 @@
 			<td><input type="text" class="form-control log" value={{log.description}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.fullName}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.studentemail}} readonly></input></td>
+			<td><input type="text" class="form-control log" value={{log.minStudents}}/{{log.maxStudents}} readonly></input></td>
 			<td><input type="text" class="form-control log" value={{log.action}} readonly></input></td>
 			<td>
             <div class="text-center">
