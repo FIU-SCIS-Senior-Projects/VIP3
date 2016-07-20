@@ -72,9 +72,16 @@ module.exports = function(app, express) {
 
 
 			if (isNaN(studentCount) || isNaN(maxStudentCount)) {
-				res.status(400);
-                return res.send("firstSemester invalid input or maxStudents invalid input.");
+				req.body.firstSemester = "256";
+				req.body.maxStudents = "256";
 			}
+			
+			
+			if (studentCount == 0 && maxStudentCount == 0) {
+				req.body.firstSemester = "256";
+				req.body.maxStudents = "256";
+			}
+			
 			if (studentCount < 0 || maxStudentCount < 0) {
 
 				res.status(400);

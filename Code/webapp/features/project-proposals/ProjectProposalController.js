@@ -1,6 +1,6 @@
 
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
-    .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams){
+    .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams, $rootScope){
         
 		var profile;
 		var vm = this;
@@ -10,13 +10,14 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 						$scope.done = true;
 						profile = data;
 						if (profile.userType != "Pi/CoPi") {
-							//$location.path("/");
+							
                             $location.path('/').replace();
 						}
 					}
 					else {
 						$scope.done = true;
 						profile = null;
+						$window.sessionStorage.setItem('lr', "project-proposal");
 						$location.path("login");
                         
 					}

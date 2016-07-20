@@ -51,7 +51,7 @@ module.exports = function (app, express) {
 
     app.post('/login',
         passport.authenticate('local', {
-            successRedirect: '/#/',
+            successRedirect: '/#/proxy',
             failureRedirect: '/status',
             failureFlash: true })
     );

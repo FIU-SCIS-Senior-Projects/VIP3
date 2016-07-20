@@ -28,12 +28,12 @@
 						|| project.members.includes(vm.current_user.email)) {
 							vm.profile = res.data;
 							if (!vm.profile) {
-								$state.go('home');
+								$state.go('viewProfile');
 							}
 							vm.done = true;
 						}
 						else {
-							$state.go('home');
+							$state.go('viewProfile');
 						}
 							
 							
@@ -41,7 +41,8 @@
 						
 					}
 					else {
-						$state.go('home');
+						$window.sessionStorage.setItem('lr', 'userprofile/' + $stateParams.user_id + '/' + $stateParams.project_id);
+						$state.go('login');
 					}
 				});
     		})
