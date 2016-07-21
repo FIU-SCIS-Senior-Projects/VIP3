@@ -174,9 +174,13 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         $scope.save = function save() {
 			
 			updateProjectOwner();
+            
+            $scope.project.video_url = ProcessVideoURL($scope.project.video_url);
+            console.log("req_video_url global " + $scope.project.video_url);
 	
 			var obj = document.getElementById('teamImage');
-			if (obj.files.length == 0) {
+			if (obj.files.length == 0)
+            {
 					
 				    $scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
 					if(!vm.editingMode){
@@ -215,6 +219,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					else {
 							
 							$scope.project.status='modified';
+                            console.log("req_video_url modified " + $scope.project.video_url);
 							$scope.project.id = $stateParams.id;
 							$scope.project.edited = true;
 							ProjectService.editProject($scope.project, $stateParams.id)
@@ -381,6 +386,25 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				$scope.project.owner_rank = profile.userType;
 				$scope.project.owner_name = profile.firstName + " " + profile.lastName;
 			}
+        }
+        
+        function ProcessVideoURL(VideoURL)
+        {
+            // format the youtube videos correctly
+            // input: https://www.youtube.com/watch?v=uQ_DHRI-Xp0
+            // output: https://www.youtube.com/v/watch?v=uQ_DHRI-Xp0
+            if (VideoURL.indexOf("youtube.com") > -1)
+            {
+                videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
+                updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
+                console.log("Filtered url: " + updatedVideoURL);
+                return updatedVideoURL;
+            }
+            
+            else
+            {
+                return VideoURL;
+            }
         }
 
     });

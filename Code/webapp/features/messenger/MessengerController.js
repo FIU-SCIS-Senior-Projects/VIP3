@@ -559,7 +559,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
        function sendMessage(usersToMessage, MessageSubject, MessageBody)
        {
             // build email URL
-            var EmailURL = "http://vip.fiu.edu:8001/#/sendmessage/" + profile.email + "/" + "1/" + encodeURIComponent(MessageSubject.trim());
+            var EmailURL = "http://vip.fiu.edu/#/sendmessage/" + profile.email + "/" + "1/" + encodeURIComponent(MessageSubject.trim());
            
             var email_msg = 
             {                
