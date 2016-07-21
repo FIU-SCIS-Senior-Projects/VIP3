@@ -61,8 +61,8 @@ module.exports = function(app, express) {
     //route get or adding projects to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
-
-
+			
+			console.log(req.body.faculty);
             req.body.term = currentTerm[0]._id;
 
 			//Validate to ensure student counts isn't negative or student count is greater than maximum.
@@ -129,6 +129,8 @@ module.exports = function(app, express) {
 				}
 				proj.edited = req.body.edited;
 				proj.status = req.body.status;
+				proj.faculty = req.body.faculty;
+				proj.mentor = req.body.mentor;
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
                 if(req.body.disciplines!=="") proj.disciplines = req.body.disciplines;
