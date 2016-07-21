@@ -1,4 +1,5 @@
-<div class="register">
+<div ng-hide="vm.done"><center><img src="img/loading.gif" width="250px" height="250px"/></center></div>
+<div class="register" ng-if="vm.done">
 	<h3 align="center"> {{vm.profile.firstName}} {{vm.profile.lastName}}'s Profile </h3>
 	<form name="Profile">
 		<div style = "text-align: center;">
@@ -58,7 +59,9 @@
 				<tr ng-if="vm.profile.resume">
 					<td colspan="4">
 						<label>Resume:</label>
+
 						<object height="500px" width="100%" data="{{vm.profile.resume}}" type="application/pdf" />
+
 					</td>
 				</tr>
 				<tr ng-if="!vm.profile.resume">

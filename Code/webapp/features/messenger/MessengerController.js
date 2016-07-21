@@ -2,22 +2,25 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
     .controller('MessengerController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams, MessengerService, reviewStudentAppService){
         
 		var profile;
+        var curr_profile;
 		var vm = this;
 
+        
 		ProfileService.loadProfile().then(function(data){
             if (data) {
                 $scope.done = true;
                 profile = data;
+                curr_profile = data.email;
                 if (profile.userType == "Student") {
                     //$location.path("/");
-                    $location.path('/').replace();
+                    //$location.path('/').replace();
                 }
             }
             else {
                 $scope.done = true;
                 profile = null;
                 //$location.path("login");
-                $location.path('login').replace();
+                //$location.path('login').replace();
             }
 		});
         
@@ -51,6 +54,13 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
 		vm.projectinprojects;
 		vm.userinunconfirmed;
         vm.messageAllUsers = messageAllUsers;
+        
+        my_id = $stateParams.user_id;
+        
+        // identifier for whether or not this is a reply to an email
+        is_a_reply = $stateParams.is_reply_to_email;
+        
+        OriginalSubject = $stateParams.original_subject;
 		
 		vm.currentUser = function(user) { vm.cuser = user; }
 		vm.currentProject = function(project) {  vm.cproject = project; }
@@ -97,14 +107,24 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
 
         ];
         
-        $scope.usersToMessage = "";
-        $scope.MessageSubject = "Type the Subject of your Message here";
-        $scope.MessageBody = "Type the Body of your Message here";
+        // if this is a reply to an email, add "Re: " and the original message subject, and update message body too
+        if (is_a_reply == 1)
+        {
+            //alert("this is a reply");
+            $scope.MessageSubject = "Re: " + OriginalSubject;
+            $scope.MessageBody = "Type your reply to '" + $scope.MessageSubject + "' here.";
+        }
         
-        my_id = $stateParams.user_id;
+        // not a reply, use standard text template
+        else
+        {
+            $scope.MessageSubject = "Type the Subject of your Message here.";
+            
+            // not a reply, so clear msg field, unless name specified
+            $scope.usersToMessage = "";
+            $scope.MessageBody = "Type the Body of your Message here.";
+        }
         
-        //alert(my_id);
-
         init();
         
         function init () {            
@@ -132,7 +152,7 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                     if (my_id != null)
                     {
                          //alert(my_id + " vs " + obj.firstName + " " + obj.lastName);
-                         if (my_id == (obj.firstName + " " + obj.lastName))
+                         if (my_id == obj.email)
                          {
                             //alert("found id " + my_id + " email is " + obj.email);
                             $scope.usersToMessage = obj.email;
@@ -443,18 +463,85 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                 showCancelButton: true
             }, function () {
                 sendMessage(usersToMessage, MessageSubject, MessageBody);
-                $location.path('/sendmessage/').replace();
+                $location.path('/sendmessage/0/1').replace();
             }
             );
         };
+        
+		//Load all user information
+		function loadUsers()
+		{
+			var tempArray2 = [];
+			MessengerService.loadAllUsers().then(function(data){
+				vm.allusers = data;
+				vm.allusers.forEach(function (obj)
+				{
+					tempArray2.push(obj);
+                    
+                    // if param with user's name is specified, cross reference the name to find the users email in the database
+                    if (my_id != null)
+                    {
+                        //alert("found param " + my_id);
+                         //alert(my_id + " vs " + obj.firstName + " " + obj.lastName);
+                         if (my_id == obj.email)
+                         {
+                            //alert("found id " + my_id + " email is " + obj.email);
+                            $scope.usersToMessage = obj.email;
+                            
+                            // grab the users ID
+                            usersToMessageId = obj._id;
+                         }
+                    }
+                    
+                    //alert(obj.email);
+					if (obj.verifiedEmail == false)
+					{
+						tempArray2.pop();
+					}
+				});
+				vm.users = tempArray2;
+			});
+        }
+        
+		//Load all user information
+		function DispatchAllToDoNotifications(EmailsList, MessageSender, MessageURL)
+		{
+			MessengerService.loadAllUsers().then(function(data)
+            {
+				vm.allusers = data;
+                
+                // iterate through all users
+				vm.allusers.forEach(function (obj)
+				{
+                    // if current users email is contained in our list of emails, we need to send this person a todo notification
+                    if (EmailsList.indexOf(obj.email) >= 0)
+                    {
+                        //tempArray2.push(obj);
+                        //alert("the email " + obj.email + " is in the list " + EmailsList);
+                       
+                        var todo = {owner: obj.userType , owner_id: obj._id, todo: obj.firstName + ", you have recieved a new message from " + MessageSender + "! It is very important that you reply as soon as possible.", type: "message", link: MessageURL };
+                        ToDoService.createTodo(todo).then(function(success)
+                        {
+                            // alert("todo added successfully");
+                        }, function(error)
+                        {
+                            // alert("failed to add todo");
+                        });
+                    }
+				});
+			});
+        }
 
        function sendMessage(usersToMessage, MessageSubject, MessageBody)
        {
+            // build email URL
+            var EmailURL = "http://vip.fiu.edu:8001/#/sendmessage/" + profile.email + "/" + "1/" + encodeURIComponent(MessageSubject.trim());
+           
             var email_msg = 
-            {
+            {                
                 recipient: usersToMessage,
                 text: "Dear User, you have recieved a new message!\n\n\nFrom: " + profile.firstName + " " + profile.lastName + "\n"
-                      + "Message Subject: " + MessageSubject + "\nMessage Text: " + MessageBody + "\n\nPlease reply to this message using the following form: http://vip.fiu.edu:8001/#/sendmessage/" + profile.firstName + "%20" + profile.lastName,
+                      + "Message Subject: " + MessageSubject + "\nMessage Text: " + MessageBody + "\n\nPlease reply to this message using the following form: " + EmailURL,
                       
                 subject: "New Message from " + profile.firstName + " " + profile.lastName + "!",
                 
@@ -464,5 +551,26 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
             };
             
             User.nodeEmail(email_msg);
+            
+            // send todo notifications to all of the users we just emailed, so they know to check their emails
+            DispatchAllToDoNotifications(usersToMessage, curr_profile, EmailURL);
+            
+            // after the email has been sent, add a to-do for all of the recipients
+            // need: all users ids by cross-referencing the target emails in usersToMessage to the database and extracting the ids
+            
+            /*
+            var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
+            ToDoService.createTodo(todo).then(function(success)  {
+                
+            }, function(error) {
+                
+            });
+            var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
+            ToDoService.createTodo(todo2).then(function(success)  {
+                
+            }, function(error) {
+                
+            });
+            */
         };
     });

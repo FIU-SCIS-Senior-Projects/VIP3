@@ -21,6 +21,7 @@
 					}
 					else {
 						$scope.done = true;
+						$window.sessionStorage.setItem('lr', 'adminpanel');
                         $location.path('login').replace();
 					}
 		});
@@ -420,7 +421,6 @@
 			});
 			});
 			}
-			
 		}
 		
 		function confirm_msg()

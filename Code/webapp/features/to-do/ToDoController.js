@@ -13,6 +13,7 @@
         vm.userCount = 0;
         vm.projectCount = 0;
         vm.studentCount = 0;
+		vm.message = 0;
 		
 		
 
@@ -29,6 +30,8 @@
             else if(todo.type == 'project') vm.projectCount--;
 
             else if(todo.type == 'student') vm.studentCount--;
+			
+			else if (todo.type == 'message') vm.message--;
 			
 			
 			
@@ -60,6 +63,8 @@
                         else if(vm.list[i].type == 'project') vm.projectCount++;
 
                         else if(vm.list[i].type == 'student') vm.studentCount++;
+						
+						else if (vm.list[i].type == 'message') vm.message++;
                     }
 	
 					vm.done = true;

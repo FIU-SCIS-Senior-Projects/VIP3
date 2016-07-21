@@ -19,7 +19,7 @@ angular.module('mainApp', [
 	'reviewStudentApp',
 	'reviewProjectProposals',
 	'admin',
-    'MessengerController',
+    'MessengerController'
 ]).filter('selectedTags', function() {
     return function(users, members)
     {
