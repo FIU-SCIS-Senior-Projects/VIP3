@@ -500,8 +500,6 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		//		$scope.project.owner_name = profile.firstName + " " + profile.lastName;
 		//	}
         //}
-
-        }
         
         function ProcessVideoURL(VideoURL)
         {
