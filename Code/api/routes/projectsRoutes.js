@@ -70,6 +70,8 @@ module.exports = function(app, express) {
 			var studentCount = Number(req.body.firstSemester);
 			var maxStudentCount = Number(req.body.maxStudents);
 
+            console.log(req.body.video_url);
+
 
 			if (isNaN(studentCount) || isNaN(maxStudentCount)) {
 				req.body.firstSemester = "256";
@@ -120,13 +122,16 @@ module.exports = function(app, express) {
     apiRouter.route('/projects/:id')
 
 
-        .put(function (req, res) {
+        .put(function (req, res)
+        {
 			//////console.log("PUT /projects/:id");
-            Project.findById(req.params.id, function(err, proj){
+            Project.findById(req.params.id, function(err, proj)
+            {
                 if(err) {
 					res.status(400);
 					res.send(err);
 				}
+                proj.video_url = req.body.video_url;
 				proj.edited = req.body.edited;
 				proj.status = req.body.status;
 				proj.faculty = req.body.faculty;
