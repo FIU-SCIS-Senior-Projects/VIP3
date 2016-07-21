@@ -23,15 +23,27 @@
         <div class="col-md-3 sidebar-container">
 
             <div class="col-md-12">
+                    <h4>Project Owners</h4>
+                <div>
+                    <ul class="student-list">
+                    <li class="student-in-list">
+                            <a href="/#/userprofile/{{vm.data.owner}}/{{vm.data._id}}">{{vm.data.owner_name}}</a>
+                            <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
+                           <i ng-if="vm.data.owner != null" class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
+                           <p ng-if="vm.data.owner == null" style="float: right;">{{vm.data.owner_email}}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                    <h4>Faculty</h4>
+                <div>
+                    <ul class="student-list">
+                    </ul>
+                </div>
                     <h4>Mentor</h4>
                 <div>
                     <ul class="student-list">
-                        <li class="student-in-list">
-                            <a href="/#/userprofile/{{vm.data.owner}}/{{vm.data._id}}">{{vm.data.owner_name}}</a>
-                            <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
-                           <i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
                     <h4>Students</h4>

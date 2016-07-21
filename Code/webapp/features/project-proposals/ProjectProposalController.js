@@ -173,14 +173,14 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
         $scope.save = function save() {
 			
-			$scope.project.owner = profile._id; // Set the project owner to the person who proposed the project used later for contacting the faculty member.
-			$scope.project.owner_email = profile.email;
-			$scope.project.owner_rank = profile.userType;
-			$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+			updateProjectOwner();
+	
 			var obj = document.getElementById('teamImage');
 			if (obj.files.length == 0) {
+					
 				    $scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
 					if(!vm.editingMode){
+							
 							$scope.project.status='pending';
 							ProjectService.createProject($scope.project)
 								.then(function(data){
@@ -212,7 +212,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
 								});
 					}
-					else{
+					else {
+							
 							$scope.project.status='modified';
 							$scope.project.id = $stateParams.id;
 							$scope.project.edited = true;
@@ -248,6 +249,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					}
 			}
 			else {
+				
 				var f = obj.files[0],
 				r = new FileReader();
 				r.onloadend = function(e){
@@ -255,7 +257,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
 					$scope.project.image = dataURL;
 					if(!vm.editingMode){
-							$scope.project.status='pending';
+							
+							$scope.project.status = 'pending';
 							ProjectService.createProject($scope.project)
 								.then(function(data){
 									success_msg();
@@ -368,4 +371,16 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             }
             );
         };
+
+        function updateProjectOwner()
+        {
+        	if($scope.project.owner_name == null && $scope.project.owner_email == null)
+			{
+				$scope.project.owner = profile._id; 
+				$scope.project.owner_email = profile.email;
+				$scope.project.owner_rank = profile.userType;
+				$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+			}
+        }
+
     });

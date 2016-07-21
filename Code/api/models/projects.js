@@ -18,6 +18,8 @@ var ProjectSchema = new Schema({
     advisors: [{name: String, school: String}],
     sponsors: [{name: String, detail: String}],
     majPrepInt: [String],
+    faculty_members: [String],
+    mentor_members: [String],
     members: [String],
 	members_detailed: [String],
     contact: [{name: String, phone: String, email: String, office: String}],
@@ -25,6 +27,8 @@ var ProjectSchema = new Schema({
 	edited: Boolean,
     image: String,
     video_url: String,
+    github_url: String,
+    drive_url: String,
     term: { type: String, default: 1 }
 });
 
