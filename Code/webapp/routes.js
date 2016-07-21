@@ -50,10 +50,7 @@ angular.module('routes', ['ui.router'])
                 templateUrl: 'features/login/loginTemplate.html'
             })
 
-            .state('checkLogin', {
-                url:'/checkLogin',
-                templateUrl: 'features/checkLogin/loginTemplate.html'
-            })
+           
 
 			.state('resetpassword', {
                 url:'/resetpassword',
@@ -126,6 +123,22 @@ angular.module('routes', ['ui.router'])
                 controllerAs: 'project',
                 params: { id: null }
             })
+			
+			.state('proxy', {
+                url:'/proxy',
+				templateUrl:'features/main-page/home.html',
+                controller: function($window) {
+					console.log("Hit Proxy!");
+					var url = $window.sessionStorage.getItem('lr');
+					if (url) {
+						$window.sessionStorage.setItem('lr', null);
+						$window.location = "/#/" + url;
+					}
+					else {
+						$state.go('/');
+					}
+				}
+            })
 
             // sensitive function
             .state('verifyuser', {
@@ -153,6 +166,7 @@ angular.module('routes', ['ui.router'])
                             else {
                                 //alert("found guest, redir to login");
                                 $location.path("login").replace();
+								$window.sessionStorage.setItem('lr', 'verifyuser/' + $stateParams.user_id);
                                 $window.location.href = "/#/login";
                             }
                         });
@@ -217,6 +231,7 @@ angular.module('routes', ['ui.router'])
                             else {
                                 //alert("User not authorized, redirecting to login");
                                 $location.path("login").replace();
+								$window.sessionStorage.setItem('lr', 'verifyProfile/' + $stateParams.user_id);
                                 $window.location.href = "/#/login";
                             }
                         });
@@ -259,6 +274,9 @@ angular.module('routes', ['ui.router'])
 			.state('loginErrorEmail', {
                 url: '/login/error_email',
                 templateUrl: 'features/login/loginEmail.html'
+            }).state('loginErrorNon', {
+                url: '/login/error_non',
+                templateUrl: 'features/login/loginNon.html'
             })
 
 			.state('reviewuser', {
@@ -290,6 +308,7 @@ angular.module('routes', ['ui.router'])
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
                                 $location.path('login');
+								$window.sessionStorage.setItem('lr', 'reviewuser');
                                 $window.location.href = "/#/login";
                             }
                         });
@@ -330,6 +349,7 @@ angular.module('routes', ['ui.router'])
                                 //$location.path("login");
                                 //alert("found guest, redir to login");
                                 $location.path('login');
+								$window.sessionStorage.setItem('lr', 'reviewproject');
                                 $window.location.href = "/#/login";
                             }
                         });
@@ -341,7 +361,7 @@ angular.module('routes', ['ui.router'])
             })
 
             .state('viewProfile', {
-                url: '/userprofile/:user_id',
+                url: '/userprofile/:user_id/:project_id',
                 templateUrl: 'features/view-profile/view-profile.html',
                 controller: 'viewProfileController',
                 controllerAs: 'vm'

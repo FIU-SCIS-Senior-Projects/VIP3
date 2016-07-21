@@ -155,6 +155,7 @@ angular
 			}
 			else {
 				$scope.done = true;
+				$window.sessionStorage.setItem('lr', 'studentConfirmation/');
 				$location.path('login');
 				
 			}

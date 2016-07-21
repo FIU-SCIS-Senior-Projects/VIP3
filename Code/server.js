@@ -14,7 +14,7 @@ var app			= express();
 
 
 //Set HOST 
-app.set("host", "vip.fiu.edu");
+app.set("host", "localhost:3000");
 
 
 //connect to mongodb
@@ -63,12 +63,9 @@ app.use('/todo', toDoRoutes);
 app.use('/support', supportRoutes);
 app.use('/log', logRoutes);
 
-app.get('/checklogin',function(req,res) {
-  if (req.user)
-    res.send(true);
-  else
-    res.send(false);
-});
+
+
+
 
 //home page
 app.get('*', function (req, res) {
