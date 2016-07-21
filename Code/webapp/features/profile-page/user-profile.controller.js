@@ -37,7 +37,6 @@
 			var obj = document.getElementById('profileImage');
 			if (obj.files.length == 0) 
 			{
-				
 				var obj2 = document.getElementById('profileResume');
 					
 					if (obj2.files.length == 0) 
@@ -107,10 +106,6 @@
 			}
 			else 
 			{
-				
-				
-				
-				
 				var f = obj.files[0];
 				var r = new FileReader();
 				r.onloadend = function(e)

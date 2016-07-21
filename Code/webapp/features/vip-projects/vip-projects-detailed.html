@@ -1,21 +1,5 @@
 <div class="row team-project">
-   <!--  <div class="projects-top-bar">
-        <div>
-            <h3></h3>
-        </div>
-        <div class="col">
-            <div class="col-sm-4 team-info">
-                <h5>{{vm.data.name}}</h5>
-            </div>
-            <div class="col-sm-8 sort-by-padding">
-                <label class=""><h5>Sort By:</h5></label>
-                <select class="btn btn-default dropdown-toggle top-margin">
-                    <option value="Title">Title</option>
-                    <option value="Start Year">Start Year</option>
-                </select>
-            </div>
-        </div>
-    </div> -->
+
         <div class="video-container" ng-show="vm.data.video_url">
 			
             <iframe width="600" height="350" ng-src="{{vm.setVideo(vm.data.video_url)}}"  frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
@@ -39,15 +23,27 @@
         <div class="col-md-3 sidebar-container">
 
             <div class="col-md-12">
+                    <h4>Project Owners</h4>
+                <div>
+                    <ul class="student-list">
+                    <li class="student-in-list">
+                            <a href="/#/userprofile/{{vm.data.owner}}/{{vm.data._id}}">{{vm.data.owner_name}}</a>
+                            <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
+                           <i ng-if="vm.data.owner != null" class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
+                           <p ng-if="vm.data.owner == null" style="float: right;">{{vm.data.owner_email}}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                    <h4>Faculty</h4>
+                <div>
+                    <ul class="student-list">
+                    </ul>
+                </div>
                     <h4>Mentor</h4>
                 <div>
                     <ul class="student-list">
-                        <li class="student-in-list">
-                            <a href="/#/userprofile/{{vm.data.owner}}/{{vm.data._id}}">{{vm.data.owner_name}}</a>
-                            <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
-                           <i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
                     <h4>Students</h4>

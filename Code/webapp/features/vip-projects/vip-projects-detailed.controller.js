@@ -17,7 +17,7 @@
         vm.deleteProject = deleteProject;
         vm.editProject = editProject;
 		vm.leaveProject = leaveProject;
-        vm.findProfile = findProfile;
+        // vm.findProfile = findProfile;
 		vm.already_joined = null;
 		vm.not_signed_in = false;
 		vm.setVideo = function(src) {
@@ -127,13 +127,12 @@
                  }
          }
 
-         function findProfile(name) {
-            console.log(name);
+         // function findProfile(name) {
+         //    console.log(name);
             
-         }
+         // }
          
          function editProject() {
-            //console.log(vm.profile.userType);
 			 if (vm.profile) 
              {
 				 if (vm.profile._id == vm.data.owner || vm.profile.userType == "Pi/CoPi") 
@@ -164,11 +163,6 @@
             }
             );
         }
-
-            
-            // console.log(vm.profile.userType == 'Student');
-            // console.log(vm.user_type == 'Staff/Faculty');
-            // console.log(vm.user_type == 'Pi/CoPi');
 
     }
 })();

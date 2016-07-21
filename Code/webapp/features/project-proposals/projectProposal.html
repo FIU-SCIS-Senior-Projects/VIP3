@@ -1,4 +1,3 @@
-<div>
 <div ng-if="!done">
  <center><img img width="250px" height="250px" src="img/loading.gif"/></center>
 </div>
@@ -30,21 +29,28 @@
             </textarea>
         </div>
         <div class="form-group">
+            <label>Add a project owner</label>
+            <input type="text" class="form-control" ng-model="project.owner_name" placeholder="Their name" />
+            <input type="text" class="form-control" ng-model="project.owner_email" placeholder="Their email" />
+            <small><i>If you are a member proposing a project for another faculty member</i></small>
+        </div>
+        <div class="form-group">
             <label>Github link</label>
-            <input type="text" ng-model="project.github_url" class="form-control"/>
+            <input type="text" ng-model="project.github_url" ng-model="github_url" class="form-control" disabled />
         </div>
         <div class="form-group">
             <label>Google Drive link</label>
-            <input type="text" ng-model="project.drive_link" class="form-control"/>
+            <input type="text" ng-model="project.drive_link" ng-model="drive_url" class="form-control" disabled />
         </div>
         <div class="form-group">
-            <label>Minimum number of students:</label>
+            <label>*Minimum number of students:</label>
             <input type="number" min="0" class="form-control" placeholder="" ng-model="project.firstSemester" >
         </div>
         <div class="form-group">
-            <label>Maximum number of students per semester:</label>
+            <label>*Maximum number of students per semester:</label>
             <input type="number" min="0" class="form-control" placeholder="" ng-model="project.maxStudents" >
         </div>
+        <p><strong>* : required fields</strong></p>
 
        <p><h5>Click to expand</h5></p>
         <div ng-repeat = 'college in colleges'>
@@ -58,14 +64,12 @@
             </div>
         </div>
 
-        <!-- <div ng-repeat = 'majors in majorList'>
-            <label><input type="checkbox" ng-click="toggleCheckbox(majors)"> {{majors}}</label>
-        </div> -->
+        <br>
+        <br>
 
-        <button type="submit" class="btn btn-default" ng-click="save()">Submit</button>
+        <button type="submit" class="btn btn-primary" ng-click="save()">Submit</button>
         <br>
         <br>
-        <p><strong>* : required fields</strong></p>
+
     </form>
-</div>
 </div>
