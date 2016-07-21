@@ -37,14 +37,23 @@
                 </div>
                     <h4>Faculty</h4>
                 <div>
-                    <ul class="student-list">
-                    </ul>
+					<ul class="student-list" ng-repeat="faculty in vm.data.faculty track by $index">
+					<li><p>{{faculty.name}}
+					<a href="/#/sendmessage/{{faculty.email}}/0/1">
+					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
+					</a>
+                    </li>
+					</ul>
                 </div>
                     <h4>Mentor</h4>
-                <div>
-                    <ul class="student-list">
-                        
-                    </ul>
+				<div>
+					<ul class="student-list" ng-repeat="mentor in vm.data.mentor track by $index">
+					<li><p>{{mentor.name}}
+					<a href="/#/sendmessage/{{mentor.email}}/0/1">
+					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
+					</a>
+                    </li>
+					</ul>
                 </div>
                     <h4>Students</h4>
                 <div>

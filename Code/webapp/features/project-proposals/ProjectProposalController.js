@@ -2,6 +2,7 @@
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
     .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams, $rootScope){
         
+		
 		var profile;
 		var vm = this;
 		$scope.done = false;
@@ -153,6 +154,12 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         vm.disciplines = [];
         vm.editingMode = false;
         //$scope.project.submit = submit;
+		
+		var faculty;
+		$scope.updateFacultyEmails = updateFacultyEmails;
+		$scope.updateFacultyNames = updateFacultyNames;
+		$scope.updateMentorEmails = updateMentorEmails;
+		$scope.updateMentorNames = updateMentorNames;
 
         init();
         function init () {
@@ -172,8 +179,9 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         }
 
         $scope.save = function save() {
-			
-			updateProjectOwner();
+			updateFaculty();
+			updateMentor();
+			//updateProjectOwner();
 	
 			var obj = document.getElementById('teamImage');
 			if (obj.files.length == 0) {
@@ -371,16 +379,117 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             }
             );
         };
-
-        function updateProjectOwner()
-        {
-        	if($scope.project.owner_name == null && $scope.project.owner_email == null)
+		
+		var facultyname;
+		var facultyemail;
+		function updateFacultyNames(nameList)
+		{
+			if (nameList)
 			{
-				$scope.project.owner = profile._id; 
-				$scope.project.owner_email = profile.email;
-				$scope.project.owner_rank = profile.userType;
-				$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+			var names = nameList.split(', ');
+			console.log(names);
+			var temp = [];
+			names.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			facultyname = temp;
 			}
-        }
+		}
+		
+		
+		function updateFacultyEmails(emailList)
+		{
+			if (emailList){
+			var emails = emailList.split(', ');
+			console.log(emails);
+			var temp = [];
+			emails.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			facultyemail = temp;
+			}
+		}
+		
+		function updateFaculty()
+		{
+			if (facultyname && facultyemail)
+			{
+				for (var i = 0; i < facultyname.length; i++)
+				{
+					if ($scope.project.faculty)
+					{
+						$scope.project.faculty.push({name: facultyname[i], email: facultyemail[i]});
+					}
+					else
+					{
+						$scope.project.faculty = [{name: facultyname[i], email: facultyemail[i]}];
+					}
+				}
+			}
+		}
+		
+		var mentorname;
+		var mentoremail;
+		function updateMentorNames(nameList)
+		{
+			if (nameList)
+			{
+			var names = nameList.split(', ');
+			console.log(names);
+			var temp = [];
+			names.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			mentorname = temp;
+			}
+		}
+		
+		
+		function updateMentorEmails(emailList)
+		{
+			if (emailList){
+			var emails = emailList.split(', ');
+			console.log(emails);
+			var temp = [];
+			emails.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			mentoremail = temp;
+			}
+		}
+		
+		function updateMentor()
+		{
+			if (mentorname && mentoremail)
+			{
+				for (var i = 0; i < mentorname.length; i++)
+				{
+					if ($scope.project.mentor)
+					{
+						$scope.project.mentor.push({name: mentorname[i], email: mentoremail[i]});
+					}
+					else
+					{
+						$scope.project.mentor = [{name: mentorname[i], email: mentoremail[i]}];
+					}
+				}
+			}
+		}
+
+
+        //function updateProjectMembers()
+        //{
+        //	if($scope.project.owner_name && $scope.project.owner_email)
+		//	{
+		//		$scope.project.members = profile._id; 
+		//		$scope.project.owner_email = profile.email;
+		//		$scope.project.owner_rank = profile.userType;
+		//		$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+		//	}
+        //}
 
     });
