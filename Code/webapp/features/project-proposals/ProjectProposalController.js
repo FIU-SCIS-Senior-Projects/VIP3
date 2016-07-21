@@ -175,6 +175,31 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){
                 $scope.project = data;
+				$scope.SelectedFacultyNames = "";
+				$scope.SelectedMentorNames = "";
+				$scope.SelectedFacultyEmails = "";
+				$scope.SelectedMentorEmails = "";
+				for(i = 0; i < $scope.project.faculty.length; i++) {
+					if (i != $scope.project.faculty.length - 1) {
+						$scope.SelectedFacultyNames += $scope.project.faculty[i].name + ",";
+						$scope.SelectedFacultyEmails += $scope.project.faculty[i].email + ",";
+					}
+					else {
+						$scope.SelectedFacultyNames += $scope.project.faculty[i].name;
+						$scope.SelectedFacultyEmails += $scope.project.faculty[i].email;
+					}
+				}
+				for(i = 0; i < $scope.project.mentor.length; i++) {
+					if (i != $scope.project.mentor.length - 1) {
+						$scope.SelectedMentorNames += $scope.project.mentor[i].name + ",";
+						$scope.SelectedMentorEmails += $scope.project.mentor[i].email + ",";
+					}
+					else {
+						$scope.SelectedMentorNames += $scope.project.mentor[i].name;
+						$scope.SelectedMentorEmails += $scope.project.mentor[i].email;
+					}
+				}
+				
             });
         }
 
@@ -506,18 +531,23 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             // format the youtube videos correctly
             // input: https://www.youtube.com/watch?v=uQ_DHRI-Xp0
             // output: https://www.youtube.com/v/watch?v=uQ_DHRI-Xp0
-            if (VideoURL.indexOf("youtube.com") > -1)
-            {
-                videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
-                updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
-                console.log("Filtered url: " + updatedVideoURL);
-                return updatedVideoURL;
-            }
-            
-            else
-            {
-                return VideoURL;
-            }
+			if (VideoURL) {
+				if (VideoURL.indexOf("youtube.com") > -1)
+				{
+					videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
+					updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
+					console.log("Filtered url: " + updatedVideoURL);
+					return updatedVideoURL;
+				}
+				
+				else
+				{
+					return VideoURL;
+				}
+			}
+			else {
+				return "";
+			}
         }
 
 
