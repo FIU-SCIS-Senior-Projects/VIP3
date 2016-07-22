@@ -207,8 +207,18 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
 			updateFaculty();
 			updateMentor();
-			//updateProjectOwner();
-
+			
+			
+			if (!$scope.project.owner_name && !$scope.project.owner_email) {
+				$scope.project.owner = profile._id;
+				$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+				$scope.project.owner_email = profile.email;
+			}
+			else {
+				$scope.project.owner = "";
+			}
+			
+		
             
             $scope.project.video_url = ProcessVideoURL($scope.project.video_url);
             console.log("req_video_url global " + $scope.project.video_url);

@@ -5,6 +5,12 @@
     <h2>Team Proposal Form</h2>
 	<p style="color:orange;"><strong>{{result}}</strong></p>
     <form role="form">
+		<div class="form-group">
+            <label>Product Owner (if left blank it will place you as product owner)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_name" required="False">
+			<label>Email of Product Owner (if product owner not blank an email must be provided)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_email" required="False">
+        </div>
         <div class="form-group">
             <label>*Team Title</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
