@@ -65,7 +65,7 @@
         
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){
-				if (data.old_project) {
+				if (data.old_project && data.old_project.length > 0) {
 					vm.data = data.old_project[0];
 				}
 				else {
@@ -74,7 +74,11 @@
 				ProfileService.loadProfile().then(function(data){
 					profile = data;
 					if (profile) {
-						vm.already_joined = vm.data.members.includes(profile.email);
+						if (vm.data.members)
+							vm.already_joined = vm.data.members.includes(profile.email);
+						else {
+							vm.already_joined = false;
+						}
 						console.log(vm.already_joined);
 					}
 					else {
