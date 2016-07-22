@@ -460,6 +460,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		{
 			if (facultyname && facultyemail)
 			{
+				$scope.project.faculty = [];
 				for (var i = 0; i < facultyname.length; i++)
 				{
 					if ($scope.project.faculty)
@@ -508,8 +509,11 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
 		function updateMentor()
 		{
+			
+			
 			if (mentorname && mentoremail)
 			{
+				$scope.project.mentor = [];
 				for (var i = 0; i < mentorname.length; i++)
 				{
 					if ($scope.project.mentor)
