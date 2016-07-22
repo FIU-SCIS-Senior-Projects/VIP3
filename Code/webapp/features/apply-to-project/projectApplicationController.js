@@ -155,9 +155,10 @@ angular
 			}
 			else {
 				$scope.done = true;
-				$window.sessionStorage.setItem('lr', 'studentConfirmation/');
-				$location.path('login');
-				
+				//$window.sessionStorage.setItem('lr', 'studentConfirmation/');
+				//$location.path('login');
+				vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
+				$scope.guest = true;
 			}
 		});
 
@@ -205,58 +206,232 @@ angular
 
         vm.save = function() {
 			
-			vm.profile.rank = vm.rank;
-			reviewProfileService.updateProfile(vm.profile).then(function(data){
-            });
-			var project = vm.sProject;
-			for (i = 0; i < project.members.length; i++) {
-				if (project.members[i] === vm.email) {
-					 error_msg();
-					return;
-				}
-			}
-			for (i = 0; i < project.members_detailed.length; i++) {
-				if (project.members_detailed[i] === (profile.firstName + " " + profile.lastName)) {
-					 error_msg();
-					return;
-				}
-			}
+			if (!$scope.guest) {
 			
-			profile.joined_project = false;
-			User.update({user: profile});
-			
-			project.members[project.members.length] = vm.email;
-			project.members_detailed[project.members_detailed.length] = profile.firstName + " " + profile.lastName;
-			ProjectService.editProject(project,project._id).then(
-				   function(response){
-					 // success callback
-					 success_msg();
-					 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
-					ToDoService.createTodo(todo).then(function(success)  {
-						
-					}, function(error) {
-						
-					});
+				vm.profile.rank = vm.rank;
+				reviewProfileService.updateProfile(vm.profile).then(function(data){
+				});
+				var project = vm.sProject;
+				
+				
+				if (vm.join_type) {
+					if (vm.join_type == 'Mentor') {
+						if (project.mentor) {
+								for (i = 0; i < project.mentor.length; i++) {
+									if (project.mentor[i].email === vm.email) {
+										 error_msg();
+										return;
+									}
+								}
+								project.mentor.push({name: profile.firstName + " " + profile.lastName, email: profile.email});
+							
+						}
+						else {
+							if (vm.name && vm.email2) {
+								project.mentor = [{name: profile.firstName + " " + profile.lastName, email: profile.email}];
+							}
+							else {
+								alert('Please enter a name and a valid email this is required!');
+								return;
+							}
+						}
+					}
+					else {
+						if (project.faculty) {
+								for (i = 0; i < project.faculty.length; i++) {
+									if (project.faculty[i].email === vm.email) {
+										 error_msg();
+										return;
+									}
+								}
+								project.faculty.push({name: profile.firstName + " " + profile.lastName, email: profile.email});
+							
+							
+						}
+						else {
+							
+								project.faculty = [{name: profile.firstName + " " + profile.lastName, email: profile.email}];
+							
+						}
+					}
 					
-					var email_msg = 
-					{
-						recipient: profile.email, 
-						text: "Dear " + profile.firstName + ", thank you for applying to " + project.title + " you are currently pending and this is just a confirmation that you applied to the project please keep checking the VIP to-do or your email as the PI will approve or deny your request to join the project.\n\nProject: " + project.title + "\nStatus: Pending", 
-						subject: "Project Application Submission Pending", 
-						recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
-						text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project please approve him/her by logging into your VIP account and choosing student applications.", 
-						subject2: "New Student Applied Has Applied To " + project.title 
-					};
-					User.nodeEmail(email_msg);
+					profile.joined_project = false;
+					User.update({user: profile});
+					
+					ProjectService.editProject(project,project._id).then(
+						   function(response){
+							 // success callback
+							 success_msg();
+							
+							
+							var email_msg = 
+							{
+								recipient: profile.email, 
+								text: "Dear " + profile.firstName + " " + profile.lastName + ", thank you for applying to " + project.title + ", as either a faculty or mentor please register an account using the same email as soon as possible so people who are signed into the website can see your profile.\n\nProject: " + project.title + "\nStatus: Approved", 
+								subject: "Faculty/Mentor Application Successfull", 
+								recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
+								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project as a mentor or faculty you can remove this person off the project if he or she isn't authorized to join project.", 
+								subject2: "Faculty/Mentor has joined " + project.title 
+							};
+							User.nodeEmail(email_msg);
 
-                    // // refresh the page after 3 seconds so the user can see the message
-                    // setTimeout(function () { location.reload(true); }, 7000);
-			   }, 
-			   function(response){
-				 // failure callback
-				 vm.message = response.data;
-			   }
-			);
+							// // refresh the page after 3 seconds so the user can see the message
+							// setTimeout(function () { location.reload(true); }, 7000);
+					   }, 
+					   function(response){
+						 // failure callback
+						 vm.message = response.data;
+					   }
+					);
+				}
+				else {
+				
+				
+				
+					for (i = 0; i < project.members.length; i++) {
+						if (project.members[i] === vm.email) {
+							 error_msg();
+							return;
+						}
+					}
+					for (i = 0; i < project.members_detailed.length; i++) {
+						if (project.members_detailed[i] === (profile.firstName + " " + profile.lastName)) {
+							 error_msg();
+							return;
+						}
+					}
+					
+					profile.joined_project = false;
+					User.update({user: profile});
+					
+					project.members[project.members.length] = vm.email;
+					project.members_detailed[project.members_detailed.length] = profile.firstName + " " + profile.lastName;
+					ProjectService.editProject(project,project._id).then(
+						   function(response){
+							 // success callback
+							 success_msg();
+							 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
+							ToDoService.createTodo(todo).then(function(success)  {
+								
+							}, function(error) {
+								
+							});
+							
+							var email_msg = 
+							{
+								recipient: profile.email, 
+								text: "Dear " + profile.firstName + ", thank you for applying to " + project.title + " you are currently pending and this is just a confirmation that you applied to the project please keep checking the VIP to-do or your email as the PI will approve or deny your request to join the project.\n\nProject: " + project.title + "\nStatus: Pending", 
+								subject: "Project Application Submission Pending", 
+								recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
+								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project please approve him/her by logging into your VIP account and choosing student applications.", 
+								subject2: "New Student Applied Has Applied To " + project.title 
+							};
+							User.nodeEmail(email_msg);
+
+							// // refresh the page after 3 seconds so the user can see the message
+							// setTimeout(function () { location.reload(true); }, 7000);
+					   }, 
+					   function(response){
+						 // failure callback
+						 vm.message = response.data;
+					   }
+					);
+				}
+			}
+			else {
+				var project = vm.sProject;
+				
+				if (vm.join_type) {
+					if (vm.join_type == 'Mentor') {
+						if (project.mentor) {
+							if (vm.name && vm.email2) {
+								
+								for (i = 0; i < project.mentor.length; i++) {
+									if (project.mentor[i].email === vm.email2) {
+										 error_msg();
+										return;
+									}
+								}
+								
+								project.mentor.push({name: vm.name, email: vm.email2});
+							}
+							else {
+								alert('Please enter a name and a valid email this is required!');
+								return;
+							}
+						}
+						else {
+							if (vm.name && vm.email2) {
+								project.mentor = [{name: vm.name, email: vm.email2}];
+							}
+							else {
+								alert('Please enter a name and a valid email this is required!');
+								return;
+							}
+						}
+					}
+					else {
+						if (project.faculty) {
+							if (vm.name && vm.email2) {
+								for (i = 0; i < project.faculty.length; i++) {
+									if (project.faculty[i].email === vm.email2) {
+										 error_msg();
+										return;
+									}
+								}
+								project.faculty.push({name: vm.name, email: vm.email2});
+							}
+							else {
+								alert('Please enter a name and a valid email this is required!');
+								return;
+							}
+						}
+						else {
+							if (vm.name && vm.email2) {
+								project.faculty = [{name: vm.name, email: vm.email2}];
+							}
+							else {
+								alert('Please enter a name and a valid email this is required!');
+								return;
+							}
+						}
+					}
+				}
+				else {
+					alert('Please select the type of person you would like to join the project as!');
+					return;
+				}
+				
+				
+				ProjectService.editProject(project,project._id).then(
+					   function(response){
+						 // success callback
+						 success_msg();
+						
+						
+						var email_msg = 
+						{
+							recipient: vm.email2, 
+							text: "Dear " + vm.name + ", thank you for applying to " + project.title + ", as either a faculty or mentor please register an account using the same email as soon as possible so people who are signed into the website can see your profile.\n\nProject: " + project.title + "\nStatus: Approved", 
+							subject: "Faculty/Mentor Application Successfull", 
+							recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
+							text2: "Dear PI, " + vm.name  + " has applied to project as a mentor or faculty you can remove this person off the project if he or she isn't authorized to join project.", 
+							subject2: "Faculty/Mentor has joined " + project.title 
+						};
+						User.nodeEmail(email_msg);
+
+						// // refresh the page after 3 seconds so the user can see the message
+						// setTimeout(function () { location.reload(true); }, 7000);
+				   }, 
+				   function(response){
+					 // failure callback
+					 vm.message = response.data;
+				   }
+				);
+				
+				
+				
+			}
 			
         };
 
