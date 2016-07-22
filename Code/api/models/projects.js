@@ -25,6 +25,7 @@ var ProjectSchema = new Schema({
     contact: [{name: String, phone: String, email: String, office: String}],
     status: String,
 	edited: Boolean,
+	old_project: [Schema.Types.Mixed],
     image: String,
     video_url: String,
     github_url: String,

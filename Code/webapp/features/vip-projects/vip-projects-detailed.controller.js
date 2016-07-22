@@ -65,7 +65,12 @@
         
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){
-                vm.data = data;
+				if (data.old_project) {
+					vm.data = data.old_project[0];
+				}
+				else {
+					vm.data = data;
+				}	
 				ProfileService.loadProfile().then(function(data){
 					profile = data;
 					if (profile) {

@@ -170,11 +170,12 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             }
         }
 
-
+		var old_project = null;
 
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){
                 $scope.project = data;
+				old_project = JSON.parse(JSON.stringify(data)); // Make a new reference to avoid a circular reference.
 				$scope.SelectedFacultyNames = "";
 				$scope.SelectedMentorNames = "";
 				$scope.SelectedFacultyEmails = "";
@@ -262,8 +263,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
 								});
 					}
-					else {
-							
+					else {	
+							if (old_project) {
+								$scope.project.old_project = old_project;
+							}
 							$scope.project.status='modified';
                             console.log("req_video_url modified " + $scope.project.video_url);
 							$scope.project.id = $stateParams.id;
@@ -340,7 +343,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 								});
 					}
 					else{
-							$scope.project.status='pending';
+							if (old_project) {
+								$scope.project.old_project = old_project;
+							}
+							$scope.project.status='modified';
 							$scope.project.id = $stateParams.id;
 							$scope.project.edited = true;
 							ProjectService.editProject($scope.project, $stateParams.id)

@@ -105,6 +105,15 @@
                 <p class="proj-descrip-teams">{{project.description}}</p>
             </div>
         </div>
+		
+		<div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.projects | filter: { status: 'modified' }" ng-click="vm.viewDetails(project.old_project[0])">
+            <div class="proj-info-box">
+                <img ng-src="{{project.old_project[0].image}}" alt="{{project.old_project[0].title}}" class="proj-image">
+                <h3 class="proj-title-teams">{{project.old_project[0].title}}</h3>
+                <h5 class="proj-title-owner">Owner: {{project.old_project[0].owner_name}}</h5>
+                <p class="proj-descrip-teams">{{project.old_project[0].description}}</p>
+            </div>
+        </div>
 
         <!-- End here -->
 </div>
