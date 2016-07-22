@@ -16,6 +16,14 @@ html {
 	background-color: #081E3F;
 }
 
+.social-icon {
+    font-size: 32px; 
+}
+
+.sidebar-bottom-wrap {
+    margin-bottom: 10px;
+}
+
 .footer p{
 	color: #f2f2f2;
 	column-count: 2;
@@ -260,6 +268,21 @@ a {
 	text-decoration: none;
 }
 
+.btn-feature {
+    width:100%; 
+    height:100%; 
+    background-color:#081E3F; 
+    font-size: 1.5em;
+    border: none;
+}
+
+.btn-feature-container {
+    float:left; 
+    width:49%;
+    margin-left: 1px; 
+    height:100%;  
+}
+
 .projects-top-bar {
     margin-bottom: 1.5em;
     padding: 3em;
@@ -320,12 +343,58 @@ a {
 }
 
 @media (max-width: 1200px) {
+    .team-project {
+        margin: 0 auto;
+    }
+
+    .projects-top-bar {
+        margin-bottom: 1.5em;
+        padding: 3em;
+        border: none;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
     .project-info {
-    margin: 10px auto;
-    height: 260px;
-    width: 90%;
-    
+        margin: 10px auto;
+        height: 260px;
+        width: 100%;
+    }
+
+    .btn-feature-container {
+        width:100%; 
+        height:100%;  
+    }
 }
+
+@media (max-width: 950px) {
+
+.team-project iframe {
+    width: 90% !important;
+    max-height: 350px !important;
+}
+
+.project-second-section-middle {
+    margin: 0px auto;
+    width: 100%;
+}
+
+.sidebar-container {
+   float: left;
+   width: 80%;
+   border-left: none !important;
+   border-top: 1px solid #eee;
+   margin-top: 10px auto 0 auto;
+    }
+
+.sidebar-container .col-md-12 {
+    margin-top: 15px;
+}
+
+.sidebar-bottom-wrap {
+    float: left;
+}
+
 }
 
 .student-list {
@@ -358,10 +427,6 @@ a {
     text-align: center;
     width: 100%;
     max-height: 600px;
-}
-
-.proj-title-owner {
-
 }
 
 .team-info {
