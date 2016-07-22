@@ -28,7 +28,7 @@
                 <div>
                     <ul class="student-list">
                     <li class="student-in-list">
-                            <a href="/#/userprofile/{{vm.data.owner}}/{{vm.data._id}}">{{vm.data.owner_name}}</a>
+                            <a href="/#/userprofile/{{vm.data.owner}}/{{vm.data._id}}" class="person_hover">{{vm.data.owner_name}}</a>
                             <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
                            <i ng-if="vm.data.owner != null" class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
                            <p ng-if="vm.data.owner == null" style="float: right;">{{vm.data.owner_email}}</p>
@@ -40,7 +40,7 @@
                 <div>
 					<ul class="student-list" ng-repeat="faculty in vm.data.faculty track by $index">
 					<li class="student-in-list">
-                    <a ng-click="vm.redirect2(faculty.email)">{{faculty.name}}</a>
+                    <a ng-click="vm.redirect2(faculty.email)" class="person_hover">{{faculty.name}}</a>
 					<a href="/#/sendmessage/{{faculty.email}}/0/1">
 					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
 					</a>
@@ -51,7 +51,7 @@
 				<div>
 					<ul class="student-list" ng-repeat="mentor in vm.data.mentor track by $index">
 					<li class="student-in-list">
-                    <a ng-click="vm.redirect2(mentor.email)">{{mentor.name}}</a>
+                    <a ng-click="vm.redirect2(mentor.email)" class="person_hover">{{mentor.name}}</a>
 					<a href="/#/sendmessage/{{mentor.email}}/0/1">
 					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
 					</a>
@@ -62,7 +62,7 @@
                 <div>
                     <ul class="student-list" ng-repeat="student in vm.data.members_detailed track by $index">
                         <li class="student-in-list">
-                        <a ng-click="vm.redirect($index)">{{student}}</a>
+                        <a ng-click="vm.redirect($index)" class="person_hover">{{student}}</a>
                         <a href="/#/sendmessage/{{vm.getEmail($index)}}/0/1">
                         <i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
                         </a>
