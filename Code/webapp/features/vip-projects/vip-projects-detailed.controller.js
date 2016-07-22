@@ -34,9 +34,15 @@
 			User.getByEmail(vm.data.members[index]).then(function(res) {
 				$state.go('viewProfile',{user_id: res.data, project_id: vm.data._id});
 			});
-			
-			
 		}
+		
+		 vm.redirect2 = function(email) {
+			
+			User.getByEmail(email).then(function(res) {
+				$state.go('viewProfile',{user_id: res.data, project_id: vm.data._id});
+			});
+		}
+		
         $scope.go = function ( path ) {
           alert(path);
           $location.path( path );

@@ -38,7 +38,8 @@
                     <h4>Faculty</h4>
                 <div>
 					<ul class="student-list" ng-repeat="faculty in vm.data.faculty track by $index">
-					<li><p>{{faculty.name}}
+					<li class="student-in-list">
+                    <a ng-click="vm.redirect2(faculty.email)">{{faculty.name}}</a>
 					<a href="/#/sendmessage/{{faculty.email}}/0/1">
 					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
 					</a>
@@ -48,7 +49,8 @@
                     <h4>Mentor</h4>
 				<div>
 					<ul class="student-list" ng-repeat="mentor in vm.data.mentor track by $index">
-					<li><p>{{mentor.name}}
+					<li class="student-in-list">
+                    <a ng-click="vm.redirect($index)">{{mentor.name}}</a>
 					<a href="/#/sendmessage/{{mentor.email}}/0/1">
 					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
 					</a>

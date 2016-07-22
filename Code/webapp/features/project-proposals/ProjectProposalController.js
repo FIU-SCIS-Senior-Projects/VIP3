@@ -181,8 +181,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				$scope.SelectedMentorEmails = "";
 				for(i = 0; i < $scope.project.faculty.length; i++) {
 					if (i != $scope.project.faculty.length - 1) {
-						$scope.SelectedFacultyNames += $scope.project.faculty[i].name + ",";
-						$scope.SelectedFacultyEmails += $scope.project.faculty[i].email + ",";
+						$scope.SelectedFacultyNames += $scope.project.faculty[i].name + ", ";
+						$scope.SelectedFacultyEmails += $scope.project.faculty[i].email + ", ";
 					}
 					else {
 						$scope.SelectedFacultyNames += $scope.project.faculty[i].name;
@@ -191,8 +191,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				}
 				for(i = 0; i < $scope.project.mentor.length; i++) {
 					if (i != $scope.project.mentor.length - 1) {
-						$scope.SelectedMentorNames += $scope.project.mentor[i].name + ",";
-						$scope.SelectedMentorEmails += $scope.project.mentor[i].email + ",";
+						$scope.SelectedMentorNames += $scope.project.mentor[i].name + ", ";
+						$scope.SelectedMentorEmails += $scope.project.mentor[i].email + ", ";
 					}
 					else {
 						$scope.SelectedMentorNames += $scope.project.mentor[i].name;
