@@ -28,7 +28,7 @@
                 <div>
                     <ul class="student-list">
                     <li class="student-in-list">
-                            <a href="/#/userprofile/{{vm.data.owner}}/{{vm.data._id}}">{{vm.data.owner_name}}</a>
+                            <a ng-click="vm.redirect2(vm.data.owner_email)">{{vm.data.owner_name}}</a>
                             <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
                            <i ng-if="vm.data.owner != null" class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
                            <p ng-if="vm.data.owner == null" style="float: right;">{{vm.data.owner_email}}</p>
