@@ -206,6 +206,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
         $scope.save = function save() {
 
+			
 			updateFaculty();
 			updateMentor();
 			
@@ -435,14 +436,17 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		{
 			if (nameList)
 			{
-			var names = nameList.split(', ');
-			console.log(names);
-			var temp = [];
-			names.forEach(function (obj)
-			{
-				temp.push(obj);
-			});
-			facultyname = temp;
+				var names = nameList.split(', ');
+				console.log(names);
+				var temp = [];
+				names.forEach(function (obj)
+				{
+					temp.push(obj);
+				});
+				facultyname = temp;
+			}
+			else {
+				facultyname = null;
 			}
 
 		}
@@ -451,14 +455,17 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		function updateFacultyEmails(emailList)
 		{
 			if (emailList){
-			var emails = emailList.split(', ');
-			console.log(emails);
-			var temp = [];
-			emails.forEach(function (obj)
-			{
-				temp.push(obj);
-			});
-			facultyemail = temp;
+				var emails = emailList.split(', ');
+				console.log(emails);
+				var temp = [];
+				emails.forEach(function (obj)
+				{
+					temp.push(obj);
+				});
+				facultyemail = temp;
+			}
+			else {
+				facultyemail = null;
 			}
 		}
 		
@@ -479,6 +486,9 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					}
 				}
 			}
+			else {
+				$scope.project.faculty = [];
+			}
 		}
 		
 		var mentorname;
@@ -487,14 +497,17 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		{
 			if (nameList)
 			{
-			var names = nameList.split(', ');
-			console.log(names);
-			var temp = [];
-			names.forEach(function (obj)
-			{
-				temp.push(obj);
-			});
-			mentorname = temp;
+				var names = nameList.split(', ');
+				console.log(names);
+				var temp = [];
+				names.forEach(function (obj)
+				{
+					temp.push(obj);
+				});
+				mentorname = temp;
+			}
+			else {
+				mentorname = null;
 			}
 		}
 		
@@ -502,14 +515,17 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		function updateMentorEmails(emailList)
 		{
 			if (emailList){
-			var emails = emailList.split(', ');
-			console.log(emails);
-			var temp = [];
-			emails.forEach(function (obj)
-			{
-				temp.push(obj);
-			});
-			mentoremail = temp;
+				var emails = emailList.split(', ');
+				console.log(emails);
+				var temp = [];
+				emails.forEach(function (obj)
+				{
+					temp.push(obj);
+				});
+				mentoremail = temp;
+			}
+			else {
+				mentoremail = null;
 			}
 		}
 		
@@ -531,6 +547,9 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 						$scope.project.mentor = [{name: mentorname[i], email: mentoremail[i]}];
 					}
 				}
+			}
+			else {
+				$scope.project.mentor = [];
 			}
 		}
 
