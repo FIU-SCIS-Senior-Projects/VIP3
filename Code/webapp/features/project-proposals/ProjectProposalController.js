@@ -238,14 +238,16 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 									}, function(error) {
 										
 									});
+                                    
+                                    // email should indicate that the project has been modified, not that it's a new proposal
 									var email_msg = 
 									{
 										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title + ". Your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
-										subject: "Project Proposal Submission Pending", 
-										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project by visiting the following link - http://vip.fiu.edu/#/reviewproject/", 
-										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
+										text: "Dear " + profile.firstName + ", please be patient while the edits that you have proposed for the project " + $scope.project.title + " are reviewed. Once a decision has been made to approve/reject your edits, you will be notified again via email.\n\nProject:" + $scope.project.title + "\nStatus: Modified-PendingReview" , 
+										subject: "Proposed Edits for " + $scope.project.title + " are being Reviewed", 
+										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",
+                                        subject2: "Faculty Has Edited the Existing Project " + $scope.project.title,
+										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has edited the existing project " + $scope.project.title +  ". Please review the edits to the project, and approve/deny the project by visiting the following link - http://vip.fiu.edu/#/reviewproject/"
 									};
 									User.nodeEmail(email_msg);
 								}, function (error) {
@@ -531,11 +533,22 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             // format the youtube videos correctly
             // input: https://www.youtube.com/watch?v=uQ_DHRI-Xp0
             // output: https://www.youtube.com/v/watch?v=uQ_DHRI-Xp0
-			if (VideoURL) {
+			if (VideoURL)
+            {
+                // youtube.com universal filter
 				if (VideoURL.indexOf("youtube.com") > -1)
 				{
 					videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
-					updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
+					updatedVideoURL = "https://www.youtube.com/v/watch?v=" + videoID;
+					console.log("Filtered url: " + updatedVideoURL);
+					return updatedVideoURL;
+				}
+                
+                // youtu.be filter
+				else if (VideoURL.indexOf("youtu.be") > -1)
+				{
+					videoID = VideoURL.substr(VideoURL.indexOf(".be/") + 4);
+					updatedVideoURL = "https://www.youtube.com/v/watch?v=" + videoID;
 					console.log("Filtered url: " + updatedVideoURL);
 					return updatedVideoURL;
 				}
