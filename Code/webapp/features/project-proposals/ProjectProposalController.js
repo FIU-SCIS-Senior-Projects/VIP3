@@ -577,6 +577,12 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 // youtube.com universal filter
 				if (VideoURL.indexOf("youtube.com") > -1)
 				{
+                    // video is already embed format, return
+                    if (VideoURL.indexOf("youtube.com/embed/") > -1)
+                    {
+                        return VideoURL;
+                    }
+                    
 					videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
 					updatedVideoURL = "https://www.youtube.com/v/watch?v=" + videoID;
 					console.log("Filtered url: " + updatedVideoURL);
