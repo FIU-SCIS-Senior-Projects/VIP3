@@ -5,6 +5,12 @@
     <h2>Team Proposal Form</h2>
 	<p style="color:orange;"><strong>{{result}}</strong></p>
     <form role="form">
+		<div class="form-group">
+            <label>Product Owner (if left blank it will place you as product owner)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_name" required="False">
+			<label>Email of Product Owner (if product owner not blank an email must be provided)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_email" required="False">
+        </div>
         <div class="form-group">
             <label>*Team Title</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
@@ -29,10 +35,16 @@
             </textarea>
         </div>
         <div class="form-group">
-            <label>Add a project owner</label>
-            <input type="text" class="form-control" ng-model="project.owner_name" placeholder="Their name" />
-            <input type="text" class="form-control" ng-model="project.owner_email" placeholder="Their email" />
-            <small><i>If you are a member proposing a project for another faculty member</i></small>
+            <label>Add a Faculty Member</label><br>
+            Name:  <input type="text" class="form-control" ng-model="SelectedFacultyNames" placeholder="Michael Smith, Johnny Stuart, Daniel Riveron" value="{{updateFacultyNames(SelectedFacultyNames)}}" />
+            Email:  <input type="text" class="form-control" ng-model="SelectedFacultyEmails" placeholder="michael@fiu.edu, johnny@yahoo.com, daniel@gmail.com" value="{{updateFacultyEmails(SelectedFacultyEmails)}}" />
+            <small><i>Note: Separate each with commas followed by one space!</i></small>
+        </div>
+		 <div class="form-group">
+            <label>Add a Mentor</label><br>
+            Name:  <input type="text" class="form-control" ng-model="SelectedMentorNames" placeholder="Michael Smith, Johnny Stuart, Daniel Riveron" value="{{updateMentorNames(SelectedMentorNames)}}" />
+            Email:  <input type="text" class="form-control" ng-model="SelectedMentorEmails" placeholder="michael@fiu.edu, johnny@yahoo.com, daniel@gmail.com" value="{{updateMentorEmails(SelectedMentorEmails)}}" />
+            <small><i>Note: Separate each with commas followed by one space!</i></small>
         </div>
         <div class="form-group">
             <label>Github link</label>

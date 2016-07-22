@@ -38,7 +38,7 @@
 		
             reviewPPS.AcceptProjects(projectid).then(function(data){
 				$scope.result = "Project Approved";
-				var todo = {owner: rank, owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been approved by the PI." , type: "project", link: "/#/to-do" };
+				var todo = {owner: rank, owner_id: owner, todo: "Dear proposer of project, the project titled: " + title + " has been approved by the PI. Link To Project: \nhttp://vip.fiu.edu/#/vip-projects-detailed/" + projectid , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -47,7 +47,7 @@
 				var email_msg = 
 				{
 					recipient: email, 
-					text: "Dear proposer of project, the project titled: " + title + " has been approved by the PI.",
+					text: "Dear proposer of project, the project titled: " + title + " has been approved by the PI. Link To Project: \nhttp://vip.fiu.edu/#/vip-projects-detailed/" + projectid,
 					subject: "Project Approved", 
 					recipient2: "test@example.com", 
 					text2: "", 

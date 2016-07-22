@@ -61,14 +61,16 @@ module.exports = function(app, express) {
     //route get or adding projects to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
-
-
+			
+			console.log(req.body.faculty);
             req.body.term = currentTerm[0]._id;
 
 			//Validate to ensure student counts isn't negative or student count is greater than maximum.
 
 			var studentCount = Number(req.body.firstSemester);
 			var maxStudentCount = Number(req.body.maxStudents);
+
+            console.log(req.body.video_url);
 
 
 			if (isNaN(studentCount) || isNaN(maxStudentCount)) {
@@ -120,15 +122,22 @@ module.exports = function(app, express) {
     apiRouter.route('/projects/:id')
 
 
-        .put(function (req, res) {
+        .put(function (req, res)
+        {
 			//////console.log("PUT /projects/:id");
-            Project.findById(req.params.id, function(err, proj){
+            Project.findById(req.params.id, function(err, proj)
+            {
                 if(err) {
 					res.status(400);
 					res.send(err);
 				}
+                proj.video_url = req.body.video_url;
 				proj.edited = req.body.edited;
 				proj.status = req.body.status;
+				proj.faculty = req.body.faculty;
+				proj.mentor = req.body.mentor;
+				proj.owner_name = req.body.owner_name;
+				proj.owner_email = req.body.owner_email;
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
                 if(req.body.disciplines!=="") proj.disciplines = req.body.disciplines;

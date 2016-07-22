@@ -2,6 +2,7 @@
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
     .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams, $rootScope){
         
+		
 		var profile;
 		var vm = this;
 		$scope.done = false;
@@ -153,6 +154,12 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         vm.disciplines = [];
         vm.editingMode = false;
         //$scope.project.submit = submit;
+		
+		var faculty;
+		$scope.updateFacultyEmails = updateFacultyEmails;
+		$scope.updateFacultyNames = updateFacultyNames;
+		$scope.updateMentorEmails = updateMentorEmails;
+		$scope.updateMentorNames = updateMentorNames;
 
         init();
         function init () {
@@ -168,15 +175,58 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){
                 $scope.project = data;
+				$scope.SelectedFacultyNames = "";
+				$scope.SelectedMentorNames = "";
+				$scope.SelectedFacultyEmails = "";
+				$scope.SelectedMentorEmails = "";
+				for(i = 0; i < $scope.project.faculty.length; i++) {
+					if (i != $scope.project.faculty.length - 1) {
+						$scope.SelectedFacultyNames += $scope.project.faculty[i].name + ", ";
+						$scope.SelectedFacultyEmails += $scope.project.faculty[i].email + ", ";
+					}
+					else {
+						$scope.SelectedFacultyNames += $scope.project.faculty[i].name;
+						$scope.SelectedFacultyEmails += $scope.project.faculty[i].email;
+					}
+				}
+				for(i = 0; i < $scope.project.mentor.length; i++) {
+					if (i != $scope.project.mentor.length - 1) {
+						$scope.SelectedMentorNames += $scope.project.mentor[i].name + ", ";
+						$scope.SelectedMentorEmails += $scope.project.mentor[i].email + ", ";
+					}
+					else {
+						$scope.SelectedMentorNames += $scope.project.mentor[i].name;
+						$scope.SelectedMentorEmails += $scope.project.mentor[i].email;
+					}
+				}
+				
             });
         }
 
         $scope.save = function save() {
+
+			updateFaculty();
+			updateMentor();
 			
-			updateProjectOwner();
+			
+			if (!$scope.project.owner_name && !$scope.project.owner_email) {
+				$scope.project.owner = profile._id;
+				$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+				$scope.project.owner_email = profile.email;
+			}
+			else {
+				$scope.project.owner = "";
+			}
+			
+		
+            
+            $scope.project.video_url = ProcessVideoURL($scope.project.video_url);
+            console.log("req_video_url global " + $scope.project.video_url);
+
 	
 			var obj = document.getElementById('teamImage');
-			if (obj.files.length == 0) {
+			if (obj.files.length == 0)
+            {
 					
 				    $scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
 					if(!vm.editingMode){
@@ -215,6 +265,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					else {
 							
 							$scope.project.status='modified';
+                            console.log("req_video_url modified " + $scope.project.video_url);
 							$scope.project.id = $stateParams.id;
 							$scope.project.edited = true;
 							ProjectService.editProject($scope.project, $stateParams.id)
@@ -371,16 +422,149 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             }
             );
         };
-
-        function updateProjectOwner()
-        {
-        	if($scope.project.owner_name == null && $scope.project.owner_email == null)
+		
+		var facultyname;
+		var facultyemail;
+		function updateFacultyNames(nameList)
+		{
+			if (nameList)
 			{
-				$scope.project.owner = profile._id; 
-				$scope.project.owner_email = profile.email;
-				$scope.project.owner_rank = profile.userType;
-				$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+			var names = nameList.split(', ');
+			console.log(names);
+			var temp = [];
+			names.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			facultyname = temp;
+			}
+
+		}
+		
+		
+		function updateFacultyEmails(emailList)
+		{
+			if (emailList){
+			var emails = emailList.split(', ');
+			console.log(emails);
+			var temp = [];
+			emails.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			facultyemail = temp;
+			}
+		}
+		
+		function updateFaculty()
+		{
+			if (facultyname && facultyemail)
+			{
+				$scope.project.faculty = [];
+				for (var i = 0; i < facultyname.length; i++)
+				{
+					if ($scope.project.faculty)
+					{
+						$scope.project.faculty.push({name: facultyname[i], email: facultyemail[i]});
+					}
+					else
+					{
+						$scope.project.faculty = [{name: facultyname[i], email: facultyemail[i]}];
+					}
+				}
+			}
+		}
+		
+		var mentorname;
+		var mentoremail;
+		function updateMentorNames(nameList)
+		{
+			if (nameList)
+			{
+			var names = nameList.split(', ');
+			console.log(names);
+			var temp = [];
+			names.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			mentorname = temp;
+			}
+		}
+		
+		
+		function updateMentorEmails(emailList)
+		{
+			if (emailList){
+			var emails = emailList.split(', ');
+			console.log(emails);
+			var temp = [];
+			emails.forEach(function (obj)
+			{
+				temp.push(obj);
+			});
+			mentoremail = temp;
+			}
+		}
+		
+		function updateMentor()
+		{
+			
+			
+			if (mentorname && mentoremail)
+			{
+				$scope.project.mentor = [];
+				for (var i = 0; i < mentorname.length; i++)
+				{
+					if ($scope.project.mentor)
+					{
+						$scope.project.mentor.push({name: mentorname[i], email: mentoremail[i]});
+					}
+					else
+					{
+						$scope.project.mentor = [{name: mentorname[i], email: mentoremail[i]}];
+					}
+				}
+			}
+		}
+
+
+        //function updateProjectMembers()
+        //{
+        //	if($scope.project.owner_name && $scope.project.owner_email)
+		//	{
+		//		$scope.project.members = profile._id; 
+		//		$scope.project.owner_email = profile.email;
+		//		$scope.project.owner_rank = profile.userType;
+		//		$scope.project.owner_name = profile.firstName + " " + profile.lastName;
+		//	}
+        //}
+
+        
+        
+        function ProcessVideoURL(VideoURL)
+        {
+            // format the youtube videos correctly
+            // input: https://www.youtube.com/watch?v=uQ_DHRI-Xp0
+            // output: https://www.youtube.com/v/watch?v=uQ_DHRI-Xp0
+			if (VideoURL) {
+				if (VideoURL.indexOf("youtube.com") > -1)
+				{
+					videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
+					updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
+					console.log("Filtered url: " + updatedVideoURL);
+					return updatedVideoURL;
+				}
+				
+				else
+				{
+					return VideoURL;
+				}
+			}
+			else {
+				return "";
 			}
         }
+
 
     });
