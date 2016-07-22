@@ -5,6 +5,7 @@ angular
         var vm = this;
 		var profile;
 		$scope.done = false;
+		$scope.joinAs = "fac";
 		
 		ProfileService.loadProfile().then(function(data)
 		{
@@ -401,12 +402,14 @@ angular
 					alert('Please select the type of person you would like to join the project as!');
 					return;
 				}
+
 				
 				
 				ProjectService.editProject(project,project._id).then(
 					   function(response){
 						 // success callback
 						 success_msg();
+
 						
 						
 						var email_msg = 
