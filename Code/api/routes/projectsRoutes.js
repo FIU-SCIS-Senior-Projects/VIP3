@@ -136,6 +136,10 @@ module.exports = function(app, express) {
 				proj.status = req.body.status;
 				proj.faculty = req.body.faculty;
 				proj.mentor = req.body.mentor;
+				proj.owner_name = req.body.owner_name;
+				proj.owner_email = req.body.owner_email;
+				proj.old_project = req.body.old_project;
+				console.log("Old Project: " + proj.old_project);
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
                 if(req.body.disciplines!=="") proj.disciplines = req.body.disciplines;
@@ -246,6 +250,7 @@ module.exports = function(app, express) {
 						return res.send(err);
 					}
 					proj.status = 'Active';
+					proj.old_project = undefined;
 					proj.save(function(err){
 						if(err)  {
 							res.status(400);

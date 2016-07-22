@@ -34,9 +34,15 @@
 			User.getByEmail(vm.data.members[index]).then(function(res) {
 				$state.go('viewProfile',{user_id: res.data, project_id: vm.data._id});
 			});
-			
-			
 		}
+		
+		 vm.redirect2 = function(email) {
+			
+			User.getByEmail(email).then(function(res) {
+				$state.go('viewProfile',{user_id: res.data, project_id: vm.data._id});
+			});
+		}
+		
         $scope.go = function ( path ) {
           alert(path);
           $location.path( path );
@@ -59,11 +65,20 @@
         
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){
-                vm.data = data;
+				if (data.old_project && data.old_project.length > 0) {
+					vm.data = data.old_project[0];
+				}
+				else {
+					vm.data = data;
+				}	
 				ProfileService.loadProfile().then(function(data){
 					profile = data;
 					if (profile) {
-						vm.already_joined = vm.data.members.includes(profile.email);
+						if (vm.data.members)
+							vm.already_joined = vm.data.members.includes(profile.email);
+						else {
+							vm.already_joined = false;
+						}
 						console.log(vm.already_joined);
 					}
 					else {

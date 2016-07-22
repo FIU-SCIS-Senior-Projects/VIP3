@@ -5,6 +5,14 @@
     <h2>Team Proposal Form</h2>
 	<p style="color:orange;"><strong>{{result}}</strong></p>
     <form role="form">
+		<div class="form-group">
+            <label>Product Owner (if left blank it will place you as product owner)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_name" required="False">
+        </div>
+        <div class="form-group">
+            <label>Email of Product Owner (if product owner not blank an email must be provided)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_email" required="False">
+        </div>
         <div class="form-group">
             <label>*Team Title</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
@@ -42,11 +50,11 @@
         </div>
         <div class="form-group">
             <label>Github link</label>
-            <input type="text" ng-model="project.github_url" ng-model="github_url" class="form-control" disabled />
+            <input type="text" ng-model="project.github_url"  class="form-control"/>
         </div>
         <div class="form-group">
             <label>Google Drive link</label>
-            <input type="text" ng-model="project.drive_link" ng-model="drive_url" class="form-control" disabled />
+            <input type="text" ng-model="project.drive_url" class="form-control" />
         </div>
         <div class="form-group">
             <label>*Minimum number of students:</label>

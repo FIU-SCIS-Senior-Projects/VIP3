@@ -135,7 +135,7 @@ angular.module('routes', ['ui.router'])
 						$window.location = "/#/" + url;
 					}
 					else {
-						$state.go('/');
+						$window.location = "/#/";
 					}
 				}
             })

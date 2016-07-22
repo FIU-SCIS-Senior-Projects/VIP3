@@ -21,8 +21,9 @@
         </div>
 
         <div class="col-md-3 sidebar-container">
-
             <div class="col-md-12">
+             <a target="_blank" href="{{vm.data.github_url}}"><i ng-hide="!(vm.data.github_url)" class="fa fa-github social-icon" aria-hidden="true"></i></a>
+             <a target="_blank" href="{{vm.data.drive_url}}"><i ng-hide="!(vm.data.drive_url)" class="fa fa-google social-icon" style="margin-left: 10px;" aria-hidden="true"></i></a>
                     <h4>Project Owners</h4>
                 <div>
                     <ul class="student-list">
@@ -38,7 +39,8 @@
                     <h4>Faculty</h4>
                 <div>
 					<ul class="student-list" ng-repeat="faculty in vm.data.faculty track by $index">
-					<li><p>{{faculty.name}}
+					<li class="student-in-list">
+                    <a ng-click="vm.redirect2(faculty.email)">{{faculty.name}}</a>
 					<a href="/#/sendmessage/{{faculty.email}}/0/1">
 					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
 					</a>
@@ -48,7 +50,8 @@
                     <h4>Mentor</h4>
 				<div>
 					<ul class="student-list" ng-repeat="mentor in vm.data.mentor track by $index">
-					<li><p>{{mentor.name}}
+					<li class="student-in-list">
+                    <a ng-click="vm.redirect2(mentor.email)">{{mentor.name}}</a>
 					<a href="/#/sendmessage/{{mentor.email}}/0/1">
 					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
 					</a>
@@ -68,7 +71,8 @@
                 </div>
 
             </div>
-
+            
+            <div class="sidebar-bottom-wrap">
              <div class="col-sm-12">
                     <h4>Options</h4>
             </div>
@@ -95,6 +99,7 @@
 
             <div class="btn btn-primary" ng-click="vm.deleteProject()" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'"> 
                 <strong>Delete</strong>
+            </div>
             </div>
         </div>
 </div>
