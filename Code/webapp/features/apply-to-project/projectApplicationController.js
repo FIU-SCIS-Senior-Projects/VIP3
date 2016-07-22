@@ -5,6 +5,7 @@ angular
         var vm = this;
 		var profile;
 		$scope.done = false;
+		$scope.joinAs = "fac";
 		
 		ProfileService.loadProfile().then(function(data)
 		{
@@ -225,11 +226,30 @@ angular
 			profile.joined_project = false;
 			User.update({user: profile});
 			
-			project.members[project.members.length] = vm.email;
-			project.members_detailed[project.members_detailed.length] = profile.firstName + " " + profile.lastName;
+			// if(profile.userType == 'Pi/CoPi' || profile.userType == 'Staff/Faculty')
+			// {}
+			if($scope.joinAs == "fac")
+			{
+				console.log("This is Faculty");
+				project.faculty_members[project.faculty_members.length] = profile.firstName + " " + profile.lastName;
+			}
+			else if($scope.joinAs == "mentor")
+			{
+				console.log("This is Mentor");
+				project.mentor_members[project.mentor_members.length] = profile.firstName + " " + profile.lastName;
+			}
+			else
+			{
+				console.log("This is Student");
+				project.members[project.members.length] = vm.email;
+				project.members_detailed[project.members_detailed.length] = profile.firstName + " " + profile.lastName;
+			}
+
+			console.log("Adding the members");
 			ProjectService.editProject(project,project._id).then(
 				   function(response){
 					 // success callback
+					 console.log("We added the members");
 					 success_msg();
 					 var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for applying for the project titled " + project.title + ". You will have to be approved first so please check for future notifaction and emails regarding the status of joining the project.", type: "personal", link: "#" };
 					ToDoService.createTodo(todo).then(function(success)  {

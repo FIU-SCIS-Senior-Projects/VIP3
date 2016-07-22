@@ -23,6 +23,25 @@
                             </select>
                         </td>
                     </tr>
+
+                    <tr ng-show="projApp.type == 'Pi/CoPi' || projApp.type == 'Staff/Faculty'">
+                        <td colspan="4">
+
+                            <label>Are you joining this project as a:</label>
+                            <div class="btn-group" data-toggle="buttons">
+                              <label class="btn btn-primary active">
+                                <input type="radio" ng-model="joinAs" value="stu" id="stu_opt" autocomplete="off"> Student
+                              </label>
+                              <label class="btn btn-primary">
+                                <input type="radio" ng-model="joinAs" value="fac" id="fac_opt" autocomplete="off" checked> Faculty
+                              </label>
+                              <label class="btn btn-primary">
+                                <input type="radio" ng-model="joinAs" value="mentor" id="mentor_opt" autocomplete="off"> Mentor
+                              </label>
+                            </div>
+                        </td>
+                    </tr>
+
                     <tr>
                         <td>
                             <input type="text" ng-model="projApp.firstName" class="form-control" Required="True" ng-readonly="true">
