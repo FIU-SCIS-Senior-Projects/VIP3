@@ -50,7 +50,7 @@
 				<div>
 					<ul class="student-list" ng-repeat="mentor in vm.data.mentor track by $index">
 					<li class="student-in-list">
-                    <a ng-click="vm.redirect($index)">{{mentor.name}}</a>
+                    <a ng-click="vm.redirect2(mentor.email)">{{mentor.name}}</a>
 					<a href="/#/sendmessage/{{mentor.email}}/0/1">
 					<i class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
 					</a>
