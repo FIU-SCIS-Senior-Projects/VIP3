@@ -28,7 +28,7 @@
                 </span>
                 <input type="text" class="form-control disciplines" aria-label="..." value="Show All" readonly>
             </div>
-            <h5 style="float: left;">Showing {{vm.projects.length}} out of {{vm.backupProjects.length}}</h5>
+            <h5 style="float: left;">Showing {{vm.filteredprojects.length}} out of {{vm.backupProjects.length}}</h5>
         </div>
         <div class="col-sm-12">
             <div class="btn"><h4>Disciplines</h4></div>
@@ -44,78 +44,23 @@
     </div> -->
     <!-- Project cards here -->
     
-  <button ng-show="vm.userTypeNew == 'Pi/CoPi'" id="searchbutton" type="button" style= "width: 180px;" name="answer" class="btn btn-primary" ng-click="vm.ShowDiv()"/>{{vm.SearchMessage}}</button><br><br>
-        <div id="vlad_new" class="row" style="display:none;">
-            <div class="col-md-4 panel panel-default" style="height: 420px;">
+            <div class="col-md-4 panel panel-default" style="height: 120;">
 
             <table class="table">
             <tr>
                 <th>
-                    <b>Filter Users:
-                    <p><input type="checkbox" ng-model="usertype">UserType:<select class="form-control" ng-model="selectedusertype" ng-options="typerank as typerank.name for typerank in vm.typeranks" value="{{vm.getRank(selectedusertype)}}"></select></input></p>
-                    <p><input type="checkbox" ng-model="userrank">UserRank:<select class="form-control" ng-model="selecteduserrank" ng-options="rank for rank in vm.filteredrank"></select></input></p>
-                    <p><input type="checkbox" ng-model="userproject">Project:<select class="form-control" ng-model="selecteduserproject" ng-options="projects as projects.title for projects in vm.projects" value="{{vm.getStudents(SelectedProject)}}"></select></input></p>
-                    <p><input type="checkbox" ng-model="unconfirmed">Unconfirmed Email</input></p>
-                    <p><input type="checkbox" ng-model="gmail">Gmail Login</input></p>
-                    <p><input type="checkbox" ng-model="mentor">Mentor</input></p>
-                    <p><input type="checkbox" ng-model="multiple">Multiple Projects</input></p>
+                    <b>
+                    <p><input type="hidden" ng-model="userproject">Filter Projects By:<select class="form-control" ng-model="selectedFilter" ng-options="projects as projects.name for projects in vm.filters" ng-change="applyFilter()"></select></input></p>
                 </th>
-            </tr>
-            <tr>
-            <th>
-            <button style= "text-align: center;" class="btn btn-primary" ng-click="vm.filterUsers(usertype,userrank,unconfirmed,gmail,mentor,multiple,selectedusertype,selecteduserrank, selecteduserproject, userproject)">Lookup</button>
-            <button style= "text-align: center;" class="btn btn-primary" ng-click="vm.messageAllUsers()">Message All</button>
-            <button style= "text-align: center;" class="btn btn-primary" ng-click="vm.clearUsers()">Clear Recipients</button>
-            </th>
             </tr>
             </table>
             
             </div>
-
-            <div class="col-md-4 panel panel-default"  style="height: 392px; overflow:scroll;">
-        
-                <table class="table">
-                <tr>
-                    <th>
-                        <b>List of Users (Click to View their Profile):
-                    </th>
-                    <tr ng-repeat="user in vm.filteredusers track by $index">
-                    <td><button class="btn btn-info btn-block" ng-click="vm.currentview(user)">{{user.firstName + " " +user.lastName}}</button></td>
-                </tr>
-                
-                </table>
-        
-            </div>
-            <div class="col-md-4 panel panel-default" style="height: 392px;">
-        
-            <table class="table">
-            <tr>
-                <th>
-                    <b>Detailed User Info:</b>
-                </th>
-            </tr>
-            <tr >
-                <th ng-if="!vm.currentuserview"><center><h1>No User Selected</h1></center></th>
-                <th ng-repeat="user in vm.currentuserview">
-                    <p><b>Name: {{user.firstName}} {{user.lastName}} </b></p>	
-                    <p><b>Gender: {{user.gender}} </b></p>
-                    <p><b>UserType: {{user.userType}} </b></p>
-                    <p><b>UserRank: {{user.userRank}} </b></p>
-                    <p><b>Email: {{user.email}} </b></p>	
-                    <p><b>Department: {{user.department}} </b></p>	
-                    <p><b>College: {{user.college}} </b></p>	
-                    <p><b>Project: {{user.project}} </b></p>
-                    <button class="btn btn-info btn-block" ng-click="vm.updateUsers(user.email)">Message {{user.firstName}} {{user.lastName}}</button>
-                </th>
-            </tr>
-            </table>
-        
-        </div>
-    </div>
     
+        <br><br><br><br><br><br>
 		<center ng-hide="vm.done"><img ng-hide="vm.done" width="30%" height="30%" src="img/loading.gif"/></center>
         
-        <div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.projects | filter: { status: 'Active' }" ng-click="vm.viewDetails(project)">
+        <div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.filteredprojects | filter: { status: 'Active' }" ng-click="vm.viewDetails(project)">
             <div class="proj-info-box">
                 <img ng-src="{{project.image}}" alt="{{project.title}}" class="proj-image">
                 <h3 class="proj-title-teams">{{project.title}}</h3>
@@ -124,7 +69,7 @@
             </div>
         </div>
 		
-		<div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.projects | filter: { status: 'modified' }" ng-click="vm.viewDetails(project.old_project[0])">
+		<div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.filteredprojects | filter: { status: 'modified' }" ng-click="vm.viewDetails(project.old_project[0])">
             <div class="proj-info-box">
                 <img ng-src="{{project.old_project[0].image}}" alt="{{project.old_project[0].title}}" class="proj-image">
                 <h3 class="proj-title-teams">{{project.old_project[0].title}}</h3>

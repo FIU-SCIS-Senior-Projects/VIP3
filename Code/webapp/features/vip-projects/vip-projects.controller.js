@@ -10,6 +10,7 @@
     function VIPProjectsCtrl($state, $scope, ProjectService) {
         //Variable Declarations
         var vm = this;
+        var projectsArray = [];
         vm.projects;
         vm.disciplines;
         vm.backupProjects;
@@ -21,7 +22,102 @@
         //Function Declarations
         vm.showAllDisciplinesToggle = showAllDisciplinesToggle; 
         vm.filterByDiscipline = filterByDiscipline;
-        vm.viewDetails = viewDetails; 
+        vm.viewDetails = viewDetails;
+        var selectedFilter = null;
+        vm.filteredprojects;
+        
+        vm.filters = [
+            {
+                name: 'Show All Projects',
+            },
+            {
+                name: 'Open and Joinable Projects',
+            },
+            {
+                name: 'Full and Non-Joinable Projects',
+            },
+            {
+                name: 'Reverse Alphabetical (Z-A)',
+            },
+            {
+                name: 'Active Projects',
+            }
+        ];
+        
+        $scope.applyFilter = function()
+        {
+            selectedFilter = $scope.selectedFilter.name;
+            
+            //alert("we select the filter " + selectedFilter);
+            
+            switch (selectedFilter)
+            {
+                case 'Active Projects':
+                    //alert('actives');
+                    projectsArray = [];
+                    vm.projects.forEach(function (obj)
+                    {
+                        // user is in project we selected
+                        if (obj.status == "Active")
+                        {
+                            projectsArray.push(obj);
+                            //alert(obj.title);
+                        }
+                    });
+                    
+                    vm.filteredprojects = projectsArray;
+                    break;
+                
+                case 'Reverse Alphabetical (Z-A)':
+                    var tempProj = [];
+                    tempProj = vm.projects;
+                    tempProj.sort(function(a, b)
+                    {
+                        if (a.title > b.title) return -1;
+                        if (a.title < b.title) return 1;
+                        return 0;
+                    })
+                    
+                    vm.filteredprojects = tempProj;
+                    break;
+                    
+                case 'Open and Joinable Projects':
+                    projectsArray = [];
+                    vm.projects.forEach(function (obj)
+                    {                       
+                        if (obj.members.length < obj.maxStudents)
+                        {
+                            projectsArray.push(obj);
+                        }
+                    });
+                    
+                    vm.filteredprojects = projectsArray;
+                    break;
+                
+                case 'Full and Non-Joinable Projects':
+                    projectsArray = [];
+                    vm.projects.forEach(function (obj)
+                    {                       
+                        if (obj.members.length >= obj.maxStudents)
+                        {
+                            projectsArray.push(obj);
+                        }
+                    });
+                    
+                    vm.filteredprojects = projectsArray;
+                    break;
+                    
+                case 'Show All Projects':
+                    vm.filteredprojects = vm.projects;
+                    break;
+                
+                default:
+                    alert('no filter for this option');
+                    //$location.url('/#en');
+            }
+            //$translate.use(langKey);
+          }
+        
         
         init();
         function init(){
@@ -40,6 +136,7 @@
                 bubbleSort(data, 'title');
                 vm.disciplines = getDisciplines(data);
                 vm.projects = data;
+                vm.filteredprojects = data;
                 vm.backupProjects = vm.projects;
                 vm.backupDisciplines = vm.disciplines;
 				vm.done = true;
