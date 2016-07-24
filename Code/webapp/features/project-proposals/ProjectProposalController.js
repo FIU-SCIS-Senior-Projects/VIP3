@@ -160,6 +160,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		$scope.updateFacultyNames = updateFacultyNames;
 		$scope.updateMentorEmails = updateMentorEmails;
 		$scope.updateMentorNames = updateMentorNames;
+		$scope.updateStudentNames = updateStudentNames;
+		$scope.updateStudentEmails = updateStudentEmails;
 
         init();
         function init () {
@@ -178,8 +180,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				old_project = JSON.parse(JSON.stringify(data)); // Make a new reference to avoid a circular reference.
 				$scope.SelectedFacultyNames = "";
 				$scope.SelectedMentorNames = "";
+				$scope.SelectedStudentNames = "";
 				$scope.SelectedFacultyEmails = "";
 				$scope.SelectedMentorEmails = "";
+				$scope.SelectedStudentEmails = "";
 				for(i = 0; i < $scope.project.faculty.length; i++) {
 					if (i != $scope.project.faculty.length - 1) {
 						$scope.SelectedFacultyNames += $scope.project.faculty[i].name + ", ";
@@ -200,6 +204,16 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 						$scope.SelectedMentorEmails += $scope.project.mentor[i].email;
 					}
 				}
+				for(i = 0; i < $scope.project.addedStudents.length; i++) {
+					if (i != $scope.project.addedStudents.length - 1) {
+						$scope.SelectedStudentNames += $scope.project.addedStudents[i].name + ", ";
+						$scope.SelectedStudentEmails += $scope.project.addedStudents[i].email + ", ";
+					}
+					else {
+						$scope.SelectedStudentNames += $scope.project.addedStudents[i].name;
+						$scope.SelectedStudentEmails += $scope.project.addedStudents[i].email;
+					}
+				}
 				
             });
         }
@@ -210,6 +224,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 			
 			updateFaculty();
 			updateMentor();
+			updateStudent();
 			
 			
 			if (!$scope.project.owner_name && !$scope.project.owner_email) {
@@ -567,6 +582,68 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 			}
 		}
 
+		
+		var studentname;
+		var studentemail;
+		function updateStudentNames(nameList)
+		{
+			if (nameList)
+			{
+				var names = nameList.split(', ');
+				console.log(names);
+				var temp = [];
+				names.forEach(function (obj)
+				{
+					temp.push(obj);
+				});
+				studentname = temp;
+			}
+			else {
+				studentname = null;
+			}
+		}
+		
+		
+		function updateStudentEmails(emailList)
+		{
+			if (emailList){
+				var emails = emailList.split(', ');
+				console.log(emails);
+				var temp = [];
+				emails.forEach(function (obj)
+				{
+					temp.push(obj);
+				});
+				studentemail = temp;
+			}
+			else {
+				studentemail = null;
+			}
+		}
+		
+		function updateStudent()
+		{
+			
+			
+			if (studentname && studentemail)
+			{
+				$scope.project.addedStudents = [];
+				for (var i = 0; i < mentorname.length; i++)
+				{
+					if ($scope.project.addedStudents)
+					{
+						$scope.project.addedStudents.push({name: studentname[i], email: studentemail[i]});
+					}
+					else
+					{
+						$scope.project.addedStudents = [{name: studentname[i], email: studentemail[i]}];
+					}
+				}
+			}
+			else {
+				$scope.project.addedStudents = [];
+			}
+		}
 
         //function updateProjectMembers()
         //{

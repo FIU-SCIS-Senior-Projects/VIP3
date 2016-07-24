@@ -20,6 +20,7 @@ var ProjectSchema = new Schema({
     majPrepInt: [String],
     faculty: [{name: String, email: String}],
     mentor: [{name: String, email: String}],
+	addedStudents: [{name: String, email: String}], //Students added to project by pi
     members: [String],
 	members_detailed: [String],
     contact: [{name: String, phone: String, email: String, office: String}],

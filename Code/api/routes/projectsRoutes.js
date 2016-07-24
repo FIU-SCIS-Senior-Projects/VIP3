@@ -136,6 +136,7 @@ module.exports = function(app, express) {
 				proj.status = req.body.status;
 				proj.faculty = req.body.faculty;
 				proj.mentor = req.body.mentor;
+				proj.addedStudents = req.body.addedStudents;
 				proj.owner_name = req.body.owner_name;
 				proj.owner_email = req.body.owner_email;
 				proj.old_project = req.body.old_project;

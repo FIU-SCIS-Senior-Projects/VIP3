@@ -48,6 +48,12 @@
             Email:  <input type="text" class="form-control" ng-model="SelectedMentorEmails" placeholder="michael@fiu.edu, johnny@yahoo.com, daniel@gmail.com" value="{{updateMentorEmails(SelectedMentorEmails)}}" />
             <small><i>Note: Separate each with commas followed by one space!</i></small>
         </div>
+		<div class="form-group">
+            <label>Add Students</label><br>
+            Name:  <input type="text" class="form-control" ng-model="SelectedStudentNames" placeholder="Michael Smith, Johnny Stuart, Daniel Riveron" value="{{updateStudentNames(SelectedStudentNames)}}" />
+            Email:  <input type="text" class="form-control" ng-model="SelectedStudentEmails" placeholder="michael@fiu.edu, johnny@yahoo.com, daniel@gmail.com" value="{{updateStudentEmails(SelectedStudentEmails)}}" />
+            <small><i>Note: Separate each with commas followed by one space!</i></small>
+        </div>
         <div class="form-group">
             <label>Github link</label>
             <input type="text" ng-model="project.github_url"  class="form-control"/>
