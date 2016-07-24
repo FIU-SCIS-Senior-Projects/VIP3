@@ -22,6 +22,7 @@
         });
 
         function acceptProfile () {
+			loading();
             vm.profile.piApproval = true;
             vm.profile.isDecisionMade = true;
             vm.profile.__v = 1;
@@ -48,6 +49,7 @@
         }
         
         function rejectProfile () {
+			loading();
             vm.profile.piApproval = false;
             vm.profile.piDenial = true;
             vm.profile.isDecisionMade = true;
@@ -57,7 +59,19 @@
             reviewRegService.rejectProfile(vm.profile).then(function(data){
             });
             reject_msg();
+
         }
+		
+		function loading() {
+			swal({   
+               title: '',
+			   text: 'Loading Please Wait...',
+			   html: true,
+			   timer: 10000,   
+			   showConfirmButton: false
+            }
+            );
+		}
 
         function success_msg()
          {

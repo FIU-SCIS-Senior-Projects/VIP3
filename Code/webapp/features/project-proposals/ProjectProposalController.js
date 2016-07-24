@@ -206,6 +206,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
         $scope.save = function save() {
 
+			loading();
 			
 			updateFaculty();
 			updateMentor();
@@ -401,6 +402,17 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
               vm.disciplines.push(majors);
             }
         };
+		
+		function loading() {
+			swal({   
+               title: '',
+			   text: 'Loading Please Wait...',
+			   html: true,
+			   timer: 10000,   
+			   showConfirmButton: false
+            }
+            );
+		}
 		
 		 function error_msg()
          {

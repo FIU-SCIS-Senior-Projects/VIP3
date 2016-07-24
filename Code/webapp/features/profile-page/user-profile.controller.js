@@ -32,7 +32,7 @@
         // save changes to profile
 		function updateProfile () {
 			
-			
+			loading();
 
 			var obj = document.getElementById('profileImage');
 			if (obj.files.length == 0) 
@@ -244,6 +244,17 @@
             }
             );
         };
+		
+		function loading() {
+			swal({   
+               title: '',
+			   text: 'Loading Please Wait...',
+			   html: true,
+			   timer: 10000,   
+			   showConfirmButton: false
+            }
+            );
+		}
 
         function success_msg_student()
          {

@@ -113,7 +113,7 @@
         </div>
     </div>
     
-		<center ng-hide="vm.done"><img ng-hide="vm.done" width="30%" height="30%" src="img/loading.gif"/></center>
+		
         
         <div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.projects | filter: { status: 'Active' }" ng-click="vm.viewDetails(project)">
             <div class="proj-info-box">

@@ -207,6 +207,8 @@ angular
 
         vm.save = function() {
 			
+			loading();
+			
 			if (!$scope.guest) {
 			
 				vm.profile.rank = vm.rank;
@@ -280,8 +282,7 @@ angular
 							// setTimeout(function () { location.reload(true); }, 7000);
 					   }, 
 					   function(response){
-						 // failure callback
-						 vm.message = response.data;
+						  msg("Cannot Apply Reason:", response.data);
 					   }
 					);
 				}
@@ -333,8 +334,7 @@ angular
 							// setTimeout(function () { location.reload(true); }, 7000);
 					   }, 
 					   function(response){
-						 // failure callback
-						 vm.message = response.data;
+						  msg("Cannot Apply Reason:", response.data);
 					   }
 					);
 				}
@@ -427,8 +427,7 @@ angular
 						// setTimeout(function () { location.reload(true); }, 7000);
 				   }, 
 				   function(response){
-					 // failure callback
-					 vm.message = response.data;
+					  msg("Cannot Apply Reason:", response.data);
 				   }
 				);
 				
@@ -437,6 +436,31 @@ angular
 			}
 			
         };
+		
+		function loading() {
+			swal({   
+               title: '',
+			   text: 'Loading Please Wait...',
+			   html: true,
+			   timer: 10000,   
+			   showConfirmButton: false
+            }
+            );
+		}
+		
+		function msg(title, text) {
+			swal({   
+                title: title,   
+                text: text,   
+                type: "success",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 7000,
+            }, function () {
+                window.location.reload();
+            }
+            );
+		}
 
          function success_msg()
          {

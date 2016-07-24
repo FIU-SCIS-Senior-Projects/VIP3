@@ -74,6 +74,7 @@
 		function ApproveData(pid, members, userid,name,user)
 		{
            
+			loading();
 			//reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
 			//	$scope.result = "Approved";
 				
@@ -114,7 +115,7 @@
 		
 		function RejectData(pid, members,members_detailed,userid,name, user)
 		{
-            
+            loading();
 			reviewStudentAppService.RemoveFromProject(pid, members, {detailed: members_detailed }).then(function(data){
 				$scope.result = "Rejected";
 				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "/#/to-do" };
@@ -148,6 +149,8 @@
 		
 		function UndoStudent(log)
 		{
+			
+			loading();
 			if (log.action == "Rejected")
 			{
 				//check if original user is in project first
@@ -251,6 +254,18 @@
 				logdelete_msg()
 			}, function(error) {
 			});
+		}
+		
+		
+		function loading() {
+			swal({   
+               title: '',
+			   text: 'Loading Please Wait...',
+			   html: true,
+			   timer: 10000,   
+			   showConfirmButton: false
+            }
+            );
 		}
 		
 		function logdelete_msg()

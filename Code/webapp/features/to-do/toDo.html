@@ -16,7 +16,7 @@
         <div class="panel-heading">
             <h4><b>Email Messages</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="message in todo.list | filter:emptyOrNull | filter: message.type='message' | filter: message.read='false' | orderBy: todo.time | date:'medium'">
+        <ul class="list-group" ng-repeat="message in todo.list | filter:emptyOrNull | filter: message.type='message' | filter: message.read='false' | orderBy: -todo.time:true | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{message.link}}" ng-click="todo.markedAsRead(message)">
@@ -33,7 +33,7 @@
         <div class="panel-heading">
             <h4><b>General Messages</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="personal in todo.list | filter:emptyOrNull | filter: personal.type='personal' | filter: personal.read='false' | orderBy: todo.time | date:'medium'">
+        <ul class="list-group" ng-repeat="personal in todo.list | filter:emptyOrNull | filter: personal.type='personal' | filter: personal.read='false' | orderBy: -todo.time | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{personal.link}}" ng-click="todo.markedAsRead(personal)">
@@ -50,7 +50,7 @@
         <div class="panel-heading">
             <h4><b>User Account Registration Review</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="user in todo.list | filter:emptyOrNull |  filter: user.type='user' | filter: user.read='false' | orderBy: todo.time | date:'medium'">
+        <ul class="list-group" ng-repeat="user in todo.list | filter:emptyOrNull |  filter: user.type='user' | filter: user.read='false' | orderBy: -todo.time:true | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{user.link}}" ng-click="todo.markedAsRead(user)">
@@ -67,7 +67,7 @@
         <div class="panel-heading">
             <h4><b>Project Proposal Review</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="project in todo.list | filter:emptyOrNull | filter: project.type='project' | filter: project.read='false' | orderBy: todo.time | date:'medium'">
+        <ul class="list-group" ng-repeat="project in todo.list | filter:emptyOrNull | filter: project.type='project' | filter: project.read='false' | orderBy: -todo.time:true | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{project.link}}" ng-click="todo.markedAsRead(project)">
@@ -84,7 +84,7 @@
         <div class="panel-heading">
             <h4><b>Student Application Review</b></h4>
         </div>
-        <ul class="list-group" ng-repeat="student in todo.list | filter:emptyOrNull | filter: student.type='student' | filter: student.read='false' | orderBy: todo.time | date:'medium'">
+        <ul class="list-group" ng-repeat="student in todo.list | filter:emptyOrNull | filter: student.type='student' | filter: student.read='false' | orderBy: -todo.time:true | date:'medium'">
             <li class="list-group-item">
 				
                 <a ng-href="{{student.link}}" ng-click="todo.markedAsRead(student)">
