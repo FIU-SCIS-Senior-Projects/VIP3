@@ -246,7 +246,8 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 			if (obj.files.length == 0)
             {
 					
-				    $scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
+					if (!$scope.project.image)
+						$scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
 					if(!vm.editingMode){
 							
 							$scope.project.status='pending';
