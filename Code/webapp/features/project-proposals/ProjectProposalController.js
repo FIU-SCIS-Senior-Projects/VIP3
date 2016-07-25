@@ -629,7 +629,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 			if (studentname && studentemail)
 			{
 				$scope.project.addedStudents = [];
-				for (var i = 0; i < mentorname.length; i++)
+				for (var i = 0; i < studentname.length; i++)
 				{
 					if ($scope.project.addedStudents)
 					{
