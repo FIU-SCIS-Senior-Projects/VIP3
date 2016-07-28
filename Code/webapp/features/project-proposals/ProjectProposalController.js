@@ -1,3 +1,39 @@
+var image;
+
+
+function uploadImage2() {
+			
+			var obj = document.getElementById('teamImage');
+			var pI = document.getElementById('pI');
+			pI.max = 100;
+			pI.value = 0;	
+			if (obj.files.length == 0) 
+			{
+					
+			}
+			else 
+			{
+				pI.style.visibility = "visible";
+			
+				var f = obj.files[0];
+				var r = new FileReader();
+				r.onprogress = function(event) {
+					if (event.lengthComputable) {
+						pI.max = event.total;
+						pI.value = event.loaded;
+					}
+				};
+				r.onloadend = function(e)
+				{
+					
+					var dataURL = e.target.result;
+					image = dataURL;
+					
+				}
+				r.readAsDataURL(f);
+			}
+};
+
 
 angular.module('ProjectProposalController', ['ProjectProposalService', 'userService','toDoModule'])
     .controller('ProjectProposalController', function($window,$location,$scope, User, ProfileService, ProjectService, ToDoService, $stateParams, $rootScope){
@@ -241,171 +277,89 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
             $scope.project.video_url = ProcessVideoURL($scope.project.video_url);
             console.log("req_video_url global " + $scope.project.video_url);
 
-	
-			var obj = document.getElementById('teamImage');
-			if (obj.files.length == 0)
-            {
+			if (image) 
+				$scope.project.image = image;
+			else
+				$scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
+			
+			if(!vm.editingMode){
 					
-					if (!$scope.project.image)
-						$scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
-					if(!vm.editingMode){
+					$scope.project.status='pending';
+					ProjectService.createProject($scope.project)
+						.then(function(data){
+							success_msg();
 							
-							$scope.project.status='pending';
-							ProjectService.createProject($scope.project)
-								.then(function(data){
-									success_msg();
-                                    
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
-									ToDoService.createTodo(todo).then(function(success)  {
-										
-									}, function(error) {
-										
-									});
-									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
-									ToDoService.createTodo(todo2).then(function(success)  {
-										
-									}, function(error) {
-										
-									});
-                                    
-									var email_msg = 
-									{
-										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
-										subject: "Project Proposal Submission Pending", 
-										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
-										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
-									};
-
-									User.nodeEmail(email_msg);
-								}, function (error) {
-									$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
-								});
-					}
-					else {	
-							if (old_project) {
-								$scope.project.old_project = old_project;
-							}
-							$scope.project.status='modified';
-                            console.log("req_video_url modified " + $scope.project.video_url);
-							$scope.project.id = $stateParams.id;
-							$scope.project.edited = true;
-							ProjectService.editProject($scope.project, $stateParams.id)
-								.then(function(data){
-									success_msg();
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for editing the project proposal titled " + $scope.project.title + ". Your changes are currently under review, and you will be notified as soon as a decision to approve/deny them has been made. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
-									ToDoService.createTodo(todo).then(function(success)  {
-										
-									}, function(error) {
-										
-									});
-									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has edited an existing project titled: " + $scope.project.title +  ", please approve or deny the changes that were made.", type: "project", link: "/#/reviewproject" };
-									ToDoService.createTodo(todo2).then(function(success)  {
-										
-									}, function(error) {
-										
-									});
-                                    
-                                    // email should indicate that the project has been modified, not that it's a new proposal
-									var email_msg = 
-									{
-										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", please be patient while the edits that you have proposed for the project " + $scope.project.title + " are reviewed. Once a decision has been made to approve/reject your edits, you will be notified again via email.\n\nProject:" + $scope.project.title + "\nStatus: Modified-PendingReview" , 
-										subject: "Proposed Edits for " + $scope.project.title + " are being Reviewed", 
-										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",
-                                        subject2: "Faculty Has Edited the Existing Project " + $scope.project.title,
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has edited the existing project " + $scope.project.title +  ". Please review the edits to the project, and approve/deny the project by visiting the following link - http://vip.fiu.edu/#/reviewproject/"
-									};
-
-									User.nodeEmail(email_msg);
-									
-								}, function(error) {
-									$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
-								});
-					}
-			}
-			else {
-				
-				var f = obj.files[0],
-				r = new FileReader();
-				r.onloadend = function(e){
-					var dataURL = e.target.result;
-
-					$scope.project.image = dataURL;
-					if(!vm.editingMode){
+							var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
+							ToDoService.createTodo(todo).then(function(success)  {
+								
+							}, function(error) {
+								
+							});
+							var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
+							ToDoService.createTodo(todo2).then(function(success)  {
+								
+							}, function(error) {
+								
+							});
 							
-							$scope.project.status = 'pending';
-							ProjectService.createProject($scope.project)
-								.then(function(data){
-									success_msg();
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
-									ToDoService.createTodo(todo).then(function(success)  {
-										
-									}, function(error) {
-										
-									});
-									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
-									ToDoService.createTodo(todo2).then(function(success)  {
-										
-									}, function(error) {
-										
-									});
-									var email_msg = 
-									{
-										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
-										subject: "Project Proposal Submission Pending", 
-										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",   
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. You can do this by logging into VIP. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
-										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
-									};
-									User.nodeEmail(email_msg);
-								}, function (error) {
-									error_msg();
-								});
-					}
-					else{
-							if (old_project) {
-								$scope.project.old_project = old_project;
-							}
-							$scope.project.status='modified';
-							$scope.project.id = $stateParams.id;
-							$scope.project.edited = true;
-							ProjectService.editProject($scope.project, $stateParams.id)
-								.then(function(data){
-									success_msg();
-									var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for submitting project proposal titled " + $scope.project.title + ". Currently the project is pending approval wait till PI approves and you will recieve another notification here with the status. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
-									ToDoService.createTodo(todo).then(function(success)  {
-										
-									}, function(error) {
-										error_msg();
-										
-									});
-									var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval.", type: "project", link: "/#/reviewproject" };
-									ToDoService.createTodo(todo2).then(function(success)  {
-										
-									}, function(error) {
-										
-									});
-									var email_msg = 
-									{
-										recipient: profile.email, 
-										text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.s  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
-										subject: "Project Proposal Submission Pending", 
-										recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",  
-										text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
-										subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
-									};
-									User.nodeEmail(email_msg);
-								}, function(error) {
-									error_msg();
-								});
-					}
+							var email_msg = 
+							{
+								recipient: profile.email, 
+								text: "Dear " + profile.firstName + ", thank you for proposing " + $scope.project.title  + " your proposed project is currently pending and this is just a confirmation that you proposed the project please keep checking the VIP to-do or your email as the PI will approve or deny the project you have just proposed.\n\nProject:" + $scope.project.title + "\nStatus: Pending" , 
+								subject: "Project Proposal Submission Pending", 
+								recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu", 
+								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has proposed a project titled: " + $scope.project.title +  ", please approve or deny the project as it requires your approval. Approve Projects Here: http://vip.fiu.edu/#/reviewproject", 
+								subject2: "Faculty Has Proposed New Project: " + $scope.project.title 
+							};
 
-				}
-				r.readAsDataURL(f);
+							User.nodeEmail(email_msg);
+						}, function (error) {
+							$scope.result = "An Error Occured Whilst Submitting Project Proposal! REASON: " + error.data;
+						});
 			}
+			else {	
+					if (old_project) {
+						$scope.project.old_project = old_project;
+					}
+					$scope.project.status='modified';
+					console.log("req_video_url modified " + $scope.project.video_url);
+					$scope.project.id = $stateParams.id;
+					$scope.project.edited = true;
+					ProjectService.editProject($scope.project, $stateParams.id)
+						.then(function(data){
+							success_msg();
+							var todo = {owner: profile.userType , owner_id: profile._id, todo: profile.firstName + ", thank you for editing the project proposal titled " + $scope.project.title + ". Your changes are currently under review, and you will be notified as soon as a decision to approve/deny them has been made. If you have any question contact the PI.", type: "project", link: "/#/to-do" };
+							ToDoService.createTodo(todo).then(function(success)  {
+								
+							}, function(error) {
+								
+							});
+							var todo2 = {owner: "Pi/CoPi", todo: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has edited an existing project titled: " + $scope.project.title +  ", please approve or deny the changes that were made.", type: "project", link: "/#/reviewproject" };
+							ToDoService.createTodo(todo2).then(function(success)  {
+								
+							}, function(error) {
+								
+							});
+							
+							// email should indicate that the project has been modified, not that it's a new proposal
+							var email_msg = 
+							{
+								recipient: profile.email, 
+								text: "Dear " + profile.firstName + ", please be patient while the edits that you have proposed for the project " + $scope.project.title + " are reviewed. Once a decision has been made to approve/reject your edits, you will be notified again via email.\n\nProject:" + $scope.project.title + "\nStatus: Modified-PendingReview" , 
+								subject: "Proposed Edits for " + $scope.project.title + " are being Reviewed", 
+								recipient2: "dlope073@fiu.edu,mtahe006@fiu.edu,vlalo001@fiu.edu",
+								subject2: "Faculty Has Edited the Existing Project " + $scope.project.title,
+								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has edited the existing project " + $scope.project.title +  ". Please review the edits to the project, and approve/deny the project by visiting the following link - http://vip.fiu.edu/#/reviewproject/"
+							};
+
+							User.nodeEmail(email_msg);
+							
+						}, function(error) {
+							$.scope.result = "An Error Occured Whilst Submitting Project Proposal!";
+						});
+			}
+			
+			
         };
 
         $scope.toggleCheckbox = function toggleSelection(majors) {

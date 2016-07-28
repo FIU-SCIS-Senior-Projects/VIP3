@@ -1,5 +1,77 @@
+var image;
+
+var resume;
+
+function uploadImage() {
+			
+			var obj = document.getElementById('profileImage');
+			var pI = document.getElementById('pI');
+			pI.max = 100;
+			pI.value = 0;	
+			if (obj.files.length == 0) 
+			{
+					
+			}
+			else 
+			{
+				pI.style.visibility = "visible";
+			
+				var f = obj.files[0];
+				var r = new FileReader();
+				r.onprogress = function(event) {
+					if (event.lengthComputable) {
+						pI.max = event.total;
+						pI.value = event.loaded;
+					}
+				};
+				r.onloadend = function(e)
+				{
+					
+					var dataURL = e.target.result;
+					image = dataURL;
+					
+				}
+				r.readAsDataURL(f);
+			}
+};
+
+
+function uploadResume() {
+			
+			var obj2 = document.getElementById('profileResume');
+			var pR = document.getElementById('pR');
+			pR.max = 100;
+			pR.value = 0;	
+			if (obj2.files.length == 0) 
+			{
+			}
+			else
+			{
+					pR.style.visibility = "visible";
+					var f2 = obj2.files[0];
+					var r2 = new FileReader();
+					r2.onprogress = function(event) {
+						if (event.lengthComputable) {
+							pR.max = event.total;
+							pR.value = event.loaded;
+						}
+					};
+					r2.onloadend = function(e2)
+					{
+							var dataURL2 = e2.target.result;
+							resume = dataURL2;
+							
+					};
+					r2.readAsDataURL(f2);
+			}
+			
+};
+
+
 (function () {
     'use strict';
+	
+	
 
     angular
         .module('user-profile', ['userService'])
@@ -14,6 +86,8 @@
         vm.image = "";
 		vm.updateProfile = updateProfile;
 		vm.destroyAccount = destroyAccount;
+	
+		
 		var currRank;
 
         init();
@@ -33,158 +107,39 @@
 		function updateProfile () {
 			
 			loading();
+			
+			if (image)
+				vm.profile.image = image;
+			if (resume)
+				vm.profile.resume = resume;
 
-			var obj = document.getElementById('profileImage');
-			if (obj.files.length == 0) 
+			ProfileService.saveProfile(vm.profile).then(function(data)
 			{
-				var obj2 = document.getElementById('profileResume');
-					
-					if (obj2.files.length == 0) 
-					{
-						ProfileService.saveProfile(vm.profile).then(function(data)
-						{
-						
-							// user is trying to change the userType, which may need approval
-							if (vm.profile.userType != currRank)
-							{
-								// however, Pi/CoPi/Coordinators can update the profile without approval
-								if (vm.profile.isSuperUser)
-								{
-									success_msg();
-								}
-
-								// otherwise, this requested userType change needs approval
-								else
-								{
-									success_msg_student();
-								}
-							}
-
-							// changing anything else doesnt need approval
-							else
-							{
-								success_msg();
-							}
-						});
-					}
-					else 
-					{
-						var f2 = obj2.files[0];
-						var r2 = new FileReader();
-						r2.onloadend = function(e2)
-						{
-							var dataURL2 = e2.target.result;
-							vm.profile.resume = dataURL2;
-							ProfileService.saveProfile(vm.profile).then(function(data)
-							{
-							
-								// user is trying to change the userType, which may need approval
-								if (vm.profile.userType != currRank)
-								{
-									// however, Pi/CoPi/Coordinators can update the profile without approval
-									if (vm.profile.isSuperUser)
-									{
-										success_msg();
-									}
-
-									// otherwise, this requested userType change needs approval
-									else
-									{
-										success_msg_student();
-									}
-								}
-
-								// changing anything else doesnt need approval
-								else
-								{
-									success_msg();
-								}
-							});
-						}
-						r2.readAsDataURL(f2);
-					}
-			}
-			else 
-			{
-				var f = obj.files[0];
-				var r = new FileReader();
-				r.onloadend = function(e)
+			
+				// user is trying to change the userType, which may need approval
+				if (vm.profile.userType != currRank)
 				{
-					
-					var dataURL = e.target.result;
-					vm.profile.image = dataURL;
-					
-					
-					var obj2 = document.getElementById('profileResume');
-					
-					if (obj2.files.length == 0) 
+					// however, Pi/CoPi/Coordinators can update the profile without approval
+					if (vm.profile.isSuperUser)
 					{
-						ProfileService.saveProfile(vm.profile).then(function(data)
-						{
-						
-							// user is trying to change the userType, which may need approval
-							if (vm.profile.userType != currRank)
-							{
-								// however, Pi/CoPi/Coordinators can update the profile without approval
-								if (vm.profile.isSuperUser)
-								{
-									success_msg();
-								}
-
-								// otherwise, this requested userType change needs approval
-								else
-								{
-									success_msg_student();
-								}
-							}
-
-							// changing anything else doesnt need approval
-							else
-							{
-								success_msg();
-							}
-						});
+						success_msg();
 					}
-					else {
-						var f2 = obj2.files[0];
-						var r2 = new FileReader();
-						r2.onloadend = function(e2)
-						{
-							var dataURL2 = e2.target.result;
-							vm.profile.resume = dataURL2;
-							ProfileService.saveProfile(vm.profile).then(function(data)
-							{
-							
-								// user is trying to change the userType, which may need approval
-								if (vm.profile.userType != currRank)
-								{
-									// however, Pi/CoPi/Coordinators can update the profile without approval
-									if (vm.profile.isSuperUser)
-									{
-										success_msg();
-									}
 
-									// otherwise, this requested userType change needs approval
-									else
-									{
-										success_msg_student();
-									}
-								}
-
-								// changing anything else doesnt need approval
-								else
-								{
-									success_msg();
-								}
-							});
-						}
-						r2.readAsDataURL(f2);
+					// otherwise, this requested userType change needs approval
+					else
+					{
+						success_msg_student();
 					}
-					
-					
 				}
-				r.readAsDataURL(f);
-			}
+
+				// changing anything else doesnt need approval
+				else
+				{
+					success_msg();
+				}
+			});
+					
+			
 			
 		}
 
