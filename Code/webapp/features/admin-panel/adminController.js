@@ -54,8 +54,9 @@
 		vm.currentUser = function(user) { vm.cuser = user; }
 		vm.currentProject = function(project) {  vm.cproject = project; }
 		vm.sw = ChangeUserProject;
+		vm.sc = ClearProject;
 		
-        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student'];
+        vm.usertype = ['Staff/Faculty' , 'Pi/CoPi', 'Student', 'Undefined'];
 		
 		vm.getProjectTitle = function (email) {
 			if (email) {
@@ -109,8 +110,13 @@
                     'PhD',
                     'postDoc'
                 ]
+            },
+			{
+                name: 'Undefined',
+                ranks: [
+                    'Undefined'
+                ]
             }
-
         ];
 		
 		function getRank(usertype)
@@ -161,9 +167,10 @@
 		//Loads all project information for active projects
 		function loadProjects(){
 			reviewStudentAppService.loadProjects().then(function(data){
-				vm.projects = data;
+				vm.projects = data;	
 			});
 		}
+		
 		
 		//Filters users based on parameters
 		function filterUsers(usertype, userrank, unconfirmed, gmaillogin, mentor, multipleprojects, selectedusertype,selecteduserrank, SelectedProject, userproject)
@@ -499,6 +506,21 @@
             );
         };
 		
+		function changeclear_msg()
+         {
+            swal({   
+                title: "User's Project Cleared",   
+                text: "User's project has been cleared!",   
+                type: "info",   
+                confirmButtonText: "Continue" ,
+                allowOutsideClick: true,
+                timer: 10000,
+            }, function (){
+			
+            }
+            );
+        };
+		
 		//Change User's Project
 		function ChangeUserProject()
 		{
@@ -531,7 +553,46 @@
 				}
 				changepro_msg();
 			}
-		}
+		};
+		
+		function ClearProject()
+		{
+			var user = vm.cuser;
+			if (user) 
+			{
+				var formerProject;
+				var name = user.firstName + " " + user.lastName;
+				var email = user.email;
+				for(i = 0; i < vm.projects.length; i++) 
+				{
+					if (vm.projects[i].members.includes(email)) 
+					{
+						formerProject = vm.projects[i];
+					}
+				}
+				if (formerProject) 
+				{
+					for (i = 0; i < formerProject.members_detailed.length; i++) 
+					{
+						if (formerProject.members_detailed[i] == name) 
+						{
+							formerProject.members_detailed.splice(i, 1);
+						}
+					}
+					for (i = 0; i < formerProject.members.length; i++) 
+					{
+						if (formerProject.members[i] == email) 
+						{
+							formerProject.members.splice(i, 1);
+						}
+					}
+					ProjectService.editProject(formerProject,formerProject._id);
+				}
+				changeclear_msg();
+			}
+		};
+		
+		
 	}
 })();
 

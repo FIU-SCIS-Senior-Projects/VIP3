@@ -17,7 +17,7 @@
         vm.deleteProject = deleteProject;
         vm.editProject = editProject;
 		vm.leaveProject = leaveProject;
-        // vm.findProfile = findProfile;
+        //vm.findProfile = findProfile;
 		vm.already_joined = null;
 		vm.not_signed_in = false;
 		vm.setVideo = function(src) {

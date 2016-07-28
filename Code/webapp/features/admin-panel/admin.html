@@ -118,6 +118,8 @@
 							<select  class="form-control" ng-model="Selectedusertype" ng-options="usertype for usertype in vm.usertype" value="{{vm.userTypeChange(Selectedusertype)}}"></select>
 						</th>
 					</tr>
+					</table>
+					<table class="table" style="height: 1px;">
 					<tr>
 						<th>
 								<button style="width: 80px;" class="btn btn-success btn-block" ng-click="vm.changeUserType()">Change</button>
@@ -147,9 +149,14 @@
 							<select  class="form-control" ng-model="selectedProject" ng-options="projects as projects.title for projects in vm.projects" value="{{vm.currentProject(selectedProject)}}"></select>
 						</th>
 					</tr>
+					</table>
+					<table class="table" style="height: 1px;">
 					<tr>
 						<th>
 								<button style= "width: 80px;" ng-click="vm.sw()" class="btn btn-success btn-block">Change</button>
+						</th>
+						<th>
+								<button style= "width: 80px;" ng-click="vm.sc()" class="btn btn-success btn-danger">Clear</button>
 						</th>
 					</tr>
 					</table>
