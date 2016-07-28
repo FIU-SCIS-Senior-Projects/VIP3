@@ -555,6 +555,7 @@
 			}
 		};
 		
+		//Remove a user from a project
 		function ClearProject()
 		{
 			var user = vm.cuser;
@@ -563,6 +564,17 @@
 				var formerProject;
 				var name = user.firstName + " " + user.lastName;
 				var email = user.email;
+				var email_msg = 
+				{
+					recipient: email, 
+					text:  "Dear VIP user, your current project has been cleared. For more information, please contact a PI.",
+					subject: "Project Cleared", 
+					recipient2: "test@example.com", 
+					text2: "", 
+					subject2: "" 
+				};
+				User.nodeEmail(email_msg);
+			
 				for(i = 0; i < vm.projects.length; i++) 
 				{
 					if (vm.projects[i].members.includes(email)) 
