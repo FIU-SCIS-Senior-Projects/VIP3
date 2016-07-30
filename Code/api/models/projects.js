@@ -29,6 +29,7 @@ var ProjectSchema = new Schema({
 	old_project: [Schema.Types.Mixed],
     image: String,
     video_url: String,
+    youtube_url: String,
     github_url: String,
     drive_url: String,
     term: { type: String, default: 1 }
