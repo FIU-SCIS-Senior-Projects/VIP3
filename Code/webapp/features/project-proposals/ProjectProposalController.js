@@ -256,7 +256,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 
         $scope.save = function save() {
 
-			loading();
+			// loading();
 			
 			updateFaculty();
 			updateMentor();
@@ -275,7 +275,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
             
             $scope.project.video_url = ProcessVideoURL($scope.project.video_url);
-            console.log("req_video_url global " + $scope.project.video_url);
+           
 
 			if (image) 
 				$scope.project.image = image;

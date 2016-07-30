@@ -16,6 +16,37 @@ html {
 	background-color: #081E3F;
 }
 
+.filters-table {
+    font-family: calibri, sans-serif;
+}
+
+.project_proposal {
+    font-family: calibri, sans-serif;
+    font-size: 1.1em;
+}
+
+.project_proposal .btn-info {
+    margin-bottom: 3px;
+    background: #5bc0de;
+}
+
+.project_proposal h2 {
+    color: #081E3F;
+    font-weight: bold;
+}
+
+.project_proposal .submit-btn {
+    font-weight: bold;
+    font-size: 1.2em;
+    width: 22%;
+    letter-spacing: 3px;
+}
+
+.project_proposal button {
+    border: none;
+    background: #081E3F;
+}
+
 .social-icon {
     font-size: 32px; 
 }
@@ -419,7 +450,18 @@ a {
 .proj-title-teams {
     text-align: center;
     font-weight: bold;
-    letter-spacing: 5px;
+    letter-spacing: 4px;
+}
+
+.read-btn {
+    float: right;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.glyphicon-trash {
+    font-size: 16px;
+    font-color: #E83234;
 }
 
 .video-container {

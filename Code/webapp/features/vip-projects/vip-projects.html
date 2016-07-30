@@ -20,35 +20,14 @@
             <br>
             <br>
     </div>
-    <!-- <div class="col-sm-3 proj-sidebar">
-        <div class="col-sm-12 project-second-section-sidebar">
-            <div class="input-group">
-                <span class="input-group-addon disciplines">
-                    <input id="showAll" type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.showAllDisciplinesToggle()" ng-model="vm.showAllCheckBox">
-                </span>
-                <input type="text" class="form-control disciplines" aria-label="..." value="Show All" readonly>
-            </div>
-            <h5 style="float: left;">Showing {{vm.filteredprojects.length}} out of {{vm.backupProjects.length}}</h5>
-        </div>
-        <div class="col-sm-12">
-            <div class="btn"><h4>Disciplines</h4></div>
-        </div>
-        <div class="col-sm-12" ng-repeat="discipline in vm.disciplines">
-            <div class="input-group">
-                <span class="input-group-addon disciplines">
-                    <input type="checkbox" class="btn btn-default disciplines" aria-label="..." ng-click="vm.filterByDiscipline(discipline)">
-                </span>
-                <input type="text" class="form-control disciplines" aria-label="..." value={{discipline}} readonly>
-            </div>
-        </div>
-    </div> -->
+
     <!-- Project cards here -->
     
-            <div class="col-md-4 panel panel-default" style="height: 120;">
+            <div class="col-md-4 panel panel-default" style="max-height: 90px; width: 100%; border:none; box-shadow: none; margin-top: 40px;">
 
-            <table class="table">
+            <table class="table filters-table" style="max-width: 200px; border: none;">
             <tr>
-                <th>
+                <th style="border: none;">
                     <b>
                     <p><input type="hidden" ng-model="userproject">Filter Projects By:<select class="form-control" ng-model="selectedFilter" ng-options="projects as projects.name for projects in vm.filters" ng-change="applyFilter()"></select></input></p>
                 </th>
@@ -56,7 +35,8 @@
             </table>
             
             </div>
-        <br><br><br><br><br><br>
+
+        <br><br>
 		<center ng-hide="vm.done"><img ng-hide="vm.done" width="30%" height="30%" src="img/loading.gif"/></center>
         
         <div class="col-md-6 project-info" ng-if="vm.done" ng-repeat="project in vm.filteredprojects | filter: { status: 'Active' }" ng-click="vm.viewDetails(project)">

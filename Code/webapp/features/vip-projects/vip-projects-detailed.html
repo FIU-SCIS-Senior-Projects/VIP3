@@ -3,7 +3,6 @@
         <div class="video-container" ng-show="vm.data.video_url">
 			
             <iframe width="600" height="350" ng-src="{{vm.setVideo(vm.data.video_url)}}"  frameborder="0" allowfullscreen style="margin: 0 auto;"></iframe>
-			
         </div>
 
         <div class="col-sm-9 project-second-section-middle">
@@ -22,9 +21,12 @@
 
         <div class="col-md-3 sidebar-container">
             <div class="col-md-12">
+            <h4>Discover More</h4>
              <a target="_blank" href="{{vm.data.github_url}}"><i ng-hide="!(vm.data.github_url)" class="fa fa-github social-icon" aria-hidden="true"></i></a>
              <a target="_blank" href="{{vm.data.drive_url}}"><i ng-hide="!(vm.data.drive_url)" class="fa fa-google social-icon" style="margin-left: 10px;" aria-hidden="true"></i></a>
-                    <h4>Project Owners</h4>
+             <a target="_blank" href="{{vm.data.youtube_url}}"><i ng-hide="!(vm.data.youtube_url)" class="fa fa-youtube social-icon" style="margin-left: 10px;" aria-hidden="true"></i></a>
+             <hr>
+                <h4>Project Owners</h4>
                 <div>
                     <ul class="student-list">
                     <li class="student-in-list">
@@ -79,15 +81,16 @@
                 </div>
 
             </div>
-            
             <div class="sidebar-bottom-wrap">
+
              <div class="col-sm-12">
+             <hr>
                     <h4>Options</h4>
             </div>
 
-            <div class="col-sm-12" ng-repeat="discipline in vm.data.disciplines">
+            <!-- <div class="col-sm-12" ng-repeat="discipline in vm.data.disciplines">
                 <div class="btn side-bar-button">{{discipline}}</div>
-            </div>
+            </div> -->
 
             <div class="btn btn-primary" ng-click="vm.applyForProject()" ng-hide=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" ng-if="!vm.already_joined"> 
                 <strong>Apply</strong>

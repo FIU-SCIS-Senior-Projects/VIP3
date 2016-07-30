@@ -2,93 +2,114 @@
  <center><img img width="250px" height="250px" src="img/loading.gif"/></center>
 </div>
 <div ng-if="done">
-    <h2>Team Proposal Form</h2>
+    <h2>PROJECT PROPOSAL FORM</h2>
+    <hr>
 	<p style="color:orange;"><strong>{{result}}</strong></p>
-    <form role="form">
-		<div class="form-group">
-            <label>Product Owner (if left blank it will place you as product owner)</label>
-            <input type="text" class="form-control" placeholder="" ng-model="project.owner_name" required="False">
-        </div>
-        <div class="form-group">
-            <label>Email of Product Owner (if product owner not blank an email must be provided)</label>
-            <input type="text" class="form-control" placeholder="" ng-model="project.owner_email" required="False">
-        </div>
+    <form role="form" class="project_proposal">
         <div class="form-group">
             <label>*Team Title</label>
             <input type="text" class="form-control" placeholder="" ng-model="project.title" required="True">
         </div>
+
         <div class="form-group" hidden>
             <label>Team Image:</label>
-            <input type="url" class="form-control" placeholder="" ng-model="project.image">
+            <input type="url" class="form-control" ng-model="project.image">
         </div>
+
 		<div class="form-group">
 			<label>Upload Team Image</label>
 			<input onchange="uploadImage2()" id="teamImage" accept=".jpg,.png,.gif" type="file" class="form-control" />
-			<br><progress id="pI" class="form-control" style="visibility: hidden;"/>
+			<progress id="pI" class="form-control" style="visibility: hidden; width: 20%; border: none;"/>
+            <small><i>Picture size MUST be below 2MB</i></small>
 		</div>
+
         <div class="form-group">
             <label>Video Link</label>
             <input type="text" ng-model="project.video_url" class="form-control"/>
-            <small><i>You must host the video on another website and paste the link. The video should be a short introduction to the project.</i></small>
+            <small><i>It is recommended you put an intro video as the first video of a Youtube playlist for easier viewing</i></small>
         </div>
+
+        <!-- <button type="button" data-toggle="collapse" data-target="#vids" class="btn btn-primary">Add a secondary video</button> -->
+        <div class="form-group" id="vids">
+            <label>Link to your YouTube page</label>
+            <input type="text" ng-model="project.youtube_url" class="form-control"/>
+        </div>
+
         <div class="form-group">
             <label>*Team Description:</label>
             <!-- <div text-angular ng-model="project.description"></div> -->
             <textarea ng-model="project.description" name="" class="form-control" rows="10">    
             </textarea>
         </div>
-        <div class="form-group">
+
+        <button type="button" data-toggle="collapse" data-target="#owner" class="btn btn-primary">Add a different product owner</button>
+        <div class="form-group collapse" id="owner">
+            <label>Product Owner (if left blank it will place you as product owner)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_name" required="False">
+            <label>Email of Product Owner (if product owner not blank an email must be provided)</label>
+            <input type="text" class="form-control" placeholder="" ng-model="project.owner_email" required="False">
+        </div>
+
+        <button type="button" data-toggle="collapse" data-target="#faculty" class="btn btn-primary">Add faculty members</button>
+        <div class="form-group collapse" id="faculty">
             <label>Add a Faculty Member</label><br>
             Name:  <input type="text" class="form-control" ng-model="SelectedFacultyNames" placeholder="Michael Smith, Johnny Stuart, Daniel Riveron" value="{{updateFacultyNames(SelectedFacultyNames)}}" />
             Email:  <input type="text" class="form-control" ng-model="SelectedFacultyEmails" placeholder="michael@fiu.edu, johnny@yahoo.com, daniel@gmail.com" value="{{updateFacultyEmails(SelectedFacultyEmails)}}" />
             <small><i>Note: Separate each with commas followed by one space!</i></small>
         </div>
-		 <div class="form-group">
+
+        <button type="button" data-toggle="collapse" data-target="#mentor" class="btn btn-primary">Add mentors</button>
+		 <div class="form-group collapse" id="mentor">
             <label>Add a Mentor</label><br>
             Name:  <input type="text" class="form-control" ng-model="SelectedMentorNames" placeholder="Michael Smith, Johnny Stuart, Daniel Riveron" value="{{updateMentorNames(SelectedMentorNames)}}" />
             Email:  <input type="text" class="form-control" ng-model="SelectedMentorEmails" placeholder="michael@fiu.edu, johnny@yahoo.com, daniel@gmail.com" value="{{updateMentorEmails(SelectedMentorEmails)}}" />
             <small><i>Note: Separate each with commas followed by one space!</i></small>
         </div>
-		<div class="form-group">
+
+        <button type="button" data-toggle="collapse" data-target="#student" class="btn btn-primary">Add students manually</button>
+		<div class="form-group collapse" id="student">
             <label>Add Students</label><br>
             Name:  <input type="text" class="form-control" ng-model="SelectedStudentNames" placeholder="Michael Smith, Johnny Stuart, Daniel Riveron" value="{{updateStudentNames(SelectedStudentNames)}}" />
             Email:  <input type="text" class="form-control" ng-model="SelectedStudentEmails" placeholder="michael@fiu.edu, johnny@yahoo.com, daniel@gmail.com" value="{{updateStudentEmails(SelectedStudentEmails)}}" />
             <small><i>Note: Separate each with commas followed by one space!</i></small>
         </div>
+        
         <div class="form-group">
             <label>Github link</label>
             <input type="text" ng-model="project.github_url"  class="form-control"/>
         </div>
+
         <div class="form-group">
             <label>Google Drive link</label>
             <input type="text" ng-model="project.drive_url" class="form-control" />
         </div>
+
         <div class="form-group">
             <label>*Minimum number of students:</label>
-            <input type="number" min="0" class="form-control" placeholder="" ng-model="project.firstSemester" >
+            <input type="number" min="0" class="form-control" placeholder="" ng-model="project.firstSemester" required >
         </div>
+
         <div class="form-group">
             <label>*Maximum number of students per semester:</label>
-            <input type="number" min="0" class="form-control" placeholder="" ng-model="project.maxStudents" >
+            <input type="number" min="0" class="form-control" placeholder="" ng-model="project.maxStudents" required>
         </div>
-        <p><strong>* : required fields</strong></p>
-
+        <h4><strong>* : required fields</strong></h4>
+        <br>
        <p><h5>Click to expand</h5></p>
         <div ng-repeat = 'college in colleges'>
-            <div>
-                  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{college['name']}}">{{college['name']}}</button>
-                  <div class="collapse" id="{{college['name']}}">
-                        <div ng-repeat = '(key2, value2) in college["schools"]'>
-                            <label><input type="checkbox" ng-click="toggleCheckbox(value2)">  {{value2}}</label>
-                        </div>
+              <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{college['name']}}">{{college['name']}}</button>
+              <div class="collapse" id="{{college['name']}}">
+                    <div ng-repeat = '(key2, value2) in college["schools"]'>
+                        <label><input type="checkbox" ng-click="toggleCheckbox(value2)">  {{value2}}</label>
                     </div>
-            </div>
+                </div>
+        
         </div>
 
         <br>
         <br>
 
-        <button type="submit" class="btn btn-primary" ng-click="save()">Submit</button>
+        <button type="submit" class="btn btn-primary submit-btn" ng-click="save()">SUBMIT</button>
         <br>
         <br>
 
