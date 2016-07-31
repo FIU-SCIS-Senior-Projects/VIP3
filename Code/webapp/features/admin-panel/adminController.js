@@ -369,6 +369,7 @@
 			user.piApproval = true;
             user.isDecisionMade = true;
             user.__v = 1;
+			user.verifiedEmail = true;
             console.log("piApproval set to true");
             vm.message = "User has been Accepted!";
 
