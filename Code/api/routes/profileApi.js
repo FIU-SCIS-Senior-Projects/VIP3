@@ -320,6 +320,49 @@ module.exports = function(app, express) {
 						}
 					);                    
                 }
+				
+				 // new account approved, and email verified, send account approval email
+                if (req.body.__v == 3)
+                {
+					profile.verifiedEmail = true;
+					// init
+					var vm = {};
+					vm.userData = {};
+					var host = req.get('host');
+
+					// build the path to the nodeemail script
+					var postDomain = "http://" + "127.0.0.1:3000" + "/vip/nodeemail2";
+
+					// user ID in database for cross-reference
+					vm.objectId = profile.objectId;
+
+					// recipient email(s)
+					vm.userData.recipient = profile.email;
+
+					// email body text
+					vm.userData.text = "Dear " + profile.firstName + " " + profile.lastName + ", \n\nCongratulations, your account and email for VIP has been approved!  You may now login at http://vip.fiu.edu/#/login";
+
+					// email subject line
+					vm.userData.subject = "Your VIP Account has been Approved";
+
+					////console.log("Sending account approval email");
+
+					// deploy email
+					request.post(
+						postDomain,
+						{ form: { vm } },
+						function (error, response, body) {
+							if (!error && response.statusCode == 200) {
+								////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
+							}
+                                ////console.log(body);
+                                ////console.log(error);
+                                ////console.log(response);
+						}
+					);
+                }
 
 				// update profile, "Rank" and "userType" changes will be handled below this, it's impossible to update those values here
 				// request values will be populated in the DB here
