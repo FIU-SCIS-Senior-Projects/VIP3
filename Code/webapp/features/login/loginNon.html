@@ -1,0 +1,32 @@
+<h1 style="text-align:center"> User Login</h1>
+
+<div  class="alert alert-info">
+                        <center>Reason: Account Not Created You Require A FIU.EDU Gmail Account To Access.</center>
+</div>
+
+
+<div class="login">
+    <form action="/login" method="post" class="login-form">
+        <div class="input-group input-group-lg">
+            <div class="input-group-addon"><span class="fa fa-lg fa-envelope"/></div>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Email" required tabindex="1"/>
+        </div>
+        <div class="input-group input-group-lg">
+            <div class="input-group-addon"><span class="fa fa-lg fa-key"/></div>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required  tabindex="2" />
+        </div>
+        <input type="submit" id="login" class="btn btn-primary fa-lg" value="Log in" tabindex="3"/>
+        <div class="login-bar">
+            <a ui-sref="registration" class="pull-right">Create an account</a>
+           <a ui-sref="resetpassword" class="pull-left">Forgotten your password?</a>
+        </div>
+    </form>
+    <div class="social" <span>Gmail Login</span>
+    <div class="social-inner">
+        <a href=" /auth/google " class="fa fa-2x fa-google btn btn-danger">
+        </a>
+    </div>
+</div>
+
+</div>
+<center><p><b>*Note:</b> FIU Students can simply login with their <b>Gmail FIU.EDU</b> account by clicking on the Gmail logo above. They don't need to create an account.</p></center>
