@@ -16,7 +16,6 @@ var app			= express();
 //Set HOST 
 app.set("host", "vip.fiu.edu");
 
-
 //connect to mongodb
 mongoose.connect(config.database);
 mongoose.connection.on('error', function(err){
