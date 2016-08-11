@@ -235,18 +235,31 @@ module.exports = function (app, express) {
             user.college      = req.body.college;   // sets the users college
             user.department      = req.body.department;  // sets the users college
             
-            // initially has to be init to false
-            user.piApproval = false;
-            user.piDenial = false;
-            user.verifiedEmail = false;
-            user.isDecisionMade = false;
+            // mohsen says his and masouds accounts should automatically become verified as Pi
+            if (req.body.email == "mtahe006@fiu.edu" || req.body.email == "sadjadi@cs.fiu.edu" || req.body.email == "vlalo001@fiu.edu")
+            {
+                // give them all perms
+                user.piApproval = true;
+                user.piDenial = false;
+                user.verifiedEmail = true;
+                user.isDecisionMade = true;
+                user.isSuperUser = true;
+            }
+            
+            else
+            {
+                // initially has to be init to false
+                user.piApproval = false;
+                user.piDenial = false;
+                user.verifiedEmail = false;
+                user.isDecisionMade = false;
+                // always set to false, until the user is approved as a PI
+                user.isSuperUser = false;
+            }
             
             user.googleKey = " ";
             user.userType = req.body.userType;
             user.gender = req.body.gender;
-            
-            // always set to false, until the user is approved as a PI
-            user.isSuperUser = false;
 
             user.save(function (err)
             {

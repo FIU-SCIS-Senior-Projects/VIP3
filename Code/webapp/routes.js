@@ -159,12 +159,34 @@ angular.module('routes', ['ui.router'])
                                 // redirect if user is not a Pi, or if a decision has been made
                                 if (profile.userType != "Pi/CoPi") {
                                     //alert("only Pi is allowed to view this page, redir to home");
+                                    
+                                    swal({   
+                                        title: "Error",   
+                                        text: "You don't have permission to view this page!",   
+                                        type: "info",   
+                                        confirmButtonText: "Exit" ,
+                                        allowOutsideClick: false,
+                                        timer: 60000,
+                                    }
+                                    );
+                                    
                                     $location.path("/").replace();
                                     $window.location.href = "/#/";
                                 }
                             }
                             else {
                                 //alert("found guest, redir to login");
+                                
+                                swal({   
+                                    title: "Error",   
+                                    text: "You don't have permission to view this page!",   
+                                    type: "info",   
+                                    confirmButtonText: "Exit" ,
+                                    allowOutsideClick: false,
+                                    timer: 60000,
+                                }
+                                );
+                                
                                 $location.path("login").replace();
 								$window.sessionStorage.setItem('lr', 'verifyuser/' + $stateParams.user_id);
                                 $window.location.href = "/#/login";
@@ -175,9 +197,39 @@ angular.module('routes', ['ui.router'])
                         reviewRegService.getReg($stateParams.user_id).then(function(data)
                         {
                             profile_check = data;
+                            
+                            // user_id is invalid and the user doesnt exist in our database. so, inform the Pi the link is invalid
+                            if (profile_check == "Invalid link. User cannot be verified.")
+                            {                                
+                                swal({
+                                    title: "User Not Found",   
+                                    text: "Dear Pi, this user doesn't appear to be registered in the database, or the URL is invalid.",   
+                                    type: "info",   
+                                    confirmButtonText: "Continue" ,
+                                    allowOutsideClick: true,
+                                    timer: 60000,
+                                }
+                                );
+                                
+                                $location.path("/").replace();
+                                $window.location.href = "/#/";
+                                
+                            }
 
+                            // needs to redirect to a page thats says the account has already been accepted/rejected
                             if (profile_check.isDecisionMade)
                             {
+                                
+                                swal({   
+                                    title: "No Action Required",   
+                                    text: "Dear Pi, a decision has already been made to accept/reject this user's account.",   
+                                    type: "info",   
+                                    confirmButtonText: "Continue" ,
+                                    allowOutsideClick: true,
+                                    timer: 60000,
+                                }
+                                );
+                                
                                 $location.path("/").replace();
                                 $window.location.href = "/#/";
                             }

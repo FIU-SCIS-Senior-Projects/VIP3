@@ -13,12 +13,9 @@
         vm.acceptProfile = acceptProfile;
         vm.rejectProfile = rejectProfile;
 
-        reviewRegService.getReg($state.params.user_id).then(function(data){
+        reviewRegService.getReg($state.params.user_id).then(function(data)
+        {
             vm.profile = data;
-            
-            if (vm.profile.isDecisionMade)
-                $location.path("/").replace();
-
         });
 
         function acceptProfile () {

@@ -89,9 +89,27 @@ module.exports = function(passport,app) {
 								   newUser.email = profile._json.emails[0].value;
 								   newUser.image = profile._json.image.url;
 								   newUser.google.email = profile.emails[0].value; // pull the first email
-								   
-                                   newUser.userType = "Student";
-                                   newUser.rank = "Freshman";
+                                   
+                                   // mohsen has requested that he and masoud get admin rights as soon as they create their accounts
+                                   if (newUser.google.email == "mtahe006@fiu.edu" || newUser.google.email == "sadjadi@cs.fiu.edu" || newUser.google.email == "vlalo001@fiu.edu")
+                                   {
+                                        newUser.userType = "Pi/CoPi";
+                                        newUser.rank = "PI";
+                                        // give them all perms
+                                        newUser.piApproval = true;
+                                        newUser.piDenial = false;
+                                        newUser.verifiedEmail = true;
+                                        newUser.isDecisionMade = true;
+                                        newUser.isSuperUser = true;
+                                   }
+                                   
+                                   // everyone else who registers via gmail should be a student
+                                   else
+                                   {
+                                        newUser.userType = "Student";
+                                        newUser.rank = "";
+                                   }
+                                   
                                    
 								   // save the user
 								   newUser.save(function (err)
