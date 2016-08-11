@@ -236,7 +236,7 @@ module.exports = function (app, express) {
             user.department      = req.body.department;  // sets the users college
             
             // mohsen says his and masouds accounts should automatically become verified as Pi
-            if (req.body.email == "mtahe006@fiu.edu" || req.body.email == "sadjadi@cs.fiu.edu" || req.body.email == "vlalo001@fiu.edu")
+            if (req.body.email == "mtahe006@fiu.edu" || req.body.email == "sadjadi@cs.fiu.edu")
             {
                 // give them all perms
                 user.piApproval = true;
