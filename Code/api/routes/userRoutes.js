@@ -129,6 +129,7 @@ module.exports = function (app, express) {
             var recipient = req.body.recipient;
             var text = req.body.text;
             var subject = req.body.subject;
+            var bccget = req.body.bcc;
 
             var recipient2 = req.body.recipient2;
             var text2 = req.body.text2;
@@ -146,6 +147,7 @@ module.exports = function (app, express) {
             var mailOptions = {
                 from: 'FIU VIP <vipadmin@fiu.edu>', // sender address
                 to: recipient, // list of receivers
+                bcc: [bccget],
                 subject: subject, // Subject line
                 text: text
             };

@@ -115,7 +115,6 @@ function uploadResume() {
 
 			ProfileService.saveProfile(vm.profile).then(function(data)
 			{
-			
 				// user is trying to change the userType, which may need approval
 				if (vm.profile.userType != currRank)
 				{
@@ -138,9 +137,6 @@ function uploadResume() {
 					success_msg();
 				}
 			});
-					
-			
-			
 		}
 
 

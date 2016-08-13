@@ -145,7 +145,7 @@ angular.module('routes', ['ui.router'])
                                         timer: 60000,
                                     });
 
-                                    $location.path("/");
+                                    $location.path("/").replace();
                                     $window.location.href = "/#/";
                                 }
                             }
@@ -165,7 +165,7 @@ angular.module('routes', ['ui.router'])
                                 );
 
                                 $window.sessionStorage.setItem('lr', "project-proposal");
-                                $location.path("login");
+                                $location.path("login").replace();
                             }
                         });                        
                     }

@@ -53,7 +53,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                 // students cannot submit proposals, only Pi/CoPi and Faculty/Staff
                 if (profile.userType == "Student")
                 {
-                    $location.path("/");
+                    $location.path("/").replace();
                     $window.location.href = "/#/";
                 }
                 

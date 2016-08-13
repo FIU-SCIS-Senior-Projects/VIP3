@@ -487,9 +487,13 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
                 showCancelButton: true
             }, function () {
                 sendMessage(usersToMessage, MessageSubject, MessageBody);
-                $location.path('/sendmessage/0/1/').replace();
+                alert("Message sent successfully");
+                $location.path('/').replace();
             }
             );
+            
+
+            
         };
         
 		//Load all user information
@@ -562,8 +566,12 @@ angular.module('MessengerController', ['ProjectProposalService', 'userService','
             var EmailURL = "http://vip.fiu.edu/#/sendmessage/" + profile.email + "/" + "1/" + encodeURIComponent(MessageSubject.trim());
            
             var email_msg = 
-            {                
-                recipient: usersToMessage,
+            {
+                // doing this for privacy concerns from Pi
+                recipient: "fiuvipmailer@gmail.com",
+                
+                // we message all of the users using bcc, because they way they only see the fiuvipmailer@gmail.com email address, and not the email address of all the people who are also included on that email
+                bcc: usersToMessage,
                 text: "Dear User, you have recieved a new message!\n\n\nFrom: " + profile.firstName + " " + profile.lastName + "\n"
                       + "Message Subject: " + MessageSubject + "\nMessage Text: " + MessageBody + "\n\nPlease reply to this message using the following form: " + EmailURL,
                       
