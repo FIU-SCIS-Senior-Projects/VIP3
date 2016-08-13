@@ -42,22 +42,23 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		var profile;
 		var vm = this;
 		$scope.done = false;
-		ProfileService.loadProfile().then(function(data){
-					if (data) {
-						$scope.done = true;
-						profile = data;
-						if (profile.userType != "Pi/CoPi") {
-							
-                            $location.path('/').replace();
-						}
-					}
-					else {
-						$scope.done = true;
-						profile = null;
-						$window.sessionStorage.setItem('lr', "project-proposal");
-						$location.path("login");
-                        
-					}
+        
+        // check permissions and get data
+		ProfileService.loadProfile().then(function(data)
+        {
+            if (data)
+            {
+                profile = data;
+                
+                // students cannot submit proposals, only Pi/CoPi and Faculty/Staff
+                if (profile.userType == "Student")
+                {
+                    $location.path("/");
+                    $window.location.href = "/#/";
+                }
+                
+                $scope.done = true;
+            }
 		});
 
         $scope.colleges= [
@@ -631,7 +632,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
                     }
                     
 					videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
-					updatedVideoURL = "https://www.youtube.com/v/watch?v=" + videoID;
+					updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
 					console.log("Filtered url: " + updatedVideoURL);
 					return updatedVideoURL;
 				}
@@ -640,7 +641,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				else if (VideoURL.indexOf("youtu.be") > -1)
 				{
 					videoID = VideoURL.substr(VideoURL.indexOf(".be/") + 4);
-					updatedVideoURL = "https://www.youtube.com/v/watch?v=" + videoID;
+					updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
 					console.log("Filtered url: " + updatedVideoURL);
 					return updatedVideoURL;
 				}
