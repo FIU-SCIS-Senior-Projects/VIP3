@@ -91,7 +91,26 @@
         
         function applyForProject()
         {
-            $state.go('studentconfirminfo', {id: vm.id});
+            // guest user should be told to login before applying to join a project
+            if (!vm.profile) 
+            {
+                swal({   
+                            title: "Dear Guest!",   
+                            text: "Please Login/Register before Applying to Join a Project!",   
+                            type: "info",   
+                            confirmButtonText: "Okay" ,
+                            showCancelButton: true,
+                }, function () {
+                            //alert(1);
+                            $window.location.href = "/#/login";
+                });
+            }
+            
+            // all other users are allowed
+            else 
+            {
+                $state.go('studentconfirminfo', {id: vm.id});
+            }
         }
 		
 		
@@ -108,7 +127,6 @@
 						reviewStudentAppService.RemoveFromProject(vm.id,profile.email, {detailed: profile.firstName + " " + profile.lastName});
 						$window.location.reload();
 			});
-			
 		}
          
          function deleteProject() {

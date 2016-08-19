@@ -276,10 +276,10 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
             
             $scope.project.video_url = ProcessVideoURL($scope.project.video_url);
-           
 
 			if (image) 
 				$scope.project.image = image;
+            
 			else
 				$scope.project.image = "http://www.woojr.com/wp-content/uploads/2009/04/" + $scope.project.title.toLowerCase()[0] + ".gif";
 			
@@ -324,6 +324,15 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 					}
 					$scope.project.status='modified';
 					console.log("req_video_url modified " + $scope.project.video_url);
+                    
+                    // if user has uploaded a new image, 'image' var will be non-null, so update image via API
+                    if (image) 
+                        $scope.project.image = image;
+                    
+                    // user hasnt uploaded a new image, set 'image' val to "", so API can know not to change it
+                    else
+                        $scope.project.image = "";
+                    
 					$scope.project.id = $stateParams.id;
 					$scope.project.edited = true;
 					ProjectService.editProject($scope.project, $stateParams.id)
@@ -481,6 +490,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
 		var mentorname;
 		var mentoremail;
+        
 		function updateMentorNames(nameList)
 		{
 			if (nameList)
@@ -519,8 +529,6 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
 		function updateMentor()
 		{
-			
-			
 			if (mentorname && mentoremail)
 			{
 				$scope.project.mentor = [];
@@ -544,6 +552,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
 		var studentname;
 		var studentemail;
+        
 		function updateStudentNames(nameList)
 		{
 			if (nameList)
@@ -561,7 +570,6 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				studentname = null;
 			}
 		}
-		
 		
 		function updateStudentEmails(emailList)
 		{
@@ -582,8 +590,6 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		
 		function updateStudent()
 		{
-			
-			
 			if (studentname && studentemail)
 			{
 				$scope.project.addedStudents = [];
@@ -619,21 +625,21 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
         {
             // format the youtube videos correctly
             // input: https://www.youtube.com/watch?v=uQ_DHRI-Xp0
-            // output: https://www.youtube.com/v/watch?v=uQ_DHRI-Xp0
+            // output: https://www.youtube.com/embed/uQ_DHRI-Xp0
 			if (VideoURL)
             {
+                // video is already embed format, return
+                if (VideoURL.indexOf("youtube.com/embed/") > -1)
+                {
+                    return VideoURL;
+                }
+                
                 // youtube.com universal filter
 				if (VideoURL.indexOf("youtube.com") > -1)
-				{
-                    // video is already embed format, return
-                    if (VideoURL.indexOf("youtube.com/embed/") > -1)
-                    {
-                        return VideoURL;
-                    }
-                    
+				{                   
 					videoID = VideoURL.substr(VideoURL.indexOf("?v=") + 3);
 					updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
-					console.log("Filtered url: " + updatedVideoURL);
+					//console.log("Filtered url: " + updatedVideoURL);
 					return updatedVideoURL;
 				}
                 
@@ -642,7 +648,7 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 				{
 					videoID = VideoURL.substr(VideoURL.indexOf(".be/") + 4);
 					updatedVideoURL = "https://www.youtube.com/embed/" + videoID;
-					console.log("Filtered url: " + updatedVideoURL);
+					//console.log("Filtered url: " + updatedVideoURL);
 					return updatedVideoURL;
 				}
 				

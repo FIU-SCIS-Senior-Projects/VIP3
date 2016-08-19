@@ -66,21 +66,29 @@ module.exports = function(app, express) {
             req.body.term = currentTerm[0]._id;
 
 			//Validate to ensure student counts isn't negative or student count is greater than maximum.
+            
+            var studentCount = 0;
+			var maxStudentCount = 0;
+            
+            // user provided a min number of students
+            if (req.body.firstSemester)
+                studentCount = Number(req.body.firstSemester);
+            
+            // user provided a max number of students
+            if (req.body.maxStudents)
+                maxStudentCount = Number(req.body.maxStudents);
 
-			var studentCount = Number(req.body.firstSemester);
-			var maxStudentCount = Number(req.body.maxStudents);
+            //console.log(req.body.video_url);
 
-            console.log(req.body.video_url);
-
-
+            // user didnt supply a min and max number of students, make it a really big number so anyone can join
 			if (isNaN(studentCount) || isNaN(maxStudentCount)) {
-				req.body.firstSemester = "256";
+				req.body.firstSemester = "1";
 				req.body.maxStudents = "256";
 			}
 			
-			
+            // user didnt supply a min and max number of students, make it a really big number so anyone can join
 			if (studentCount == 0 && maxStudentCount == 0) {
-				req.body.firstSemester = "256";
+				req.body.firstSemester = "1";
 				req.body.maxStudents = "256";
 			}
 			
@@ -89,12 +97,12 @@ module.exports = function(app, express) {
 				res.status(400);
                 return res.send("firstSemester cannot be less than 0 or maxStudents cannot be less than 0.");
 			}
+            
 			if (studentCount > maxStudentCount) {
 				res.status(400);
 				return res.send("Count cannot be greater than the maximum.");
 			}
 			
-			////console.log("Pinga");
 			////console.log(req.body);
 
 
@@ -120,8 +128,6 @@ module.exports = function(app, express) {
         });
 
     apiRouter.route('/projects/:id')
-
-
         .put(function (req, res)
         {
 			//////console.log("PUT /projects/:id");
@@ -131,6 +137,13 @@ module.exports = function(app, express) {
 					res.status(400);
 					res.send(err);
 				}
+
+                if (req.body.image)
+                {
+                    console.log("new image : " + req.body.image);
+                    proj.image = req.body.image;
+                }
+                
                 proj.video_url = req.body.video_url;
 				proj.edited = req.body.edited;
 				proj.status = req.body.status;
@@ -144,7 +157,6 @@ module.exports = function(app, express) {
                 if(req.body.title!=="") proj.title = req.body.title;
                 if(req.body.description!=="") proj.description = req.body.description
                 if(req.body.disciplines!=="") proj.disciplines = req.body.disciplines;
-                if(req.body.image!=="") proj.image = req.body.image;
                 if(req.body.firstSemester!=="") proj.firstSemester = req.body.firstSemester;
                 if(req.body.maxStudents!=="") proj.maxStudents = req.body.maxStudents;
 				if (req.body.members.length > proj.maxStudents) {
