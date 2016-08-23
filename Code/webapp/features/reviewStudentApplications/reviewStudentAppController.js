@@ -66,7 +66,7 @@
 						}
 					}
 				}
-				vm.membs = vm.membs.filter(function(n){ return n != undefined && !n.joined_project });
+				vm.membs = vm.membs.filter(function(n){ return !n.joined_project });
 				
             });
         }

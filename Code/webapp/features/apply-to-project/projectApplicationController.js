@@ -163,10 +163,6 @@ angular
 			}
 		});
 
-        
-
-        
-
         init();
         function init () {
             loadData();
@@ -187,6 +183,7 @@ angular
                 }
             });
         }
+        
         function getProjectById (projects){
             ProjectService.getProject(vm.id).then(function(data){
 
@@ -199,11 +196,6 @@ angular
                 });
             });
         }
-		
-		
-				
-       
-
 
         vm.save = function() {
 			
@@ -287,9 +279,6 @@ angular
 					);
 				}
 				else {
-				
-				
-				
 					for (i = 0; i < project.members.length; i++) {
 						if (project.members[i] === vm.email) {
 							 error_msg();
@@ -325,7 +314,7 @@ angular
 								text: "Dear " + profile.firstName + ", thank you for applying to " + project.title + " you are currently pending and this is just a confirmation that you applied to the project please keep checking the VIP to-do or your email as the PI will approve or deny your request to join the project.\n\nProject: " + project.title + "\nStatus: Pending", 
 								subject: "Project Application Submission Pending", 
 								recipient2: "sadjadi@cs.fiu.edu,mtahe006@fiu.edu,dlope073@fiu.edu,vlalo001@fiu.edu", 
-								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project please approve him/her by logging into your VIP account and choosing student applications.", 
+								text2: "Dear PI, " + profile.firstName + " " + profile.lastName  + " has applied to project " + project.title + ". Please approve him/her by logging into your VIP account and choosing student applications.", 
 								subject2: "New Student Applied Has Applied To " + project.title 
 							};
 							User.nodeEmail(email_msg);
@@ -410,8 +399,6 @@ angular
 						 // success callback
 						 success_msg();
 
-						
-						
 						var email_msg = 
 						{
 							recipient: vm.email2, 
