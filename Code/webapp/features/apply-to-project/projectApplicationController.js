@@ -293,6 +293,7 @@ angular
 					}
 					
 					profile.joined_project = false;
+                    profile.modifying = 2;
 					User.update({user: profile});
 					
 					project.members[project.members.length] = vm.email;

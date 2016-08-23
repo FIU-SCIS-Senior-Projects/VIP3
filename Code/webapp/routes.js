@@ -110,6 +110,42 @@ angular.module('routes', ['ui.router'])
             // sensitive page:
             .state('studentconfirminfo', {
                 url:'/studentConfirmation/:id',
+                resolve:{
+                    //function to be resolved, accessFac and $location Injected
+                    "check":function(ProfileService,reviewRegService,$location,$stateParams,$window)
+                    {
+                        var profile;
+                        var profile_check = {};
+                        
+                        // check if user is allowed to view this page
+                        ProfileService.loadProfile().then(function(data)
+                        {
+                            // authenticated user
+                            if (data)
+                            {
+                                profile = data;
+                            }
+
+                            // guest user
+                            else {
+                                //alert("found guest, redir to login");
+                                
+                                swal({   
+                                    title: "Please Login!",   
+                                    text: "Please login to your account before joining a new project.",   
+                                    type: "info",   
+                                    confirmButtonText: "Okay" ,
+                                    allowOutsideClick: false,
+                                    timer: 60000,
+                                }
+                                );
+
+                                $window.sessionStorage.setItem('lr', "studentconfirminfo");
+                                $location.path("login").replace();
+                            }
+                        });                        
+                    }
+                },
                 templateUrl: 'features/apply-to-project/StudentConfirmInfo.html',
                 controller: 'projAppCtrl',
                 controllerAs: 'projApp'

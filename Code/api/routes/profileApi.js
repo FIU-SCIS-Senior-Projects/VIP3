@@ -6,7 +6,6 @@ var request = require('request');
 module.exports = function(app, express) {
     var apiRouter = express.Router();
 
-
 	// used to update the rank/usertype of a profile that the PI has authorized the changes to
     apiRouter.route('/updateprofile')
         .put(function (req, res) {
@@ -32,12 +31,11 @@ module.exports = function(app, express) {
 				profile.image = req.body.image;
 				profile.resume = req.body.resume;
 				profile.modifying = req.body.modifying;
+                profile.isDecisionMade = req.body.isDecisionMade;
+                profile.joined_project = req.body.joined_project;
 				////console.log("rank = " + req.body.rank);
 				////console.log("userType = " + req.body.userType);
-                ////console.log("requested userType = " + profile.requested_userType);
-				
-				////console.log("Approved:" + profile.isApproved);
-
+                
                 // we only update userType with approval
                 if (profile.isApproved)
                 {
@@ -79,8 +77,6 @@ module.exports = function(app, express) {
                 // recipient email(s)
                 vm.userData.recipient = profile.email;
 
-               
-				
 				if (profile.modifying)
 				{
 				
@@ -102,7 +98,6 @@ module.exports = function(app, express) {
 
                     // email subject line
                     vm.userData.subject = "Profile Changes have been Approved";
-					
                 }
 				
                 
@@ -116,15 +111,7 @@ module.exports = function(app, express) {
 
                     // email subject line
                     vm.userData.subject = "Profile Changes have been Denied";
-					
-					profile.remove(function(err) {
-						if (err)
-							console.log("Could not delete rejected account please manually delete rejected account!");
-					});
                 }
-				
-
-                ////console.log("Sending notification of profile approval to the User");
 
                 // deploy email
                 request.post(

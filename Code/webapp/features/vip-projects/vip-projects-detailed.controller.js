@@ -94,7 +94,7 @@
             // guest user should be told to login before applying to join a project
             if (!vm.profile) 
             {
-                swal({   
+                swal({
                             title: "Dear Guest!",   
                             text: "Please Login/Register before Applying to Join a Project!",   
                             type: "info",   
@@ -107,7 +107,7 @@
             }
             
             // all other users are allowed
-            else 
+            else
             {
                 $state.go('studentconfirminfo', {id: vm.id});
             }
