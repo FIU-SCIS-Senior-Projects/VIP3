@@ -30,8 +30,8 @@ function userService($http) {
 			});
         };
 		
-		profileFactory.RemoveFromProject = function (id, members,members_detailed) {
-			 return $http.put('/api/project/'+ id + '/' + members,members_detailed).then(function (data){
+		profileFactory.RemoveFromProject = function (id, members, detailed) {
+			 return $http.put('/api/project/'+ id + '/' + members + '/' + detailed).then(function (data){
 				 return data.data;
 			});
         };

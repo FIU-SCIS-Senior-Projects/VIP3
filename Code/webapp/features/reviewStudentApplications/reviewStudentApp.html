@@ -16,14 +16,14 @@
 			<td><input type="text" class="form-control profile" value={{user.project}} readonly></input></td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.ApproveData(user.projectid, user.email, user._id, user.project,user)">
+                <button style= "width: 50px;" class="btn btn-success btn-block" ng-click="vm.ApproveData(user)">
                     <i></i> Yes
                 </button>
                 </div>
 			</td>
 			<td>
             <div class="text-center">
-                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectData(user.projectid, user.email, user.members_detailed, user._id,user.project, user)">
+                <button style= "width: 50px;" class="btn btn-danger btn-block" ng-click="vm.RejectData(user)">
                     <i></i> No
                 </button>
 			</td>

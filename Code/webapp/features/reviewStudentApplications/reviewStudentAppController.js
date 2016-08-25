@@ -69,6 +69,8 @@
                             {
                                 console.log("match: " + obj.lastName + ", project: " + obj2.title);
                                 obj.project = obj2.title;
+								obj.projectid = obj2._id;
+								obj.fullName = obj.firstName + " " + obj.lastName;
                                 tempFilter[tmpCount] = obj;
                                 ++tmpCount;
                             }
@@ -80,11 +82,10 @@
             });
         }
 		
-		function ApproveData(pid, members, userid,name,user)
+		function ApproveData(user)
 		{
-           
 			loading();
-			//reviewStudentAppService.RemoveFromProject(pid, members).then(function(data){
+			//reviewStudentAppService.RemoveFromProject(user.projectid, user.email).then(function(data){
 			//	$scope.result = "Approved";
 				
 			//});
@@ -93,12 +94,12 @@
 			
 			User.update({user: user});
 			
-			reviewStudentAppService.AddToProject(userid, pid).then(function(data){
+			reviewStudentAppService.AddToProject(user._id, user.projectid).then(function(data){
 				$scope.result = "Approved";
                 
-                console.log("send mail for project " + name + " to " + members);
+                console.log("send mail for project " + user.project + " to " + user.email);
                 
-				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "/#/to-do" };
+				var todo = {owner: "Student", owner_id: user._id, todo: "Dear student, the project titled: " + user.project + " has accepted your application." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
@@ -106,7 +107,7 @@
 				});
 				var email_msg = 
 				{
-					recipient: members, 
+					recipient: user.email, 
 					text:  "Dear student, the project you joined has accepted you to participate.",
 					subject: "Project Approved", 
 					recipient2: "test@example.com", 
@@ -117,7 +118,7 @@
 			});
 
 			success_msg();
-			var log = {projectid: pid, student: userid, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: name, gender: user.gender, department: user.department, college: user.college, action: "Approved", type: "student" };
+			var log = {projectid: user.projectid, student: user._id, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: user.project, gender: user.gender, department: user.department, college: user.college, action: "Approved", type: "student" };
 			reviewPPS.createLog(log).then(function(success)  {
 					
 				}, function(error) {
@@ -125,21 +126,23 @@
 
 		}
 		
-		function RejectData(pid, members,members_detailed,userid,name, user)
+		function RejectData(user)
 		{
             loading();
-			reviewStudentAppService.RemoveFromProject(pid, members, {detailed: members_detailed }).then(function(data){
+			if (user.projectid != null)
+			{
+			reviewStudentAppService.RemoveFromProject(user.projectid, user.email, user.fullName).then(function(data){
 				$scope.result = "Rejected";
-				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has rejected your application." , type: "project", link: "/#/to-do" };
+				var todo = {owner: "Student", owner_id: user._id, todo: "Dear student, the project titled: " + user.project + " has rejected your application." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					
 				}, function(error) {
 					
-				});
+				});      
 				var email_msg = 
 				{
-					recipient: members, 
-					text:  "Dear student, the project you joined has rejected you from joining.",
+					recipient: user.email, 
+					text:  "Dear student, the project you applied for has rejected you from joining.",
 					subject: "Project Rejected", 
 					recipient2: "test@example.com", 
 					text2: "", 
@@ -148,7 +151,7 @@
 				User.nodeEmail(email_msg);
 
 			});
-			var log = {projectid: pid, student: userid, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: name, gender: user.gender, department: user.department, college: user.college, action: "Rejected", type: "student" };
+			var log = {projectid: user.projectid, student: user._id, firstName: user.firstName, lastName: user.lastName, studentemail: user.email, selectProject: name, gender: user.gender, department: user.department, college: user.college, action: "Rejected", type: "student" };
 			reviewPPS.createLog(log).then(function(success)  {
 					
 				}, function(error) {
@@ -156,6 +159,12 @@
 
 
 			reject_msg();
+			
+			}
+			else
+			{
+				console.log("PID IS UNDEFINED!");
+			}
 
 		}
 		
@@ -167,7 +176,7 @@
 			{
 				//check if original user is in project first
 				reviewStudentAppService.loadUser(log.student).then(function(data){
-					var thisStud = data[0];
+					var thisStud = data;
 					if (thisStud.joined_project == false)
 					{
 						var sProject;

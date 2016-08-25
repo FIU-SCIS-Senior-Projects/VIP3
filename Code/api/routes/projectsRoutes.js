@@ -198,14 +198,14 @@ module.exports = function(app, express) {
 
 		
 		//route for removing a member from a project (members in project are treated as student applications for the project)
-		apiRouter.route('/project/:id/:members')
+		apiRouter.route('/project/:id/:members/:detailed')
 		.put(function (req, res) {
-			console.log("PUT /project/:id/:members");
+			console.log("PUT /project/:id/:members/:detailed");
 			console.log(req.params);
 			var id = req.params.id;
 			var memberemail = req.params.members;
-			var members_detailed = req.body.detailed;
-			if (id != null && memberemail != null)
+			var members_detailed = req.params.detailed;
+			if (memberemail != null)
 			{
 			Project.findOne({_id: id}, function(err, proj){
 				if (err){
