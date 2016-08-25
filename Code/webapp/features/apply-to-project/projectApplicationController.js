@@ -4,14 +4,13 @@ angular
         
         var vm = this;
 		var profile;
+        var currprof;
 		$scope.done = false;
-		$scope.joinAs = "fac";
+		$scope.joinAs = "fac";       
 		
 		ProfileService.loadProfile().then(function(data)
 		{
 			if (data) {
-				
-				
 					vm.Colleges = [
 					{
 						name: 'Architecture + The Arts ',
@@ -130,14 +129,13 @@ angular
 				vm.genders = ['Male', 'Female'];
 				vm.semesters = ['Fall 2016', 'Spring 2017', 'Summer 2017'];
 
-				
-				
 				vm.selectedCollege = vm.Colleges.find(function (element) {
 					return element.name === data.college;
 				});;
 						
 				$scope.done = true;
 				profile = data;
+
 				vm.user_info = data.firstName;
 				vm.user_type = data.userType;
 				vm.firstName = data.firstName;
@@ -149,7 +147,7 @@ angular
 				vm.rank = data.rank;
 				vm.school = data.department;
 				vm.college = data.college;
-				vm.semester = "1";
+				vm.semester = data.semester;
 				vm.google = data.google;
 				vm.profile = data;
 				
@@ -196,18 +194,103 @@ angular
                 });
             });
         }
+        
+        // returns 0 if student didnt fill out some part of the form
+        //function validateStudentFormData(FormData, ProfileData)
+        function validateStudentFormData(FormData)
+        {
+            console.log("FormData.sProject = " + FormData.sProject + ", " + "FormData.semester = " + FormData.semester + ", " + "FormData.user_type = " + FormData.user_type + ", " + "FormData.pID = " + FormData.pID + ", "  + "FormData.selectedCollege = " + FormData.selectedCollege + ", " + "FormData.school = " + FormData.school);
+            // make sure student has: selected a project, chosen a semester, pantherID, college, school/department
+            if ( (FormData.sProject != null) && (FormData.semester != null) && (FormData.user_type != null) && (FormData.pID != null) && (FormData.selectedCollege != null) && (FormData.school != null) )
+            {
+                return 1;
+            }
+            return 0;
+        }
+        
+        function processStudentApplication(vm, profile)
+        {
+            // if the student has not filled out all of the required fields in the form, let them know, and return
+            if (!validateStudentFormData(vm))
+            {
+                return 0;
+            }
+            
+            return 1;
+        }
 
-        vm.save = function() {
-			
+        // note: vm.xxx = data from form, vm.profile.xxx = data from current users account
+        vm.save = function()
+        {
+            // in the event of high volume traffic, this function may take longer to complete for each user
 			loading();
 			
-			if (!$scope.guest) {
-			
-				vm.profile.rank = vm.rank;
-				reviewProfileService.updateProfile(vm.profile).then(function(data){
-				});
+            // processes project application, if the user is not a guest
+			if (!$scope.guest)
+            {
+                // if the user is a student
+                if (vm.profile.userType == "Student")
+                {
+                    // the student didnt supply all of the form data
+                    if (!processStudentApplication(vm, vm.profile))
+                    {
+                        // let them know and dont go any furthere
+                        studentMissingFields();
+                        return;
+                    }
+                    
+                     console.log("vm.rank = " + vm.rank + ", vm.profile.rank = " + vm.profile.rank);
+                     console.log("vm.pID = " + vm.pID + ", vm.profile.pantherID = " + vm.profile.pantherID);
+                     console.log("vm.selectedCollege = " + vm.selectedCollege + ", vm.profile.college = " + vm.profile.college);
+                    
+                    if (vm.profile.rank != vm.rank)
+                    {
+                        console.log("1");
+                        vm.profile.rank = vm.rank;
+                    }
+
+                    if (vm.profile.pantherID != vm.pID)
+                    {
+                        console.log("2");
+                        vm.profile.pantherID = vm.pID;
+                    }
+                    
+                    if (vm.profile.college != vm.selectedCollege)
+                    {
+                        console.log("3");
+                        vm.profile.college = vm.selectedCollege.name;
+                    }
+                    
+                    if (vm.profile.department != vm.school)
+                    {
+                        console.log("4");
+                        vm.profile.department = vm.school;
+                    }
+                        
+                    if (vm.profile.gender != vm.gender)
+                    {
+                        console.log("5");
+                        vm.profile.gender = vm.gender;
+                    }
+
+                    console.log("vm.profile.pantherID = " + vm.profile.pantherID + ", vm.pID = " + vm.pID);
+                    
+                    //f (vm.user_type != 
+                    reviewProfileService.updateProfileProject(vm.profile).then(function(data){
+                    });
+                }
+                
+                // note:
+                // vm = FormData (data provided in submitted form)
+                // vm.profile = ProfileData (data from db)
+                // if the user provided us with new information that wasnt previously in the database for their account, add that info to the db
+                //updateUserData(vm, vm.profile);
+                
+
+                
 				var project = vm.sProject;
 				
+                return;
 				
 				if (vm.join_type) {
 					if (vm.join_type == 'Mentor') {
@@ -257,7 +340,6 @@ angular
 						   function(response){
 							 // success callback
 							 success_msg();
-							
 							
 							var email_msg = 
 							{
@@ -432,6 +514,18 @@ angular
 			   html: true,
 			   timer: 10000,   
 			   showConfirmButton: false
+            }
+            );
+		}
+        
+        // student is missing some of the required fields
+		function studentMissingFields() {
+			swal({   
+               title: 'Almost There!',
+			   text: 'Please double check and make sure you have filled in all of the required information in the form.',
+			   html: true,
+			   timer: 10000,
+			   showConfirmButton: true
             }
             );
 		}

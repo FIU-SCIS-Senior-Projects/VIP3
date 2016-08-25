@@ -17,6 +17,12 @@ function userNewService($http) {
             return data.data;
         });
     };
+    
+    profileFactory.updateProfileProject = function (profileData) {
+        return $http.put('/api/updateprofileproject/',profileData).then(function(data){
+            return data.data;
+        });
+    };
 
     return profileFactory;
 }

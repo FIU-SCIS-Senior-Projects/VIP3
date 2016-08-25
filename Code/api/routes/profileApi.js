@@ -5,6 +5,42 @@ var request = require('request');
 
 module.exports = function(app, express) {
     var apiRouter = express.Router();
+    
+	// updates profile based on data submitted when applying for a project
+    apiRouter.route('/updateprofileproject')
+        .put(function (req, res) {
+			////console.log('updateprofile has been called');
+			////console.log('updating the profile for user ' + req.body._id);
+            
+            console.log("update user info 1");
+
+			Profile.findById(req.body._id, function(err, profile)
+            {
+                console.log("old gender: " + profile.gender);
+                console.log("req gender: " + req.body.gender);
+                console.log("old college: " + profile.college);
+                console.log("req college: " + req.body.college);
+                console.log("old department: " + profile.department);
+                console.log("req department: " + req.body.department);
+                profile.rank = req.body.rank;
+                profile.pantherID = req.body.pantherID;
+                profile.college = req.body.college;
+                profile.school = req.body.school;
+                profile.gender = req.body.gender;
+                profile.department = req.body.department;
+                
+                console.log("new gender: " + profile.gender);
+                console.log("new college: " + profile.college);
+                console.log("new department: " + profile.department);
+                
+                console.log("update user info 2");
+                
+                profile.save(function(err){
+                    if(err) res.send(err);
+                    res.json(profile);
+                })
+            });
+        });
 
 	// used to update the rank/usertype of a profile that the PI has authorized the changes to
     apiRouter.route('/updateprofile')

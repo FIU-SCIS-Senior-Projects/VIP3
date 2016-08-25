@@ -90,6 +90,10 @@ module.exports = function(passport,app) {
 								   newUser.image = profile._json.image.url;
 								   newUser.google.email = profile.emails[0].value; // pull the first email
                                    
+                                   // initially set a blank department so the user can change it later
+                                   // fix for students not being able to set department
+                                   newUser.department = "";
+                                   
                                    // mohsen has requested that he and masoud get admin rights as soon as they create their accounts
                                    if (newUser.google.email == "mtahe006@fiu.edu" || newUser.google.email == "sadjadi@cs.fiu.edu")
                                    {

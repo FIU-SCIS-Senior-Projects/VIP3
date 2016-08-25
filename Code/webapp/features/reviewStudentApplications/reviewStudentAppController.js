@@ -51,23 +51,32 @@
 		//Loads all Student information and matches them to their student applications  
         function loadData()
 		{
-            reviewStudentAppService.loadProfile().then(function(data){
+            reviewStudentAppService.loadProfile().then(function(data)
+            {
                 vm.profile = data;
-				for (var i = 0; i < vm.profile.length; i++)
-				{
-					for (var x = 0; x < vm.members.length; x++)
-					{
-						if (vm.profile[i].email == vm.members[x][2])
-						{
-							vm.profile[i].projectid = vm.members[x][0];
-							vm.profile[i].project = vm.members[x][1]; 
-							vm.profile[i].members_detailed = vm.members[x][3];
-							vm.membs[i] = vm.profile[i];
-						}
-					}
-				}
-				vm.membs = vm.membs.filter(function(n){ return !n.joined_project });
-				
+                
+                var tempFilter = [];
+                var tmpCount = 0;
+                
+                vm.profile.forEach(function (obj)
+                {
+                    vm.projects.forEach(function (obj2)
+                    {
+                        obj2.members.forEach(function (obj3)
+                        {
+                            //console.log("test: " + obj3);
+                            if (obj.email == obj3 && !obj.joined_project)
+                            {
+                                console.log("match: " + obj.lastName + ", project: " + obj2.title);
+                                obj.project = obj2.title;
+                                tempFilter[tmpCount] = obj;
+                                ++tmpCount;
+                            }
+                        });
+                    });
+                });
+                
+                vm.membs = tempFilter;
             });
         }
 		
@@ -86,6 +95,9 @@
 			
 			reviewStudentAppService.AddToProject(userid, pid).then(function(data){
 				$scope.result = "Approved";
+                
+                console.log("send mail for project " + name + " to " + members);
+                
 				var todo = {owner: "Student", owner_id: userid, todo: "Dear student, the project titled: " + name + " has accepted your application." , type: "project", link: "/#/to-do" };
 				ToDoService.createTodo(todo).then(function(success)  {
 					

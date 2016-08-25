@@ -4,14 +4,14 @@
 </div>
 <div ng-if="done" class=register>
         <h3 align="center"> Confirm Information </h3>
-        <form name="ProjectApplication" ng-submit="projApp.save()" novalidate>
+        <form name="ProjectApplication" ng-disabled="ProjectApplication.$invalid" ng-submit="projApp.save()" novalidate>
             <div class="form-group">
                 <table class="table">
                     <tr>
                         <td colspan="4">
 
                             <label>Project:</label>
-                            <select  ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects" class="form-control" Required="True"  >
+                            <select ng-model="projApp.sProject" ng-options="project as project.title for project in projApp.projects" class="form-control" Required="True">
                             </select>
                         </td>
                     </tr>
@@ -19,7 +19,7 @@
                         <td colspan="4">
 
                             <label>Semester:</label>
-                            <select  ng-model="projApp.semester" ng-options=" semester for semester in projApp.semesters" class="form-control" Required="True">
+                            <select  ng-model="projApp.semester" ng-options="semester for semester in projApp.semesters" class="form-control" Required="True">
                             </select>
                         </td>
                     </tr>
@@ -27,28 +27,13 @@
                         <td colspan="4">
 
                             <label>Join As:</label>
-                            <select  ng-model="projApp.join_type" class="form-control" Required="True"  >
+                            <select  ng-model="projApp.join_type" class="form-control" Required="True">
 								<option>Faculty</option>
 								<option>Mentor</option>
                             </select>
                         </td>
                     </tr>
-					<tr ng-show="guest">
-                        <td colspan="4">
-
-                            <label>Name:</label>
-							<input type="text" ng-model="projApp.name" class="form-control" Required="True" >
-                        </td>
-                    </tr>
-					<tr ng-show="guest">
-                        <td colspan="4">
-
-                            <label>Email: (Make sure to register with this email later on so members have access to the profile)</label>
-                            <input type="text" ng-model="projApp.email2" class="form-control" Required="True" >
-                        </td>
-                    </tr>
                     <tr ng-hide="guest">
-
                         <td>
                             <input type="text" ng-model="projApp.firstName" class="form-control" Required="True" ng-readonly="true">
 
@@ -66,14 +51,14 @@
                         <td>
                             <label>User Type:</label>
                             <div>
-                                <input class = 'form-control'  ng-model="projApp.type" ng-readonly="true">
+                                <input class = 'form-control' ng-model="projApp.type" ng-readonly="true">
                             </div><br>
 
                         </td>
                         <td>
                             <label>Rank:</label>
                             <div>
-                                <input class = 'form-control'  ng-model="projApp.rank" ng-readonly="true">
+                                <input class="form-control" ng-model="projApp.rank" ng-readonly="true" Required="False">
                             </div><br>
                     </tr>
                     <tr ng-hide="guest">
@@ -81,7 +66,7 @@
                             <label>Panther ID:</label>
 
                             <div>
-                                <input type="text" ng-model="projApp.pID" class="form-control" Required="True" ng-readonly="true"/>
+                                <input type="text" ng-model="projApp.pID" class="form-control" Required="True" ng-readonly="false">
                             </div>
 
                         </td>
@@ -89,7 +74,7 @@
 
                             <label>Gender:</label>
                             <div>
-                                <select select  ng-model="projApp.gender" ng-options=" gender for gender in projApp.genders" class="form-control" Required="False" disabled>
+                                <select select ng-model="projApp.gender" ng-options="gender for gender in projApp.genders" class="form-control" Required="False">
                             </div>
                         </td>
 
@@ -97,7 +82,7 @@
                         <td colspan="4">
 
                             <label>College:</label>
-                            <select  ng-model="projApp.selectedCollege" ng-options="college as college.name for college in projApp.Colleges" class="form-control" Required="False" disabled>
+                            <select ng-model="projApp.selectedCollege" ng-options="college as college.name for college in projApp.Colleges" class="form-control" Required="True">
                             </select>
                         </td>
                     </tr>
@@ -105,7 +90,7 @@
                         <td colspan="4">
 
                             <label>School/Department:</label>
-                            <select  ng-model="projApp.school" ng-options=" school for school in projApp.selectedCollege.schools" class="form-control"  disabled>
+                            <select ng-model="projApp.school" ng-options="school for school in projApp.selectedCollege.schools" class="form-control" Required="True">
                             </select>
 
                         </td>

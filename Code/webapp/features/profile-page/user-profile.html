@@ -66,7 +66,9 @@
 					<td colspan="4">
 
 						<label>School/Department:</label>
-							<select  ng-model="vm.profile.department" ng-options="school as schools for schools in vm.selectedCollege.schools" class="form-control">
+							<select  ng-model="vm.profile.department" ng-options="school for school in vm.selectedCollege.schools" class="form-control">
+                            
+                            
 						</input>
 
 					</td>

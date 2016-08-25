@@ -18,7 +18,7 @@ var UsersSchema = new Schema({
     piDenial: Boolean,
     verifiedEmail: Boolean,
     college:{type: String, required: false},
-    department:{type: String, required: false},
+    department: String,
     major:String,
     minor:String,
     image: String,

@@ -100,6 +100,16 @@ function uploadResume() {
                 vm.profile = data;
                 ////console.log(vm.profile.userType);
                 currRank = vm.profile.userType;
+                
+                // get the right index for the school/dept of the current college user is in
+                for (var i = 0; i < vm.Colleges.length; i++)
+                {
+                    if (vm.Colleges[i].name == vm.profile.college)
+                    {
+                        vm.selectedCollege = vm.Colleges[i];
+                    }
+                }
+                
             });
         }
 
@@ -493,12 +503,7 @@ function uploadResume() {
             }
         ];
 
-        vm.selectedCollege = vm.Colleges[1];
-
 		vm.genders = ['Male', 'Female'];
-
-
-
 
     }
 })();

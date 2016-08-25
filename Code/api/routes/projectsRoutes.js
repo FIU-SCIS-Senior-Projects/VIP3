@@ -54,10 +54,6 @@ module.exports = function(app, express) {
 
     });
 	
-	
-	
-
-
     //route get or adding projects to a users account
     apiRouter.route('/projects')
         .post(function (req, res) {
@@ -204,8 +200,8 @@ module.exports = function(app, express) {
 		//route for removing a member from a project (members in project are treated as student applications for the project)
 		apiRouter.route('/project/:id/:members')
 		.put(function (req, res) {
-			//////console.log("PUT /project/:id/:members");
-			//////console.log(req.params);
+			console.log("PUT /project/:id/:members");
+			console.log(req.params);
 			var id = req.params.id;
 			var memberemail = req.params.members;
 			var members_detailed = req.body.detailed;
@@ -217,7 +213,7 @@ module.exports = function(app, express) {
 					 res.json({message: 'Error!'});
 				}
 				else if (proj){
-					//////console.log("Members: " + memberemail + " Detailed: " + members_detailed);
+					console.log("Members: " + memberemail + " Detailed: " + members_detailed);
 					proj.members.pull(memberemail);
 					proj.members_detailed.pull(members_detailed);
 					proj.save(function(err){
