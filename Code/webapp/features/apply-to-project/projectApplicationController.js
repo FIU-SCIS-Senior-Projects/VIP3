@@ -242,42 +242,6 @@ angular
                      console.log("vm.rank = " + vm.rank + ", vm.profile.rank = " + vm.profile.rank);
                      console.log("vm.pID = " + vm.pID + ", vm.profile.pantherID = " + vm.profile.pantherID);
                      console.log("vm.selectedCollege = " + vm.selectedCollege + ", vm.profile.college = " + vm.profile.college);
-                    
-                    if (vm.profile.rank != vm.rank)
-                    {
-                        console.log("1");
-                        vm.profile.rank = vm.rank;
-                    }
-
-                    if (vm.profile.pantherID != vm.pID)
-                    {
-                        console.log("2");
-                        vm.profile.pantherID = vm.pID;
-                    }
-                    
-                    if (vm.profile.college != vm.selectedCollege)
-                    {
-                        console.log("3");
-                        vm.profile.college = vm.selectedCollege.name;
-                    }
-                    
-                    if (vm.profile.department != vm.school)
-                    {
-                        console.log("4");
-                        vm.profile.department = vm.school;
-                    }
-                        
-                    if (vm.profile.gender != vm.gender)
-                    {
-                        console.log("5");
-                        vm.profile.gender = vm.gender;
-                    }
-
-                    console.log("vm.profile.pantherID = " + vm.profile.pantherID + ", vm.pID = " + vm.pID);
-                    
-                    //f (vm.user_type != 
-                    reviewProfileService.updateProfileProject(vm.profile).then(function(data){
-                    });
                 }
                 
                 // note:
@@ -286,11 +250,43 @@ angular
                 // if the user provided us with new information that wasnt previously in the database for their account, add that info to the db
                 //updateUserData(vm, vm.profile);
                 
+                if (vm.profile.rank != vm.rank)
+                {
+                    console.log("1");
+                    vm.profile.rank = vm.rank;
+                }
 
+                if (vm.profile.pantherID != vm.pID)
+                {
+                    console.log("2");
+                    vm.profile.pantherID = vm.pID;
+                }
+                
+                if (vm.profile.college != vm.selectedCollege)
+                {
+                    console.log("3");
+                    vm.profile.college = vm.selectedCollege.name;
+                }
+                
+                if (vm.profile.department != vm.school)
+                {
+                    console.log("4");
+                    vm.profile.department = vm.school;
+                }
+                    
+                if (vm.profile.gender != vm.gender)
+                {
+                    console.log("5");
+                    vm.profile.gender = vm.gender;
+                }
+
+                console.log("vm.profile.pantherID = " + vm.profile.pantherID + ", vm.pID = " + vm.pID);
+                
+                //f (vm.user_type != 
+                reviewProfileService.updateProfileProject(vm.profile).then(function(data){
+                });
                 
 				var project = vm.sProject;
-				
-                return;
 				
 				if (vm.join_type) {
 					if (vm.join_type == 'Mentor') {
