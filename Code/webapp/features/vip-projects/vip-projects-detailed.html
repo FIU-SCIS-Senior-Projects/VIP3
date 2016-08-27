@@ -28,12 +28,12 @@
              <hr>
                 <h4>Project Owners</h4>
                 <div>
-                    <ul class="student-list">
+                    <ul class="student-list" ng-repeat="projowners in vm.productOwner">
                     <li class="student-in-list">
-                            <a ng-click="vm.redirect2(vm.data.owner_email)" class="person_hover">{{vm.data.owner_name}}</a>
-                            <a href="/#/sendmessage/{{vm.data.owner_email}}/0/1">
-                           <i ng-if="vm.data.owner != null" class="fa fa-envelope-o" ng-show=" vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
-                           <p ng-if="vm.data.owner == null" style="float: right;">{{vm.data.owner_email}}</p>
+                            <a ng-click="vm.redirect2(projowners[1])" class="person_hover">{{projowners[0]}}</a>
+                            <a href="/#/sendmessage/{{projowners[1]}}/0/1">
+                           <i ng-if="vm.data.owner != null" class="fa fa-envelope-o" ng-show="vm.profile.userType == 'Pi/CoPi' || vm.profile.userType == 'Staff/Faculty'" aria-hidden="true" style="font-size: 20px; float: right;"></i>
+                           <p ng-if="vm.data.owner == null" style="float: right;"></p>
                             </a>
                         </li>
                     </ul>

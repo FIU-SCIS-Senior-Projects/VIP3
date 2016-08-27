@@ -11,7 +11,13 @@
     function VIPProjectsDetailedCtrl($sce,$location, $state, $scope, $stateParams, ProjectService, ProfileService,reviewStudentAppService,User,$window) {
         var profile = null;
 		var vm = this;
-        vm.data = null;
+        vm.data = null
+        
+        vm.productOwner = new Array();
+        
+        // array that stores the names of product owners
+        vm.own = [];
+        
         vm.profile;
         vm.applyForProject = applyForProject;
         vm.deleteProject = deleteProject;
@@ -60,16 +66,33 @@
 			ProfileService.loadProfile().then(function(data){
 				vm.profile = data;
 			});
-        //}
-
+        //}           
+            
         
         function getProjectById (){
             ProjectService.getProject(vm.id).then(function(data){
 				if (data.old_project && data.old_project.length > 0) {
 					vm.data = data.old_project[0];
+                    console.log(vm.data.owner_name);
+                    vm.own = vm.data.owner_name.split(', ');
+                    vm.own.mail = vm.data.owner_email.split(', ');
+                    console.log(vm.own);
+                    //vm.own_mails = 
 				}
 				else {
 					vm.data = data;
+                    console.log(vm.data.owner_name);
+                    
+                    vm.own = vm.data.owner_name.split(', ');
+                    vm.newmail = vm.data.owner_email.split(', ');
+                    
+                    var xlength = vm.own.length;
+                    for(var i = 0; i < xlength; i++) {
+                        vm.productOwner.push([vm.own[i], vm.newmail[i]]);
+                    }
+
+                    console.log("Productowner array: ");
+                    alert(vm.productOwner);
 				}	
 				ProfileService.loadProfile().then(function(data){
 					profile = data;
@@ -181,8 +204,6 @@
              {
 				 deny_msg();
 			 }
-			 
-             
          }
 
 
