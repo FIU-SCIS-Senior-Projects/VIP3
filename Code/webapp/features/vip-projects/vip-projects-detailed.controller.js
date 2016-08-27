@@ -50,7 +50,7 @@
 		}
 		
         $scope.go = function ( path ) {
-          alert(path);
+          //alert(path);
           $location.path( path );
         };
         
@@ -91,8 +91,8 @@
                         vm.productOwner.push([vm.own[i], vm.newmail[i]]);
                     }
 
-                    console.log("Productowner array: ");
-                    alert(vm.productOwner);
+                    //console.log("Productowner array: ");
+                    //alert(vm.productOwner);
 				}	
 				ProfileService.loadProfile().then(function(data){
 					profile = data;
