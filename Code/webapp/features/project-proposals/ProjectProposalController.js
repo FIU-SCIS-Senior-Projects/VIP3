@@ -241,14 +241,14 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 						$scope.SelectedMentorEmails += $scope.project.mentor[i].email;
 					}
 				}
-				for(i = 0; i < $scope.project.addedStudents.length; i++) {
-					if (i != $scope.project.addedStudents.length - 1) {
-						$scope.SelectedStudentNames += $scope.project.addedStudents[i].name + ", ";
-						$scope.SelectedStudentEmails += $scope.project.addedStudents[i].email + ", ";
+				for(i = 0; i < $scope.project.members_detailed.length; i++) {
+					if (i != $scope.project.members_detailed.length - 1) {
+						$scope.SelectedStudentNames += $scope.project.members_detailed[i] + ", ";
+						$scope.SelectedStudentEmails += $scope.project.members[i] + ", ";
 					}
 					else {
-						$scope.SelectedStudentNames += $scope.project.addedStudents[i].name;
-						$scope.SelectedStudentEmails += $scope.project.addedStudents[i].email;
+						$scope.SelectedStudentNames += $scope.project.members_detailed[i];
+						$scope.SelectedStudentEmails += $scope.project.members[i];
 					}
 				}
 				
@@ -592,21 +592,26 @@ angular.module('ProjectProposalController', ['ProjectProposalService', 'userServ
 		{
 			if (studentname && studentemail)
 			{
-				$scope.project.addedStudents = [];
+				$scope.project.members = [];
+                $scope.project.members_detailed = [];
 				for (var i = 0; i < studentname.length; i++)
 				{
 					if ($scope.project.addedStudents)
 					{
-						$scope.project.addedStudents.push({name: studentname[i], email: studentemail[i]});
+						//$scope.project.addedStudents.push({name: studentname[i], email: studentemail[i]});
+                        $scope.project.members.push(studentemail[i]);
+                        $scope.project.members_detailed.push(studentname[i]);
 					}
 					else
 					{
-						$scope.project.addedStudents = [{name: studentname[i], email: studentemail[i]}];
+                        $scope.project.members = studentemail[i];
+                        $scope.project.members_detailed = studentname[i];
 					}
 				}
 			}
 			else {
-				$scope.project.addedStudents = [];
+                    $scope.project.members = [];
+                    $scope.project.members_detailed = [];
 			}
 		}
 
